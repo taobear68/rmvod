@@ -27,7 +27,7 @@ echo "Cloning the repo..."
 cd && mkdir -p git && \
 pushd ~/git && \
 rm -rf ./-RIBBBITN3RDing && \
-git clone https://github.com/taobear68/-RIBBBITN3RDing.git && \
+git clone https://github.com/taobear68/rmvod.git && \
 popd && \
 date
 
