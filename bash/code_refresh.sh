@@ -26,13 +26,13 @@ mkdir -p /var/www/html/rmvod/js/ /var/www/html/rmvod/css
 echo "Cloning the repo..."
 cd && mkdir -p git && \
 pushd ~/git && \
-rm -rf ./-RIBBBITN3RDing && \
+rm -rf ./rmvod && \
 git clone https://github.com/taobear68/rmvod.git && \
 popd && \
 date
 
 echo "Refreshing deployed code..."
-pushd ~/git/-RIBBBITN3RDing/rmvod/ && \
+pushd ~/git/rmvod/ && \
 cp js/* /var/www/html/rmvod/js/ && \
 cp html/* /var/www/html/rmvod/ && \
 cp css/* /var/www/html/rmvod/css/ && \
