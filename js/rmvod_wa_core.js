@@ -812,7 +812,7 @@ class RMVodWebApp {
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
-        this.postJSVer("0.5.11");
+        this.postJSVer("0.8.0");
     }
     // Returns a "likely unique" ID for this browser to be used in 
     // play request logging.

@@ -38,7 +38,7 @@ import requests
 
 #fileStr = "vodLibrarydb.py"
 fileStr = "rmvod_api.py"
-versionStr = "0.2.9"
+versionStr = "0.8.0"
 
 # moving to "proper" deployment via WSGI:  https://flask.palletsprojects.com/en/2.0.x/deploying/mod_wsgi/
 class VodLibDB:
@@ -109,7 +109,7 @@ class VodLibDB:
             print("_stdDelete: Poop")
         return retval
     def getDBVersion(self):
-        return "0.2.0" # Table playlog_live added 
+        return "0.8.0" # Table playlog_live added 
     def fetchArtiDeetsFromOmdbapi(self):
         print("vldb.fetchArtiDeetsFromOmdbapi")
         maxRows = 10
