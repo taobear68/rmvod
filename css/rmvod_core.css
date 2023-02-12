@@ -1,0 +1,379 @@
+/*
+ * Cascading Style Sheet for for rmvod.html page
+ * Copyright (c) 2022, 2023 by Paul Tourville
+ * 
+ * This file is part of RIBBBITmedia VideoOnDemand (a.k.a. "rmvod").
+ * 
+ * RIBBBITmedia VideoOnDemand (a.k.a. "rmvod") is free software: you 
+ * can redistribute it and/or modify it under the terms of the GNU 
+ * General Public License as published by the Free Software Foundation, 
+ * either version 3 of the License, or (at your option) any later 
+ * version.
+ * 
+ * RIBBBITmedia VideoOnDemand (a.k.a. "rmvod") is distributed in the 
+ * hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+ * PURPOSE. See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with RIBBBITmedia VideoOnDemand (a.k.a. "rmvod"). If not, 
+ * see <https://www.gnu.org/licenses/>.
+ * 
+ * 
+ * 
+ *  */
+
+/* rmvod_core.css version 0.2.6 */
+
+body {
+    background-color:#0c0c0c;
+    font-family:arial;
+    font-size:20px;
+    color:#c0c0c0;
+}
+div {
+    margin: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border: 0px solid gray;                
+}
+div.mastercont {
+    display:block;
+    /* width:1120px;
+    height:700px; */
+    width:1210px;
+    height:760px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left:10px;
+    margin-right:0px;
+    background-color:#101010;
+}
+div.headercont {
+    display:block;
+    width:1118px;
+    height:98px;
+    /* background-color:#00ee00; */
+}
+div.headerflexwrap {
+    display:inline-flex;
+    width:1116px;
+    height:96px;
+    /* background-color:#008800; */
+}
+div.headerflexcell {
+    display:inline-flex;
+    width:250px;
+    height:94px;
+    /* background-color:#ffffff; */
+}
+div.bigbusiness {
+    display:block;
+    width:1118px;
+    height:596px;
+    /* background-color:#ee0000; */
+}
+div.featurecont {
+    display:inline-flex;
+    width:695px;
+    height:592px;
+    /* background-color:#0000ee; */
+}
+/* div.featureelement {
+    display:block;
+    width:692px;
+    height:590px;
+} */
+div.featureelement0 {
+    display:block;
+    width:1190px;
+    height:540px;
+    overflow:auto;
+    /* background-color:#ccffff; */
+}
+
+div.listcontainer{
+    display:inline-flex;
+    width:552px;
+    height:516px;
+}
+div.listwidget{
+    display:block;
+    width:550px;
+    height:514px;
+    overflow:auto;
+}
+div.listelcontainer {
+    display:block;
+    width:530px;
+    padding-top:4px;
+    padding-bottom:4px;
+}          
+div.listelconttitlelink {
+    display:block;
+    width:520px;
+}
+div.listelconttitle {
+    display:inline-flex;
+    width:470px;
+}
+div.listelcontxpbutt {
+    display:inline-flex;
+    width:50px;
+}
+div.listeldetailouter {  
+    display:none;
+    width:450;
+    background-color:#0c180c
+}
+div.listelseriescollep {
+    display:block;
+    width:394px;
+}
+div.listelseriescollepcont {
+    display:block;
+    width:460px;
+    background-color:#18180c 
+}
+div.listelseriescolleptitlelink {
+    display:block;
+    width:450;
+    padding-top:4px;
+    padding-bottom:4px;
+}   
+div.listelseriescolleptitle {
+    display:inline-flex;
+    padding-left:5px;
+    width:380px;
+}
+div.listelseriescollepdetail {
+    display:none;
+    width:350;
+    background-color:#20200c
+}
+
+
+div.artideetcontainer {
+    height: 180px;
+    width: 695px;
+    display: block;
+    overflow: auto;
+}
+span.listtitleunseen {
+    color: #c0c0c0;
+}
+span.listtitleseen {
+    color: #e0b0b0;
+}
+span.fieldvalue {
+    word-wrap: break-word;
+}
+/* Edit Form Elements */
+div.edit-form-outer-container {
+    display: block; 
+    width: 680px;
+    height: 520px;
+    overflow: auto;
+    /* background-color: #ffffdd; */
+}
+
+div.edit-form-row{
+    display: block; 
+    width:95%;
+}
+div.edit-form-field-label{
+    display: inline-flex;
+    /* background-color: #eeeeee; */
+    justify-content: right;
+    vertical-align: top;
+    width: 30%;
+}
+div.edit-form-field-value-orig{
+    display: inline-flex;
+    /* background-color: #ffffff; */
+    justify-content: left;
+    width: 60%;
+}
+div.edit-form-field-value-delta{
+    display: inline-flex;
+    /* background-color: #ffdddd; */
+    justify-content: left;
+    width: 60%;
+}
+input.edit-simple-text {
+    width: 350px;
+}
+textarea.edit-simple-textarea {
+    height: 100px;
+    width: 350px;
+}
+
+
+/*
+CSS FOR fancy list edit fields
+*/
+div.tags, div.relorg, div.director, div.writer, div.primcast{
+    display:block;
+}
+[class$="Box"] {
+    display:block;
+    width:350px;
+    height:100px;
+    border-width:2px;
+    border-style:solid;
+    border-color:#000000;
+    background-color:#ffffff;
+    overflow:auto;
+}
+[class$="AddMember"] {
+    display:inline-flex;
+    padding:4px;
+    border-radius:25px;
+    border-style:solid;
+    border-color:#000000;
+    border-width:2px;
+    margin:3px;
+}
+[class$="AddMemberButton"] {
+    font-size:14px;
+    color:#000000; 
+    }
+[class$="MemberRmv"] {
+    margin-left:5px;
+    font-size:14px;
+    color:#000000; 
+    }
+[class$="MemberLabel"]  {
+    font-size:14px;
+    color:#000000;    
+}
+[class$="Member"] {
+    display:inline-flex;
+    padding:4px;
+    border-radius:25px;
+    border-width:1px;
+    border-style:solid;
+    border-color:#000000;
+    margin:3px;
+}
+[class$="Select"] {
+}
+
+
+
+
+
+
+
+
+
+
+
+.throbber-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.throbber-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  /* border: 6px solid #fff; */
+  border: 6px solid #0aa;
+  /* border-color: #fff transparent #fff transparent; */
+  border-color: #0aa transparent #0aa transparent;
+  animation: throbber-ring 1.2s linear infinite;
+}
+@keyframes throbber-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+  
+
+
+
+div.RNWATabWidget {
+    /* background-color:#cccccc; */
+    width:1210px;
+    height:580px;
+}
+div.RNWATabWidgetTabTab-sel {
+    width:150px;
+    height:30px;
+    border:3px;
+    margin:2px;
+    padding:5px;
+    border-top-style:solid;
+    border-bottom-style:none;
+    border-left-style:solid;
+    border-right-style:solid;
+    border-color:#cccccc;
+    background-color:#444444;
+    
+}
+div.RNWATabWidgetTabTab-unsel {
+    width:150px;
+    height:30px;
+    border:2px;
+    margin:2px;
+    padding:5px;
+    border-top-style:solid;
+    border-bottom-style:solid;
+    border-left-style:solid;
+    border-right-style:solid;
+    border-color:#cccccc;
+}
+span.RNWATabWidgetTabTab-sel {
+    font-weight:bold;
+    padding:4px;
+    margin-left:5px;
+    margin-right:5px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+span.RNWATabWidgetTabTab-unsel {
+    font-weight:normal;
+    padding:4px;
+    margin-left:5px;
+    margin-right:5px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+div.RNWATabWidgetTabBody-outer {
+    border-color:#000000;
+    width:1180px;
+    height:520px;
+    overflow:auto;
+    border-top:0px;
+    border-left:2px;
+    border-right:2px;
+    border-bottom:2px;
+    border-top-style:none;
+    border-bottom-style:solid;
+    border-left-style:solid;
+    border-right-style:solid;
+}
+div.RNWATabWidgetTabBody-sel {
+    display:block;
+}
+div.RNWATabWidgetTabBody-unsel {
+    display:none;
+}
+div.RNWATabWidgetTabBody-outer {
+    padding:5px;
+}
+
+
+
+  
