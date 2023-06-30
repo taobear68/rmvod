@@ -23,11 +23,19 @@
 mkdir -p /var/lib/rmvod/py /var/lib/rmvod/bash
 mkdir -p /var/www/html/rmvod/js/ /var/www/html/rmvod/css
 
+BRANCHSTR="main"
+pushd  ~
+if [[ -f "rmvod_branch.txt" ]]
+    then
+        BRANCHSTR=$(head -n 1 rmvod_branch.txt)
+    fi
+
+
 echo "Cloning the repo..."
 cd && mkdir -p git && \
 pushd ~/git && \
 rm -rf ./rmvod && \
-git clone https://github.com/taobear68/rmvod.git && \
+git clone -b ${BRANCHSTR} https://github.com/taobear68/rmvod.git && \
 popd && \
 date
 
