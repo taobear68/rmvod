@@ -1729,7 +1729,8 @@ class RMVodWebApp {
                 // Add succeeded
                 ml.renderArtifactEdit(dataObjIn['data'][0]['artifactid']);
                 const ev = new Event('click');
-                document.getElementById('tabspan2').dispatchEvent(ev); 
+                //document.getElementById('tabspan2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
+                document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
             } else {
                 // Add failed
                 window.alert("Sumbit failed.  Correct the problem listed below and try again.\n" + dataObjIn['status']['detail'])
