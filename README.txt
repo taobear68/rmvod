@@ -16,4 +16,6 @@ Major Components:
 6) Command Line Interface: In its current incarnation, rmvod has a "back end" CLI which permits fucntions more oriented toward someone administering the platform, such as creation and modification of artifact records in the database.  Most of these functions will likely end up in a separate web interface, but for now, the CLI exists, and operates on the same core code as the API, so it is useful for some testing and verification without using the full web stack, if necessary.
 
 
+20230630 - Work begins on r0.9
+
 
