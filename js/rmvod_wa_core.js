@@ -1727,7 +1727,7 @@ class RMVodWebApp {
             var ml =  new RMVodWebApp();
             if (dataObjIn['status']['success'] == true) {
                 // Add succeeded
-                ml.renderArtifactEdit(dataObjIn['data']['artifactid']);
+                ml.renderArtifactEdit(dataObjIn['data'][0]['artifactid']);
                 const ev = new Event('click');
                 document.getElementById('tabspan2').dispatchEvent(ev); 
             } else {
