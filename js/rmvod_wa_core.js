@@ -814,6 +814,12 @@ class RMVodWebApp {
         this.apiFetchRemoteVersions();
         this.postJSVer("0.8.0");
     }
+    resetPageTitle(){
+        document.title = "RIBBBITmedia VideoOnDemand";
+    }
+    setPageTitle(titleStrIn){
+        document.title = titleStrIn;
+    }
     // Returns a "likely unique" ID for this browser to be used in 
     // play request logging.
     generateMyUuid(){  // <<==== HERE BE CRUFT
@@ -1056,6 +1062,8 @@ class RMVodWebApp {
             document.getElementById('RNWATabWidget-tabspan-0').click();  //  RNWATabWidget-tabspan-0
             // Populate the artifact details in the page header
             wa.renderArtifactDetailHeader(dataObjIn);
+            // Set the browser title to the title of the artifact
+            wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
             // Setup an "interval" to post the current play time to a 
             // cookie to be used in "resume payback"
             try {
@@ -1094,6 +1102,8 @@ class RMVodWebApp {
     // what the "next" episode in the series is, and intiate playback
     // of that espisode by way of vodPlayTitleApi3.
     vodPlayNextTitle(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
+        // Clear browser title
+        this.resetPageTitle();
         //// Confirm checkbox is checked
         if (document.getElementById('serplaynext').checked == false) {
             console.log('serplaynext not checked');
@@ -1723,7 +1733,7 @@ class RMVodWebApp {
         var nafn = document.getElementById('nafilename').value;
         var namt = document.getElementById('namajtype').value;
         var cbFunc = function(dataObjIn){
-            console.log("apiSubmitNewSingleArtiForm.cbFunc: " + JSON.stringify(dataObjIn))
+            // console.log("apiSubmitNewSingleArtiForm.cbFunc: " + JSON.stringify(dataObjIn))
             var ml =  new RMVodWebApp();
             if (dataObjIn['status']['success'] == true) {
                 // Add succeeded
