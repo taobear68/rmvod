@@ -29,6 +29,7 @@ if [[ -f "rmvod_branch.txt" ]]
     then
         BRANCHSTR=$(head -n 1 rmvod_branch.txt)
     fi
+popd
 
 
 echo "Cloning the repo..."
