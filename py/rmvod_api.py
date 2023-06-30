@@ -2423,6 +2423,7 @@ def getArtifactObj(): # UPDATED FOR NEW RETURN OBJECT MODEL
     reqJson = request.json
     try:
         dictIn = yaml.safe_load(json.dumps(request.json))
+        print("getArtifactObj got: " + json.dumps(request.json))
         diKeysList = list(dictIn.keys())
         assert "artifactid" in diKeysList
         assert type(dictIn['artifactid']) == type("string")

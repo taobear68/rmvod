@@ -1723,6 +1723,7 @@ class RMVodWebApp {
         var nafn = document.getElementById('nafilename').value;
         var namt = document.getElementById('namajtype').value;
         var cbFunc = function(dataObjIn){
+            console.log("apiSubmitNewSingleArtiForm.cbFunc: " + json.stringify(dataObjIn))
             var ml =  new RMVodWebApp();
             if (dataObjIn['status']['success'] == true) {
                 // Add succeeded
