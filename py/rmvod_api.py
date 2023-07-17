@@ -109,7 +109,7 @@ class VodLibDB:
             print("_stdDelete: Poop")
         return retval
     def getDBVersion(self):
-        return "0.8.0" # Table playlog_live added 
+        return "0.9.0" # Table playlog_live added 
     def fetchArtiDeetsFromOmdbapi(self):
         print("vldb.fetchArtiDeetsFromOmdbapi")
         maxRows = 10
