@@ -812,7 +812,7 @@ class RMVodWebApp {
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
-        this.postJSVer("0.8.0");
+        this.postJSVer("0.9.0");
     }
     resetPageTitle(){
         document.title = "RIBBBITmedia VideoOnDemand";
