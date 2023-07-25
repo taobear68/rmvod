@@ -291,7 +291,8 @@ div.arti-detail-float {
     /* Positioning will need some attention when this gets integrated */
     display: none;
     width:800px;
-    height:500px;
+    /* height:500px; */
+    height: 480px;
     /* position: fixed; */
     position: absolute;
     background-color: #888888;
@@ -300,7 +301,8 @@ div.arti-detail-float {
     left: 20%;
     /* margin-top: -100px;
     margin-left: -100px; */
-    margin-top: -100px;
+    /* margin-top: -100px; */
+    margin-top: 10px;
     margin-left: -100px;
     /* padding: 3px; */
 }
