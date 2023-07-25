@@ -23,7 +23,7 @@
  * 
  *  */
 
-/* rmvod_core.css version 0.9.0 */
+/* rmvod_core.css version 0.9.1d */
 
 body {
     background-color:#0c0c0c;
@@ -266,10 +266,13 @@ div.tags, div.relorg, div.director, div.writer, div.primcast{
 
 
 
+/* CSS for Recommendations -- BEGIN */
 
+div.rmvodrecsmastercontouter {
 
+}
 
-
+/* CSS for Recommendations -- END */
 
 
 .throbber-ring {

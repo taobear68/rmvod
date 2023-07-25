@@ -38,7 +38,7 @@ import requests
 
 #fileStr = "vodLibrarydb.py"
 fileStr = "rmvod_api.py"
-versionStr = "0.9.0"
+versionStr = "0.9.1d"
 
 # moving to "proper" deployment via WSGI:  https://flask.palletsprojects.com/en/2.0.x/deploying/mod_wsgi/
 class VodLibDB:
@@ -1027,6 +1027,544 @@ class VodLibDB:
         retval = self._stdInsert(insSql)
         
         return retval
+    # NEWISH - PICKED UP FROM IMDB SCRAPING PROJECT
+    def getEpisodeBySeriesIdAndTitleFrag(self,seriesAdiIn,titleFragIn):
+        selSql = """SELECT 
+  artifactid 
+FROM 
+  artifacts 
+WHERE 
+  title LIKE '%""" + titleFragIn + """%'  
+  AND artifactid IN (
+    SELECT 
+      episodeaid 
+    FROM 
+      s2e 
+    WHERE 
+      seriesaid = '""" + seriesAdiIn + """'
+    ) 
+LIMIT 1
+"""
+        # print(selSql)
+        rowsTuple = self._stdRead(selSql)
+        # print(str(rowsTuple))
+        EpAid = rowsTuple[0][0]
+        return EpAid
+    def getListOfSeriesSeasons(self,seriesImdbIn):
+        retList = []
+        selSql = """SELECT 
+    DISTINCT season 
+FROM 
+    artifacts 
+WHERE 
+    season > -1 AND 
+    artifactid IN (
+        SELECT 
+            episodeaid 
+        FROM 
+            s2e 
+        WHERE 
+            seriesaid = (
+                SELECT 
+                    artifactid 
+                FROM 
+                    artifacts 
+                WHERE 
+                    imdbid = '""" + seriesImdbIn + """'
+                )
+        ) 
+ORDER BY 
+    1"""
+
+        rowsTuple = self._stdRead(selSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList
+    def getTvsEpisodeAidList(self,seriesAidIn):
+        retList = []
+        selSql = """SELECT 
+    artifactid
+FROM 
+    artifacts 
+WHERE 
+    artifactid IN (
+        SELECT 
+            episodeaid 
+        FROM 
+            s2e 
+        WHERE 
+            seriesaid = '""" + seriesAidIn + """' 
+        ) 
+ORDER BY 
+    1"""
+        #    season > -1 AND 
+        rowsTuple = self._stdRead(selSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList
+    
+    # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  
+    
+    #####  METHODS RELATED TO "RECOMMENDATIONS"
+    
+    def getRecommendedArtifactPersonsListSimple(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00"):
+        assert ((type(clientIdIn) == type(None) ) or (type(clientIdIn) == type("string")))
+        assert type(sinceDTIn) == type("string")        
+        
+        localSql = """SELECT DISTINCT a.personname /* , a.artifactid  */
+FROM p2a a
+JOIN (
+    SELECT personname, COUNT(artifactid) as 'credits'  
+    FROM p2a  
+    WHERE personname != 'string'  
+    GROUP BY 1 
+    ) b ON a.personname = b.personname
+JOIN (
+    SELECT artifactid 
+    FROM playlog_live 
+    WHERE clientid = '""" + clientIdIn + """' 
+    AND reqtime  > '""" + sinceDTIn + """'
+    ) c ON a.artifactid = c.artifactid
+WHERE b.credits > 1"""
+
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList        
+    def getRecommendedArtifactPersonsList(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",majtypModeIn=3, rowCntIn=100):
+        assert ((type(clientIdIn) == type(None) ) or (type(clientIdIn) == type("string")))
+        assert type(sinceDTIn) == type("string")
+        assert type(majtypModeIn) == type(3)
+        assert type(rowCntIn) == type(3)
+        
+
+        
+        
+        # Let's get started with building out the query
+        localSql = """SELECT t.personname, COUNT(l.reqtime) as 'plays', MIN(l.reqtime) as "firstplay", MAX(l.reqtime) as "lastplay"  
+FROM playlog_live l  
+JOIN s2e e ON l.artifactid = e.episodeaid 
+JOIN artifacts a ON e.seriesaid = a.artifactid  
+JOIN p2a t on t.artifactid = e.seriesaid 
+WHERE """ # l.clientid = 'thisIsAFakeId-Netscape-1675678310395' \
+        
+        # Set clientid condition based on input
+        if clientIdIn == None:
+            localSql += """ l.clientid != null """
+        else:
+            localSql += """ l.clientid = '""" + clientIdIn + """' """
+            
+        # Set reqtime condition based on input
+        localSql += """AND l.reqtime > '""" + sinceDTIn + """' """
+        
+        # Set majtype ocndition based on input
+        if majtypModeIn == 1:
+            localSql += """ AND a.majtype = 'tvseries' """
+        elif majtypModeIn == 2:
+            localSql += """ AND a.majtype = 'tvepisode' """
+        elif majtypModeIn == 3:
+            localSql += """ AND (a.majtype = 'tvseries' OR a.majtype = 'tvepisode') """
+        elif majtypModeIn == 4:
+            localSql += """ AND a.majtype = 'movie' """
+        else:
+            # Uh... this is bad.  Throw an error, maybe...?
+            # ...or just fall back to ...
+            localSql += """ AND a.majtype = 'tvseries' """
+            pass
+        
+        # ...and let's finish off the query
+        localSql += """ 
+AND t.personname != "string" 
+GROUP BY t.personname 
+ORDER BY 3 DESC
+LIMIT """ + str(rowCntIn) + """ """
+        
+        # print(localSql)
+        
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList
+    def getRecommendedArtifactsByPeopleSimple(self,peopleListIn=[],clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",rowCntIn=100):
+        peopleListStr = ''
+        idx = 0
+        while idx < len(peopleListIn):
+            peopleListStr += '"' + peopleListIn[idx] + '"'
+            if idx < (len(peopleListIn) - 1):
+                peopleListStr += ", "
+            pass
+            idx += 1
+        pass
+
+        localSql = """SELECT * FROM (
+    (
+        SELECT DISTINCT b.artifactid, b.title, b.majtype, b.imdbid 
+        FROM p2a a
+        JOIN artifacts b ON a.artifactid = b.artifactid
+        WHERE a.personname IN (""" + peopleListStr + """ ) 
+        AND a.artifactid NOT IN  ( 
+            SELECT artifactid 
+            FROM playlog_live l 
+            WHERE  l.clientid = '""" + clientIdIn + """' 
+            AND   l.reqtime > '""" + sinceDTIn + """' 
+            ) 
+        AND b.majtype IN ("movie","tvseries") 
+        ORDER BY 1
+        LIMIT 20
+        )
+    UNION DISTINCT
+    (
+        SELECT DISTINCT c.artifactid, c.title, c.majtype, c.imdbid 
+        FROM p2a a
+        JOIN s2e b ON a.artifactid = b.episodeaid
+        JOIN artifacts c ON b.seriesaid = c.artifactid
+        WHERE a.personname IN (""" + peopleListStr + """ ) 
+        AND a.artifactid NOT IN  ( 
+            SELECT artifactid 
+            FROM playlog_live l 
+            WHERE  l.clientid = '""" + clientIdIn + """'  
+            AND   l.reqtime > '""" + sinceDTIn + """' 
+            ) 
+        AND c.majtype IN ("movie","tvseries") 
+        ORDER BY 1
+        LIMIT 20
+        )
+    ) tt
+ """
+
+        #print(localSql)
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            tmpObj = {'artifactid':row[0],'title':row[1],'majtype':row[2],'imdbid':row[3]}
+            retList.append(tmpObj)
+            # retList.append(row[0])
+        return retList  
+    def getRecommendedArtifactsByPeople(self,peopleListIn):
+        peopleListStr = ''
+        idx = 0
+        while idx < len(peopleListIn):
+            peopleListStr += '"' + peopleListIn[idx] + '"'
+            if idx < (len(peopleListIn) - 1):
+                peopleListStr += ", "
+            pass
+            idx += 1
+        pass
+        
+        localSql = """SELECT DISTINCT u.artifactid, /* u.personname, */ u.title
+FROM (
+    (
+        SELECT DISTINCT n.artifactid, m.personname, n.title, n.majtype
+        FROM (
+            SELECT a.artifactid, p.personname, p.artifield, a.title, a.majtype
+            FROM p2a p 
+            JOIN artifacts a ON p.artifactid = a.artifactid
+            WHERE p.personname in (""" + peopleListStr + """) 
+            AND a.majtype = 'tvepisode' 
+            ) m
+        JOIN s2e s ON m.artifactid = s.episodeaid
+        JOIN artifacts n ON s.seriesaid = n.artifactid
+        )
+    UNION ALL
+    (
+        SELECT a.artifactid, p.personname, a.title, a.majtype
+        FROM p2a p 
+        JOIN artifacts a ON p.artifactid = a.artifactid
+        WHERE p.personname in (""" + peopleListStr + """) 
+        AND (a.majtype = 'tvseries' OR a.majtype = 'movie')
+        )
+    ) u
+ORDER BY 2"""
+        
+        pass
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList
+    def getClientArtifacts(self,clientIdIn=None,sinceDTIn='2023-02-01 00:00:00',limitIn=100):
+        assert ((type(clientIdIn) == type(None)) or (type(clientIdIn) == type("string")))
+        assert type(sinceDTIn) == type("string")
+        assert type(limitIn) == type(69)
+        localSql = "SELECT DISTINCT artifactid FROM playlog_live WHERE "
+        if clientIdIn != None:
+            localSql += " clientid = '" + clientIdIn + "' AND "
+        localSql += " reqtime >= '" + sinceDTIn + "' "
+        localSql += " ORDER BY reqtime DESC LIMIT " + str(limitIn) + " " 
+        print(localSql)
+        pass
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            retList.append(row[0])
+        return retList        
+    def getRecommendedArtifactsByTags(self,clientIdIn=None,sinceDTIn='2023-02-01 00:00:00',limitIn=10,tagLimitIn=5):
+        
+        clientIdStr = ''
+        # Set clientid condition based on input
+        if clientIdIn == None:
+            clientIdStr += """ != null """
+        else:
+            clientIdStr += """ = '""" + clientIdIn + """' """    
+        
+        # Set reqtime condition based on input
+        reqtimeStr = " > '" + sinceDTIn + "' "        
+        
+        
+                
+        localSql = """SELECT * FROM (
+( 
+    SELECT DISTINCT a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM artifacts a 
+    JOIN t2a t ON a.artifactid = t.artifactid 
+    WHERE t.artifactid IN ( 
+        /* List of artifactid values with same tag as popular list */ 
+        SELECT z.artifactid FROM t2a z  WHERE z.tag IN ( 
+            /* List of tags popular with this user */ 
+            SELECT w.tag FROM (
+                SELECT t.tag, COUNT(l.reqtime) as 'plays'  
+                FROM playlog_live l  
+                JOIN artifacts a ON l.artifactid = a.artifactid  
+                JOIN t2a t on l.artifactid = t.artifactid 
+                WHERE l.clientid """ + clientIdStr +  """ 
+                AND l.reqtime """ + reqtimeStr + """   
+                AND a.majtype = 'movie'  
+                GROUP BY t.tag 
+                ORDER BY 2 DESC 
+                LIMIT """ + str(tagLimitIn) + """
+                ) w 
+            )  
+        AND z.artifactid NOT IN ( 
+            /* List of artifact id values this user has seen */ 
+            SELECT artifactid 
+            FROM playlog_live 
+            WHERE clientid """ + clientIdStr +  """ 
+            )
+    )
+    AND a.majtype = 'movie'
+    ORDER BY a.artifactid
+    LIMIT """ + str(limitIn) + """  
+    )  
+UNION ALL 
+( 
+    SELECT DISTINCT b.artifactid, b.title, b.majtype, b.imdbid 
+    FROM artifacts b 
+    JOIN t2a u ON b.artifactid = u.artifactid 
+    WHERE u.artifactid IN ( 
+        /* List of artifactid values with same tag as popular list */ 
+        SELECT z.artifactid FROM t2a z  WHERE z.tag IN ( 
+            /* List of tags popular with this user */ 
+            SELECT r.tag FROM (
+                SELECT y.tag, COUNT(m.reqtime) as 'plays'  
+                /* SELECT w.title, COUNT(l.reqtime) as 'plays' */ 
+                FROM playlog_live m  
+                JOIN artifacts c ON m.artifactid = c.artifactid  
+                JOIN s2e e ON c.artifactid = e.episodeaid 
+                JOIN artifacts w ON e.seriesaid = w.artifactid
+                JOIN t2a y on w.artifactid = y.artifactid 
+                WHERE m.clientid """ + clientIdStr +  """  
+                AND m.reqtime """ + reqtimeStr + """    
+                AND c.majtype = 'tvepisode'  
+                /* AND t.tag != 'new' */ 
+                GROUP BY 1 
+                ORDER BY 2 DESC 
+                LIMIT """ + str(tagLimitIn) + """ 
+                ) r 
+            )  
+        AND z.artifactid NOT IN ( 
+            /* List of artifact id values this user has seen */ 
+            SELECT DISTINCT x.seriesaid 
+            FROM playlog_live l
+            JOIN s2e x ON l.artifactid = x.episodeaid
+            WHERE l.clientid """ + clientIdStr +  """   
+            ) 
+    ) 
+    AND b.majtype = 'tvseries'
+    ORDER BY b.artifactid 
+    LIMIT """ + str(limitIn) + """  
+    ) 
+ORDER BY 2
+) nn """
+        #print(localSql)
+        
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            # a.artifactid, a.title, a.majtype, a.imdbid
+            tmpObj = {'artifactid':row[0],'title':row[1],'majtype':row[2],'imdbid':row[3]}
+            retList.append(tmpObj)
+            # retList.append(row[0])
+        return retList    
+    def getRecommendedArtifactsByOthers(self,clientIdIn,sinceDTIn='2023-02-01 00:00:00',limitIn=20):
+        assert type(clientIdIn) == type("thing")
+        assert len(clientIdIn) > 10
+        assert type(limitIn) == type(10)
+        localSql = """SELECT * FROM (
+    (
+        SELECT DISTINCT a.artifactid, a.title, a.majtype, a.imdbid 
+        FROM artifacts a 
+        JOIN playlog_live b ON a.artifactid = b.artifactid 
+        WHERE b.clientid  != '""" + clientIdIn + """' 
+        AND b.reqtime  > '""" + sinceDTIn + """' 
+        AND b.artifactid NOT IN (
+            SELECT artifactid 
+            FROM playlog_live 
+            WHERE clientid = '""" + clientIdIn + """'
+            ) 
+        AND a.majtype = 'movie' 
+        LIMIT """ + str(limitIn) + """ 
+        )
+        UNION DISTINCT
+    (
+        SELECT DISTINCT a.artifactid, a.title, a.majtype, a.imdbid 
+        FROM artifacts a 
+        JOIN s2e c ON a.artifactid = c.seriesaid 
+        JOIN playlog_live b ON c.episodeaid = b.artifactid 
+        WHERE b.clientid  != '""" + clientIdIn + """' 
+        AND b.reqtime  > '""" + sinceDTIn + """' 
+        AND a.artifactid NOT IN (
+            SELECT e.seriesaid  
+            FROM playlog_live d 
+            JOIN s2e e ON d.artifactid = e.episodeaid 
+            WHERE d.clientid = '""" + clientIdIn + """'
+            ) 
+        AND a.majtype = 'tvseries' 
+        LIMIT """ + str(limitIn) + """ 
+        ) 
+    ) tt  """
+        #print(localSql)
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            # a.artifactid, a.title, a.majtype, a.imdbid
+            tmpObj = {'artifactid':row[0],'title':row[1],'majtype':row[2],'imdbid':row[3]}
+            retList.append(tmpObj)
+            # retList.append(row[0])
+        return retList 
+    def getRecommendedArtifactsByServer(self,sinceDtIn='2023-02-01 00:00:00',limitIn=20):
+        pass
+        localSql = """SELECT * FROM (
+    (
+        SELECT DISTINCT a.artifactid, a.title, a.majtype, a.imdbid 
+        FROM artifacts a 
+        WHERE a.artifactid NOT IN (
+            SELECT DISTINCT artifactid 
+            FROM playlog_live 
+            WHERE reqtime  > '""" + sinceDtIn + """' 
+            )
+        AND a.majtype = 'movie' 
+        ORDER BY 1
+        LIMIT """ + str(limitIn) + """
+        )
+    UNION DISTINCT
+    (
+        SELECT DISTINCT a.artifactid, a.title, a.majtype, a.imdbid 
+        FROM artifacts a 
+        WHERE a.artifactid NOT IN (
+            SELECT e.seriesaid  
+            FROM playlog_live d 
+            JOIN s2e e ON d.artifactid = e.episodeaid 
+            WHERE reqtime  > '""" + sinceDtIn + """' 
+            )
+        AND a.majtype = 'tvseries' 
+        ORDER BY 1
+        LIMIT """ + str(limitIn) + """
+        )
+    ) ff """
+        #print(localSql)
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            # a.artifactid, a.title, a.majtype, a.imdbid
+            tmpObj = {'artifactid':row[0],'title':row[1],'majtype':row[2],'imdbid':row[3]}
+            retList.append(tmpObj)
+            # retList.append(row[0])
+        return retList     
+    def getRecommendedArtifactsByRewatch(self,clientIdIn=None,sinceDtIn='2023-02-01 00:00:00',limitIn=20):    
+        
+        localSql = """SELECT * FROM (
+    (
+        SELECT DISTINCT b.artifactid, b.title, b.majtype, b.imdbid  
+        FROM playlog_live a 
+        JOIN artifacts b  ON  a.artifactid = b.artifactid
+        WHERE  a.clientid = '""" + clientIdIn + """'  
+        AND   a.reqtime > '""" + sinceDtIn + """' 
+        AND b.majtype = "movie"
+        ORDER BY 1
+        LIMIT """ + str(limitIn) + """ 
+        )
+    UNION DISTINCT
+    (
+        SELECT DISTINCT b.artifactid, b.title, b.majtype, b.imdbid  
+        FROM playlog_live a 
+        JOIN s2e c ON a.artifactid = c.episodeaid
+        JOIN artifacts b  ON  c.seriesaid = b.artifactid
+        WHERE  a.clientid = '""" + clientIdIn + """'  
+        AND   a.reqtime > '""" + sinceDtIn + """' 
+        AND b.majtype = "tvseries"
+        ORDER BY 1
+        LIMIT """ + str(limitIn) + """ 
+        )
+    ) dd """
+        #print(localSql)
+        retList = []
+        rowsTuple = self._stdRead(localSql)
+        for row in rowsTuple:
+            # a.artifactid, a.title, a.majtype, a.imdbid
+            tmpObj = {'artifactid':row[0],'title':row[1],'majtype':row[2],'imdbid':row[3]}
+            retList.append(tmpObj)
+            # retList.append(row[0])
+        return retList  
+
+
+        
+class RMVOD_Recommendations:
+    def __init__(self):
+        pass
+    def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
+        pass
+        recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+        vldb = VodLibDB();
+        
+        # People
+        resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
+        artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['people'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+    
+        # Tags
+        artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
+        for recArti in artiList:
+            recsObj['data']['tags'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+    
+        # Others
+        artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['others'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        # Server
+        artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['server'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        # Rewatch
+        artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        now = datetime.now()
+        
+        recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        return recsObj
+
         
 
 class MediaLibraryDB:
@@ -1891,6 +2429,48 @@ class MediaLibraryDB:
             print('MediaLibraryDB.apiLogPlay is sad.')
             retDict['status']['detail'] = 'MediaLibraryDB.apiLogPlay is sad.'
         return retDict
+    def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
+        pass
+        recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+        vldb = VodLibDB();
+        
+        # People
+        resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
+        artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['people'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+    
+        # Tags
+        artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
+        for recArti in artiList:
+            recsObj['data']['tags'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+    
+        # Others
+        artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['others'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        # Server
+        artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['server'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        # Rewatch
+        artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        for recArti in artiList:
+            recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
+            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        
+        now = datetime.now()
+        
+        recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        return recsObj
+
         
 
 class MLCLI:
@@ -2620,6 +3200,31 @@ def logPlayback():
     ml = MediaLibraryDB()
     retDict = ml.apiLogPlay(request.json['artifactid'],request.json['clientid'])
     return json.dumps(retDict)
+
+@app.route('/artifact/recs/get',methods=['POST','GET'])
+def getRecs():
+    ml = MediaLibraryDB()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    retDict = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
+    
+    try:
+        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
+        retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+    except:
+        print( "Oh noes!  " + json.dumps(retDict))
+    return json.dumps(retDict)
+    
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
