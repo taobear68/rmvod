@@ -364,7 +364,7 @@ class RMVWAHtmlGenerator {
         tmpAry.push('<div id="structfeatureplayer">' + this.renderHTMLPlayerTab() + '</div>');
         tmpAry.push('<div id="structfeaturesearch">' + this.renderHTMLSearchTab() + '</div>');
         // NEW for recs
-        tmpAry.push('<div id="structreaturerecs">' + this.renderHTMLRecsTab() + '</div>'>);
+        tmpAry.push('<div id="structreaturerecs">' + this.renderHTMLRecsTab() + '</div>');
         tmpAry.push('<div id="structfeatureedit">' + this.renderHTMLEditTab() + '</div>');
         tmpAry.push('<div id="structfeaturesettings">' + this.renderHTMLSettingsTab() + '</div>');
         tw.tabBodyContentHtmlList = tmpAry;
