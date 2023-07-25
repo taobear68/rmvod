@@ -271,30 +271,44 @@ div.tags, div.relorg, div.director, div.writer, div.primcast{
 div.rmvodrecsmastercontouter {
 
 }
-
-div.linktype {
-	border: 1px darkgray solid;
-	padding: 4px;
-	margin: 2px;
+div.recs-carousel-rowcontainer {
+    display: inline-flex;
+    width: 1050px;
+    overflow: auto;
+    margin-left: 4px; 
+    /* border: 1px solid gray; */
 }
-div.linkrow {
-	display: inline-flex;
-	width: 100%;
+div.recs-carousel-rec-outer {
+    display: block;
+    width: 225px;
+    min-width: 225px;
+    height: 315px;
+    margin-left: 2px;
+    margin-right: 2px;
+    /* border: 1px solid gray; */
 }
-div.link {
-	width: 23%;
-	margin-left: 8px;
-	padding: 4px;
+div.arti-detail-float {
+    /* Positioning will need some attention when this gets integrated */
+    display: none;
+    width:800px;
+    height:500px;
+    /* position: fixed; */
+    position: absolute;
+    background-color: #888888;
+    color: white;
+    top: 20%;
+    left: 20%;
+    /* margin-top: -100px;
+    margin-left: -100px; */
+    margin-top: -100px;
+    margin-left: -100px;
+    /* padding: 3px; */
 }
-div.serchcontdiv {
-	border: 1px darkgray solid;
-	padding: 4px;
-	margin: 2px;
+div.arti-detail-item {
+    margin: 7px;
 }
-input.srchstrfield {
-    width: 400px;
-    font-size: 20px;
-    size: 50;
+span.arti-detail-title {
+    font-size: 40px;
 }
 
 /* CSS for Recommendations -- END */
