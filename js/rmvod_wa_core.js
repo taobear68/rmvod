@@ -689,10 +689,10 @@ class RMVWAHtmlGenerator {
     // NEW for recs
     renderHTMLRecsTab(){
         var tmpHtml = '';
-        tmpHTHtml += '<div id="rmvodrecsmastercontouter" class="rmvodrecsmastercontouter">';
-        tmpHTHtml += '<b>This would be where the Recommendations would go if they worked</b>';
-        tmpHTHtml += '</div>';
-        //tmpHTHtml += '';
+        tmpHtml += '<div id="rmvodrecsmastercontouter" class="rmvodrecsmastercontouter">';
+        tmpHtml += '<b>This would be where the Recommendations would go if they worked</b>';
+        tmpHtml += '</div>';
+        //tmpHtml += '';
         return tmpHtml;
     }
     renderHTMLTabBodyChicken(){
