@@ -2731,6 +2731,9 @@ class WMCWARecommend {
         var directorListStr = "";
         var castListStr = "";
         
+        // onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
+        
+        
         // Make tag list
         try {
             var iterLimit = 5;
@@ -2822,7 +2825,9 @@ class WMCWARecommend {
             } else {
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='" + playDivStyle ;
                 playDivHtmlStr += "'><span data-artifactid='" + artiIdIn ;
-                playDivHtmlStr += "'  onclick='console.log(\"Play " + artiIdIn + "\")' >Play this Title</span></div>";
+                //playDivHtmlStr += "'  onclick='console.log(\"Play " + artiIdIn + "\")' >Play this Title</span></div>";
+                // onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
+                playDivHtmlStr += "'  onclick='switchboard(\"vodPlayTitle\",\"" + artiIdIn + "\",{})' >Play this Title</span></div>";
             }
             //console.log(playDivHtmlStr);
             htmlStr += playDivHtmlStr;
