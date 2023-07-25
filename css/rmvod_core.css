@@ -272,6 +272,31 @@ div.rmvodrecsmastercontouter {
 
 }
 
+div.linktype {
+	border: 1px darkgray solid;
+	padding: 4px;
+	margin: 2px;
+}
+div.linkrow {
+	display: inline-flex;
+	width: 100%;
+}
+div.link {
+	width: 23%;
+	margin-left: 8px;
+	padding: 4px;
+}
+div.serchcontdiv {
+	border: 1px darkgray solid;
+	padding: 4px;
+	margin: 2px;
+}
+input.srchstrfield {
+    width: 400px;
+    font-size: 20px;
+    size: 50;
+}
+
 /* CSS for Recommendations -- END */
 
 
