@@ -2434,36 +2434,44 @@ class MediaLibraryDB:
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         vldb = VodLibDB();
         
+        print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + recLimitIntIn)
         # People
         resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
+        print ("generateStandardRecs: resList " + str(resList))
+        
         artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['people'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        print ("generateStandardRecs: artiList " + artiList)
     
         # Tags
         artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
         for recArti in artiList:
             recsObj['data']['tags'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        print ("generateStandardRecs: Tags artiList " + str(artiList))
     
         # Others
         artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['others'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        print ("generateStandardRecs: Others artiList " + str(artiList))
         
         # Server
         artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['server'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        print ("generateStandardRecs: Server artiList " + str(artiList))
         
         # Rewatch
         artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        print ("generateStandardRecs: Rewatch artiList" + str(artiList))
         
         now = datetime.now()
         
@@ -3213,11 +3221,12 @@ def getRecs():
         dictIn = yaml.safe_load(json.dumps(request.json))
         diKeysList = list(dictIn.keys())
     except:
-        print("What came in: " + str(request.json))
+        print("FAIL!  What came in: " + str(request.json))
         dictIn = {}
         diKeysList = []
         return json.dumps([])    
     
+    print("What came in: " + str(request.json))
     try:
         # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
         retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
