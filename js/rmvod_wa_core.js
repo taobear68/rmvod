@@ -2545,7 +2545,7 @@ class RMVodWebApp {
         //console.log(deetDE.dataset.artifact);
         //console.log(deetDE.dataset.atrifactid);
         var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
-        console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(selectDEIdIn).value);
+        console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(deIdIn).value);
         //document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
         document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + artiObj['title'] + " season " + String(de.value);
         var cbFunc = function (objIn) {
