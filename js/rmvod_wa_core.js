@@ -2565,7 +2565,7 @@ class RMVodWebApp {
             var epTIMList = objIn['data']
             for (var i = 0; i < epTIMList.length; i++) {
                 
-                de = wa.renderSALElementById(artiTitleIdObjIn);
+                de = wa.renderSALElementById(epTIMList[i]);
                 tde.appendChild(de);
                 
             }
