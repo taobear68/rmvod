@@ -2398,7 +2398,7 @@ class RMVodWebApp {
     // with a tvseries artifact
     execAddSeriesEpisodes(seriesaidIn,filepathIn,filefragIn){
         var cbFunc = function(dataObjIn) {
-            console.log('execAddSeriesEpisodes.cbFunc: \n' + JSON.stringify(dataObjIn));
+            //console.log('execAddSeriesEpisodes.cbFunc: \n' + JSON.stringify(dataObjIn));
             
             var tmpHtml = '';
             
@@ -2521,18 +2521,12 @@ class RMVodWebApp {
     }
 
     playFirstEpOfSeries(seriesAidIn){
-        console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
-        // ml.vodPlayTitleApi3(objIdIn);
-        
-        //var seriesAid = '6f4b23e1-83fe-4136-aca4-9210efd0fcf2';
-        //var wa = new RMVodWebApp();
+        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var cbFunc = function (objIn) {
-            //console.log('playFirstEpOfSeries.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
             wa.vodPlayTitleApi3(objIn['data']);
         }
         var payloadObj = {'artiid':seriesAidIn};
-        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
         
@@ -2541,30 +2535,18 @@ class RMVodWebApp {
     }
     getEpiListForSeriesSeason(deIdIn){
         console.log('getEpiListForSeriesSeason: ' + deIdIn);
-        //console.log('getEpiListForSeriesSeason.seriesAidIn: ' + seriesAidIn + ", SeasonIntIn: " + SeasonIntIn.toString());
-    
-        // console.log(selectDEIdIn);
         var de = document.getElementById(deIdIn);
         var deetDE = document.getElementById('artifactDetailDiv');
-        //console.log(deetDE.dataset.artifact);
-        //console.log(deetDE.dataset.atrifactid);
         var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
         var seriesAID = artiObj['artifactid'];
         var seriesTitle = artiObj['title'];
         var seriesSeason = de.value;
-        //console.log('getEpiListForSeriesSeason.artiObj: ' + JSON.stringify(artiObj));
-        ////console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(deIdIn).value);
-        //console.log("recArtiDeetSeasonEpisodes: " + de.value.toString());
-        ////document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
-        //document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + artiObj['title'] + " season " + String(de.value);
         document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + seriesTitle + " season " + String(seriesSeason);
         var cbFunc = function (objIn) {
             console.log('getEpiListForSeriesSeason.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
             var de;
             var tde = document.getElementById('rec-series-ep-list');
-            //tde.innerHTML = '<div>Season ' + ;
-            // renderSALElementById(artiTitleIdObjIn)
             var epTIMList = objIn['data']
             for (var i = 0; i < epTIMList.length; i++) {
                 
@@ -2573,9 +2555,7 @@ class RMVodWebApp {
                 
             }
         }
-        // dictIn['artiid'],dictIn['season']
         var payloadObj = {'artiid':seriesAID,'season':seriesSeason};
-        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
         
@@ -2587,7 +2567,6 @@ class RMVodWebApp {
 //
 // NEW CODE TO SUPPORT RECOMMENDATIONS -- START
 //
-
 
 function recsWrapper(sinceDtStrIn){
         var wa = new RMVodWebApp();
@@ -2605,27 +2584,17 @@ function recsWrapper(sinceDtStrIn){
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
     }
 function deetShow(eventObjIn){
-    //console.log("deetShow: " + JSON.stringify(eventObjIn));
-    //console.log("deetShow: " + this.dataset.artifactid);
     var rec = new WMCWARecommend();
     document.getElementById('artifactDetailDiv').dataset.artifact = this.dataset.artifact;
     rec.artiHover(this.dataset.artifactid);
 }
 function deetHide(eventObjIn){
-    //console.log("deetHide: " + JSON.stringify(eventObjIn));
     var rec = new WMCWARecommend();
     rec.hideartiDetailDiv();
 }
 function recArtiDeetSeasonEpisodes(selectDEIdIn){
-    
-    // onchange="recArtiDeetSeasonEpisodes(this.id)"
-    
-    
-    // console.log(selectDEIdIn);
     var de = document.getElementById(selectDEIdIn);
     var deetDE = document.getElementById('artifactDetailDiv');
-    //console.log(deetDE.dataset.artifact);
-    //console.log(deetDE.dataset.atrifactid);
     var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
     console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(selectDEIdIn).value);
     document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
@@ -2657,22 +2626,16 @@ class WMCWARecommend {
         var recsObj = this.recSrcData['data'];
 
         // Event Handler Functions
-        // var mouseEnterFunc = deetShow;
         var mouseEnterFunc = function(fooIn){
             //console.log("Mouse Enter registered for " + String(this.id));
             //console.log("Artifact ID: " + String(this.dataset.artifactid));
         }
 
-        // var mouseLeaveFunc = deetHide;
         var mouseLeaveFunc = function(fooIn){
             //console.log("Mouse Leave registered for " + String(this.id));
             //console.log("Artifact ID: " + String(this.dataset.artifactid));
         }
         
-        //var MouseClicFunc = function(fooIn){
-            //console.log("Mouse Click registered for " + String(this.id));
-            //console.log("Artifact ID: " + String(this.dataset.artifactid));
-        //}
         var MouseClicFunc = deetShow;
                         
         var roKeys = Object.keys(recsObj);
@@ -2713,8 +2676,8 @@ class WMCWARecommend {
                         // for artifact details, and one for direct play
                         // ...and a third for ... looking at the episode
                         // list if it's a series...?
-                        arOuter.addEventListener("mouseenter",mouseEnterFunc);
-                        arOuter.addEventListener("mouseleave",mouseLeaveFunc);
+                        // arOuter.addEventListener("mouseenter",mouseEnterFunc);
+                        // arOuter.addEventListener("mouseleave",mouseLeaveFunc);
                         arOuter.addEventListener("click",MouseClicFunc);
                         
                         var htmlStr = "";
@@ -2786,22 +2749,13 @@ class WMCWARecommend {
     }
     showArtiDetailDiv(){
         var artiIdIn = document.getElementById('artifactDetailDiv').dataset.artifactid;
-        //console.log('showArtiDetailDiv - artiIdIn: ' + artiIdIn);
-        
-        //console.log(document.getElementById('artifactDetailDiv').dataset.artifact);
-        
         var artiJson = document.getElementById('artifactDetailDiv').dataset.artifact;
-        //console.log(artiJson);
         var artiDetObj = JSON.parse(artiJson)[0];
-        //console.log(Object.keys(this.recSrcData));
         
         var tagListStr = "";
         var writerListStr = "";
         var directorListStr = "";
         var castListStr = "";
-        
-        // onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
-        
         
         // Make tag list
         try {
@@ -2871,46 +2825,22 @@ class WMCWARecommend {
             var playDivStyle = "border: 2px black solid;padding:3px;"
             var playDivHtmlStr = '';
             if (artiDetObj['majtype'] == 'tvseries') {
-                
-                
-                // Need an API call to this endpoint
-                // /artifact/recs/serseasonnmbrlist/get
-                // to get the list of seasons to build out the option list
-                
-                //// Build season option list
-                //// Once integrated we would probably get this from the API
-                //var seasonNrList = [1,2,3,4,5];
-                //var seasonOptListStr = "";
-                //for (var n = 0; n < seasonNrList.length; n++ ) {
-                    //var sNum = seasonNrList[n];
-                    //seasonOptListStr += "<option value='" + String(sNum) + "'>Season " + String(sNum) + "</option>";
-                //}
-                
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='";
                 playDivHtmlStr += playDivStyle + "'>";
                 playDivHtmlStr += "<select id='recDeetSeriesSeasonSelect' data-artifactid='" + artiIdIn ;
-                //playDivHtmlStr += "' onchange='recArtiDeetSeasonEpisodes(this.id)'>";
                 playDivHtmlStr += "' onchange='switchboard(\"recFetchSeriesSeasonEpList\",this.id,{})'>"; //switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})'
                 playDivHtmlStr += "<option value='NONE'>Seasons</option>";
-                //playDivHtmlStr += seasonOptListStr;
                 playDivHtmlStr += "</select>";
-                
-                
-                
                 
                 playDivHtmlStr += "    |    ";
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
-                //playDivHtmlStr += "'  onclick='console.log(\"Play " + artiIdIn + " from the beginning.\")' >";
                 playDivHtmlStr += "'  onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
                 playDivHtmlStr += "Play Series from start</span></div>";
             } else {
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='" + playDivStyle ;
                 playDivHtmlStr += "'><span data-artifactid='" + artiIdIn ;
-                //playDivHtmlStr += "'  onclick='console.log(\"Play " + artiIdIn + "\")' >Play this Title</span></div>";
-                // onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
                 playDivHtmlStr += "'  onclick='switchboard(\"vodPlayTitle\",\"" + artiIdIn + "\",{})' >Play this Title</span></div>";
             }
-            //console.log(playDivHtmlStr);
             htmlStr += playDivHtmlStr;
             
             htmlStr += "<div class='arti-detail-item'>" + artiDetObj['synopsis'] + "</div>";
@@ -2922,8 +2852,6 @@ class WMCWARecommend {
             if (artiDetObj['majtype'] == 'tvseries') {
                 htmlStr += "<div id='rec-series-ep-list' class='arti-detail-item'><a name='episodeList'></a>Series Ep List</div>";
             }
-            
-            //htmlStr += "<div>" +  + "</div>";
         } catch (e) {
             console.log("Could not create htmlStr.");
         }
@@ -2936,21 +2864,14 @@ class WMCWARecommend {
         deetPoster.style.padding = "7px";
         var dpHtml = "<div style='padding:3px;'><span onclick='deetHide()'><b>X [close]</b></span></div>";
         if (artiDetObj['imdbid'] != '' & artiDetObj['imdbid'] != undefined & artiDetObj['imdbid'] != 'string' & artiDetObj['imdbid'] != 'none') {
-            
-            //this.posterHeightPx = 215;
-            //this.posterWidthFraction = 0.75;    
             var ph = this.posterHeightPx * 1.90;
             var pw = ph * this.posterWidthFraction;
-            
-            //deetPoster.innerHTML = '<img width="161" height="215" src="http://rmvid/rmvod/img/poster_00/' + artiDetObj['imdbid'] + '.jpg">';
             dpHtml += '<img width="' + pw + '" height="' + ph + '" src="http://rmvid/rmvod/img/poster_00/' + artiDetObj['imdbid'] + '.jpg">';
         } else {
-            //                            posterImg.src = 'http://rmvid/rmvod/img/RMVOD_NoPoster.png' ;
             dpHtml += '<img width="' + pw + '" height="' + ph + '" src="http://rmvid/rmvod/img/RMVOD_NoPoster.png">';
         }
 
         deetPoster.innerHTML = dpHtml;
-        
         
         var deetContent = document.createElement('div');
         deetContent.style.display = "block";
@@ -2960,7 +2881,6 @@ class WMCWARecommend {
         deetContent.style.overflow = "auto";
         deetContent.innerHTML = htmlStr
                 
-        
         var deetOuter = document.createElement('div');
         deetOuter.style.display = "inline-flex";
         deetOuter.style.width = "100%";
@@ -2970,16 +2890,13 @@ class WMCWARecommend {
         deetOuter.appendChild(deetContent);
          
         var fd = document.getElementById('artifactDetailDiv');
-        //fd.innerHTML = htmlStr;
         fd.appendChild(deetOuter);
         fd.style.display = "block";
-        
         
         //Now that we have the select list extablished in the DOM 
         // we can do the API call to build out the options
         
         var cbFunc = function(dataIn){
-            // <option value='" + String(sNum) + "'>Season " + String(sNum) + "</option>";
             var seasonList = dataIn['data'];
             var selectDE = document.getElementById('recDeetSeriesSeasonSelect');
             var tmpDE;
@@ -2989,18 +2906,11 @@ class WMCWARecommend {
                 tmpDE.innerHTML = "Season " + String(seasonList[i]);
                 selectDE.appendChild(tmpDE);
             }
-            //tmpDE = document.createElement('option');
-            
-            
         }
         var wa = new RMVodWebApp();
         var payloadObj = {'artiid':artiDetObj['artifactid']};
-        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serseasonnmbrlist/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
-        
-        
-        
     }
     hideartiDetailDiv(){
         var fd = document.getElementById('artifactDetailDiv');
@@ -3009,21 +2919,12 @@ class WMCWARecommend {
         fd.style.display = "none";
     }
     artiHover(artiIdIn) {
-        //this.artiHoverDelayMs;
-        //var artiId = 0;
-        //console.log(artiIdIn);
         var dDiv = document.getElementById('artifactDetailDiv');
         dDiv.innerHTML = '';
-        //dDiv.dataset.artifactid = dDiv.dataset.artifactid; //artiIdIn
         dDiv.dataset.artifactid = artiIdIn; //artiIdIn
-        //dDiv.dataset.timeout = setTimeout(this.showArtiDetailDiv,this.artiHoverDelayMs);
         this.showArtiDetailDiv();
-        
     }
-    
 }
-
-
 
 //
 // NEW CODE TO SUPPORT RECOMMENDATIONS -- END
@@ -3190,13 +3091,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.execAddSeriesEpisodes(seriesaid,filepath,filefrag);
             break;
         case 'recPlaySeriesFromStart':
-            //console.log('Play series from start for AID ' + objIdIn);
             ml.playFirstEpOfSeries(objIdIn);
-            //console.log('Played series from start for AID ' + objIdIn);
             break;
-            
         case 'recFetchSeriesSeasonEpList':
-            // onchange="recArtiDeetSeasonEpisodes(this.id)"
             ml.getEpiListForSeriesSeason(objIdIn);
             break;
             
