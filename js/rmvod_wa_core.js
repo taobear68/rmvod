@@ -2536,7 +2536,40 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
     }
-
+    getEpiListForSeriesSeason(deIdIn){
+        //console.log('getEpiListForSeriesSeason.seriesAidIn: ' + seriesAidIn + ", SeasonIntIn: " + SeasonIntIn.toString());
+    
+        // console.log(selectDEIdIn);
+        var de = document.getElementById(deIdIn);
+        var deetDE = document.getElementById('artifactDetailDiv');
+        //console.log(deetDE.dataset.artifact);
+        //console.log(deetDE.dataset.atrifactid);
+        var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
+        console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(selectDEIdIn).value);
+        //document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
+        document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + artiObj['title'] + " season " + String(de.value);
+        var cbFunc = function (objIn) {
+            console.log('getEpiListForSeriesSeason.cbFunc: ' + JSON.stringify(objIn));
+            var wa = new RMVodWebApp();
+            var de;
+            var tde = document.getElementById('rec-series-ep-list');
+            //tde.innerHTML = '<div>Season ' + ;
+            // renderSALElementById(artiTitleIdObjIn)
+            var epTIMList = objIn['data']
+            for (var i = 0; i < epTIMList.length; i++) {
+                
+                de = wa.renderSALElementById(artiTitleIdObjIn);
+                tde.appendChild(de);
+                
+            }
+        }
+        // dictIn['artiid'],dictIn['season']
+        var payloadObj = {'artiid':artiObj['atrifactid'],'season':artiObj['season']};
+        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
+        var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
+        
+    }
 }
 
 
@@ -2574,6 +2607,10 @@ function deetHide(eventObjIn){
     rec.hideartiDetailDiv();
 }
 function recArtiDeetSeasonEpisodes(selectDEIdIn){
+    
+    // onchange="recArtiDeetSeasonEpisodes(this.id)"
+    
+    
     // console.log(selectDEIdIn);
     var de = document.getElementById(selectDEIdIn);
     var deetDE = document.getElementById('artifactDetailDiv');
@@ -3109,6 +3146,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.playFirstEpOfSeries(objIdIn);
             //console.log('Played series from start for AID ' + objIdIn);
             break;
+            
+        case 'recFetchSeriesSeasonEpList':
+            // onchange="recArtiDeetSeasonEpisodes(this.id)"
+            
             
             
         /* 
