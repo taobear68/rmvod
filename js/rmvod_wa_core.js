@@ -2521,6 +2521,7 @@ class RMVodWebApp {
     }
 
     playFirstEpOfSeries(seriesAidIn){
+        console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         // ml.vodPlayTitleApi3(objIdIn);
         
         //var seriesAid = '6f4b23e1-83fe-4136-aca4-9210efd0fcf2';
