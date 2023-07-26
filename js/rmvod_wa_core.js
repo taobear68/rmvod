@@ -2877,7 +2877,7 @@ class WMCWARecommend {
                 playDivHtmlStr += playDivStyle + "'>";
                 playDivHtmlStr += "<select id='recDeetSeriesSeasonSelect' data-artifactid='" + artiIdIn ;
                 //playDivHtmlStr += "' onchange='recArtiDeetSeasonEpisodes(this.id)'>";
-                playDivHtmlStr += "' onchange='switchboard(\"recFetchSeriesSeasonEpList\",\"" + this.id + "\",{})'>"; //switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})'
+                playDivHtmlStr += "' onchange='switchboard(\"recFetchSeriesSeasonEpList\",this.id,{})'>"; //switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})'
                 playDivHtmlStr += "<option value='NONE'>Seasons</option>";
                 playDivHtmlStr += seasonOptListStr;
                 playDivHtmlStr += "</select>";
