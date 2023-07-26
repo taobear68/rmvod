@@ -2874,7 +2874,8 @@ class WMCWARecommend {
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='";
                 playDivHtmlStr += playDivStyle + "'>";
                 playDivHtmlStr += "<select id='recDeetSeriesSeasonSelect' data-artifactid='" + artiIdIn ;
-                playDivHtmlStr += "' onchange='recArtiDeetSeasonEpisodes(this.id)'>";
+                //playDivHtmlStr += "' onchange='recArtiDeetSeasonEpisodes(this.id)'>";
+                playDivHtmlStr += "' onchange='switchboard(\"recFetchSeriesSeasonEpList\",\"" + this.id + "\",{})'>"; //switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})'
                 playDivHtmlStr += "<option value='NONE'>Seasons</option>";
                 playDivHtmlStr += seasonOptListStr;
                 playDivHtmlStr += "</select>";
@@ -3149,7 +3150,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case 'recFetchSeriesSeasonEpList':
             // onchange="recArtiDeetSeasonEpisodes(this.id)"
-            
+            ml.getEpiListForSeriesSeason(argObjIn);
+            break;
             
             
         /* 
