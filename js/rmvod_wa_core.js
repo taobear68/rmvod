@@ -2543,7 +2543,7 @@ function recsWrapper(sinceDtStrIn){
         var wa = new RMVodWebApp();
         //var clientId = 'thisIsAFakeId-Netscape-1675678310395';
         //clientId = 'thisIsAFakeId-Netscape-1684665518260';
-        //var clientId = wa.cc.getCookie('clientid')
+        var clientId = wa.cc.getCookie('clientid')
         //var sinceDTStr = "2023-02-01 00:00:01";
         //var recLimitInt = 30;
         var cbFunc = function (objIn) {
