@@ -2992,11 +2992,11 @@ class WMCWARecommend {
             
             
         }
-        
+        var wa = new RMVodWebApp();
         var payloadObj = {'artiid':artiDetObj['artifactid']};
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serseasonnmbrlist/get';
-        var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
+        var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
         
         
