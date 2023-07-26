@@ -2544,17 +2544,17 @@ function recsWrapper(sinceDtStrIn){
         //var clientId = 'thisIsAFakeId-Netscape-1675678310395';
         //clientId = 'thisIsAFakeId-Netscape-1684665518260';
         var clientId = wa.cc.getCookie('clientid')
-        //var sinceDTStr = "2023-02-01 00:00:01";
-        //var recLimitInt = 30;
+        var sinceDTStr = "2023-02-01 00:00:01";
+        var recLimitInt = 30;
         var cbFunc = function (objIn) {
             //console.log(JSON.stringify(objIn));
-            var cc = new CookieCrisp();
-            var clientId = cc.getCookie('clientid');
-            var sinceDTStr = "2023-02-01 00:00:01";
-            var recLimitInt = 30;
+            //var cc = new CookieCrisp();
+            //var clientId = cc.getCookie('clientid');
+            //var sinceDTStr = "2023-02-01 00:00:01";
+            //var recLimitInt = 30;
             var rec = new WMCWARecommend();
             rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
-            rec.recSrcData = recApiRetObj;
+            rec.recSrcData = objIn;
             rec.popMasterDiv(sinceDtStrIn);            
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
