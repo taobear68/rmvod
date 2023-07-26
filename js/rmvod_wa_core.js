@@ -2535,6 +2535,9 @@ class RMVodWebApp {
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
+        
+        var rec = new WMCWARecommend();
+        rec.hideartiDetailDiv();        
     }
     getEpiListForSeriesSeason(deIdIn){
         console.log('getEpiListForSeriesSeason: ' + deIdIn);
