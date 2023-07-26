@@ -3108,7 +3108,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             console.log('Play series from start for AID ' + objIdIn);
             
             
-            ml.vodPlayTitleApi3(objIdIn);
+            ml.playFirstEpOfSeries(objIdIn);
             
             
             
