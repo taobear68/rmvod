@@ -1107,6 +1107,32 @@ ORDER BY
             retList.append(row[0])
         return retList
     
+    def getAIDofFirstEpisode(self,seriesAidIn):
+        sqlStr = """SELECT s.episodeaid, a.file, a.season, a.episode
+FROM s2e s 
+JOIN artifacts a ON s.episodeaid = a.artifactid
+WHERE seriesaid = '""" + seriesAidIn + """'
+ORDER BY 3,4
+LIMIT 1"""
+        interTuple = self._stdRead(sqlStr)
+        return interTuple[0][0]
+        
+    def getSeriesEpisodeListSingleSeason(self,seriesAidIn,seasonIntIn):
+        sqlStr = """SELECT s.episodeaid, a.file, a.season, a.episode
+FROM s2e s 
+JOIN artifacts a ON s.episodeaid = a.artifactid
+WHERE seriesaid = '""" + seriesAidIn + """'
+AND season = """ + str(seasonIntIn) + """
+ORDER BY 3,4"""
+        interTuple = self._stdRead(sqlStr)
+        aidList = []
+        for rowTuple in interTuple:
+            aidList.append(rowTuple[0])
+        return self.getArtifactListByIdList(aidList)
+        
+        pass
+    
+    
     # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  
     
     #####  METHODS RELATED TO "RECOMMENDATIONS"
@@ -2437,7 +2463,7 @@ class MediaLibraryDB:
         print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
-        vldb = VodLibDB();
+        vldb = VodLibDB()
         print ("generateStandardRecs instantiated VodLibDB.")
         # People
         resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
@@ -2482,6 +2508,27 @@ class MediaLibraryDB:
         recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
         
         return recsObj
+    def getSeriesFirstEpisodeAid(self,seriesAidIn):
+        
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getSeriesFirstEpisodeAid'
+        tmpRetObj['params'] = [seriesAidIn]
+        tmpRetObj['status']['success'] = True
+                        
+        vldb = VodLibDB()
+        tmpRetObj['data'] = vldb.getAIDofFirstEpisode(seriesAidIn)
+        
+        return  tmpRetObj
+    def getSeriesSeasonEpisodeList(self,seriesAidIn,seasonIntIn):
+        
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getSeriesSeasonEpisodeList'
+        tmpRetObj['params'] = [seriesAidIn,seasonIntIn]
+        tmpRetObj['status']['success'] = True
+                        
+        vldb = VodLibDB()
+        tmpRetObj['data'] = vldb.getSeriesEpisodeListSingleSeason(seriesAidIn,seasonIntIn)
+        return tmpRetObj
 
         
 
@@ -3230,17 +3277,54 @@ def getRecs():
         diKeysList = []
         return json.dumps([])    
     
-    print("What came in: " + str(request.json))
-    retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
-    # try:
-        # # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
-    # except:
-        # print( "Oh noes!  " + json.dumps(retDict))
+    # print("What came in: " + str(request.json))
+    # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+    try:
+        # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
+        retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+    except:
+        print( "Oh noes!  " + json.dumps(retDict))
     return json.dumps(retDict)
+
+@app.route('/artifact/recs/serfirstep/get',methods=['POST'])
+def getSeriesFirstEpAid():
+    ml = MediaLibraryDB()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
     
+    print("What came in: " + str(request.json))
+    return json.dumps(ml.getSeriesFirstEpisodeAid(dictIn['artiid']))
+
+@app.route('/artifact/recs/serseasoneplist/get',methods=['POST'])
+def getSeriesSeasonEpList():
+    ml = MediaLibraryDB()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
     
+    print("What came in: " + str(request.json))
+    return json.dumps(ml.getSeriesSeasonEpisodeList(dictIn['artiid'],dictIn['season']))    
+
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
     # Switch
