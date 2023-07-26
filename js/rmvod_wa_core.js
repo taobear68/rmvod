@@ -2546,10 +2546,15 @@ class RMVodWebApp {
         //console.log(deetDE.dataset.artifact);
         //console.log(deetDE.dataset.atrifactid);
         var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
-        //console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(deIdIn).value);
-        console.log("recArtiDeetSeasonEpisodes: " + de.value.toString());
-        //document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
-        document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + artiObj['title'] + " season " + String(de.value);
+        var seriesAID = artiObj['artifactid'];
+        var seriesTitle = artiObj['title'];
+        var seriesSeason = de.value;
+        //console.log('getEpiListForSeriesSeason.artiObj: ' + JSON.stringify(artiObj));
+        ////console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(deIdIn).value);
+        //console.log("recArtiDeetSeasonEpisodes: " + de.value.toString());
+        ////document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
+        //document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + artiObj['title'] + " season " + String(de.value);
+        document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + seriesTitle + " season " + String(seriesSeason);
         var cbFunc = function (objIn) {
             console.log('getEpiListForSeriesSeason.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
@@ -2566,7 +2571,7 @@ class RMVodWebApp {
             }
         }
         // dictIn['artiid'],dictIn['season']
-        var payloadObj = {'artiid':artiObj['atrifactid'],'season':artiObj['season']};
+        var payloadObj = {'artiid':seriesAID,'season':seriesSeason};
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
