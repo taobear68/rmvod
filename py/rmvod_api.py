@@ -1557,7 +1557,7 @@ ORDER BY 1"""
         retList = []
         rowsTuple = self._stdRead(sqlStr)
         for row in rowsTuple:
-            retList.append row[0]
+            retList.append(row[0])
         return retList
         
         
