@@ -2872,14 +2872,19 @@ class WMCWARecommend {
             var playDivHtmlStr = '';
             if (artiDetObj['majtype'] == 'tvseries') {
                 
-                // Build season option list
-                // Once integrated we would probably get this from the API
-                var seasonNrList = [1,2,3,4,5];
-                var seasonOptListStr = "";
-                for (var n = 0; n < seasonNrList.length; n++ ) {
-                    var sNum = seasonNrList[n];
-                    seasonOptListStr += "<option value='" + String(sNum) + "'>Season " + String(sNum) + "</option>";
-                }
+                
+                // Need an API call to this endpoint
+                // /artifact/recs/serseasonnmbrlist/get
+                // to get the list of seasons to build out the option list
+                
+                //// Build season option list
+                //// Once integrated we would probably get this from the API
+                //var seasonNrList = [1,2,3,4,5];
+                //var seasonOptListStr = "";
+                //for (var n = 0; n < seasonNrList.length; n++ ) {
+                    //var sNum = seasonNrList[n];
+                    //seasonOptListStr += "<option value='" + String(sNum) + "'>Season " + String(sNum) + "</option>";
+                //}
                 
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='";
                 playDivHtmlStr += playDivStyle + "'>";
@@ -2887,8 +2892,12 @@ class WMCWARecommend {
                 //playDivHtmlStr += "' onchange='recArtiDeetSeasonEpisodes(this.id)'>";
                 playDivHtmlStr += "' onchange='switchboard(\"recFetchSeriesSeasonEpList\",this.id,{})'>"; //switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})'
                 playDivHtmlStr += "<option value='NONE'>Seasons</option>";
-                playDivHtmlStr += seasonOptListStr;
+                //playDivHtmlStr += seasonOptListStr;
                 playDivHtmlStr += "</select>";
+                
+                
+                
+                
                 playDivHtmlStr += "    |    ";
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
                 //playDivHtmlStr += "'  onclick='console.log(\"Play " + artiIdIn + " from the beginning.\")' >";
@@ -2964,6 +2973,33 @@ class WMCWARecommend {
         //fd.innerHTML = htmlStr;
         fd.appendChild(deetOuter);
         fd.style.display = "block";
+        
+        
+        //Now that we have the select list extablished in the DOM 
+        // we can do the API call to build out the options
+        
+        var cbFunc = function(dataIn){
+            // <option value='" + String(sNum) + "'>Season " + String(sNum) + "</option>";
+            var seasonList = dataIn['data'];
+            var selectDE = document.getElementById('recDeetSeriesSeasonSelect');
+            for (var i = 0; i < seasonList.length; i++ ) {
+                tmpDE = document.creatElement('option');
+                tmpDE.value = seasonList[i];
+                tmpDE.innerHTML = "Season " + String(sNum);
+                selectDE.appendChild(tmpDE);
+            }
+            tmpDE = document.creatElement('option');
+            
+            
+        }
+        
+        var payloadObj = {'artiid':artiDetObj['artifactid']};
+        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
+        var endpoint = '/rmvod/api/artifact/recs/serseasonnmbrlist/get';
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
+        
+        
+        
     }
     hideartiDetailDiv(){
         var fd = document.getElementById('artifactDetailDiv');

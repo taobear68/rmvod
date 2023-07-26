@@ -1547,6 +1547,22 @@ ORDER BY 2
             retList.append(tmpObj)
             # retList.append(row[0])
         return retList  
+    def getRecSeriesList(self,seriesArtiIdIn):
+
+        sqlStr = """SELECT DISTINCT a.season FROM s2e s
+JOIN artifacts a ON s.episodeaid = a.artifactid
+WHERE s.seriesaid = '""" + seriesArtiIdIn + """'
+ORDER BY 1"""
+        pass
+        retList = []
+        rowsTuple = self._stdRead(sqlStr)
+        for row in rowsTuple:
+            retList.append row[0]
+        return retList
+        
+        
+        
+        
 
 
         
@@ -2529,6 +2545,17 @@ class MediaLibraryDB:
         vldb = VodLibDB()
         tmpRetObj['data'] = vldb.getSeriesEpisodeListSingleSeason(seriesAidIn,seasonIntIn)
         return tmpRetObj
+    def getSeriesSeasonNumberList(seriesAidIn):
+        # getRecSeriesList(self,seriesArtiIdIn)
+        vldb = VodLibDB()
+        
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getSeriesSeasonNumberList'
+        tmpRetObj['params'] = [seriesAidIn]
+        tmpRetObj['status']['success'] = True
+                                
+        tmpRetObj['data'] = vldb.getRecSeriesList(seriesAidIn)
+        return tmpRetObj
 
         
 
@@ -3322,6 +3349,25 @@ def getSeriesSeasonEpList():
     
     print("What came in: " + str(request.json))
     return json.dumps(ml.getSeriesSeasonEpisodeList(dictIn['artiid'],dictIn['season']))    
+
+@app.route('/artifact/recs/serseasonnmbrlist/get',methods=['POST'])
+def getSeriesSeasonNmbrList():
+    ml = MediaLibraryDB()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
+    
+    print("What came in: " + str(request.json))
+    return json.dumps(ml.getSeriesSeasonNumberList(dictIn['artiid']))    
+
 
 
 
