@@ -2445,7 +2445,7 @@ class MediaLibraryDB:
         for recArti in artiList:
             recsObj['data']['people'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        print ("generateStandardRecs: artiList " + artiList)
+        print ("generateStandardRecs: artiList " + str(artiList))
     
         # Tags
         artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
