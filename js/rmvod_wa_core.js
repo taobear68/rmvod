@@ -2537,6 +2537,7 @@ class RMVodWebApp {
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
     }
     getEpiListForSeriesSeason(deIdIn){
+        console.log('getEpiListForSeriesSeason: ' + deIdIn);
         //console.log('getEpiListForSeriesSeason.seriesAidIn: ' + seriesAidIn + ", SeasonIntIn: " + SeasonIntIn.toString());
     
         // console.log(selectDEIdIn);
