@@ -3106,12 +3106,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;
         case 'recPlaySeriesFromStart':
             console.log('Play series from start for AID ' + objIdIn);
-            
-            
             ml.playFirstEpOfSeries(objIdIn);
-            
-            
-            
+            console.log('Played series from start for AID ' + objIdIn);
             break;
             
             
