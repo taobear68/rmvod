@@ -2545,7 +2545,7 @@ class MediaLibraryDB:
         vldb = VodLibDB()
         tmpRetObj['data'] = vldb.getSeriesEpisodeListSingleSeason(seriesAidIn,seasonIntIn)
         return tmpRetObj
-    def getSeriesSeasonNumberList(seriesAidIn):
+    def getSeriesSeasonNumberList(self,seriesAidIn):
         # getRecSeriesList(self,seriesArtiIdIn)
         vldb = VodLibDB()
         
