@@ -2524,15 +2524,16 @@ class RMVodWebApp {
         // ml.vodPlayTitleApi3(objIdIn);
         
         //var seriesAid = '6f4b23e1-83fe-4136-aca4-9210efd0fcf2';
-        var wa = new RMVodWebApp();
+        //var wa = new RMVodWebApp();
         var cbFunc = function (objIn) {
-            console.log(JSON.stringify(objIn));
+            console.log('playFirstEpOfSeries.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
             wa.vodPlayTitleApi3(objIn['data']);
         }
         var payloadObj = {'artiid':seriesAidIn};
+        console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
-        var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
     }
 
 }
