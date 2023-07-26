@@ -2989,7 +2989,7 @@ class WMCWARecommend {
                 tmpDE.innerHTML = "Season " + String(seasonList[i]);
                 selectDE.appendChild(tmpDE);
             }
-            tmpDE = document.creatElement('option');
+            //tmpDE = document.createElement('option');
             
             
         }
