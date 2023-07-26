@@ -2986,7 +2986,7 @@ class WMCWARecommend {
             for (var i = 0; i < seasonList.length; i++ ) {
                 tmpDE = document.createElement('option');
                 tmpDE.value = seasonList[i];
-                tmpDE.innerHTML = "Season " + String(sNum);
+                tmpDE.innerHTML = "Season " + String(seasonList[i]);
                 selectDE.appendChild(tmpDE);
             }
             tmpDE = document.creatElement('option');
