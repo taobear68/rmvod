@@ -3229,11 +3229,13 @@ def getRecs():
         return json.dumps([])    
     
     print("What came in: " + str(request.json))
-    try:
-        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
-    except:
-        print( "Oh noes!  " + json.dumps(retDict))
+    retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+    # try:
+        # # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
+        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+    # except:
+        # print( "Oh noes!  " + json.dumps(retDict))
     return json.dumps(retDict)
     
     
