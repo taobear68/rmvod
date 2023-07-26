@@ -3152,7 +3152,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case 'recFetchSeriesSeasonEpList':
             // onchange="recArtiDeetSeasonEpisodes(this.id)"
-            ml.getEpiListForSeriesSeason(argObjIn);
+            ml.getEpiListForSeriesSeason(objIdIn);
             break;
             
             
