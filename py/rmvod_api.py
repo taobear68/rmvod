@@ -2432,11 +2432,11 @@ class MediaLibraryDB:
             retDict['status']['detail'] = 'MediaLibraryDB.apiLogPlay is sad.'
         return retDict
     def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
+        print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         vldb = VodLibDB();
-        
-        print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + recLimitIntIn)
+        print ("generateStandardRecs instantiated VodLibDB.")
         # People
         resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
         print ("generateStandardRecs: resList " + str(resList))
