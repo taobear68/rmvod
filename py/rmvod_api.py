@@ -2476,14 +2476,14 @@ class MediaLibraryDB:
             retDict['status']['detail'] = 'MediaLibraryDB.apiLogPlay is sad.'
         return retDict
     def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
-        print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
+        # print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         vldb = VodLibDB()
-        print ("generateStandardRecs instantiated VodLibDB.")
+        # print ("generateStandardRecs instantiated VodLibDB.")
         # People
         resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
-        print ("generateStandardRecs: resList " + str(resList))
+        # print ("generateStandardRecs: resList " + str(resList))
         
         artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
@@ -2496,28 +2496,28 @@ class MediaLibraryDB:
         for recArti in artiList:
             recsObj['data']['tags'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        print ("generateStandardRecs: Tags artiList " + str(artiList))
+        # print ("generateStandardRecs: Tags artiList " + str(artiList))
     
         # Others
         artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['others'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        print ("generateStandardRecs: Others artiList " + str(artiList))
+        # print ("generateStandardRecs: Others artiList " + str(artiList))
         
         # Server
         artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['server'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        print ("generateStandardRecs: Server artiList " + str(artiList))
+        # print ("generateStandardRecs: Server artiList " + str(artiList))
         
         # Rewatch
         artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         for recArti in artiList:
             recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        print ("generateStandardRecs: Rewatch artiList" + str(artiList))
+        # print ("generateStandardRecs: Rewatch artiList" + str(artiList))
         
         now = datetime.now()
         
@@ -3329,7 +3329,7 @@ def getSeriesFirstEpAid():
         diKeysList = []
         return json.dumps([])    
     
-    print("What came in: " + str(request.json))
+    # print("What came in: " + str(request.json))
     return json.dumps(ml.getSeriesFirstEpisodeAid(dictIn['artiid']))
 
 @app.route('/artifact/recs/serseasoneplist/get',methods=['POST'])
@@ -3347,7 +3347,7 @@ def getSeriesSeasonEpList():
         diKeysList = []
         return json.dumps([])    
     
-    print("What came in: " + str(request.json))
+    # print("What came in: " + str(request.json))
     return json.dumps(ml.getSeriesSeasonEpisodeList(dictIn['artiid'],dictIn['season']))    
 
 @app.route('/artifact/recs/serseasonnmbrlist/get',methods=['POST'])
@@ -3365,7 +3365,7 @@ def getSeriesSeasonNmbrList():
         diKeysList = []
         return json.dumps([])    
     
-    print("What came in: " + str(request.json))
+    # # print("What came in: " + str(request.json))
     return json.dumps(ml.getSeriesSeasonNumberList(dictIn['artiid']))    
 
 

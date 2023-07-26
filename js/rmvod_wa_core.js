@@ -2543,7 +2543,7 @@ class RMVodWebApp {
         var seriesSeason = de.value;
         document.getElementById('rec-series-ep-list').innerHTML = "Episode list for " + seriesTitle + " season " + String(seriesSeason);
         var cbFunc = function (objIn) {
-            console.log('getEpiListForSeriesSeason.cbFunc: ' + JSON.stringify(objIn));
+            // console.log('getEpiListForSeriesSeason.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
             var de;
             var tde = document.getElementById('rec-series-ep-list');
