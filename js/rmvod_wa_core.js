@@ -2527,12 +2527,12 @@ class RMVodWebApp {
         //var seriesAid = '6f4b23e1-83fe-4136-aca4-9210efd0fcf2';
         //var wa = new RMVodWebApp();
         var cbFunc = function (objIn) {
-            console.log('playFirstEpOfSeries.cbFunc: ' + JSON.stringify(objIn));
+            //console.log('playFirstEpOfSeries.cbFunc: ' + JSON.stringify(objIn));
             var wa = new RMVodWebApp();
             wa.vodPlayTitleApi3(objIn['data']);
         }
         var payloadObj = {'artiid':seriesAidIn};
-        console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
+        //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
     }
@@ -3105,9 +3105,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.execAddSeriesEpisodes(seriesaid,filepath,filefrag);
             break;
         case 'recPlaySeriesFromStart':
-            console.log('Play series from start for AID ' + objIdIn);
+            //console.log('Play series from start for AID ' + objIdIn);
             ml.playFirstEpOfSeries(objIdIn);
-            console.log('Played series from start for AID ' + objIdIn);
+            //console.log('Played series from start for AID ' + objIdIn);
             break;
             
             
