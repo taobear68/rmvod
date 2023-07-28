@@ -1559,13 +1559,8 @@ ORDER BY 1"""
         for row in rowsTuple:
             retList.append(row[0])
         return retList
-        
-        
-        
-        
 
 
-        
 class RMVOD_Recommendations:
     def __init__(self):
         pass
@@ -1611,7 +1606,6 @@ class RMVOD_Recommendations:
         
         return recsObj
 
-        
 
 class MediaLibraryDB:
     def __init__(self):
@@ -2557,7 +2551,6 @@ class MediaLibraryDB:
         tmpRetObj['data'] = vldb.getRecSeriesList(seriesAidIn)
         return tmpRetObj
 
-        
 
 class MLCLI:
     def __init__(self):

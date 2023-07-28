@@ -1743,6 +1743,14 @@ class RMVodWebApp {
         const payload = {'artifactid':wrkArtiId,'values':updateObj};
         this.genericApiCall(payload,endpoint,cbFunc);
     }
+    // select Edit tab
+    selectEditTab(){
+        const ev = new Event('click');
+        //document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
+        document.getElementById('RNWATabWidget-tabspan-3').dispatchEvent(ev); // RNWATabWidget-tabspan-2
+        return true;
+    }
+    
     // Submit "Add Single Artifact" form
     // Performs DOM updates directly.
     apiSubmitNewSingleArtiForm(){ //UPDATED FOR NEW RETURN OBJECT MODEL
@@ -1755,9 +1763,10 @@ class RMVodWebApp {
             if (dataObjIn['status']['success'] == true) {
                 // Add succeeded
                 ml.renderArtifactEdit(dataObjIn['data'][0]['artifactid']);
-                const ev = new Event('click');
+                //const ev = new Event('click');
                 //document.getElementById('tabspan2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
-                document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
+                //document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
+                ml.selectEditTab();
             } else {
                 // Add failed
                 window.alert("Sumbit failed.  Correct the problem listed below and try again.\n" + dataObjIn['status']['detail'])
@@ -2250,6 +2259,7 @@ class RMVodWebApp {
         // tabspan2
         const ev = new Event('click');
         document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2 // tabspan2
+        this.selectEditTab();
     }
     // Render a form for data entry to associate tvepisode artifacts 
     // with a tvseries artifact.
@@ -2307,8 +2317,9 @@ class RMVodWebApp {
         document.getElementById('nafilename').value = argObjIn['file'];
         
         // tabspan2
-        const ev = new Event('click');
-        document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev);  // RNWATabWidget-tabspan-2 // tabspan2
+        //const ev = new Event('click');
+        //document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev);  // RNWATabWidget-tabspan-2 // tabspan2
+        this.selectEditTab();
     }
     // Render a form for data entry to create multiple new artifacts
     // Performs DOM updates directly.
@@ -2391,8 +2402,9 @@ class RMVodWebApp {
         targetDiv.appendChild(div);
         
         // tabspan2
-        const ev = new Event('click');
-        document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2 // tabspan2
+        //const ev = new Event('click');
+        //document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2 // tabspan2
+        this.selectEditTab();
     }
     // Execute an API call which associates tvepisode artifacts 
     // with a tvseries artifact
