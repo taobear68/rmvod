@@ -2703,7 +2703,8 @@ class WMCWARecommend {
                         posterImg.width = iw ;
                         posterImg.height = ih ;
                         if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
-                            posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
+                            //posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
+                            posterImg.src = '/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
                         } else {
                             //posterDiv.innerHTML = "<b>Oops!  No Poster!</b>";
                             posterImg.src = 'http://rmvid/rmvod/img/RMVOD_NoPoster.png' ;
