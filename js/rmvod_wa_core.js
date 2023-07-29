@@ -2707,7 +2707,7 @@ class WMCWARecommend {
                             posterImg.src = '/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
                         } else {
                             //posterDiv.innerHTML = "<b>Oops!  No Poster!</b>";
-                            posterImg.src = 'http://rmvid/rmvod/img/RMVOD_NoPoster.png' ;
+                            posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
                             // RMVOD_NoPoster.png
                         }
                         posterDiv.appendChild(posterImg);
@@ -2879,9 +2879,9 @@ class WMCWARecommend {
         if (artiDetObj['imdbid'] != '' & artiDetObj['imdbid'] != undefined & artiDetObj['imdbid'] != 'string' & artiDetObj['imdbid'] != 'none') {
             var ph = this.posterHeightPx * 1.90;
             var pw = ph * this.posterWidthFraction;
-            dpHtml += '<img width="' + pw + '" height="' + ph + '" src="http://rmvid/rmvod/img/poster_00/' + artiDetObj['imdbid'] + '.jpg">';
+            dpHtml += '<img width="' + pw + '" height="' + ph + '" src="/rmvod/img/poster_00/' + artiDetObj['imdbid'] + '.jpg">';
         } else {
-            dpHtml += '<img width="' + pw + '" height="' + ph + '" src="http://rmvid/rmvod/img/RMVOD_NoPoster.png">';
+            dpHtml += '<img width="' + pw + '" height="' + ph + '" src="/rmvod/img/RMVOD_NoPoster.png">';
         }
 
         deetPoster.innerHTML = dpHtml;
