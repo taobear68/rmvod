@@ -2586,6 +2586,15 @@ class MediaLibraryDB:
         
         recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
         
+        
+        for artiKey in recsObj['artifacts'].keys():
+            badImdbid = ['none','string','']
+            if not (recsObj['artifacts'][artiKey]['imdbid'] in badImdbid:
+                self.fetchPosterFile(recsObj['artifacts'][artiKey]['imdbid'])
+            pass
+        pass
+            
+        
         return recsObj
     def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
