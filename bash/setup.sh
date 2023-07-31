@@ -67,7 +67,8 @@ fs_setup(){
         {
             mkdir -p rmvod && cd rmvod && \
             mkdir -p api css data dl img js vidsrc && \
-            mkdir -p img/poster_00
+            mkdir -p img/poster_00 && \
+            mkdir -p /etc/rmvod
         } || {
             echo "Filesystem Setup failed (var/www/html)."
             exit 1 
@@ -98,6 +99,7 @@ file_copy(){
     cp css/* /var/www/html/rmvod/css/ && \
     cp py/* /var/lib/rmvod/py/ && \
     cp bash/* /var/lib/rmvod/bash/ && \
+    cp cfg/rmvod_api.cfg /etc/rmvod && \
     cp apache/sites-available/*  /etc/apache2/sites-available/ && \
     chmod o+x /var/lib/rmvod/bash/*.sh && \
     chmod o+x /var/lib/rmvod/py/*.py  || \
