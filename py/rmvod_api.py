@@ -2556,7 +2556,7 @@ class MediaLibraryDB:
             #self.fetchPosterFile(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
             # print(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
             
-        print ("generateStandardRecs: artiList " + str(artiList))
+        # print ("generateStandardRecs: artiList " + str(artiList))
     
         # Tags
         artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
