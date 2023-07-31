@@ -15,6 +15,7 @@ import base64
 import os
 import yaml
 import requests
+import configparser
 
 import re
 import time
@@ -1625,24 +1626,63 @@ class MediaLibraryDB:
         self.libMeta['retdicttempl']['status']['detail'] = ''
         self.libMeta['retdicttempl']['status']['log'] = []
         
+        # set config param defaults
+        self.config = {}
+        self.config['API_Settings'] = {'do_recs': 'on', 'service_name': 'RIBBBITmedia VideoOnDemand', 'service_abbrev': 'RMVOD'}
+        self.config['API_Resources'] = {'image_path': '/rmvod/img', 'poster_path': '/rmvod/img/poster_00', 'video_path': '/rmvod/vidsrc', 'api_path': '/rmvod/api', 'logo_tile_image': '/rmvod/img/rmvod_badge_center.png'}
+        self.config['Database'] = {'db_host': 'localhost', 'db_user': 'vodlibapi', 'db_password': 'vodlibapipw', 'db_db': 'vodlib'}
+        
+        # Update config params from file if present
+        self.cfgReader()
         pass
     def __normalizeTagStr(self,tagStrIn):
         istr0 = tagStrIn.lower()
         istr1 = istr0.strip()
         istr2 = istr1.replace(' ','_')
         return istr2
-    def getDBVersion(self):
-        vldb = VodLibDB()
+    def cfgReader(self):
+        cfgFile = '/etc/rmvod/rmvod_api.cfg'
+        cfgDict = {}
+        cfExists = os.path.exists(cfgFile)
+        if ( not cfExists) :
+            print("oh noes.  Will not be updating config from file because it's not there.")
+            return cfgDict
+        config = configparser.ConfigParser()
+        config.read(cfgFile)
+        for secNm in config.sections():
+            cfgDict[secNm] = {}
+            for key in config[secNm]:
+                # Set the value we're going to return
+                cfgDict[secNm][key] = config[secNm][key]
+                # Set the 
+                self.config[secNm][key] = config[secNm][key]
+        #{'API_Settings': {'do_recs': 'on', 'service_name': 'RIBBBITmedia VideoOnDemand', 'service_abbrev': 'RMVOD'}, 
+        #'API_Resources': {'image_path': '/rmvod/img', 'poster_path': '/rmvod/img/poster_00', 'video_path': '/rmvod/vidsrc', 'api_path': '/rmvod/api', 'logo_tile_image': '/rmvod/img/rmvod_badge_center.png'}, 
+        #'Database': {'db_host': 'localhost', 'db_user': 'vodlibapi', 'db_password': 'vodlibapipw', 'db_db': 'vodlib'}}
+        return cfgDict
+    def dbHandleConfigged(self):
+        db = VodLibDB()
+        db.dbc['host'] = self.config['Database']['db_host']
+        db.dbc['user'] = self.config['Database']['db_user']
+        db.dbc['password'] = self.config['Database']['db_password']
+        db.dbc['database'] = self.config['Database']['db_db']
+        return db
+    def getDBVersion(self): # Updated to use .cfg
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         return vldb.getDBVersion()
-    def artifactFileCheck(self,pathIn,fileIn):
-        basePath = '/var/www/html/rmvod/vidsrc/'
+    def artifactFileCheck(self,pathIn,fileIn): # Updated to use .cfg
+        #basePath = '/var/www/html/rmvod/vidsrc/'
+        basePath = '/var/www/html' + self.config['API_Resources']['video_path']
         exist = os.path.exists(basePath + pathIn + '/' + fileIn)
         return  exist    
-    def newArtiPreCheck(self,pathIn,fileIn):
-        basePath = '/var/www/html/rmvod/vidsrc/'
+    def newArtiPreCheck(self,pathIn,fileIn): # Updated to use .cfg
+        #basePath = '/var/www/html/rmvod/vidsrc/'
+        basePath = '/var/www/html' + self.config['API_Resources']['video_path']
         exist = os.path.exists(basePath + pathIn + '/' + fileIn)
         
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         count = vldb.getArtifactCountByFieldValue('file',fileIn)
         
         retval = False
@@ -1797,11 +1837,12 @@ class MediaLibraryDB:
         finally:
             pass
         pass
-    def createTag(self,tagStrIn):
+    def createTag(self,tagStrIn): # Updated to use .cfg
         retval = False
         try:
             ntag = self.__normalizeTagStr(tagStrIn)
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             vldb.createTag(ntag)
             retval = True
         except:
@@ -1809,10 +1850,11 @@ class MediaLibraryDB:
             pass
         pass
         return retval
-    def createArtitext(self,artiIdIn,fieldNameIn,contentIn):
+    def createArtitext(self,artiIdIn,fieldNameIn,contentIn): # Updated to use .cfg
         retval = False
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             vldb.createArtiText(artiIdIn,fieldNameIn,contentIn)
             retval = True
         except:
@@ -1839,18 +1881,19 @@ class MediaLibraryDB:
             retval = True
         pass
         return retval
-    def findTag(self,tagStrIn):
+    def findTag(self,tagStrIn): # Updated to use .cfg
         ntag = self.__normalizeTagStr(tagStrIn)
         retval = -1
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             resTagList = vldb.findTag(ntag)
             retval = len(resTagList)
         except:
             retval = -1
         pass
         return retval
-    def getSupportList(self,tableNameIn): # UPDATED FOR NEW RETURN OBJECT MODEL
+    def getSupportList(self,tableNameIn): # UPDATED FOR NEW RETURN OBJECT MODEL  # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSupportList'
@@ -1859,14 +1902,15 @@ class MediaLibraryDB:
         retval = None
         try:
             assert tableNameIn in ['persons','companies','tags']
-            vldb = VodLibDB()
+            # vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             tmpRetObj['data'] = vldb.getSupportList(tableNameIn)
             tmpRetObj['status']['success'] = True 
         except:
             pass
         pass
         return tmpRetObj
-    def createArtifact(self,artifactDictIn):
+    def createArtifact(self,artifactDictIn): # Updated to use .cfg
         # We should be confirming that the title doesn't already exist
         try:
             assert (type(artifactDictIn['title']) == type("A String"))
@@ -1893,16 +1937,18 @@ class MediaLibraryDB:
                 inserDict[pKey] = artifactDictIn[pKey]
             pass
         pass
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         vldb.createArtifact(inserDict)
         return aId
-    def modifyArtifact(self,artifactIdIn,artifactDictIn): # UPDATED FOR NEW RETURN OBJECT MODEL
+    def modifyArtifact(self,artifactIdIn,artifactDictIn): # UPDATED FOR NEW RETURN OBJECT MODEL  # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'modifyArtifact'
         tmpRetObj['params'] = [artifactIdIn, artifactDictIn]
         
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             foo = vldb.updateArtifactByIdAndDict(artifactIdIn,artifactDictIn)
             tmpRetObj['status']['success'] = True
         except:
@@ -1958,17 +2004,19 @@ class MediaLibraryDB:
         except:
             print('Title Update failed')
         return retval
-    def deleteArtifact(self,artifactId=None,artifactName=None):
+    def deleteArtifact(self,artifactId=None,artifactName=None): # Updated to use .cfg
         retval = False
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retval = vldb.deleteArtifact()
         return retval
-    def getTagList(self):
+    def getTagList(self): # Updated to use .cfg
         retval = None
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retval = vldb.getTagList()
         return retval
-    def getArtifactByIdNew(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL
+    def getArtifactByIdNew(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         retval = None
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
@@ -1977,7 +2025,8 @@ class MediaLibraryDB:
         tmpRetObj['status']['success'] = True
                 
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retval = vldb.getArtifactById(artiIdIn,False)[0]
             retval = self.titleLibTweak(retval)
             tmpRetObj['data'].append(retval)
@@ -1993,10 +2042,11 @@ class MediaLibraryDB:
             
         
         return tmpRetObj
-    def getArtifactById(self,artiIdIn):
+    def getArtifactById(self,artiIdIn): # Updated to use .cfg
         retval = None
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retval = vldb.getArtifactById(artiIdIn,False)[0]
             retval = self.titleLibTweak(retval)
         except:
@@ -2007,7 +2057,7 @@ class MediaLibraryDB:
         except:
             print("getArtifactById couldn't get the poster file.  Sad.")
         return retval
-    def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL
+    def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getNextEpisodeArtifactById'
@@ -2016,45 +2066,50 @@ class MediaLibraryDB:
                 
         retval = None
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             tmpres = vldb.getNextEpisodeArtifact(artiIdIn)[0]
             tmpRetObj['data'] = vldb.getNextEpisodeArtifact(artiIdIn)
         except:
             print("getNextEpisodeArtifactById for " + artiIdIn + " FAILED")
         return tmpRetObj # retval
-    def getArtifactByName(self,artiNameIn):
+    def getArtifactByName(self,artiNameIn): # Updated to use .cfg
         retval = False
         try:
             vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             resList = vldb.getArtifactListByTitleFrag(artiNameFragStrIn)
             artiId = resList[0]['artifactid']
             retval = self.getArtifactById(artiId)
         except:
             print(getArtifactByName + ": DUNG!")
         return retval
-    def addTagtoArtifact(self,tagStrIn,artifactIdIn):
+    def addTagtoArtifact(self,tagStrIn,artifactIdIn): # Updated to use .cfg
         retval = False
         stepfail = False
         ntag = self.__normalizeTagStr(tagStrIn)
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retval = vldb.addTagtoArtifact(ntag,artifactIdIn)
         return retval
-    def addTagToSeries(self,tagIn,seriesAIDIn):
+    def addTagToSeries(self,tagIn,seriesAIDIn): # Updated to use .cfg
         nTag = self.__normalizeTagStr(tagIn)
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retval = vldb.assignTagToSeries(seriesAIDIn, nTag)
         return retval
-    def removeTagFromArtifact(self,tagStrIn,artifactIdIn):
+    def removeTagFromArtifact(self,tagStrIn,artifactIdIn): # Updated to use .cfg
         retval = False
         ntag = self.__normalizeTagStr(tagStrIn)
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retval = vldb.removeTagFromArtifact(artifactIdIn,ntag)
         except:
             print("Well, poop.")
         pass
         return retval
-    def getArtifactsByTag(self,tagStrIn):   # UPDATED FOR NEW RETURN OBJECT MODEL 
+    def getArtifactsByTag(self,tagStrIn):   # UPDATED FOR NEW RETURN OBJECT MODEL  # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getArtifactsByTag'
         tmpRetObj['params'] = [tagStrIn]
@@ -2062,7 +2117,8 @@ class MediaLibraryDB:
         ntag = self.__normalizeTagStr(tagStrIn)
         retobj = []
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retobj = vldb.getArtifactListByTagList([ntag])
             tmpRetObj['data'] = retobj
             tmpRetObj['status']['success'] = True
@@ -2071,14 +2127,15 @@ class MediaLibraryDB:
             pass
         pass
         return tmpRetObj
-    def getArtifactsByMajtype(self,majtypeStrIn): # UPDATED FOR NEW RETURN OBJECT MODEL 
+    def getArtifactsByMajtype(self,majtypeStrIn): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getArtifactsByMajtype'
         tmpRetObj['params'] = [majtypeStrIn]
         
         retobj = [];
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retobj = vldb.getArtifactListByMajtype(majtypeStrIn)
             tmpRetObj['data'] = retobj
             tmpRetObj['status']['success'] = True
@@ -2088,14 +2145,15 @@ class MediaLibraryDB:
             pass
         pass
         return tmpRetObj
-    def getArtifactsByRelyear(self,relyear1In,relyear2In): # UPDATED FOR NEW RETURN OBJECT MODEL 
+    def getArtifactsByRelyear(self,relyear1In,relyear2In): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getArtifactsByRelyear'
         tmpRetObj['params'] = [relyear1In,relyear2In]
                 
         retobj = [];
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retobj = vldb.getArtifactListByRelyear(relyear1In,relyear2In)
             tmpRetObj['data'] = retobj
             tmpRetObj['status']['success'] = True
@@ -2105,14 +2163,15 @@ class MediaLibraryDB:
             pass
         pass
         return tmpRetObj  
-    def findArtifactsBySrchStr(self,srchStrIn): # UPDATED FOR NEW RETURN OBJECT MODEL 
+    def findArtifactsBySrchStr(self,srchStrIn): # UPDATED FOR NEW RETURN OBJECT MODEL    # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'findArtifactsBySrchStr'
         tmpRetObj['params'] = [srchStrIn]
         
         retobj = []
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retobj = vldb.getArtifactListByPersTitleStr(str(srchStrIn))
             tmpRetObj['data'] = retobj
             tmpRetObj['status']['success'] = True
@@ -2121,7 +2180,7 @@ class MediaLibraryDB:
             pass
         pass
         return tmpRetObj
-    def getArtifactsByMultiFactorSrch(self,mfSrchObjIn): # UPDATED FOR NEW RETURN OBJECT MODEL 
+    def getArtifactsByMultiFactorSrch(self,mfSrchObjIn): # UPDATED FOR NEW RETURN OBJECT MODEL    # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getArtifactsByMultiFactorSrch'
         tmpRetObj['params'] = [mfSrchObjIn]
@@ -2164,16 +2223,18 @@ class MediaLibraryDB:
                 pass
             pass
         pass
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retobj = vldb.getArtifactListByIdList(idList);
         tmpRetObj['status']['success'] = True 
         tmpRetObj['data'] = retobj
         return tmpRetObj        
-    def getArtifactsByArbWhereClause(self,whereClauseStrIn):
+    def getArtifactsByArbWhereClause(self,whereClauseStrIn):   # Updated to use .cfg
         retobj = []
         print ('MediaLibraryDB.getArtifactsByArbWhereClause: ' + whereClauseStrIn)
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retobj = vldb.getArtifactListByArbWhereClause(whereClauseStrIn)
             print("WHEE!")
         except:
@@ -2181,8 +2242,9 @@ class MediaLibraryDB:
             pass
         pass
         return retobj
-    def findArtifactsByName(self,artiNameFragStrIn):
-        vldb = VodLibDB()
+    def findArtifactsByName(self,artiNameFragStrIn):   # Updated to use .cfg
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'findArtifactsByName'
         tmpRetObj['params'] = [artiNameFragStrIn]
@@ -2195,12 +2257,13 @@ class MediaLibraryDB:
         
             
         return tmpRetObj
-    def getIdTitleListBySeriesArtiId(self,atriIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL
+    def getIdTitleListBySeriesArtiId(self,atriIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getIdTitleListBySeriesArtiId'
         tmpRetObj['params'] = [atriIdIn]
         tmpRetObj['status']['success'] = True
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         tmpRetObj['data'] = vldb.getEpisodeTIMListBySeriesId(atriIdIn)
         return tmpRetObj
     def getTagsByArtifact(self,artifactIdIn):
@@ -2217,17 +2280,20 @@ class MediaLibraryDB:
         artiProtoDict = copy.deepcopy(self.artifactProto)
         pass
         return artiProtoDict
-    def fetchDeetsFromApi(self):
+    def fetchDeetsFromApi(self):   # Updated to use .cfg
         print("ml.fetchDeetsFromApi")
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         vldb.fetchArtiDeetsFromOmdbapi()
         return True
-    def getArtifactLackingImdbid(self,majtypeIn):
-        vldb = VodLibDB()
+    def getArtifactLackingImdbid(self,majtypeIn):   # Updated to use .cfg
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         retDict = vldb.getArtifactNeedingImdbId(majtypeIn)
         return retDict
-    def updateArtifactImdbid(self,artiIdIn,imdbidIn):
-        vldb = VodLibDB()
+    def updateArtifactImdbid(self,artiIdIn,imdbidIn):   # Updated to use .cfg
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         vldb.setImdbId(artiIdIn,imdbidIn)
     def updateArtiDeetsFromOmdb(self,artiIdIn):
         artiDict = self.getArtifactById(artiIdIn)
@@ -2332,8 +2398,9 @@ class MediaLibraryDB:
         arbmetaDict['titlelibrary'] = libTitle
         artiObjIn['arbmeta'] = json.dumps(arbmetaDict)
         return artiObjIn
-    def addEpisodesToSeries(self,seriesArtiIdIn,filePathIn,fnFragIn): # UPDATED FOR NEW RETURN OBJECT MODEL
-        vldb = VodLibDB()
+    def addEpisodesToSeries(self,seriesArtiIdIn,filePathIn,fnFragIn): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
 
         retDict = {}
         retDict['method'] = 'addEpisodesToSeries'
@@ -2453,7 +2520,7 @@ class MediaLibraryDB:
                 pass
             pass
         return tmpRetObj
-    def apiLogPlay(self,artiIdIn,clientIdIn):
+    def apiLogPlay(self,artiIdIn,clientIdIn):   # Updated to use .cfg
         retDict = {}
         retDict['method'] = 'apiLogPlay'
         retDict['params'] = [artiIdIn,clientIdIn]
@@ -2461,7 +2528,8 @@ class MediaLibraryDB:
         retDict['data'] = []
         
         try:
-            vldb = VodLibDB()
+            #vldb = VodLibDB()
+            vldb = self.dbHandleConfigged()
             retval = vldb.logPlay(artiIdIn,clientIdIn)
             retDict['status']['success'] = True
             retDict['status']['detail'] = retval
@@ -2469,11 +2537,12 @@ class MediaLibraryDB:
             print('MediaLibraryDB.apiLogPlay is sad.')
             retDict['status']['detail'] = 'MediaLibraryDB.apiLogPlay is sad.'
         return retDict
-    def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
+    def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):   # Updated to use .cfg
         # print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         # print ("generateStandardRecs instantiated VodLibDB.")
         # People
         resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
@@ -2518,31 +2587,33 @@ class MediaLibraryDB:
         recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
         
         return recsObj
-    def getSeriesFirstEpisodeAid(self,seriesAidIn):
+    def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSeriesFirstEpisodeAid'
         tmpRetObj['params'] = [seriesAidIn]
         tmpRetObj['status']['success'] = True
                         
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         tmpRetObj['data'] = vldb.getAIDofFirstEpisode(seriesAidIn)
         
         return  tmpRetObj
-    def getSeriesSeasonEpisodeList(self,seriesAidIn,seasonIntIn):
+    def getSeriesSeasonEpisodeList(self,seriesAidIn,seasonIntIn):   # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSeriesSeasonEpisodeList'
         tmpRetObj['params'] = [seriesAidIn,seasonIntIn]
         tmpRetObj['status']['success'] = True
                         
-        vldb = VodLibDB()
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         tmpRetObj['data'] = vldb.getSeriesEpisodeListSingleSeason(seriesAidIn,seasonIntIn)
         return tmpRetObj
-    def getSeriesSeasonNumberList(self,seriesAidIn):
+    def getSeriesSeasonNumberList(self,seriesAidIn):   # Updated to use .cfg
         # getRecSeriesList(self,seriesArtiIdIn)
-        vldb = VodLibDB()
-        
+        #vldb = VodLibDB()
+        vldb = self.dbHandleConfigged()
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSeriesSeasonNumberList'
         tmpRetObj['params'] = [seriesAidIn]
