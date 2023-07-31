@@ -2541,6 +2541,12 @@ class MediaLibraryDB:
         # print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+        
+        # Let's bail out if Recs are not on.
+        # self.config['API_Settings'] = {'do_recs': 'on'
+        if (self.config['API_Settings']['do_recs'] != "on"):
+            return recsObj
+            
         #vldb = VodLibDB()
         vldb = self.dbHandleConfigged()
         # print ("generateStandardRecs instantiated VodLibDB.")
