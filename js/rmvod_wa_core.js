@@ -2751,6 +2751,14 @@ class WMCWARecommend {
                 document.getElementById(this.targetParentElementId).appendChild(recOuter);              
             }
         }
+        var metaKeysList = Object.keys(this.recSrcData['meta']);
+        if (metaKeysList.indexOf('message') > -1  ) {
+            var tmpDiv = document.createElement('div');
+            tmpDiv.innerHTML = '<b>' + this.recSrcData['meta']['message'] + '</b>';
+            document.getElementById(this.targetParentElementId).appendChild(tmpDiv);
+        }
+        
+         
     }
     playFromRecs(deIdIn, ArtiIdIn){
         //Turn the tile pink

@@ -2545,6 +2545,7 @@ class MediaLibraryDB:
         # Let's bail out if Recs are not on.
         # self.config['API_Settings'] = {'do_recs': 'on'
         if (self.config['API_Settings']['do_recs'] != "on"):
+            recsObj['meta']['message'] = "Recommendations disabled on this Server."
             return recsObj
             
         #vldb = VodLibDB()
