@@ -2552,6 +2552,9 @@ class MediaLibraryDB:
         for recArti in artiList:
             recsObj['data']['people'][recArti['majtype']].append(recArti)
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+            
+            self.fetchPosterFile(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
+            
         print ("generateStandardRecs: artiList " + str(artiList))
     
         # Tags
@@ -2586,13 +2589,12 @@ class MediaLibraryDB:
         
         recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        
-        for artiKey in recsObj['artifacts'].keys():
-            badImdbid = ['none','string','']
-            if not (recsObj['artifacts'][artiKey]['imdbid'] in badImdbid):
-                self.fetchPosterFile(recsObj['artifacts'][artiKey]['imdbid'])
-            pass
-        pass
+        # badImdbid = ['none','string','']
+        # for artiKey in recsObj['artifacts'].keys():
+            # if not (recsObj['artifacts'][artiKey]['imdbid'] in badImdbid):
+                # self.fetchPosterFile(recsObj['artifacts'][artiKey]['imdbid'])
+            # pass
+        # pass
             
         
         return recsObj
