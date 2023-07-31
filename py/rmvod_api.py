@@ -2554,7 +2554,7 @@ class MediaLibraryDB:
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
             
             #self.fetchPosterFile(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
-            print(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
+            # print(recsObj['artifacts'][recArti['artifactid']]['imdbid'])
             
         print ("generateStandardRecs: artiList " + str(artiList))
     
