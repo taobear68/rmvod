@@ -2589,7 +2589,7 @@ class MediaLibraryDB:
         
         for artiKey in recsObj['artifacts'].keys():
             badImdbid = ['none','string','']
-            if not (recsObj['artifacts'][artiKey]['imdbid'] in badImdbid:
+            if not (recsObj['artifacts'][artiKey]['imdbid'] in badImdbid):
                 self.fetchPosterFile(recsObj['artifacts'][artiKey]['imdbid'])
             pass
         pass
