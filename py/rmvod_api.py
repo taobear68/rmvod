@@ -2640,6 +2640,20 @@ class MediaLibraryDB:
                                 
         tmpRetObj['data'] = vldb.getRecSeriesList(seriesAidIn)
         return tmpRetObj
+    def fetchApiConfig(self): 
+        # take the current config, strip out the private stuff, and
+        # send it back to the client
+        
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'fetchApiConfig'
+        tmpRetObj['params'] = []
+        tmpRetObj['status']['success'] = True
+        
+        clientCfg = copy.deepcopy(self.config)
+        clientCfg.pop('Database')
+        tmpRetObj['data'] = clientCfg
+        
+        return tmpRetObj
 
 
 class MLCLI:
@@ -3451,7 +3465,10 @@ def getSeriesSeasonNmbrList():
     # # print("What came in: " + str(request.json))
     return json.dumps(ml.getSeriesSeasonNumberList(dictIn['artiid']))    
 
-
+@app.route('/config/get',methods=['POST'])
+def getApiConfig():
+    ml = MediaLibraryDB()
+    return json.dumps(ml.fetchApiConfig())
 
 
 if __name__ == '__main__':
