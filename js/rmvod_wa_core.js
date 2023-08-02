@@ -862,7 +862,8 @@ class RMVodWebApp {
             //}
             
             try {
-                var foo = this.sse.ssRead('apicfg');
+                var sse = new RMSSSEnhanced();
+                var foo = sse.ssRead('apicfg');
                 x = 0;
             } catch (e) {
                 console.log(e);
