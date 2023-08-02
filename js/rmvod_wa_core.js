@@ -843,6 +843,50 @@ class RMVodWebApp {
         
         
         
+        
+        // USE A PROMISE...?
+        function myDisplayer(some) {
+            //document.getElementById("demo").innerHTML = some;
+            //console.log('document.getElementById("demo").innerHTML = some;');
+            console.log(some);
+            //return "poop";
+        }
+        
+        let myPromise = new Promise(function(myResolve, myReject) {
+            let x = 99;
+            
+            // The producing code (this may take some time)
+            //for (var i = 0; i < 2000; i++ ) {
+                //console.log("interation");
+                //i += 1;
+            //}
+            
+            try {
+                var foo = this.sse.ssRead('apicfg');
+                x = 0;
+            } catch (e) {
+                console.log(e);
+            }
+            
+            if (x == 0) {
+                myResolve("OK");
+            } else {
+                myReject("Error");
+            }
+            return "completed Value";
+        });
+        
+        myPromise.then(
+            function(value) {myDisplayer(value);},
+            function(error) {myDisplayer(error);}
+        );
+                
+        
+        
+        
+        
+        
+        
         this.apiFetchPersonsList();
         this.apiFetchCompaniesList();
         this.apiFetchTagsList();
