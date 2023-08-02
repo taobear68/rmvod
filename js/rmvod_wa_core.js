@@ -853,7 +853,32 @@ class RMVodWebApp {
         //clientName =  apiSettings['service_name'];
         //wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
         //this.setPageTitle(clientName);   
-        this.setPageTitle(this.sse.ssRead('apicfg')['API_Settings']['service_name']);     
+        var done = false;
+        var tries = 0;
+        var maxTries = 1;
+        var delay = 1000;
+        var startTitle = document.title;
+        var cbFunc = function(){
+            try {
+                var wa = new RMVodWebApp();
+                var apiCfg = wa.sse.ssRead('apicfg');
+                wa.setPageTitle(apiCfg['API_Settings']['service_name']); 
+                //done = true;
+            } catch (e) {
+                // document.title = "RIBBBITmedia VideoOnDemand (STATIC)";
+                console.log('API config not ready yet');
+                //tries += 1;
+            }
+        }
+        while ((document.title == startTitle) & (tries < maxTries)){
+            //console.log(done, tries);
+            setTimeout(cbFunc,delay);
+            tries += 1
+            //if tries > maxTries
+        }
+            
+        //var apiCfg = this.sse.ssRead('apicfg')
+        //this.setPageTitle(this.sse.ssRead('apicfg')['API_Settings']['service_name']);     
         //document.title = "RIBBBITmedia VideoOnDemand";
         
         
