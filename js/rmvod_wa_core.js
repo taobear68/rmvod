@@ -851,10 +851,12 @@ class RMVodWebApp {
                 itsOk = true;
                 console.log("got it: " + JSON.stringify(tmpObj));
             } catch(e) {
+                console.log("Nope.");
                 for (var i = 0; i < 2000; i++ ) {
-                    console.log("interation");
+                    // console.log("interation");
                     i += 1;
-                }         
+                }
+                console.log("Moving on...");     
             }
         }
         
