@@ -800,9 +800,10 @@ class RMVodWebApp {
         this.sse.ssOKWrite('localcfg','apibaseuri','/freezer/api/');       // API Base URI
         this.sse.ssOKWrite('localcfg','apiepblobget','blob/get');    // API Endpoint - Single Object Fetch
         
-        this.apiFetchPersonsList();
-        this.apiFetchCompaniesList();
-        this.apiFetchTagsList();
+        // This needs to happen later due to API Config fetch
+        //this.apiFetchPersonsList();
+        //this.apiFetchCompaniesList();
+        //this.apiFetchTagsList();
         
         var bid;
         // Browser ID Cookie
@@ -842,6 +843,10 @@ class RMVodWebApp {
         
         
         
+        this.apiFetchPersonsList();
+        this.apiFetchCompaniesList();
+        this.apiFetchTagsList();
+                
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
