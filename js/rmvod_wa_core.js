@@ -853,6 +853,8 @@ class RMVodWebApp {
         try {
             retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
         } catch (e) {
+            console.log("Caught Exception " + e);
+            console.log("Gonna wait a sec and try again.");
             var done = false;
             var cbFunc = function() {
                 retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
@@ -860,7 +862,10 @@ class RMVodWebApp {
             }
             setTimeout(cbFunc,1000);
             while (done == false) {
-                console.log("sit here like a dummy");
+                var otherFunc = function() {
+                    console.log("sit here like a dummy");
+                }
+                setTimeout(otherFunc,250);
             }
             
         }
