@@ -910,6 +910,7 @@ class RMVodWebApp {
             for (var snooze = 0; snooze < 1000; snooze += 1 ) {
                 console.log ("snoozing");
             }
+        }
         
         
         
