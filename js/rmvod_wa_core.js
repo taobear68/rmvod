@@ -841,38 +841,40 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
-        var sleep = function (miliseconds) {
-            var currentTime = new Date().getTime();
-            while (currentTime + miliseconds >= new Date().getTime()) {
-            }
-        }  
+        //var sleep = function (miliseconds) {
+            //var currentTime = new Date().getTime();
+            //while (currentTime + miliseconds >= new Date().getTime()) {
+            //}
+        //}  
         
-        sleep(500);
-        console.log("Please work: " + JSON.stringify(this.sse.ssRead('apicfg')['API_Resources']['api_path']));
+        //sleep(500);
+        //console.log("Please work: " + JSON.stringify(this.sse.ssRead('apicfg')['API_Resources']['api_path']));
+        
+        
         
         //var sleep = function (miliseconds) {
             //var currentTime = new Date().getTime();
             //while (currentTime + miliseconds >= new Date().getTime()) {
             //}
         //}        
-        //var itsOk = false;
-        //while (itsOk == false ) {
-            //try {
-                ////var tmpObj = sse.ssRead('apicfg');
-                ////var foo = tmpObj['API_Resources']['api_path'];  
-                //var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //itsOk = true;
-                //console.log("got it: " + JSON.stringify(tmpObj));
-            //} catch(e) {
-                //console.log("Nope.");
+        var itsOk = false;
+        while (itsOk == false ) {
+            try {
+                //var tmpObj = sse.ssRead('apicfg');
+                //var foo = tmpObj['API_Resources']['api_path'];  
+                var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                itsOk = true;
+                console.log("got it: " + JSON.stringify(tmpObj));
+            } catch(e) {
+                console.log("Nope.");
                 //sleep(500);
-                ////for (var i = 0; i < 2000; i++ ) {
-                    ////// console.log("interation");
-                    ////i += 1;
-                ////}
-                //console.log("Moving on...");     
-            //}
-        //}
+                //for (var i = 0; i < 2000; i++ ) {
+                    //// console.log("interation");
+                    //i += 1;
+                //}
+                console.log("Moving on...");     
+            }
+        }
         
         
         
