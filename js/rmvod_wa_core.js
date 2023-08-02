@@ -848,7 +848,7 @@ class RMVodWebApp {
         this.postJSVer("0.9.1d");
     }
     getApiConfigValue(majorKeyIn,minorKeyIn){
-        console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn
+        console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
         var retval;
         retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
         //var cbFunc = function(valIn = retval){
