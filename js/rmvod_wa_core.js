@@ -842,6 +842,21 @@ class RMVodWebApp {
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
         
+        var itsOk = false;
+        while (itsOk == false ) {
+            try {
+                //var tmpObj = sse.ssRead('apicfg');
+                //var foo = tmpObj['API_Resources']['api_path'];  
+                var tmpObj = sse.ssRead('apicfg')['API_Resources']['api_path'];
+                itsOk = true;
+                console.log("got it: " + JSON.stringify(tmpObj));
+            } catch(e) {
+                for (var i = 0; i < 2000; i++ ) {
+                    console.log("interation");
+                    i += 1;                
+            }
+        }
+        
         //console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
         
         //// USE A PROMISE...?
