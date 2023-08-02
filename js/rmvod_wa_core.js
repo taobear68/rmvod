@@ -857,8 +857,10 @@ class RMVodWebApp {
             console.log("Gonna wait a sec and try again.");
             var done = false;
             var cbFunc = function() {
-                console.log("Starting the callback");
-                retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+                var wa = new RMVodWebApp();
+                console.log("Starting the callback " , majorKeyIn, minorKeyIn);
+                var intVal = wa.sse.ssRead('apicfg');
+                retval = intVal[majorKeyIn][minorKeyIn];
                 done = true;
                 console.log("DONE with the callback");
             }
