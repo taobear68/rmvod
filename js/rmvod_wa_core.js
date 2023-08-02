@@ -853,7 +853,7 @@ class RMVodWebApp {
         //clientName =  apiSettings['service_name'];
         //wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
         //this.setPageTitle(clientName);   
-        this.setPageTitle(wa.sse.ssRead('apicfg')['API_Settings']['service_name']);     
+        this.setPageTitle(this.sse.ssRead('apicfg')['API_Settings']['service_name']);     
         //document.title = "RIBBBITmedia VideoOnDemand";
         
         
