@@ -893,16 +893,25 @@ class RMVodWebApp {
         var waitFunc = function () {
             console.log("Doing waitFunc");
             var didIt = false;
-            var sse = new RMSSSEnhanced();
-            var foo = sse.ssRead('apicfg');
-            if (foo != {}) {
-                // x = 0;
-                didIt = true;
+            //var sse = new RMSSSEnhanced();
+            //var foo = sse.ssRead('apicfg');
+            //if (foo != {}) {
+                //// x = 0;
+                //didIt = true;
+                //console.log("Whee: " + JSON.stringify(foo));
+            //} else {
+                //console.log("Promise read result: " + JSON.stringify(foo));
+                //console.log("Trying again...");
+                ////setTimeout(waitFunc,1000);
+            //}
+            try {
+                var sse = new RMSSSEnhanced();
+                var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
                 console.log("Whee: " + JSON.stringify(foo));
-            } else {
+                didIt = true;
+            } catch (e) {
                 console.log("Promise read result: " + JSON.stringify(foo));
-                console.log("Trying again...");
-                //setTimeout(waitFunc,1000);
+                console.log("Trying again...");                
             }
             return didIt;          
         }
