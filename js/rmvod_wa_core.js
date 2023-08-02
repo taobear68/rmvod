@@ -841,7 +841,7 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
-        function sleep(miliseconds) {
+        var sleep = function (miliseconds) {
             var currentTime = new Date().getTime();
             while (currentTime + miliseconds >= new Date().getTime()) {
             }
