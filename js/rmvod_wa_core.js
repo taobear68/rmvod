@@ -841,7 +841,11 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
-        
+        function sleep(miliseconds) {
+            var currentTime = new Date().getTime();
+            while (currentTime + miliseconds >= new Date().getTime()) {
+            }
+        }        
         var itsOk = false;
         while (itsOk == false ) {
             try {
@@ -852,10 +856,11 @@ class RMVodWebApp {
                 console.log("got it: " + JSON.stringify(tmpObj));
             } catch(e) {
                 console.log("Nope.");
-                for (var i = 0; i < 2000; i++ ) {
-                    // console.log("interation");
-                    i += 1;
-                }
+                sleep(500);
+                //for (var i = 0; i < 2000; i++ ) {
+                    //// console.log("interation");
+                    //i += 1;
+                //}
                 console.log("Moving on...");     
             }
         }
