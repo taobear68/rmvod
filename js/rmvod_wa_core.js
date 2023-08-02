@@ -1069,7 +1069,8 @@ class RMVodWebApp {
         }
         const payloadObj = {'table':'companies'};
         //const endpoint = '/rmvod/api/suplist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        var apiBase = this.getApiConfigValue('API_Resources','api_path');
         const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
@@ -1086,7 +1087,8 @@ class RMVodWebApp {
         }
         const payloadObj = {'table':'tags'};
         //const endpoint = '/rmvod/api/suplist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        var apiBase = this.getApiConfigValue('API_Resources','api_path');
         const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
