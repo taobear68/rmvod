@@ -851,7 +851,7 @@ class RMVodWebApp {
             try {
                 //var tmpObj = sse.ssRead('apicfg');
                 //var foo = tmpObj['API_Resources']['api_path'];  
-                var tmpObj = sse.ssRead('apicfg')['API_Resources']['api_path'];
+                var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
                 itsOk = true;
                 console.log("got it: " + JSON.stringify(tmpObj));
             } catch(e) {
