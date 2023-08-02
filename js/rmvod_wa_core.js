@@ -888,42 +888,48 @@ class RMVodWebApp {
         //);
         //console.log('Done with the Promise...');        
         
-        console.log("Trying to wait here until we have the API config bits");
-        // var didIt = false;
-        var waitFunc = function () {
-            console.log("Doing waitFunc");
-            var didIt = false;
-            //var sse = new RMSSSEnhanced();
-            //var foo = sse.ssRead('apicfg');
-            //if (foo != {}) {
-                //// x = 0;
-                //didIt = true;
+        
+        
+        
+        
+        
+        
+        //console.log("Trying to wait here until we have the API config bits");
+        //// var didIt = false;
+        //var waitFunc = function () {
+            //console.log("Doing waitFunc");
+            //var didIt = false;
+            ////var sse = new RMSSSEnhanced();
+            ////var foo = sse.ssRead('apicfg');
+            ////if (foo != {}) {
+                ////// x = 0;
+                ////didIt = true;
+                ////console.log("Whee: " + JSON.stringify(foo));
+            ////} else {
+                ////console.log("Promise read result: " + JSON.stringify(foo));
+                ////console.log("Trying again...");
+                //////setTimeout(waitFunc,1000);
+            ////}
+            //try {
+                //var sse = new RMSSSEnhanced();
+                //var tmpObj = sse.ssRead('apicfg');
+                //var foo = tmpObj['API_Resources']['api_path'];
+                ////var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
                 //console.log("Whee: " + JSON.stringify(foo));
-            //} else {
+                //didIt = true;
+            //} catch (e) {
                 //console.log("Promise read result: " + JSON.stringify(foo));
-                //console.log("Trying again...");
-                ////setTimeout(waitFunc,1000);
+                //console.log("Trying again...");                
             //}
-            try {
-                var sse = new RMSSSEnhanced();
-                var tmpObj = sse.ssRead('apicfg');
-                var foo = tmpObj['API_Resources']['api_path'];
-                //var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
-                console.log("Whee: " + JSON.stringify(foo));
-                didIt = true;
-            } catch (e) {
-                console.log("Promise read result: " + JSON.stringify(foo));
-                console.log("Trying again...");                
-            }
-            return didIt;          
-        }
-        var happy = false;
-        while (happy == false) {
-            happy = waitFunc();
-            for (var snooze = 0; snooze < 1000; snooze += 1 ) {
-                console.log ("snoozing");
-            }
-        }
+            //return didIt;          
+        //}
+        //var happy = false;
+        //while (happy == false) {
+            //happy = waitFunc();
+            //for (var snooze = 0; snooze < 1000; snooze += 1 ) {
+                //console.log ("snoozing");
+            //}
+        //}
         
         
         
@@ -939,29 +945,32 @@ class RMVodWebApp {
     getApiConfigValue(majorKeyIn,minorKeyIn){
         console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
         var retval;
-        try {
+        //try {
             retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
-        } catch (e) {
-            console.log("Caught Exception " + e);
-            console.log("Gonna wait a sec and try again.");
-            var done = false;
-            var cbFunc = function() {
-                var wa = new RMVodWebApp();
-                console.log("Starting the callback " , majorKeyIn, minorKeyIn);
-                var intVal = wa.sse.ssRead('apicfg');
-                retval = intVal[majorKeyIn][minorKeyIn];
-                done = true;
-                console.log("DONE with the callback");
-            }
-            setTimeout(cbFunc,2000);
-            //while (done == false) {
-                ////var otherFunc = function() {
-                    ////console.log("sit here like a dummy");
-                ////}
-                ////setTimeout(otherFunc,250);
+        //} catch (e) {
+            //console.log("Caught Exception " + e);
+            //console.log("Gonna wait a sec and try again.");
+            //var done = false;
+            //var cbFunc = function() {
+                //var wa = new RMVodWebApp();
+                //console.log("Starting the callback " , majorKeyIn, minorKeyIn);
+                //var intVal = wa.sse.ssRead('apicfg');
+                //retval = intVal[majorKeyIn][minorKeyIn];
+                //done = true;
+                //console.log("DONE with the callback");
             //}
+            //setTimeout(cbFunc,2000);
+            ////while (done == false) {
+                //////var otherFunc = function() {
+                    //////console.log("sit here like a dummy");
+                //////}
+                //////setTimeout(otherFunc,250);
+            ////}
             
-        }
+        //}
+        
+        
+        
         //var cbFunc = function(valIn = retval){
             //valIn = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
         //}
