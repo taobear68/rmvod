@@ -842,7 +842,7 @@ class RMVodWebApp {
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
         
-        
+        console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
         
         // USE A PROMISE...?
         function myDisplayer(some) {
@@ -851,7 +851,7 @@ class RMVodWebApp {
             console.log(some);
             //return "poop";
         }
-        
+        console.log('Creating the Promise...');
         let myPromise = new Promise(function(myResolve, myReject) {
             let x = 99;
             
@@ -876,12 +876,12 @@ class RMVodWebApp {
             }
             return "completed Value";
         });
-        
+        console.log('Invoking the Promise...');
         myPromise.then(
             function(value) {myDisplayer(value);},
             function(error) {myDisplayer(error);}
         );
-                
+        console.log('Done with the Promise...');        
         
         
         
