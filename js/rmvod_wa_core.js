@@ -863,12 +863,12 @@ class RMVodWebApp {
                 console.log("DONE with the callback");
             }
             setTimeout(cbFunc,1000);
-            while (done == false) {
-                //var otherFunc = function() {
-                    //console.log("sit here like a dummy");
-                //}
-                //setTimeout(otherFunc,250);
-            }
+            //while (done == false) {
+                ////var otherFunc = function() {
+                    ////console.log("sit here like a dummy");
+                ////}
+                ////setTimeout(otherFunc,250);
+            //}
             
         }
         //var cbFunc = function(valIn = retval){
