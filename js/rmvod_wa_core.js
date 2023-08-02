@@ -1852,7 +1852,7 @@ class RMVodWebApp {
         var payload = {'filepath':nafp,'file':nafn,'majtype':namt};
         //var endpoint = "/rmvod/api/artifact/newsingle";
         var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/newsingle";
+        var endpoint = apiBase + '/artifact/newsingle';
         this.genericApiCall(payload,endpoint,cbFunc);
     }
     // Submit "Add Multiple Artifacts" form
