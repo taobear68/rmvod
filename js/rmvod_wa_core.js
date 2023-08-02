@@ -830,15 +830,12 @@ class RMVodWebApp {
         // Set local copy of the API's configuration
         var wa = new RMVodWebApp();
         var cbFunc = function (objIn) {
-            //var wa = new RMVodWebApp();
-            //wa.vodPlayTitleApi3(objIn['data']);
             console.log('apicfg => storing ' + JSON.stringify(objIn));
-            
             var sse = new RMSSSEnhanced();
-            sse.ssWrite('apicfg',objIn);
+            sse.ssWrite('apicfg',objIn['data']);
             console.log('apicfg => stored ' + JSON.stringify(sse.ssRead('apicfg')));
         }
-        var payloadObj = {}; // 'artiid':seriesAidIn
+        var payloadObj = {};
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
