@@ -1155,7 +1155,7 @@ class RMVodWebApp {
         var cbFunc = function(dataObjIn){
             //console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
         }
-        const apiEndpoint = '/rmvod/api/logplay/post'; 
+        //const apiEndpoint = '/rmvod/api/logplay/post'; 
         var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
         const apiEndpoint = apiBase + '/logplay/post'; 
         const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
