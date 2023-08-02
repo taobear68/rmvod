@@ -857,15 +857,17 @@ class RMVodWebApp {
             console.log("Gonna wait a sec and try again.");
             var done = false;
             var cbFunc = function() {
+                console.log("Starting the callback");
                 retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
                 done = true;
+                console.log("DONE with the callback");
             }
             setTimeout(cbFunc,1000);
             while (done == false) {
-                var otherFunc = function() {
-                    console.log("sit here like a dummy");
-                }
-                setTimeout(otherFunc,250);
+                //var otherFunc = function() {
+                    //console.log("sit here like a dummy");
+                //}
+                //setTimeout(otherFunc,250);
             }
             
         }
