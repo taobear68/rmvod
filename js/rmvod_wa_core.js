@@ -862,7 +862,7 @@ class RMVodWebApp {
                 done = true;
                 console.log("DONE with the callback");
             }
-            setTimeout(cbFunc,1000);
+            setTimeout(cbFunc,2000);
             //while (done == false) {
                 ////var otherFunc = function() {
                     ////console.log("sit here like a dummy");
