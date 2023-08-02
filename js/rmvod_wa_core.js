@@ -828,6 +828,7 @@ class RMVodWebApp {
         console.log('bid: ' + bid);
         
         // Set local copy of the API's configuration
+        console.log('Attempting to fetch API Config values');
         var wa = new RMVodWebApp();
         var cbFunc = function (objIn) {
             // console.log('apicfg => storing ' + JSON.stringify(objIn));
@@ -845,6 +846,21 @@ class RMVodWebApp {
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
         this.postJSVer("0.9.1d");
+    }
+    getApiConfigValue(majorKeyIn,minorKeyIn){
+        console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn
+        var retval;
+        retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+        //var cbFunc = function(valIn = retval){
+            //valIn = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+        //}
+        //try {
+            //retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+        //} catch (e) {
+            //setTimeout(cbFunc,delay);
+        //}
+        return retval;
+        
     }
     resetPageTitle(){
         document.title = "RIBBBITmedia VideoOnDemand";
@@ -989,7 +1005,8 @@ class RMVodWebApp {
             da.updateVersions(objIn['data'][0]);
         }
         const payloadObj = {};
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        var apiBase = this.getApiConfigValue('API_Resources','api_path');
         //const endpoint = '/rmvod/api/apiversion/get';
         const endpoint = apiBase + '/apiversion/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
