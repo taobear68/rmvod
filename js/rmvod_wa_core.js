@@ -776,6 +776,7 @@ class RMVodWebApp {
         sstorTemplObj.push({'name':'titleidlist','type':'list','content':'[]'}); // Tree Metadata
         
         sstorTemplObj.push({'name':'localcfg','type':'dict','content':'{}'}); // Tree Metadata
+        sstorTemplObj.push({'name':'apicfg','type':'dict','content':'{}'}); // Tree Metadata
         sstorTemplObj.push({'name':'refdata','type':'dict','content':{}});
         sstorTemplObj.push({'name':'filterdata','type':'dict','content':{}});
         sstorTemplObj.push({'name':'sortdata','type':'dict','content':{}});
@@ -825,6 +826,23 @@ class RMVodWebApp {
         }
         //console.log('RMVodWebApp.initStorage - I should have a valid clientid value now');
         console.log('bid: ' + bid);
+        
+        // Set local copy of the API's configuration
+        var wa = new RMVodWebApp();
+        var cbFunc = function (objIn) {
+            //var wa = new RMVodWebApp();
+            //wa.vodPlayTitleApi3(objIn['data']);
+            console.log('apicfg => storing ' + JSON.stringify(objIn));
+            
+            var sse = new RMSSSEnhanced();
+            sse.ssWrite('apicfg',objIn);
+            console.log('apicfg => stored ' + JSON.stringify(sse.ssRead('apicfg')));
+        }
+        var payloadObj = {}; // 'artiid':seriesAidIn
+        var endpoint = '/rmvod/api/config/get';
+        var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
+        
+        
         
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
