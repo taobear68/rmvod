@@ -853,7 +853,8 @@ class RMVodWebApp {
             } catch(e) {
                 for (var i = 0; i < 2000; i++ ) {
                     console.log("interation");
-                    i += 1;                
+                    i += 1;
+                }         
             }
         }
         
