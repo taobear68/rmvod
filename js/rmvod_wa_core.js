@@ -1214,7 +1214,7 @@ class RMVodWebApp {
                 }
             }
         }
-        const endpoint = '/rmvod/api/suplist/get';
+        //const endpoint = '/rmvod/api/suplist/get';
         var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
         const endpoint = apiBase + '/suplist/get';
         const payload = {'table':'tags'};
