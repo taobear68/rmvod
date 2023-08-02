@@ -842,53 +842,74 @@ class RMVodWebApp {
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
         
-        console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
+        //console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
         
-        // USE A PROMISE...?
-        function myDisplayer(some) {
-            //document.getElementById("demo").innerHTML = some;
-            //console.log('document.getElementById("demo").innerHTML = some;');
-            console.log(some);
-            //return "poop";
-        }
-        console.log('Creating the Promise...');
-        let myPromise = new Promise(function(myResolve, myReject) {
-            let x = 99;
+        //// USE A PROMISE...?
+        //function myDisplayer(some) {
+            ////document.getElementById("demo").innerHTML = some;
+            ////console.log('document.getElementById("demo").innerHTML = some;');
+            //console.log(some);
+            ////return "poop";
+        //}
+        //console.log('Creating the Promise...');
+        //let myPromise = new Promise(function(myResolve, myReject) {
+            //let x = 99;
             
-            // The producing code (this may take some time)
-            //for (var i = 0; i < 2000; i++ ) {
-                //console.log("interation");
-                //i += 1;
+            //// The producing code (this may take some time)
+            ////for (var i = 0; i < 2000; i++ ) {
+                ////console.log("interation");
+                ////i += 1;
+            ////}
+            
+            //try {
+                //var sse = new RMSSSEnhanced();
+                //var foo = sse.ssRead('apicfg');
+                //if (foo != {}) {
+                    //x = 0;
+                    //console.log("Whee: " + JSON.stringify(foo));
+                //} else {
+                    //console.log("Promise read result: " + JSON.stringify(foo));
+                //}
+            //} catch (e) {
+                //console.log(e);
             //}
             
-            try {
-                var sse = new RMSSSEnhanced();
-                var foo = sse.ssRead('apicfg');
-                if (foo != {}) {
-                    x = 0;
-                } else {
-                    console.log("Promise read result: " + JSON.stringify(foo));
-                }
-            } catch (e) {
-                console.log(e);
-            }
-            
-            if (x == 0) {
-                myResolve("OK");
+            //if (x == 0) {
+                //myResolve("OK");
+            //} else {
+                //myReject("Error");
+            //}
+            //return "completed Value";
+        //});
+        //console.log('Invoking the Promise...');
+        //myPromise.then(
+            //function(value) {myDisplayer(value);},
+            //function(error) {myDisplayer(error);}
+        //);
+        //console.log('Done with the Promise...');        
+        
+        console.log("Trying to wait here until we have the API config bits");
+        // var didIt = false;
+        var waitFunc = function () {
+            console.log("Doing waitFunc");
+            var didIt = false;
+            var sse = new RMSSSEnhanced();
+            var foo = sse.ssRead('apicfg');
+            if (foo != {}) {
+                // x = 0;
+                didIt = true;
+                console.log("Whee: " + JSON.stringify(foo));
             } else {
-                myReject("Error");
+                console.log("Promise read result: " + JSON.stringify(foo));
+                console.log("Trying again...");
+                //setTimeout(waitFunc,1000);
             }
-            return "completed Value";
-        });
-        console.log('Invoking the Promise...');
-        myPromise.then(
-            function(value) {myDisplayer(value);},
-            function(error) {myDisplayer(error);}
-        );
-        console.log('Done with the Promise...');        
-        
-        
-        
+            return didIt;          
+        }
+        while (waitFunc() == false) {
+            for (var snooze = 0; snooze < 1000; snooze += 1 ) {
+                console.log ("snoozing");
+            }
         
         
         
