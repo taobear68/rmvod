@@ -841,29 +841,37 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
-        var sleep = function (miliseconds) {
-            var currentTime = new Date().getTime();
-            while (currentTime + miliseconds >= new Date().getTime()) {
-            }
-        }        
-        var itsOk = false;
-        while (itsOk == false ) {
-            try {
-                //var tmpObj = sse.ssRead('apicfg');
-                //var foo = tmpObj['API_Resources']['api_path'];  
-                var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                itsOk = true;
-                console.log("got it: " + JSON.stringify(tmpObj));
-            } catch(e) {
-                console.log("Nope.");
-                sleep(500);
-                //for (var i = 0; i < 2000; i++ ) {
-                    //// console.log("interation");
-                    //i += 1;
-                //}
-                console.log("Moving on...");     
-            }
-        }
+        
+        
+        
+        //var sleep = function (miliseconds) {
+            //var currentTime = new Date().getTime();
+            //while (currentTime + miliseconds >= new Date().getTime()) {
+            //}
+        //}        
+        //var itsOk = false;
+        //while (itsOk == false ) {
+            //try {
+                ////var tmpObj = sse.ssRead('apicfg');
+                ////var foo = tmpObj['API_Resources']['api_path'];  
+                //var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //itsOk = true;
+                //console.log("got it: " + JSON.stringify(tmpObj));
+            //} catch(e) {
+                //console.log("Nope.");
+                //sleep(500);
+                ////for (var i = 0; i < 2000; i++ ) {
+                    ////// console.log("interation");
+                    ////i += 1;
+                ////}
+                //console.log("Moving on...");     
+            //}
+        //}
+        
+        
+        
+        
+        
         
         //console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
         
