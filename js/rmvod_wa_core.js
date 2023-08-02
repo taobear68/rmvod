@@ -906,7 +906,9 @@ class RMVodWebApp {
             //}
             try {
                 var sse = new RMSSSEnhanced();
-                var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
+                var tmpObj = sse.ssRead('apicfg');
+                var foo = tmpObj['API_Resources']['api_path'];
+                //var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
                 console.log("Whee: " + JSON.stringify(foo));
                 didIt = true;
             } catch (e) {
@@ -915,7 +917,9 @@ class RMVodWebApp {
             }
             return didIt;          
         }
-        while (waitFunc() == false) {
+        var happy = false;
+        while (happy == false) {
+            happy = waitFunc();
             for (var snooze = 0; snooze < 1000; snooze += 1 ) {
                 console.log ("snoozing");
             }
