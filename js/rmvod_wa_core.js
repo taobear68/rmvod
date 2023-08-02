@@ -865,6 +865,7 @@ class RMVodWebApp {
                 var sse = new RMSSSEnhanced();
                 var foo = sse.ssRead('apicfg');
                 x = 0;
+                console.log("Promise read result: " + JSON.stringify(foo));
             } catch (e) {
                 console.log(e);
             }
