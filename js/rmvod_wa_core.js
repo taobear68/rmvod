@@ -847,7 +847,16 @@ class RMVodWebApp {
         this.postJSVer("0.9.1d");
     }
     resetPageTitle(){
-        document.title = "RIBBBITmedia VideoOnDemand";
+        //document.title = "RIBBBITmedia VideoOnDemand";
+        
+        //var apiSettings = wa.sse.ssRead('apicfg')['API_Settings']; // ['service_abbrev'];
+        //clientName =  apiSettings['service_name'];
+        //wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
+        //this.setPageTitle(clientName);   
+        this.setPageTitle(wa.sse.ssRead('apicfg')['API_Settings']['service_name']);     
+        //document.title = "RIBBBITmedia VideoOnDemand";
+        
+        
     }
     setPageTitle(titleStrIn){
         document.title = titleStrIn;
@@ -1095,7 +1104,9 @@ class RMVodWebApp {
             // Populate the artifact details in the page header
             wa.renderArtifactDetailHeader(dataObjIn);
             // Set the browser title to the title of the artifact
-            wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
+            var clientAbbrev = wa.sse.ssRead('apicfg')['API_Settings']['service_abbrev'];
+            //wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
+            wa.setPageTitle(clientAbbrev + ': ' + dataObjIn['title']);
             // Setup an "interval" to post the current play time to a 
             // cookie to be used in "resume payback"
             try {
