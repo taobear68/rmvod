@@ -2992,11 +2992,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.basePageLayout02();
             ml.clockSet();
             ml.initStorage();
-            ml.resetPageTitle();
             ml.execSearchSingleFactor2('tag',{'tag':''});
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
             ml.contCookieOnLoad();
+            ml.resetPageTitle();
             
             //
             recsWrapper('2023-05-25 11:39:05');
