@@ -2990,9 +2990,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         
         case "firstthing":
             ml.basePageLayout02();
-            ml.resetPageTitle();
             ml.clockSet();
             ml.initStorage();
+            ml.resetPageTitle();
             ml.execSearchSingleFactor2('tag',{'tag':''});
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
