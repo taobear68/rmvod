@@ -850,7 +850,20 @@ class RMVodWebApp {
     getApiConfigValue(majorKeyIn,minorKeyIn){
         console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
         var retval;
-        retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+        try {
+            retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+        } catch (e) {
+            var done = false;
+            var cbFunc = function() {
+                retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
+                done = true;
+            }
+            setTimeout(cbFunc,1000);
+            while (done == false) {
+                console.log("sit here like a dummy");
+            }
+            
+        }
         //var cbFunc = function(valIn = retval){
             //valIn = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
         //}
