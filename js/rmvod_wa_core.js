@@ -1413,9 +1413,9 @@ class RMVodWebApp {
                 document.getElementById(epListDEID).appendChild(listDiv);
             }
         }
-        //const endpoint = '/rmvod/api/seriestidlist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/seriestidlist/get';
+        const endpoint = '/rmvod/api/seriestidlist/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/seriestidlist/get';
         const payloadObj = {'artifactid':seriesArtiIdIn};
         this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
@@ -1491,9 +1491,9 @@ class RMVodWebApp {
             var deetDiv = document.getElementById(docElId);
             deetDiv.innerHTML = innerHtml;
         }
-        //const endpoint = '/rmvod/api/artifact/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/get';
+        const endpoint = '/rmvod/api/artifact/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/get';
         const payloadObj = {'artifactid':artiIdIn};
         this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
@@ -1539,10 +1539,10 @@ class RMVodWebApp {
                 if (srchValObjIn['tag'].length > 0){
                     payloadObj = {'tag':srchValObjIn['tag']};
                 } 
-                //endpoint = "/rmvod/api/titleidlist/get";
-                var wa = new RMVodWebApp();
-                var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                endpoint = apiBase + '/titleidlist/get';
+                endpoint = "/rmvod/api/titleidlist/get";
+                //var wa = new RMVodWebApp();
+                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "text":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1558,7 +1558,7 @@ class RMVodWebApp {
                 if (srchValObjIn['text'].length > 0){
                     payloadObj = {'srchstr':srchValObjIn['text']}; 
                 }
-                //var endpoint = "/rmvod/api/simpletxtsrch/get";
+                var endpoint = "/rmvod/api/simpletxtsrch/get";
                 var wa = new RMVodWebApp();
                 var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
                 var endpoint = apiBase + '/simpletxtsrch/get';
@@ -1575,10 +1575,10 @@ class RMVodWebApp {
                 if (srchValObjIn['majtype'].length > 0){
                     payloadObj = {'majtype':srchValObjIn['majtype']};
                 }
-                //endpoint = "/rmvod/api/titleidlist/get";
-                var wa = new RMVodWebApp();
-                var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                endpoint = apiBase + '/titleidlist/get';
+                endpoint = "/rmvod/api/titleidlist/get";
+                //var wa = new RMVodWebApp();
+                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "relyear":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1592,10 +1592,10 @@ class RMVodWebApp {
                 if (srchValObjIn['relyear2'] > 1900){
                     payloadObj = {'relyear1':srchValObjIn['relyear1'],'relyear2':srchValObjIn['relyear2']};
                 }
-                //endpoint = "/rmvod/api/titleidlist/get";
-                var wa = new RMVodWebApp();
-                var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                endpoint = apiBase + '/titleidlist/get';
+                endpoint = "/rmvod/api/titleidlist/get";
+                //var wa = new RMVodWebApp();
+                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "whereclause":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1611,10 +1611,10 @@ class RMVodWebApp {
                 if (srchValObjIn[factorStrIn].length > 0){
                     payloadObj = {'whereclause':srchValObjIn[factorStrIn]};
                 }
-                //endpoint = "/rmvod/api/titleidlist/get";
-                var wa = new RMVodWebApp();
-                var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                endpoint = apiBase + '/titleidlist/get';
+                endpoint = "/rmvod/api/titleidlist/get";
+                //var wa = new RMVodWebApp();
+                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //endpoint = apiBase + '/titleidlist/get';
                 break;
             default:
                 console.log("execSearchSingleFactor fell through: ", factorStrIn, JSON.stringify(srchValObjIn));
@@ -1659,9 +1659,9 @@ class RMVodWebApp {
             document.getElementById('sideartilistwidget').appendChild(tmpDiv);            
         }
         
-        //const endpoint = '/rmvod/api/mfsearch/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/mfsearch/get';
+        const endpoint = '/rmvod/api/mfsearch/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/mfsearch/get';
         const payload = sfValsObj;
         this.genericApiCall(payload,endpoint,cbFunc);
         
@@ -1924,9 +1924,9 @@ class RMVodWebApp {
             
             //END of cbFunc 
         }
-        //const endpoint = '/rmvod/api/artifact/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/get';
+        const endpoint = '/rmvod/api/artifact/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/get';
         const payloadObj = {'artifactid':artiIdIn};
         this.genericApiCall(payloadObj,endpoint,cbFunc);
         //END OF renderArtifactEdit
@@ -1995,9 +1995,9 @@ class RMVodWebApp {
         var cbFunc = function (dataObjIn) {
             console.log('postArtifactFieldEdit.cbFunc: ' + JSON.stringify(dataObjIn));
         }
-        //const endpoint = '/rmvod/api/artifact/update';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/update';
+        const endpoint = '/rmvod/api/artifact/update';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/update';
         const payload = {'artifactid':wrkArtiId,'values':updateObj};
         this.genericApiCall(payload,endpoint,cbFunc);
     }
@@ -2031,9 +2031,9 @@ class RMVodWebApp {
             }
         }
         var payload = {'filepath':nafp,'file':nafn,'majtype':namt};
-        //var endpoint = "/rmvod/api/artifact/newsingle";
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        var endpoint = apiBase + '/artifact/newsingle';
+        var endpoint = "/rmvod/api/artifact/newsingle";
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var endpoint = apiBase + '/artifact/newsingle';
         this.genericApiCall(payload,endpoint,cbFunc);
     }
     // Submit "Add Multiple Artifacts" form
@@ -2062,9 +2062,9 @@ class RMVodWebApp {
                 }
             }
             var payload = {'filepath':nafp,'file':laFileList[i],'majtype':namt,'tags':[natag]};
-            //var endpoint = "/rmvod/api/artifact/newsingle";
-            var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-            const endpoint = apiBase + '/artifact/newsingle';
+            var endpoint = "/rmvod/api/artifact/newsingle";
+            //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+            //const endpoint = apiBase + '/artifact/newsingle';
             this.genericApiCall(payload,endpoint,cbFunc);
         }
     }
@@ -2703,9 +2703,9 @@ class RMVodWebApp {
             document.getElementById('structfeatureedit').appendChild(tmpDiv);
         }
         var payloadObj = {'seriesaid': seriesaidIn, 'filepath':filepathIn, 'filefrag':filefragIn};
-        //var endpoint = '/rmvod/api/series/artifacts/add';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/series/artifacts/add';
+        var endpoint = '/rmvod/api/series/artifacts/add';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/series/artifacts/add';
         this.genericApiCall(payloadObj,endpoint,cbFunc)
     }
     
@@ -2803,9 +2803,9 @@ class RMVodWebApp {
             wa.vodPlayTitleApi3(objIn['data']);
         }
         var payloadObj = {'artiid':seriesAidIn};
-        //var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/recs/serfirstep/get';
+        var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/recs/serfirstep/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
         
         var rec = new WMCWARecommend();
@@ -2834,9 +2834,9 @@ class RMVodWebApp {
             }
         }
         var payloadObj = {'artiid':seriesAID,'season':seriesSeason};
-        //var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/recs/serseasoneplist/get';
+        var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/recs/serseasoneplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
         
     }
@@ -2860,9 +2860,9 @@ function recsWrapper(sinceDtStrIn){
             rec.popMasterDiv(sinceDtStrIn);            
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
-        //var endpoint = '/rmvod/api/artifact/recs/get';
-        var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/recs/get';
+        var endpoint = '/rmvod/api/artifact/recs/get';
+        //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/recs/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
     }
 function deetShow(eventObjIn){
@@ -3200,9 +3200,9 @@ class WMCWARecommend {
         }
         var wa = new RMVodWebApp();
         var payloadObj = {'artiid':artiDetObj['artifactid']};
-        //var endpoint = '/rmvod/api/artifact/recs/serseasonnmbrlist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/recs/serseasonnmbrlist/get';
+        var endpoint = '/rmvod/api/artifact/recs/serseasonnmbrlist/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/recs/serseasonnmbrlist/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
     }
     hideartiDetailDiv(){
