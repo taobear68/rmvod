@@ -857,24 +857,26 @@ class RMVodWebApp {
             //while (currentTime + miliseconds >= new Date().getTime()) {
             //}
         //}        
-        var itsOk = false;
-        while (itsOk == false ) {
-            try {
-                //var tmpObj = sse.ssRead('apicfg');
-                //var foo = tmpObj['API_Resources']['api_path'];  
-                var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                itsOk = true;
-                console.log("got it: " + JSON.stringify(tmpObj));
-            } catch(e) {
-                console.log("Nope.");
-                //sleep(500);
-                //for (var i = 0; i < 2000; i++ ) {
-                    //// console.log("interation");
-                    //i += 1;
-                //}
-                console.log("Moving on...");     
-            }
-        }
+        
+        
+        //var itsOk = false;
+        //while (itsOk == false ) {
+            //try {
+                ////var tmpObj = sse.ssRead('apicfg');
+                ////var foo = tmpObj['API_Resources']['api_path'];  
+                //var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+                //itsOk = true;
+                //console.log("got it: " + JSON.stringify(tmpObj));
+            //} catch(e) {
+                //console.log("Nope.");
+                ////sleep(500);
+                ////for (var i = 0; i < 2000; i++ ) {
+                    ////// console.log("interation");
+                    ////i += 1;
+                ////}
+                //console.log("Moving on...");     
+            //}
+        //}
         
         
         
@@ -1165,9 +1167,9 @@ class RMVodWebApp {
         }
         const payloadObj = {};
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        var apiBase = this.getApiConfigValue('API_Resources','api_path');
-        //const endpoint = '/rmvod/api/apiversion/get';
-        const endpoint = apiBase + '/apiversion/get';
+        //var apiBase = this.getApiConfigValue('API_Resources','api_path');
+        //const endpoint = apiBase + '/apiversion/get';
+        const endpoint = '/rmvod/api/apiversion/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     // Retrieves a fresh copy of the "persons" list
@@ -1182,10 +1184,10 @@ class RMVodWebApp {
             sse.ssWrite('blob',theBlob);
         }
         const payloadObj = {'table':'persons'};
-        //const endpoint = '/rmvod/api/suplist/get';
+        const endpoint = '/rmvod/api/suplist/get';
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        var apiBase = this.getApiConfigValue('API_Resources','api_path');
-        const endpoint = apiBase + '/suplist/get';
+        //var apiBase = this.getApiConfigValue('API_Resources','api_path');
+        //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     // Retrieves a fresh copy of the "vompanies" list
@@ -1200,10 +1202,10 @@ class RMVodWebApp {
             sse.ssWrite('blob',theBlob);
         }
         const payloadObj = {'table':'companies'};
-        //const endpoint = '/rmvod/api/suplist/get';
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        var apiBase = this.getApiConfigValue('API_Resources','api_path');
-        const endpoint = apiBase + '/suplist/get';
+        const endpoint = '/rmvod/api/suplist/get';
+        ////var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var apiBase = this.getApiConfigValue('API_Resources','api_path');
+        //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     // Retrieves a fresh copy of the "tags" list
@@ -1218,10 +1220,10 @@ class RMVodWebApp {
             sse.ssWrite('blob',theBlob);
         }
         const payloadObj = {'table':'tags'};
-        //const endpoint = '/rmvod/api/suplist/get';
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        var apiBase = this.getApiConfigValue('API_Resources','api_path');
-        const endpoint = apiBase + '/suplist/get';
+        const endpoint = '/rmvod/api/suplist/get';
+        ////var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //var apiBase = this.getApiConfigValue('API_Resources','api_path');
+        //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     // Associated with RNWAListFieldWidget, this method performs an
@@ -1231,9 +1233,9 @@ class RMVodWebApp {
     apiExecListAction(deIdIn, actionIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
         var listName = deIdIn.split('_')[0];
         var artiId = document.getElementById(listName + '_DocId').innerText;
-        //var endpoint = "/rmvod/api/artifact/listfield/update";
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/artifact/listfield/update';
+        var endpoint = "/rmvod/api/artifact/listfield/update";
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/artifact/listfield/update';
         var payloadObj = {};
         payloadObj['action'] = actionIn;
         payloadObj['field'] = listName;
@@ -1322,9 +1324,9 @@ class RMVodWebApp {
             console.log('vodPlayTitleApi2 - Setting the classname for the playing artifact failed');
         }
         // Do the API call.
-        //const apiEndpoint = '/rmvod/api/artifact/get'; 
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const apiEndpoint = apiBase + '/artifact/get'; 
+        const apiEndpoint = '/rmvod/api/artifact/get'; 
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const apiEndpoint = apiBase + '/artifact/get'; 
         const payload = {'artifactid':artiIdIn};
         this.genericApiCall(payload,apiEndpoint,cbFunc);
         this.apiLogPlay(artiIdIn);
@@ -1334,9 +1336,9 @@ class RMVodWebApp {
         var cbFunc = function(dataObjIn){
             //console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
         }
-        //const apiEndpoint = '/rmvod/api/logplay/post'; 
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const apiEndpoint = apiBase + '/logplay/post'; 
+        const apiEndpoint = '/rmvod/api/logplay/post'; 
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const apiEndpoint = apiBase + '/logplay/post'; 
         const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
         this.genericApiCall(payload,apiEndpoint,cbFunc);        
     }
@@ -1359,9 +1361,9 @@ class RMVodWebApp {
             wa.vodPlayTitleApi3(objIn['artifactid']);
         }
         const payloadObj = {'artifactid':artiIdIn};
-        //const endpoint = '/rmvod/api/nextepisode/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/nextepisode/get';
+        const endpoint = '/rmvod/api/nextepisode/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/nextepisode/get';
         this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     // Refresh the Tag select list in the search widget by way of 
@@ -1393,9 +1395,9 @@ class RMVodWebApp {
                 }
             }
         }
-        //const endpoint = '/rmvod/api/suplist/get';
-        var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        const endpoint = apiBase + '/suplist/get';
+        const endpoint = '/rmvod/api/suplist/get';
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const endpoint = apiBase + '/suplist/get';
         const payload = {'table':'tags'};
         this.genericApiCall(payload,endpoint,cbFunc);
     }
