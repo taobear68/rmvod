@@ -3296,7 +3296,8 @@ class WMCWARecommend {
                 lSpan.id = typesList[i] + "-" + mtList[j] + "-rec-quicklink";
                 lSpan.dataset.timlist = JSON.stringify(recObjIn['data'][typesList[i]][mtList[j]]);
                 lSpan.innerHTML = "<b><u>Quick List: " + typesList[i] + " " + mtList[j] + "</u></b>";
-                lSpan.addEventListener('click', function () { qsRecCommonPopSideList(this.id)});
+                //lSpan.addEventListener('click', function () { qsRecCommonPopSideList(this.id)});  // recqspopsidelist
+                lSpan.addEventListener('click', function () { switchboard('recqspopsidelist',this.id,{})});  // recqspopsidelist
                 lDiv.appendChild(lSpan);
                 containerDiv.appendChild(lDiv);
             }
