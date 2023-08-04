@@ -3256,7 +3256,7 @@ class WMCWARecommend {
         outerDiv.innerHTML = tmpHtml;
         document.getElementById('headerblock2').appendChild(outerDiv);
         
-        qsRecGenerateLinkList(this.recSrcData['data'])
+        this.qsRecGenerateLinkList(this.recSrcData['data'])
     }
     
     qsRecCommonPopSideList(deIdIn) {
