@@ -3258,7 +3258,7 @@ class WMCWARecommend {
         outerDiv.id = "recqsl";
         outerDiv.classname = "recqsl";
         var tmpHtml = "";
-        tmpHtml += "<hr style="width:50%;text-align:center;margin-left:0">";
+        tmpHtml += '<hr style="width:50%;text-align:center;margin-left:0">';
         tmpHtml += "<span><b>Quick Searches from Recommendations:</b></span>";
         tmpHtml += '<div id="rec-quicklink-container">&nbsp;</div>';
 
