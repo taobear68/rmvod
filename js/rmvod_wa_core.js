@@ -3269,7 +3269,7 @@ class WMCWARecommend {
     }
     
     qsRecCommonPopSideList(deIdIn) {
-        console.log('qsRecCommonPopSideList - deIdIn: ' + deIdIn);
+        //onsole.log('qsRecCommonPopSideList - deIdIn: ' + deIdIn);
         var de = document.getElementById(deIdIn);
         var artiHandleList = JSON.parse(de.dataset.timlist);
         var slPopList = []
@@ -3280,18 +3280,18 @@ class WMCWARecommend {
             tmpObj['majtype'] = artiHandleList[i]['majtype'];
             slPopList.push(tmpObj);
         }
-        console.log(JSON.stringify(slPopList));
+        //console.log(JSON.stringify(slPopList));
         return slPopList;
     }
     // Build the list of "quick links" and stuff them in the target div.
     qsRecGenerateLinkListOlde(recObjIn) {
-        console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
+        //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
         containerDiv.innerHTML = "&nbsp;";
         var typesList = Object.keys(recObjIn['data']);
         for (var i = 0; i < typesList.length; i++ ) {
             var mtList = Object.keys(recObjIn['data'][typesList[i]]);
-            console.log(JSON.stringify(mtList));
+            //console.log(JSON.stringify(mtList));
             for (var j = 0; j < mtList.length; j++ ) {
                 var lDiv = document.createElement('div');
                 var lSpan  = document.createElement('span');
@@ -3308,13 +3308,13 @@ class WMCWARecommend {
     
     // Build the list of "quick links" and stuff them in the target div.
     qsRecGenerateLinkList(recObjIn) {
-        console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
+        //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
         containerDiv.innerHTML = "&nbsp;";
         var typesList = Object.keys(recObjIn['data']);
         for (var i = 0; i < typesList.length; i++ ) {
             var mtList = Object.keys(recObjIn['data'][typesList[i]]);
-            console.log(JSON.stringify(mtList));
+            //console.log(JSON.stringify(mtList));
             var lDiv = document.createElement('div');
             lDiv.innerHTML = "Quick List: " + typesList[i] + " ";
             for (var j = 0; j < mtList.length; j++ ) {
