@@ -841,6 +841,21 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
+        
+        
+        /* This is a bunch of stuff I tried to make "inline" execution
+         * pause here, until the API configuration data had been fully
+         * loaded into Session Storage, but everything is terrible.
+         * Javascript is single-threaded in a way that makes it so an
+         * API call can run separately from the main body of a program, 
+         * but if you do anything to pause the main body of the program
+         * the API call stalls.  What a bonkers execution environment.
+         * 
+         * Preserved here for hysterical raisins... just to show what 
+         * I'd tried so as not to repeat the same mistakes.
+         * */
+        
+        
         //var sleep = function (miliseconds) {
             //var currentTime = new Date().getTime();
             //while (currentTime + miliseconds >= new Date().getTime()) {
@@ -972,6 +987,10 @@ class RMVodWebApp {
             //}
         //}
         
+        
+        /* End of bonkers crap I tried to wait until the config data 
+         * actuall got here.
+         * */
         
         
         this.apiFetchPersonsList();
@@ -2855,6 +2874,9 @@ function recsWrapper(sinceDtStrIn){
         var recLimitInt = 30;
         var cbFunc = function (objIn) {
             var rec = new WMCWARecommend();
+            
+            rec.renderRecQuickSearchContainer();
+            
             rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
             rec.recSrcData = objIn;
             rec.popMasterDiv(sinceDtStrIn);            
@@ -3217,6 +3239,63 @@ class WMCWARecommend {
         dDiv.dataset.artifactid = artiIdIn; //artiIdIn
         this.showArtiDetailDiv();
     }
+    renderRecQuickSearchContainer(){
+        
+        // headerblock2
+        
+        //<div>
+            //<hr>
+            //<span><b>Quick Searches from Recommendations:</b></span>
+            //<div id="rec-quicklink-container">       
+        var outerDiv = document.createElement('div');
+        var tmpHtml = "";
+        tmpHtml += "<hr>";
+        tmpHtml += "<span><b>Quick Searches from Recommendations:</b></span>";
+        tmpHtml += '<div id="rec-quicklink-container">&nbsp;</div>';
+
+        outerDiv.innerHTML = tmpHtml;
+        document.getElementById('headerblock2').appendChild(outerDiv);
+        
+        qsRecGenerateLinkList(this.recSrcData['data'])
+    }
+    
+    qsRecCommonPopSideList(deIdIn) {
+        console.log('qsRecCommonPopSideList - deIdIn: ' + deIdIn);
+        var de = document.getElementById(deIdIn);
+        var artiHandleList = JSON.parse(de.dataset.timlist);
+        slPopList = []
+        for (var i=0; i < artiHandleList.length; i++ ) {
+            var tmpObj = {};
+            tmpObj['title'] = artiHandleList[i]['title'];
+            tmpObj['artifactid'] = artiHandleList[i]['artifactid'];
+            tmpObj['majtype'] = artiHandleList[i]['majtype'];
+            slPopList.push(tmpObj);
+        }
+        console.log(JSON.stringify(slPopList));
+        return slPopList;
+    }
+    // Build the list of "quick links" and stuff them in the target div.
+    qsRecGenerateLinkList(recObjIn) {
+        var containerDiv = document.getElementById('rec-quicklink-container');
+        containerDiv.innerHTML = "&nbsp;";
+        var typesList = Object.keys(recObjIn['data']);
+        for (var i = 0; i < typesList.length; i++ ) {
+            var mtList = Object.keys(recObjIn['data'][typesList[i]]);
+            console.log(JSON.stringify(mtList));
+            for (var j = 0; j < mtList.length; j++ ) {
+                var lDiv = document.createElement('div');
+                var lSpan  = document.createElement('span');
+                lSpan.id = typesList[i] + "-" + mtList[j] + "-rec-quicklink";
+                lSpan.dataset.timlist = JSON.stringify(recObjIn['data'][typesList[i]][mtList[j]]);
+                lSpan.innerHTML = "<b><u>Quick List: " + typesList[i] + " " + mtList[j] + "</u></b>";
+                lSpan.addEventListener('click', function () { qsRecCommonPopSideList(this.id)});
+                lDiv.appendChild(lSpan);
+                containerDiv.appendChild(lDiv);
+            }
+        }
+    }
+    
+
 }
 
 //
@@ -3388,6 +3467,13 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;
         case 'recFetchSeriesSeasonEpList':
             ml.getEpiListForSeriesSeason(objIdIn);
+            break;
+            
+        case 'recqspopsidelist':
+            console.log('recqspopsidelist: ' + objIdIn);
+            var rec = new WMCWARecommend();
+            var popList = rec.qsRecCommonPopSideList(objIdIn);
+            ml.renderSALByIdList(popList);
             break;
             
             
