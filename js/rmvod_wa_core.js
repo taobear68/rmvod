@@ -3262,7 +3262,10 @@ class WMCWARecommend {
         var tmpHtml = "";
         tmpHtml += '<hr style="margin-left:75px;margin-right:75px;">'; // width:50%;text-align:center;margin-left:0
         tmpHtml += "<span><b>Quick Searches from Recommendations:</b></span>";
-        tmpHtml += '<div id="rec-quicklink-container">&nbsp;</div>';
+        //tmpHtml += '<div id="rec-quicklink-container">&nbsp;</div>'; // containerDiv.innerHTML = '<div class="throbber-ring"></div>';
+        tmpHtml += '<div id="rec-quicklink-container">';
+        tmpHtml += '<div class="throbber-ring"></div>';
+        tmpHtml += '</div>'; // containerDiv.innerHTML = '<div class="throbber-ring"></div>';
 
         outerDiv.innerHTML = tmpHtml;
         document.getElementById('headerblock2').appendChild(outerDiv);
@@ -3312,8 +3315,8 @@ class WMCWARecommend {
     qsRecGenerateLinkList(recObjIn) {
         //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
-        //containerDiv.innerHTML = "&nbsp;"; //'<div class="throbber-ring"></div>';
-        containerDiv.innerHTML = '<div class="throbber-ring"></div>';
+        containerDiv.innerHTML = "&nbsp;"; //'<div class="throbber-ring"></div>';
+        //containerDiv.innerHTML = '<div class="throbber-ring"></div>';
         var typesList = Object.keys(recObjIn['data']);
         for (var i = 0; i < typesList.length; i++ ) {
             var mtList = Object.keys(recObjIn['data'][typesList[i]]);
