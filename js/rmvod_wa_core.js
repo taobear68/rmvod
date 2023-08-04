@@ -3483,7 +3483,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             var rec = new WMCWARecommend();
             var popList = rec.qsRecCommonPopSideList(objIdIn);
             var slDiv = ml.renderSALByIdList(popList);
-            document.getElementById('sideartilistwidget').innerHTML = slDiv;
+            document.getElementById('sideartilistwidget').innerHTML = '';
+            document.getElementById('sideartilistwidget').appendChild(slDiv);
             break;
             
             
