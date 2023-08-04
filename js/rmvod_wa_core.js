@@ -3270,7 +3270,7 @@ class WMCWARecommend {
         console.log('qsRecCommonPopSideList - deIdIn: ' + deIdIn);
         var de = document.getElementById(deIdIn);
         var artiHandleList = JSON.parse(de.dataset.timlist);
-        slPopList = []
+        var slPopList = []
         for (var i=0; i < artiHandleList.length; i++ ) {
             var tmpObj = {};
             tmpObj['title'] = artiHandleList[i]['title'];
