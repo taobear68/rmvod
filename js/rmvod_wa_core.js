@@ -2869,26 +2869,28 @@ class RMVodWebApp {
 //
 
 function recsWrapper(sinceDtStrIn){
-        var wa = new RMVodWebApp();
-        var clientId = wa.cc.getCookie('clientid')
-        var sinceDTStr = "2023-02-01 00:00:01";
-        var recLimitInt = 30;
-        var cbFunc = function (objIn) {
-            var rec = new WMCWARecommend();
-            rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
-            //rec.recSrcData = objIn;
-            rec.setRecSrcData(objIn);
-            rec.popMasterDiv(sinceDtStrIn);            
-            
-            rec.renderRecQuickSearchContainer();
-            
-        }
-        var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
-        var endpoint = '/rmvod/api/artifact/recs/get';
-        //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //const endpoint = apiBase + '/artifact/recs/get';
-        var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
+    //put a thobber in the recs tab
+    document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
+    var wa = new RMVodWebApp();
+    var clientId = wa.cc.getCookie('clientid')
+    var sinceDTStr = "2023-02-01 00:00:01";
+    var recLimitInt = 30;
+    var cbFunc = function (objIn) {
+        var rec = new WMCWARecommend();
+        rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
+        //rec.recSrcData = objIn;
+        rec.setRecSrcData(objIn);
+        rec.popMasterDiv(sinceDtStrIn);            
+        
+        rec.renderRecQuickSearchContainer();
+        
     }
+    var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
+    var endpoint = '/rmvod/api/artifact/recs/get';
+    //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
+    //const endpoint = apiBase + '/artifact/recs/get';
+    var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
+}
 function deetShow(eventObjIn){
     var rec = new WMCWARecommend();
     document.getElementById('artifactDetailDiv').dataset.artifact = this.dataset.artifact;
@@ -3310,7 +3312,8 @@ class WMCWARecommend {
     qsRecGenerateLinkList(recObjIn) {
         //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
-        containerDiv.innerHTML = "&nbsp;";
+        //containerDiv.innerHTML = "&nbsp;"; //'<div class="throbber-ring"></div>';
+        containerDiv.innerHTML = '<div class="throbber-ring"></div>';
         var typesList = Object.keys(recObjIn['data']);
         for (var i = 0; i < typesList.length; i++ ) {
             var mtList = Object.keys(recObjIn['data'][typesList[i]]);
