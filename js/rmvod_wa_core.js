@@ -2871,6 +2871,8 @@ class RMVodWebApp {
 function recsWrapper(sinceDtStrIn){
     //put a thobber in the recs tab
     document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
+    var rec = new WMCWARecommend();
+    rec.renderRecQuickSearchContainer();
     var wa = new RMVodWebApp();
     var clientId = wa.cc.getCookie('clientid')
     var sinceDTStr = "2023-02-01 00:00:01";
@@ -2880,9 +2882,9 @@ function recsWrapper(sinceDtStrIn){
         rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
         //rec.recSrcData = objIn;
         rec.setRecSrcData(objIn);
-        rec.renderRecQuickSearchContainer();
+        //rec.renderRecQuickSearchContainer();
         rec.popMasterDiv(sinceDtStrIn);
-        rec.this.qsRecGenerateLinkList(rec.recSrcData); 
+        rec.qsRecGenerateLinkList(objIn); 
         
     }
     var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
@@ -3315,7 +3317,7 @@ class WMCWARecommend {
     qsRecGenerateLinkList(recObjIn) {
         //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
-        containerDiv.innerHTML = "&nbsp;"; //'<div class="throbber-ring"></div>';
+        containerDiv.innerHTML = ""; //'<div class="throbber-ring"></div>';
         //containerDiv.innerHTML = '<div class="throbber-ring"></div>';
         var typesList = Object.keys(recObjIn['data']);
         for (var i = 0; i < typesList.length; i++ ) {
