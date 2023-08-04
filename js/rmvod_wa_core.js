@@ -3258,7 +3258,7 @@ class WMCWARecommend {
         outerDiv.id = "recqsl";
         outerDiv.classname = "recqsl";
         var tmpHtml = "";
-        tmpHtml += '<hr style="width:50%;text-align:center;margin-left:0">';
+        tmpHtml += '<hr style="margin-left:75px;margin-right:75px;">'; // width:50%;text-align:center;margin-left:0
         tmpHtml += "<span><b>Quick Searches from Recommendations:</b></span>";
         tmpHtml += '<div id="rec-quicklink-container">&nbsp;</div>';
 
@@ -3284,7 +3284,7 @@ class WMCWARecommend {
         return slPopList;
     }
     // Build the list of "quick links" and stuff them in the target div.
-    qsRecGenerateLinkList(recObjIn) {
+    qsRecGenerateLinkListOlde(recObjIn) {
         console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
         var containerDiv = document.getElementById('rec-quicklink-container');
         containerDiv.innerHTML = "&nbsp;";
@@ -3303,6 +3303,34 @@ class WMCWARecommend {
                 lDiv.appendChild(lSpan);
                 containerDiv.appendChild(lDiv);
             }
+        }
+    }
+    
+    // Build the list of "quick links" and stuff them in the target div.
+    qsRecGenerateLinkList(recObjIn) {
+        console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
+        var containerDiv = document.getElementById('rec-quicklink-container');
+        containerDiv.innerHTML = "&nbsp;";
+        var typesList = Object.keys(recObjIn['data']);
+        for (var i = 0; i < typesList.length; i++ ) {
+            var mtList = Object.keys(recObjIn['data'][typesList[i]]);
+            console.log(JSON.stringify(mtList));
+            var lDiv = document.createElement('div');
+            lDiv.innerHTML = "Quick List: " + typesList[i] + " ";
+            for (var j = 0; j < mtList.length; j++ ) {
+                //var lDiv = document.createElement('div');
+                var lSpan  = document.createElement('span');
+                lSpan.id = typesList[i] + "-" + mtList[j] + "-rec-quicklink";
+                lSpan.dataset.timlist = JSON.stringify(recObjIn['data'][typesList[i]][mtList[j]]);
+                //lSpan.innerHTML = "<b><u>Quick List: " + typesList[i] + " " + mtList[j] + "";
+                //lSpan.addEventListener('click', function () { qsRecCommonPopSideList(this.id)});  // recqspopsidelist
+                lSpan.innerHTML = " <b><u>" + mtList[j] + "</u></b> ";
+                lSpan.addEventListener('click', function () { switchboard('recqspopsidelist',this.id,{})});  // recqspopsidelist
+                lDiv.appendChild(lSpan);
+                //containerDiv.appendChild(lDiv);
+            }
+            //lDiv.innerHTML = lDiv.innerHTML + 
+            containerDiv.appendChild(lDiv);
         }
     }
     
