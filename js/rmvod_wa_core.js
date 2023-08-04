@@ -2956,6 +2956,10 @@ class WMCWARecommend {
         var roKeys = Object.keys(recsObj);
         var recClass = "";
         var mtClass = "";
+        
+        document.getElementById(this.targetParentElementId).innerHTML = "";
+        
+        
         for ( var i = 0; i < roKeys.length; i++ ) {
             var rtKeys = Object.keys(recsObj[roKeys[i]]);
             var rowCont;
