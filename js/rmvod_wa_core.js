@@ -777,6 +777,7 @@ class RMVodWebApp {
         
         sstorTemplObj.push({'name':'localcfg','type':'dict','content':'{}'}); // Tree Metadata
         sstorTemplObj.push({'name':'apicfg','type':'dict','content':'{}'}); // Tree Metadata
+        sstorTemplObj.push({'name':'recdata','type':'dict','content':'{}'}); // Tree Metadata
         sstorTemplObj.push({'name':'refdata','type':'dict','content':{}});
         sstorTemplObj.push({'name':'filterdata','type':'dict','content':{}});
         sstorTemplObj.push({'name':'sortdata','type':'dict','content':{}});
@@ -2874,12 +2875,13 @@ function recsWrapper(sinceDtStrIn){
         var recLimitInt = 30;
         var cbFunc = function (objIn) {
             var rec = new WMCWARecommend();
+            rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
+            //rec.recSrcData = objIn;
+            rec.setRecSrcData(objIn);
+            rec.popMasterDiv(sinceDtStrIn);            
             
             rec.renderRecQuickSearchContainer();
             
-            rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
-            rec.recSrcData = objIn;
-            rec.popMasterDiv(sinceDtStrIn);            
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
         var endpoint = '/rmvod/api/artifact/recs/get';
@@ -2924,6 +2926,11 @@ class WMCWARecommend {
         this.artiClassDefLU = {};
         this.artiClassDefLU['tvseries'] = "TV Series";
         this.artiClassDefLU['movie'] = "Movie";
+    }
+    setRecSrcData(rsdObjIn){
+        var sse = new RMSSSEnhanced();
+        sse.ssWrite('recdata',rsdObjIn);
+        this.recSrcData = sse.ssRead('recdata');
     }
     popMasterDiv(sinceDTStrIn) {
         
