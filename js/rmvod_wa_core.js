@@ -836,7 +836,7 @@ class RMVodWebApp {
             // console.log('apicfg => storing ' + JSON.stringify(objIn));
             var sse = new RMSSSEnhanced();
             sse.ssWrite('apicfg',objIn['data']);
-            console.log('apicfg => stored ' + JSON.stringify(sse.ssRead('apicfg')));
+            //console.log('apicfg => stored ' + JSON.stringify(sse.ssRead('apicfg')));
         }
         var payloadObj = {};
         var endpoint = '/rmvod/api/config/get';
