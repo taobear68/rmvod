@@ -2880,9 +2880,9 @@ function recsWrapper(sinceDtStrIn){
         rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
         //rec.recSrcData = objIn;
         rec.setRecSrcData(objIn);
-        rec.popMasterDiv(sinceDtStrIn);            
-        
         rec.renderRecQuickSearchContainer();
+        rec.popMasterDiv(sinceDtStrIn);
+        rec.this.qsRecGenerateLinkList(rec.recSrcData); 
         
     }
     var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
@@ -3270,7 +3270,7 @@ class WMCWARecommend {
         outerDiv.innerHTML = tmpHtml;
         document.getElementById('headerblock2').appendChild(outerDiv);
         
-        this.qsRecGenerateLinkList(this.recSrcData); // ['data']
+        //this.qsRecGenerateLinkList(this.recSrcData); // ['data']
     }
     
     qsRecCommonPopSideList(deIdIn) {
