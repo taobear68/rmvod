@@ -1342,7 +1342,7 @@ class RMVodWebApp {
             // If we're supposed to play in full screen, let's do that now.
             try {
                 if (wa.cc.getCookie('opt_fullscreenplay') == 'true') {
-                    document.getElementById('actualvideoplayer').webkitEnterFullScreen();
+                    document.getElementById('actualvideoplayer').webkitRequestFullscreen();
                 }
             } catch (e) {
                 console.log("webkitEnterFullScreen not supported.  " + e);
