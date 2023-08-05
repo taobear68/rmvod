@@ -653,6 +653,7 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<div><b>Settings</b></div>';
         tmpHtml += '<div><b>Play next in series: </b><input name="serplaynext" id="serplaynext" type="checkbox"></div>';
         tmpHtml += '<div><b>Resume play: </b><input name="resumeplay" id="resumeplay" type="checkbox"></div>';
+        tmpHtml += '<div><b>Play fullscreen: </b><input name="fullscreenplay" id="fullscreenplay" type="checkbox"></div>';
         
         tmpHtml += '<div><span onclick="switchboard(\'formNewSingleArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         tmpHtml += '<b><u>Create a single Artifact</u></b>'
@@ -1295,8 +1296,12 @@ class RMVodWebApp {
     vodPlayTitleApi3(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
         var cbFunc = function (objIn) {
             var dataObjIn = objIn['data'][0];
-            
             var wa = new RMVodWebApp();
+            
+            //Are we playing full-screen by default?  Let's find out.
+            var fstf = document.getElementById('fullscreenplay').checked;
+            wa.cc.setCookie('opt_fullscreenplay',String(fstf),365);
+            
             wa.cc.setCookie('playing_aid',dataObjIn['artifactid'],365);
             try {
                 const tmpIntvHandle = this.cc.getCookie('cont_play_sample_int_handle');
@@ -1333,6 +1338,17 @@ class RMVodWebApp {
             } catch (e) {
                 console.log('vodPlayTitleApi2 cbFunc barfed on trying wa.contCookiePostInterval(60000): ' + e);
             }
+            
+            // If we're supposed to play in full screen, let's do that now.
+            try {
+                if (wa.cc.getCookie('opt_fullscreenplay') == 'true') {
+                    document.getElementById('actualvideoplayer').webkitEnterFullScreen();
+                }
+            } catch (e) {
+                console.log("webkitEnterFullScreen not supported.  " + e);
+            }
+                    
+            
         }
         // Add this artifactid to the "recent plays" cookie
         this.cc.addRecentPlay(artiIdIn);
@@ -1370,6 +1386,14 @@ class RMVodWebApp {
     vodPlayNextTitle(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
         // Clear browser title
         this.resetPageTitle();
+        
+        //dump out of FullScreen
+        try {
+            document.getElementById('actualvideoplayer').webkitExitFullScreen();
+        } catch (e) {
+            console.log("webkitExitFullScreen not supported.  " + e);
+        }
+        
         //// Confirm checkbox is checked
         if (document.getElementById('serplaynext').checked == false) {
             console.log('serplaynext not checked');
@@ -2094,7 +2118,7 @@ class RMVodWebApp {
     // Check for, and if they are present, load and respect 
     // cookie-stored option values
     onloadOptions(){
-        var optList = ['serplaynext','resumeplay'];
+        var optList = ['serplaynext','resumeplay','fullscreenplay'];
         
         for (var idx=0; idx < optList.length; idx++ ) {
             var optNm = optList[idx];
