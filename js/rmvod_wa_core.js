@@ -1389,7 +1389,11 @@ class RMVodWebApp {
         
         //dump out of FullScreen
         try {
-            document.getElementById('actualvideoplayer').webkitExitFullScreen();
+            var pNextTF = String(document.getElementById('serplaynext').checked);
+            var pFullTF = String(document.getElementById('fullscreenplay').checked);
+            if ((pNextTF == 'false') & (pFullTF == 'true')) {
+                document.getElementById('actualvideoplayer').webkitExitFullScreen();
+            }
         } catch (e) {
             console.log("webkitExitFullScreen not supported.  " + e);
         }
