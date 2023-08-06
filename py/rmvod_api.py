@@ -1586,7 +1586,7 @@ ORDER BY expire_date DESC
 LIMIT 1"""
         print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
-        print("getRecJsonFromCache - tmpSql: " + tmpSql)
+        print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
         
         retval = None
         for row in rowsTuple:
