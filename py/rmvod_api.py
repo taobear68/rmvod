@@ -1563,34 +1563,34 @@ ORDER BY 1"""
         return retList
     def writeRecToCache(self,clientIdIn=None,recDictIn=None,expDurDaysIn=7):
         print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) ) # + ", recDictIn: " + json.dumps(recDictIn))
-        #uRecId = str(uuid.uuid4())
-        
-        # tmpSql = """INSERT INTO common_texts
-# SET id = '""" + uRecId + """',
-    # record_type = "recommendation",
-    # filt_crit_1 = '""" + clientIdIn + """',
-    # filt_crit_2 = "",
-    # filt_crit_3 = "",
-    # create_date = NOW(),
-    # update_date = NOW(),
-    # expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
-    # metadata = "{'desc':'Recommendations cache'}",
-    # record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+        uRecId = str(uuid.uuid4())
         
         tmpSql = """INSERT INTO common_texts
-SET id = 'fakeUUID',
+SET id = '""" + uRecId + """',
     record_type = "recommendation",
-    filt_crit_1 = 'fake_client_id',
+    filt_crit_1 = '""" + clientIdIn + """',
     filt_crit_2 = "",
     filt_crit_3 = "",
     create_date = NOW(),
     update_date = NOW(),
-    expire_date = INTERVAL 7 DAY + NOW() ,
-    metadata = 'Recommendations cache',
-    record_data = 'fake data'; """
+    expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
+    metadata = "{'desc':'Recommendations cache'}",
+    record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+        
+        # tmpSql = """INSERT INTO common_texts
+# SET id = 'fakeUUID',
+    # record_type = "recommendation",
+    # filt_crit_1 = 'fake_client_id',
+    # filt_crit_2 = "",
+    # filt_crit_3 = "",
+    # create_date = NOW(),
+    # update_date = NOW(),
+    # expire_date = INTERVAL 7 DAY + NOW() ,
+    # metadata = 'Recommendations cache',
+    # record_data = 'fake data'; """
         
         
-        print("writeRecToCache - tmpSql: " + tmpSsql)
+        print("writeRecToCache - tmpSql: " + tmpSql)
         this._stdInsert(tmpSql);
         pass
         
