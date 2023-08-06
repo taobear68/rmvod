@@ -1577,6 +1577,7 @@ SET id = '""" + uRecId + """',
         print("writeRecToCache - tmpSql: " + tmpSsql)
         this._stdInsert(tmpSql);
         pass
+        
     def getRecJsonFromCache(self,clientIdIn=None):
         tmpSql = """SELECT record_data 
 FROM common_texts 
@@ -1589,8 +1590,9 @@ LIMIT 1"""
         print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
         
         retval = None
-        for row in rowsTuple:
-            retval = row[0]
+        if (len(rowsTuple) > 0):
+            for row in rowsTuple:
+                retval = row[0]
         return retval
 
 class RMVOD_Recommendations:
