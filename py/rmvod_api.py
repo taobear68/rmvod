@@ -2649,7 +2649,7 @@ class MediaLibraryDB:
                 
         
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
-        print('fetchRecsFromCache - recsJson: ' + recsJson)
+        print('fetchRecsFromCache - recsJson: ' + str(recsJson))
         if recsJson == None:
             print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
