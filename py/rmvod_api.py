@@ -1574,6 +1574,7 @@ SET id = '""" + uRecId + """',
     expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
     metadata = "{'desc':'Recommendations cache'}",
     record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+        print("writeRecToCache - tmpSql: " + tmpSsql)
         this._stdInsert(tmpSql);
         pass
     def getRecJsonFromCache(self,clientIdIn=None):
@@ -1583,6 +1584,7 @@ WHERE filt_crit_1 = '""" + clientIdIn + """'
     AND expire_date > NOW()
 ORDER BY expire_date DESC
 LIMIT 1"""
+        print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
         retval = None
         for row in rowsTuple:
@@ -2639,6 +2641,7 @@ class MediaLibraryDB:
                 
         
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
+        print('fetchRecsFromCache - recsJson: ' + recsJson)
         if recsJson == None:
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             vldb.writeRecToCache(clientIdIn,genRecsObj,7)
