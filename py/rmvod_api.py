@@ -1134,6 +1134,7 @@ ORDER BY 3,4"""
         pass
     
     
+    
     # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  
     
     #####  METHODS RELATED TO "RECOMMENDATIONS"
@@ -1560,7 +1561,33 @@ ORDER BY 1"""
         for row in rowsTuple:
             retList.append(row[0])
         return retList
-
+    def writeRecToCache(self,clientIdIn=None,recDictIn=None,expDurDaysIn=7):
+        uRecId = str(uuid.uuid4())
+        tmpSql = """INSERT INTO common_texts
+SET id = '""" + uRecId + """',
+    record_type = "recommendation",
+    filt_crit_1 = '""" + clientIdIn + """',
+    filt_crit_2 = "",
+    filt_crit_3 = "",
+    create_date = NOW(),
+    update_date = NOW(),
+    expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
+    metadata = "{'desc':'Recommendations cache'}",
+    record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+        this._stdInsert(tmpSql);
+        pass
+    def getRecJsonFromCache(self,clientIdIn=None):
+        tmpSql = """SELECT record_data 
+FROM common_texts 
+WHERE filt_crit_1 = '""" + clientIdIn + """' 
+    AND expire_date > NOW()
+ORDER BY expire_date DESC
+LIMIT 1"""
+        rowsTuple = self._stdRead(tmpSql)
+        retval = None
+        for row in rowsTuple:
+            retval = row[0]
+        return retval
 
 class RMVOD_Recommendations:
     def __init__(self):
@@ -2606,6 +2633,21 @@ class MediaLibraryDB:
             
         
         return recsObj
+    def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn):
+        vldb = self.dbHandleConfigged()
+        recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+                
+        
+        recsJson = vldb.getRecJsonFromCache(clientIdIn)
+        if recsJson == None:
+            genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
+            vldb.writeRecToCache(clientIdIn,genRecsObj,7)
+            recsObj = genRecsObj
+        else:
+            recsObj = yaml.safe_load(recsJson)
+        return recsObj
+            
+        
     def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
@@ -3406,7 +3448,8 @@ def getRecs():
     try:
         # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
+        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+        retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
     except:
         print( "Oh noes!  " + json.dumps(retDict))
     return json.dumps(retDict)

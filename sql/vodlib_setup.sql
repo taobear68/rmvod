@@ -53,6 +53,21 @@ CREATE TABLE IF NOT EXISTS playlog_live (
     comment VARCHAR(100)
 );
 
+ -- ADDED IN r0.9.1d
+ -- Table to capture (among other things) cached "recommendations" JSON
+CREATE TABLE IF NOT EXISTS common_texts (
+id VARCHAR(40) NOT NULL PRIMARY KEY,
+record_type VARCHAR(100) NOT NULL,
+filt_crit_1 VARCHAR(100) NOT NULL,
+filt_crit_2 VARCHAR(100) NOT NULL,
+filt_crit_3 VARCHAR(100) NOT NULL,
+create_date DATETIME NOT NULL,
+update_date DATETIME NOT NULL,
+expire_date DATETIME NOT NULL,
+metadata TEXT,
+record_data MEDIUMTEXT NOT NULL);
+
+
 CREATE TABLE IF NOT EXISTS tags (
     tag VARCHAR(50) NOT NULL PRIMARY KEY
 );
