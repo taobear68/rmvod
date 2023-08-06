@@ -1563,7 +1563,8 @@ ORDER BY 1"""
         return retList
     def writeRecToCache(self,clientIdIn=None,recDictIn=None,expDurDaysIn=7):
         print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) + ", recDictIn: " + json.dumps(recDictIn))
-        uRecId = str(uuid.uuid4())
+        #uRecId = str(uuid.uuid4())
+        
         # tmpSql = """INSERT INTO common_texts
 # SET id = '""" + uRecId + """',
     # record_type = "recommendation",
