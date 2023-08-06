@@ -1587,12 +1587,16 @@ ORDER BY expire_date DESC
 LIMIT 1"""
         print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
-        print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
+        print("getRecJsonFromCache - Made it past the query.")
+        # print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
         
         retval = None
         if (len(rowsTuple) > 0):
+            print("getRecJsonFromCache Processing rowsTuple")
             for row in rowsTuple:
+                print("getRecJsonFromCache Processing row: " + str(row))
                 retval = row[0]
+        print("getRecJsonFromCache returning " + str(retval))
         return retval
 
 class RMVOD_Recommendations:
