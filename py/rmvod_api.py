@@ -1586,6 +1586,8 @@ ORDER BY expire_date DESC
 LIMIT 1"""
         print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
+        print("getRecJsonFromCache - tmpSql: " + tmpSql)
+        
         retval = None
         for row in rowsTuple:
             retval = row[0]
@@ -2643,7 +2645,9 @@ class MediaLibraryDB:
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
         print('fetchRecsFromCache - recsJson: ' + recsJson)
         if recsJson == None:
+            print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
+            print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
             vldb.writeRecToCache(clientIdIn,genRecsObj,7)
             recsObj = genRecsObj
         else:
