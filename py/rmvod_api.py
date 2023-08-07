@@ -1562,7 +1562,7 @@ ORDER BY 1"""
             retList.append(row[0])
         return retList
     def writeRecToCache(self,clientIdIn=None,recDictIn=None,expDurDaysIn=7):
-        print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) ) # + ", recDictIn: " + json.dumps(recDictIn))
+        # print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) ) # + ", recDictIn: " + json.dumps(recDictIn))
         uRecId = str(uuid.uuid4())
         
         
@@ -1570,19 +1570,6 @@ ORDER BY 1"""
         intJson = tmpJson.replace("\\\"","\\\\\\\"")
         quotedJson = intJson.replace("'","\\\'")
         
-        
-        # tmpSql = """INSERT INTO common_texts
-# SET id = '""" + uRecId + """',
-    # record_type = "recommendation",
-    # filt_crit_1 = '""" + clientIdIn + """',
-    # filt_crit_2 = "",
-    # filt_crit_3 = "",
-    # create_date = NOW(),
-    # update_date = NOW(),
-    # expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
-    # metadata = "{'desc':'Recommendations cache'}",
-    # record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
-
         tmpSql = """INSERT INTO common_texts
 SET id = '""" + uRecId + """',
     record_type = "recommendation",
@@ -1595,22 +1582,9 @@ SET id = '""" + uRecId + """',
     metadata = "{'desc':'Recommendations cache'}",
     record_data = '""" + quotedJson + """'"""
         
-        # tmpSql = """INSERT INTO common_texts 
-# SET id = 'fakeUUID',
-# record_type = "recommendation",
-# filt_crit_1 = 'fake_client_id',
-# filt_crit_2 = "",
-# filt_crit_3 = "",
-# create_date = NOW(),
-# update_date = NOW(),
-# expire_date = INTERVAL 7 DAY + NOW() ,
-# metadata = 'Recommendations cache',
-# record_data = 'fake data' """
-        
-        
-        print("writeRecToCache - tmpSql: " + tmpSql)
+        # print("writeRecToCache - tmpSql: " + tmpSql)
         self._stdInsert(tmpSql)
-        print("writtenRecToCache")
+        # print("writtenRecToCache")
         return True
 
     def getRecJsonFromCache(self,clientIdIn=None):
@@ -2684,19 +2658,19 @@ class MediaLibraryDB:
                 
         
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
-        print('fetchRecsFromCache - recsJson: ' + str(recsJson))
+        # print('fetchRecsFromCache - recsJson: ' + str(recsJson))
         if recsJson == None:
-            print('fetchRecsFromCache - got None back')
+            # print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
-            print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
+            # print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
             vldb.writeRecToCache(clientIdIn,genRecsObj,7)
-            print('fetchRecsFromCache - Done with write call.')
+            # print('fetchRecsFromCache - Done with write call.')
             recsObj = genRecsObj
         else:
-            print("fetchRecsFromCache: recsJson: " + recsJson[0:600])
+            # print("fetchRecsFromCache: recsJson: " + recsJson[0:600])
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
         
-        print("fetchRecsFromCache - recsObj: " + json.dumps(recsObj))
+        # print("fetchRecsFromCache - recsObj: " + json.dumps(recsObj))
         return recsObj
             
         
@@ -3495,20 +3469,20 @@ def getRecs():
         diKeysList = []
         return json.dumps([])    
     
-    retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit']) 
+    # retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit']) 
     
     # print("What came in: " + str(request.json))
     # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
     
     
     
-    # try:
-        # # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        # # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
-        # retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
-    # except:
-        # print( "Oh noes!  " + json.dumps(retDict))
+    try:
+        # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
+        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+        retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+    except:
+        print( "Oh noes!  " + json.dumps(retDict))
         
         
         
