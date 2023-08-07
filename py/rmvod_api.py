@@ -1591,7 +1591,7 @@ SET id = 'fakeUUID',
         
         
         print("writeRecToCache - tmpSql: " + tmpSql)
-        this._stdInsert(tmpSql);
+        this._stdInsert(tmpSql)
         pass
         
         
