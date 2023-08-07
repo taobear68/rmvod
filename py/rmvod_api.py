@@ -1587,7 +1587,7 @@ SET id = 'fakeUUID',
     update_date = NOW(),
     expire_date = INTERVAL 7 DAY + NOW() ,
     metadata = 'Recommendations cache',
-    record_data = 'fake data'; """
+    record_data = 'fake data' """
         
         
         print("writeRecToCache - tmpSql: " + tmpSql)
