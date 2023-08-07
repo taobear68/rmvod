@@ -2692,6 +2692,7 @@ class MediaLibraryDB:
             print('fetchRecsFromCache - Done with write call.')
             recsObj = genRecsObj
         else:
+            print("fetchRecsFromCache: recsJson: " + recsJson[0:600])
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
         
         print("fetchRecsFromCache - recsObj: " + json.dumps(recsObj))
