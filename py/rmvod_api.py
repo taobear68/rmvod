@@ -3493,17 +3493,23 @@ def getRecs():
         diKeysList = []
         return json.dumps([])    
     
-    # retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit']) 
+    retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit']) 
     
     # print("What came in: " + str(request.json))
     # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
-    try:
-        # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
-        retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
-    except:
-        print( "Oh noes!  " + json.dumps(retDict))
+    
+    
+    
+    # try:
+        # # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
+        # # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+        # retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+    # except:
+        # print( "Oh noes!  " + json.dumps(retDict))
+        
+        
+        
     return json.dumps(retDict)
 
 @app.route('/artifact/recs/serfirstep/get',methods=['POST'])
