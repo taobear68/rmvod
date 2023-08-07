@@ -1577,24 +1577,24 @@ ORDER BY 1"""
     # metadata = "{'desc':'Recommendations cache'}",
     # record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
         
-        tmpSql = """INSERT INTO common_texts
+        tmpSql = """INSERT INTO common_texts 
 SET id = 'fakeUUID',
-    record_type = "recommendation",
-    filt_crit_1 = 'fake_client_id',
-    filt_crit_2 = "",
-    filt_crit_3 = "",
-    create_date = NOW(),
-    update_date = NOW(),
-    expire_date = INTERVAL 7 DAY + NOW() ,
-    metadata = 'Recommendations cache',
-    record_data = 'fake data' """
+record_type = "recommendation",
+filt_crit_1 = 'fake_client_id',
+filt_crit_2 = "",
+filt_crit_3 = "",
+create_date = NOW(),
+update_date = NOW(),
+expire_date = INTERVAL 7 DAY + NOW() ,
+metadata = 'Recommendations cache',
+record_data = 'fake data' """
         
         
         print("writeRecToCache - tmpSql: " + tmpSql)
         this._stdInsert(tmpSql)
-        pass
-        
-        
+        print("writtenRecToCache")
+        return True
+
     def getRecJsonFromCache(self,clientIdIn=None):
         tmpSql = """SELECT record_data 
 FROM common_texts 
@@ -2672,6 +2672,7 @@ class MediaLibraryDB:
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
             vldb.writeRecToCache(clientIdIn,genRecsObj,7)
+            print('fetchRecsFromCache - Done with write call.')
             recsObj = genRecsObj
         else:
             recsObj = yaml.safe_load(recsJson)
