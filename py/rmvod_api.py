@@ -1586,19 +1586,6 @@ SET id = '""" + uRecId + """',
     record_data = '""" + quotedJson + """'"""
         
         
-        # tmpSql = """INSERT INTO common_texts
-# SET id = '""" + uRecId + """',
-    # record_type = "recommendation",
-    # filt_crit_1 = '""" + clientIdIn + """',
-    # filt_crit_2 = "",
-    # filt_crit_3 = "",
-    # create_date = NOW(),
-    # update_date = NOW(),
-    # expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
-    # metadata = "{'desc':'Recommendations cache','record_data_model':'json'}",
-    # record_data = '""" + quotedJson + """'"""        
-        
-        
         # print("writeRecToCache - tmpSql: " + tmpSql)
         self._stdInsert(tmpSql)
         # print("writtenRecToCache")
@@ -1611,18 +1598,18 @@ WHERE filt_crit_1 = '""" + clientIdIn + """'
     AND expire_date > NOW()
 ORDER BY expire_date DESC
 LIMIT 1"""
-        print("getRecJsonFromCache - tmpSql: " + tmpSql)
+        # print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
-        print("getRecJsonFromCache - Made it past the query.")
+        # print("getRecJsonFromCache - Made it past the query.")
         # print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
         
         retval = None
         if (len(rowsTuple) > 0):
-            print("getRecJsonFromCache Processing rowsTuple")
+            # print("getRecJsonFromCache Processing rowsTuple")
             for row in rowsTuple:
-                print("getRecJsonFromCache Processing row: " + str(row))
+                # print("getRecJsonFromCache Processing row: " + str(row))
                 retval = row[0]
-        print("getRecJsonFromCache returning " + str(retval))
+        # print("getRecJsonFromCache returning " + str(retval))
         return retval
 
 class RMVOD_Recommendations:
