@@ -1567,7 +1567,7 @@ ORDER BY 1"""
         
         
         tmpJson = json.dumps(recDictIn)
-        intJson = tmpJson.replace('\"','\\\\\\\\"')
+        intJson = tmpJson.replace("\\\"","\\\\\\\\\"")
         quotedJson = intJson.replace("'","\\\\\'")
         
         
