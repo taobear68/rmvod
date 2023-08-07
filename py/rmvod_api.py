@@ -1567,7 +1567,8 @@ ORDER BY 1"""
         
         
         tmpJson = json.dumps(recDictIn)
-        quotedJson = tmpJson.replace("'","\\\'")
+        intJson = tmpJson.replace('\\\\"','\\\\\\\\"')
+        quotedJson = intJson.replace("'","\\\'")
         
         
         # tmpSql = """INSERT INTO common_texts
