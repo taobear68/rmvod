@@ -1565,6 +1565,18 @@ ORDER BY 1"""
         print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) ) # + ", recDictIn: " + json.dumps(recDictIn))
         uRecId = str(uuid.uuid4())
         
+        # tmpSql = """INSERT INTO common_texts
+# SET id = '""" + uRecId + """',
+    # record_type = "recommendation",
+    # filt_crit_1 = '""" + clientIdIn + """',
+    # filt_crit_2 = "",
+    # filt_crit_3 = "",
+    # create_date = NOW(),
+    # update_date = NOW(),
+    # expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
+    # metadata = "{'desc':'Recommendations cache'}",
+    # record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+
         tmpSql = """INSERT INTO common_texts
 SET id = '""" + uRecId + """',
     record_type = "recommendation",
@@ -1575,7 +1587,7 @@ SET id = '""" + uRecId + """',
     update_date = NOW(),
     expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
     metadata = "{'desc':'Recommendations cache'}",
-    record_data = QUOTE('""" + json.dumps(recDictIn) + """')"""
+    record_data = 'fake data'"""
         
         # tmpSql = """INSERT INTO common_texts 
 # SET id = 'fakeUUID',
