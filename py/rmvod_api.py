@@ -1565,6 +1565,9 @@ ORDER BY 1"""
         # print("writeRecToCache - clientIdIn: " + clientIdIn + ", expDurDaysIn: " + str(expDurDaysIn) ) # + ", recDictIn: " + json.dumps(recDictIn))
         uRecId = str(uuid.uuid4())
         
+        md = {}
+        md['desc'] = "Recommendations cache"
+        md['record_data_model'] = "json"
         
         tmpJson = json.dumps(recDictIn)
         intJson = tmpJson.replace("\\\"","\\\\\\\"")
@@ -1579,8 +1582,22 @@ SET id = '""" + uRecId + """',
     create_date = NOW(),
     update_date = NOW(),
     expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
-    metadata = "{'desc':'Recommendations cache'}",
+    metadata = '""" + json.dumps(md) + """',
     record_data = '""" + quotedJson + """'"""
+        
+        
+        # tmpSql = """INSERT INTO common_texts
+# SET id = '""" + uRecId + """',
+    # record_type = "recommendation",
+    # filt_crit_1 = '""" + clientIdIn + """',
+    # filt_crit_2 = "",
+    # filt_crit_3 = "",
+    # create_date = NOW(),
+    # update_date = NOW(),
+    # expire_date = INTERVAL """ + str(expDurDaysIn) + """ DAY + NOW() ,
+    # metadata = "{'desc':'Recommendations cache','record_data_model':'json'}",
+    # record_data = '""" + quotedJson + """'"""        
+        
         
         # print("writeRecToCache - tmpSql: " + tmpSql)
         self._stdInsert(tmpSql)
