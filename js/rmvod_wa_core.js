@@ -3491,7 +3491,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         
         case 'initiateArtiEdit':
             ml.renderArtifactEdit(objIdIn);
-            document.getElementById('RNWATabWidget-tabspan-2').click();
+            document.getElementById('RNWATabWidget-tabspan-3').click();
             break;
             
         case 'updateArtifactField' :
