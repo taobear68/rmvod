@@ -1612,50 +1612,51 @@ LIMIT 1"""
         # print("getRecJsonFromCache returning " + str(retval))
         return retval
 
-class RMVOD_Recommendations:
-    def __init__(self):
-        pass
-    def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
-        pass
-        recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
-        vldb = VodLibDB();
+# Commenting out as this has been fully integrated into MediaLibraryDB
+# class RMVOD_Recommendations:
+    # def __init__(self):
+        # pass
+    # def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
+        # pass
+        # recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+        # vldb = VodLibDB();
         
-        # People
-        resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
-        artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        for recArti in artiList:
-            recsObj['data']['people'][recArti['majtype']].append(recArti)
-            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        # # People
+        # resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
+        # artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # for recArti in artiList:
+            # recsObj['data']['people'][recArti['majtype']].append(recArti)
+            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
     
-        # Tags
-        artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
-        for recArti in artiList:
-            recsObj['data']['tags'][recArti['majtype']].append(recArti)
-            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        # # Tags
+        # artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
+        # for recArti in artiList:
+            # recsObj['data']['tags'][recArti['majtype']].append(recArti)
+            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
     
-        # Others
-        artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        for recArti in artiList:
-            recsObj['data']['others'][recArti['majtype']].append(recArti)
-            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        # # Others
+        # artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # for recArti in artiList:
+            # recsObj['data']['others'][recArti['majtype']].append(recArti)
+            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
         
-        # Server
-        artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
-        for recArti in artiList:
-            recsObj['data']['server'][recArti['majtype']].append(recArti)
-            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        # # Server
+        # artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
+        # for recArti in artiList:
+            # recsObj['data']['server'][recArti['majtype']].append(recArti)
+            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
         
-        # Rewatch
-        artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        for recArti in artiList:
-            recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
-            recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
+        # # Rewatch
+        # artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
+        # for recArti in artiList:
+            # recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
+            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
         
-        now = datetime.now()
+        # now = datetime.now()
         
-        recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
+        # recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
         
-        return recsObj
+        # return recsObj
 
 
 class MediaLibraryDB:
@@ -1678,7 +1679,7 @@ class MediaLibraryDB:
         
         # set config param defaults
         self.config = {}
-        self.config['API_Settings'] = {'do_recs': 'on', 'service_name': 'RIBBBITmedia VideoOnDemand', 'service_abbrev': 'RMVOD'}
+        self.config['API_Settings'] = {'do_recs': 'on', 'service_name': 'RIBBBITmedia VideoOnDemand', 'service_abbrev': 'RMVOD', 'recs_exp_days': '7'}
         self.config['API_Resources'] = {'image_path': '/rmvod/img', 'poster_path': '/rmvod/img/poster_00', 'video_path': '/rmvod/vidsrc', 'api_path': '/rmvod/api', 'logo_tile_image': '/rmvod/img/rmvod_badge_center.png'}
         self.config['Database'] = {'db_host': 'localhost', 'db_user': 'vodlibapi', 'db_password': 'vodlibapipw', 'db_db': 'vodlib'}
         
@@ -2667,7 +2668,8 @@ class MediaLibraryDB:
             # print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             # print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
-            vldb.writeRecToCache(clientIdIn,genRecsObj,7)
+            # vldb.writeRecToCache(clientIdIn,genRecsObj,7)
+            vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
             # print('fetchRecsFromCache - Done with write call.')
             recsObj = genRecsObj
         else:
@@ -2676,8 +2678,6 @@ class MediaLibraryDB:
         
         # print("fetchRecsFromCache - recsObj: " + json.dumps(recsObj))
         return recsObj
-            
-        
     def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
