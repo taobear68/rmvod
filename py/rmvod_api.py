@@ -1723,8 +1723,8 @@ class MediaLibraryDB:
         vldb = self.dbHandleConfigged()
         return vldb.getDBVersion()
     def artifactFileCheck(self,pathIn,fileIn): # Updated to use .cfg
-        #basePath = '/var/www/html/rmvod/vidsrc/'
-        basePath = '/var/www/html' + self.config['API_Resources']['video_path']
+        basePath = '/var/www/html/rmvod/vidsrc/'
+        #basePath = '/var/www/html' + self.config['API_Resources']['video_path']
         exist = os.path.exists(basePath + pathIn + '/' + fileIn)
         return  exist    
     def newArtiPreCheck(self,pathIn,fileIn): # Updated to use .cfg
