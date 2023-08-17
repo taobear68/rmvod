@@ -2817,7 +2817,7 @@ class MediaLibraryDB:
             print("=====>> SEASON Number " + str(seasonNmbr))
         
             respDict = self.omdbFetchSeriesSeason(serImdbIdIn,seasonNmbr)
-            #print(json.dumps(respDict))
+            print(json.dumps(respDict))
             if respDict['Response'] == 'True':
                 try:
                     season = respDict['Season']
@@ -2846,7 +2846,7 @@ class MediaLibraryDB:
                         aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
 
                         ##  This is where we would modify the Episode Artifact
-                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(imdbIdIn,epStr)[0]
+                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
                         serArtiId = resDict['artifactid']
                         self.modifyArtifact(serArtiId,aud)
                         # # print("Series: " + json.dumps(aud))
