@@ -1132,6 +1132,21 @@ ORDER BY 3,4"""
         return self.getArtifactListByIdList(aidList)
         
         pass
+    def getSeriesEpByImdbIdAndSEStr(self,serImdbIdIn,epSEStrIn):
+        # imdbIdIn = "tt4793190"
+        # seaStr = "S02E01"
+        epListSql = """SELECT e.artifactid
+    FROM artifacts e
+    JOIN s2e s ON e.artifactid = s.episodeaid
+    JOIN artifacts o on s.seriesaid = o.artifactid
+    WHERE o.imdbid = '""" + serImdbIdIn + """'
+    AND e.title LIKE "%_""" + epSEStrIn + """%"
+    ORDER BY e.title
+    LIMIT 1"""
+        resTuple = self._stdRead(epListSql)
+        artiId = resTuple[0][0]
+        return self.getArtifactById(artiId)
+
     
     
     
@@ -2726,6 +2741,115 @@ class MediaLibraryDB:
         tmpRetObj['data'] = clientCfg
         
         return tmpRetObj
+    
+    def omdbFetchSingleArti(self,imdbIdIn):
+        uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  imdbIdIn
+        print("omdbFetchSingleArti - uri: " + uri)
+        response = requests.get(uri)
+        return response.json()
+    def omdbFetchSeriesSeason(self,serImdbIdIn,seasonNmbrIn):
+        serDict = self.omdbFetchSingleArti(serImdbIdIn)
+        if serDict['Response'] == 'True' \
+        and serDict['Type'] == 'series' \
+        and seasonNmbrIn <= int(serDict['totalSeasons']):
+            uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
+            print("omdbFetchSeriesSeason - uri: " + uri)
+            response = requests.get(uri)
+            return response.json()
+        else:
+            print(serImdbIdIn + " appears not to be a series, or is in some other way broken.")
+            return serDict
+        pass
+    def omdbProcessSeries(self,serImdbIdIn):  # seasonNmbrIn
+        #vldb = this.dbHandleConfigged()
+        seriesArti = self.omdbFetchSingleArti(serImdbIdIn)
+        
+        if seriesArti['Response'] == "False" or seriesArti['Type'] != "series" or int(seriesArti['totalSeasons']) < 1:
+            # Can't process this one.
+            raise Exception("IMDB ID " + serImdbIdIn + " Cannot be processed as a series.")
+
+        # Artifact Update Dict
+        aud = {}
+        #aud['season'] = int(respDict['Season'])
+        #aud['episode'] = int(episode['Episode'])
+        aud['relyear'] = int(seriesArti['Released'].split(' ')[2])   #":"23 Sep 1995",
+        #dirList = episode['Director'].split
+        if seriesArti['Director'] != "N/A":
+            aud['director'] = seriesArti['Director'].split(', ')
+        aud['writer'] = seriesArti['Writer'].split(', ')
+        aud['primcast'] = seriesArti['Actors'].split(', ')
+        # aud['imdbid'] = seriesArti['imdbID']
+        #   aud['synopsis'] = seriesArti['Title'] + ' - ' + seriesArti['Plot']
+        aud['synopsis'] = seriesArti['Plot']
+        
+        ## THIS IS JUST FOR REFERENCE
+        # {"Title": "Upstart Crow", "Year": "2016\u20132020", "Rated": "TV-PG", "Released": "09 May 2016", "Runtime": "1 min", 
+        # "Genre": "Comedy, History", "Director": "N/A", "Writer": "Ben Elton", "Actors": "David Mitchell, Gemma Whelan, Rob Rouse",
+        # "Plot": "Satirical Blackadderesque sitcom about how friends, family, historical circumstances, and his arch-rival Robert Greene, who first coined the derogatory term \"upstart crow\", influenced William Shakespeare to write his famous plays.", 
+        # "Language": "English", "Country": "United Kingdom", "Awards": "Nominated for 1 BAFTA Award3 wins & 5 nominations total", 
+        # "Poster": "https://m.media-amazon.com/images/M/MV5BNmMwNTIzOWUtN2U5Mi00ZWJhLWFjOWUtYmU5NWIyZTRlMzg3XkEyXkFqcGdeQXVyMjExMjk0ODk@._V1_SX300.jpg", 
+        # "Ratings": [{"Source": "Internet Movie Database", "Value": "7.6/10"}], "Metascore": "N/A", "imdbRating": "7.6", 
+        # "imdbVotes": "3,575", "imdbID": "tt4793190", "Type": "series", "totalSeasons": "4", "Response": "True"}
+        
+        ##  This is where we would modify the Series Artifact
+        whereClause = ' imdbid = ' + serImdbIdIn
+        resDict = self.getArtifactsByArbWhereClause(whereClause)[0]
+        serArtiId = resDict['artifactid']
+        self.modifyArtifact(serArtiId,aud)
+        
+        print("Series aud: " + json.dumps(aud))
+        
+        seasonCount = int(seriesArti['totalSeasons'])
+        for seasonNmbr in range(1,seasonCount + 1): 
+            print("=====>> SEASON Number " + str(seasonNmbr))
+        
+            respDict = no.omdbFetchSeriesSeason(imdbIdIn,seasonNmbr)
+            #print(json.dumps(respDict))
+            if respDict['Response'] == 'True':
+                try:
+                    season = respDict['Season']
+                    for episode in respDict['Episodes']:
+                        seaStr = "S" + season
+                        if int(season) < 10:
+                            seaStr = "S0" + season
+                        epStr = "E" + episode['Episode']
+                        if int(episode['Episode']) < 10:
+                            epStr = "E0" + episode['Episode']
+                        pass
+                        # try to get the corresponding artifact
+                        print(respDict['Title'] + "_" + seaStr + epStr + ": " + episode['Title'])
+                        # epListSql = """SELECT e.artifactid
+                        
+                        # Artifact Update Dict
+                        aud = {}
+                        aud['season'] = int(respDict['Season'])
+                        aud['episode'] = int(episode['Episode'])
+                        aud['relyear'] = int(episode['Released'].split(' ')[2])   #":"23 Sep 1995",
+                        #dirList = episode['Director'].split
+                        aud['director'] = episode['Director'].split(', ')
+                        aud['writer'] = episode['Writer'].split(', ')
+                        aud['primcast'] = episode['Actors'].split(', ')
+                        aud['imdbid'] = episode['imdbID']
+                        aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
+
+                        ##  This is where we would modify the Episode Artifact
+                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(imdbIdIn,epStr)[0]
+                        serArtiId = resDict['artifactid']
+                        self.modifyArtifact(serArtiId,aud)
+                        # # print("Series: " + json.dumps(aud))
+                        
+                        print("Episode AUD: " + json.dumps(aud))
+
+                        pass
+                    pass
+                except:
+                    print("I cant work like this:\n" + json.dumps(respDict))
+            else:
+                print(imdbIdIn + " - Failed to fetch Season " + str(seasonNmbrIn))
+            pass
+            
+        
+
 
 
 class MLCLI:
@@ -3551,6 +3675,22 @@ def getApiConfig():
     ml = MediaLibraryDB()
     return json.dumps(ml.fetchApiConfig())
 
+@app.route('/artifact/tvseries/detail/fetch',methods=['POST'])
+def runOmdbApiUpdateTvseries():
+    ml = MediaLibraryDB()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
+    artiDict = ml.getArtifactByIdNew(dictIn['artifactid'])
+    ml.omdbProcessSeries(['imdbid'])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
