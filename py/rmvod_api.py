@@ -2805,7 +2805,8 @@ class MediaLibraryDB:
         
         ##  This is where we would modify the Series Artifact
         whereClause = ' imdbid = ' + serImdbIdIn
-        resDict = self.getArtifactsByArbWhereClause(whereClause)[0]
+        resDict = self.getArtifactsByArbWhereClause(whereClause)
+        print(json.dumps(resDict))
         serArtiId = resDict['artifactid']
         self.modifyArtifact(serArtiId,aud)
         
