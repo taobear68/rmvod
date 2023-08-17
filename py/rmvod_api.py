@@ -2771,6 +2771,9 @@ class MediaLibraryDB:
         pass
     def omdbProcessSeries(self,serImdbIdIn):  # seasonNmbrIn
         #vldb = this.dbHandleConfigged()
+        
+        print(serImdbIdIn)
+        
         seriesArti = self.omdbFetchSingleArti(serImdbIdIn)
         
         if seriesArti['Response'] == "False" or seriesArti['Type'] != "series" or int(seriesArti['totalSeasons']) < 1:
