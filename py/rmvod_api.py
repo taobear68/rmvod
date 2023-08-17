@@ -1698,6 +1698,15 @@ class MediaLibraryDB:
         self.config['API_Resources'] = {'image_path': '/rmvod/img', 'poster_path': '/rmvod/img/poster_00', 'video_path': '/rmvod/vidsrc', 'api_path': '/rmvod/api', 'logo_tile_image': '/rmvod/img/rmvod_badge_center.png'}
         self.config['Database'] = {'db_host': 'localhost', 'db_user': 'vodlibapi', 'db_password': 'vodlibapipw', 'db_db': 'vodlib'}
         
+        
+        
+        
+        
+        self.apiKey = '87edb0eb'
+        
+        
+        
+        
         # Update config params from file if present
         self.cfgReader()
         pass
