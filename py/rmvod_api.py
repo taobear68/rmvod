@@ -2816,7 +2816,7 @@ class MediaLibraryDB:
         for seasonNmbr in range(1,seasonCount + 1): 
             print("=====>> SEASON Number " + str(seasonNmbr))
         
-            respDict = self.omdbFetchSeriesSeason(imdbIdIn,seasonNmbr)
+            respDict = self.omdbFetchSeriesSeason(serImdbIdIn,seasonNmbr)
             #print(json.dumps(respDict))
             if respDict['Response'] == 'True':
                 try:
