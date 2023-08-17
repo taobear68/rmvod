@@ -2844,9 +2844,14 @@ class MediaLibraryDB:
                         aud['primcast'] = episode['Actors'].split(', ')
                         aud['imdbid'] = episode['imdbID']
                         aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
+                        
+                        print(json.dumps(aud))
 
                         ##  This is where we would modify the Episode Artifact
                         resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
+                        
+                        print(json.dumps(resDict))
+                        
                         serArtiId = resDict['artifactid']
                         self.modifyArtifact(serArtiId,aud)
                         # # print("Series: " + json.dumps(aud))
