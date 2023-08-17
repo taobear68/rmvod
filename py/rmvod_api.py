@@ -3702,7 +3702,7 @@ def runOmdbApiUpdateTvseries():
         diKeysList = []
         return json.dumps([])    
     artiDict = ml.getArtifactByIdNew(dictIn['artifactid'])
-    ml.omdbProcessSeries(['imdbid'])
+    ml.omdbProcessSeries(artiDict['imdbid'])
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
