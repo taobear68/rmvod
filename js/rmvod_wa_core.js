@@ -1289,7 +1289,7 @@ class RMVodWebApp {
     }
     // Kick-off populating Episode details from OMDBAPI
     apiPopulateEpisodeDetails(artIdIn){
-        var cbFunc(dataObj){
+        var cbFunc = function (dataObj){
             console.log("apiPopulateEpisodeDetails.cbFunc " + artIdIn + ": " + JSON.stringify(dataObj));
         }
         var endpoint = '/rmvod/api/artifact/tvseries/detail/fetch';
