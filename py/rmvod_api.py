@@ -2831,8 +2831,9 @@ class MediaLibraryDB:
                     if int(episode['Episode']) < 10:
                         epStr = "E0" + episode['Episode']
                     pass
+                    seStr = seaStr + epStr
                     # try to get the corresponding artifact
-                    print(respDict['Title'] + "_" + seaStr + epStr + ": " + episode['Title'])
+                    print(respDict['Title'] + "_" + seStr + ": " + episode['Title'])
                     # epListSql = """SELECT e.artifactid
                     
                     # Artifact Update Dict
@@ -2851,8 +2852,8 @@ class MediaLibraryDB:
                     
                     try:
                         ##  This is where we would modify the Episode Artifact
-                        print("MediaLibraryDB.omdbProcessSeries epStr: " + epStr)
-                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
+                        print("MediaLibraryDB.omdbProcessSeries seStr: " + seStr)
+                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,seStr)[0]
                         
                         print(json.dumps(resDict))
                         
@@ -2862,7 +2863,7 @@ class MediaLibraryDB:
                         
                         print("Episode AUD: " + json.dumps(aud))
                     except:
-                        print("MediaLibraryDB.omdbProcessSeries failed to update Episode " + seriesArti['Title'] +  " - " + serImdbIdIn + " " + epStr)
+                        print("MediaLibraryDB.omdbProcessSeries failed to update Episode " + seriesArti['Title'] +  " - " + serImdbIdIn + " " + seStr)
 
                     pass
                 pass
