@@ -2848,17 +2848,20 @@ class MediaLibraryDB:
                     aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
                     
                     print(json.dumps(aud))
-
-                    ##  This is where we would modify the Episode Artifact
-                    resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
                     
-                    print(json.dumps(resDict))
-                    
-                    serArtiId = resDict['artifactid']
-                    self.modifyArtifact(serArtiId,aud)
-                    # # print("Series: " + json.dumps(aud))
-                    
-                    print("Episode AUD: " + json.dumps(aud))
+                    try:
+                        ##  This is where we would modify the Episode Artifact
+                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
+                        
+                        print(json.dumps(resDict))
+                        
+                        serArtiId = resDict['artifactid']
+                        self.modifyArtifact(serArtiId,aud)
+                        # # print("Series: " + json.dumps(aud))
+                        
+                        print("Episode AUD: " + json.dumps(aud))
+                    except:
+                        print("MediaLibraryDB.omdbProcessSeries failed to update Episode " seriesArti['Title'] +  " - " + serImdbIdIn + " " + epStr)
 
                     pass
                 pass
