@@ -1133,6 +1133,7 @@ ORDER BY 3,4"""
         
         pass
     def getSeriesEpByImdbIdAndSEStr(self,serImdbIdIn,epSEStrIn):
+        print("VodLibDB.getSeriesEpByImdbIdAndSEStr inputs: ", str(serImdbIdIn), str(epSEStrIn))
         # imdbIdIn = "tt4793190"
         # seaStr = "S02E01"
         epListSql = """SELECT e.artifactid
@@ -1143,6 +1144,7 @@ ORDER BY 3,4"""
     AND e.title LIKE "%_""" + epSEStrIn + """%"
     ORDER BY e.title
     LIMIT 1"""
+        print("VodLibDB.getSeriesEpByImdbIdAndSEStr.epListSql: " + epListSql)
         resTuple = self._stdRead(epListSql)
         artiId = resTuple[0][0]
         return self.getArtifactById(artiId)
