@@ -2846,7 +2846,7 @@ class MediaLibraryDB:
                         aud['writer'] = episode['Writer'].split(', ')
                         aud['primcast'] = episode['Actors'].split(', ')
                         aud['imdbid'] = episode['imdbID']
-                        aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
+                        aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot'].replace('"','\\\"')
                         
                         # print(json.dumps(aud))
                         
