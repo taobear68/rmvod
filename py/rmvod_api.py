@@ -2794,7 +2794,7 @@ class MediaLibraryDB:
         aud['primcast'] = seriesArti['Actors'].split(', ')
         # aud['imdbid'] = seriesArti['imdbID']
         #   aud['synopsis'] = seriesArti['Title'] + ' - ' + seriesArti['Plot']
-        aud['synopsis'] = seriesArti['Plot']
+        aud['synopsis'] = seriesArti['Plot'].replace('"','\\\"')
         
         ## THIS IS JUST FOR REFERENCE
         # {"Title": "Upstart Crow", "Year": "2016\u20132020", "Rated": "TV-PG", "Released": "09 May 2016", "Runtime": "1 min", 
