@@ -2770,7 +2770,7 @@ class MediaLibraryDB:
             return serDict
         pass
     def omdbProcessSeries(self,serImdbIdIn):  # seasonNmbrIn
-        vldb = this.dbHandleConfigged()
+        vldb = self.dbHandleConfigged()
         
         print(serImdbIdIn)
         
