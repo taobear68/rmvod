@@ -1287,6 +1287,15 @@ class RMVodWebApp {
         }
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
+    // Kick-off populating Episode details from OMDBAPI
+    apiPopulateEpisodeDetails(artIdIn){
+        var cbFunc(dataObj){
+            console.log("apiPopulateEpisodeDetails.cbFunc " + artIdIn + ": " + JSON.stringify(dataObj));
+        }
+        var endpoint = '/rmvod/api/artifact/tvseries/detail/fetch';
+        var payloadObj = {'artifactid':artIdIn};
+        this.genericApiCall(payloadObj,endpoint,cbFunc);
+    }
     // This really is the point of the whole thing, isn't it?  
     // This method initiates playback of an artifact based on its 
     // artifactid.  
@@ -1535,6 +1544,17 @@ class RMVodWebApp {
                 innerHtml += '<u>Associate Episodes</u>';
                 innerHtml += '</span>';                
             }
+            
+            //popepideets
+            if (objIn['majtype'] == 'tvseries') {
+                innerHtml += '&nbsp;&nbsp;';
+                innerHtml += '<span class="" id="" style="font-size:10px;"';
+                innerHtml += 'onclick="switchboard(\'popepideets\',\'' ;
+                innerHtml +=  objIn['artifactid'] + '\',{})" ';
+                innerHtml += '>'; 
+                innerHtml += '<u>Populate Episode Details</u>';
+                innerHtml += '</span>';                
+            }            
             
             var docElId = artiIdIn + '-sidelist-detail-outer';
             var deetDiv = document.getElementById(docElId);
@@ -3556,6 +3576,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             var slDiv = ml.renderSALByIdList(popList);
             document.getElementById('sideartilistwidget').innerHTML = '';
             document.getElementById('sideartilistwidget').appendChild(slDiv);
+            break;
+            
+        case 'popepideets':
+            ml.apiPopulateEpisodeDetails(objIdIn);
             break;
             
             
