@@ -2861,7 +2861,7 @@ class MediaLibraryDB:
                         
                         print("Episode AUD: " + json.dumps(aud))
                     except:
-                        print("MediaLibraryDB.omdbProcessSeries failed to update Episode " seriesArti['Title'] +  " - " + serImdbIdIn + " " + epStr)
+                        print("MediaLibraryDB.omdbProcessSeries failed to update Episode " + seriesArti['Title'] +  " - " + serImdbIdIn + " " + epStr)
 
                     pass
                 pass
