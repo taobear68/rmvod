@@ -2774,7 +2774,13 @@ class MediaLibraryDB:
     def omdbProcessSeries(self,serImdbIdIn):  # seasonNmbrIn
         vldb = self.dbHandleConfigged()
         
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'omdbProcessSeries'
+        tmpRetObj['params'] = [serImdbIdIn]
+                
         # print(serImdbIdIn)
+        warnList = []
+        errList = []
         
         seriesArti = self.omdbFetchSingleArti(serImdbIdIn)
         
@@ -2863,18 +2869,30 @@ class MediaLibraryDB:
                             
                             # print("Episode AUD: " + json.dumps(aud))
                         except:
-                            print("MediaLibraryDB.omdbProcessSeries failed to update Episode " + seriesArti['Title'] +  " - " + serImdbIdIn + " " + seStr)
+                            xcStr = "MediaLibraryDB.omdbProcessSeries failed to update Episode " + seriesArti['Title'] +  " - " + serImdbIdIn + " " + seStr
+                            warnList.append(xcStr)
+                            print(xcStr)
     
                         pass
                     pass
                 except:
-                    print("I cant work like this:\n" + json.dumps(respDict))
+                    xcStr = "I cant work like this:\n" + json.dumps(respDict)
+                    errList.append(errList)
+                    print(errList)
             else:
-                print(imdbIdIn + " - Failed to fetch Season " + str(seasonNmbrIn))
+                xcStr = imdbIdIn + " - Failed to fetch Season " + str(seasonNmbrIn)
+                warnList.append(xcStr)
+                print(xcStr)
             pass
             
+        if len(errList) == 0:
+            tmpRetObj['status']['success'] = True
+        else:
+            tmpRetObj['status']['success'] = False
+        tmpRetObj['status']['detail'] = "Warnings: " + str(warnList) + "; Errors: " + str(errList)
+        tmpRetObj['data'] = []
         
-
+        return tmpRetObj
 
 
 class MLCLI:
@@ -3716,7 +3734,7 @@ def runOmdbApiUpdateTvseries():
         return json.dumps([])    
     artiDict = ml.getArtifactByIdNew(dictIn['artifactid'])
     print(json.dumps(artiDict))
-    ml.omdbProcessSeries(artiDict['data'][0]['imdbid'])
+    return json.dumps(ml.omdbProcessSeries(artiDict['data'][0]['imdbid']))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
