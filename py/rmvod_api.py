@@ -1144,7 +1144,7 @@ ORDER BY 3,4"""
     AND e.title LIKE "%_""" + epSEStrIn + """%"
     ORDER BY e.title
     LIMIT 1"""
-        # print("VodLibDB.getSeriesEpByImdbIdAndSEStr.epListSql: " + epListSql)
+        print("VodLibDB.getSeriesEpByImdbIdAndSEStr.epListSql: " + epListSql)
         resTuple = self._stdRead(epListSql)
         artiId = resTuple[0][0]
         return self.getArtifactById(artiId)
@@ -2851,6 +2851,7 @@ class MediaLibraryDB:
                     
                     try:
                         ##  This is where we would modify the Episode Artifact
+                        print("MediaLibraryDB.omdbProcessSeries epStr: " + epStr)
                         resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
                         
                         print(json.dumps(resDict))
