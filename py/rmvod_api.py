@@ -114,7 +114,7 @@ class VodLibDB:
             print("_stdDelete: Poop")
         return retval
     def getDBVersion(self):
-        return "0.9.0" # Table playlog_live added 
+        return "0.9.1" # Table playlog_live added 
     def fetchArtiDeetsFromOmdbapi(self):
         print("vldb.fetchArtiDeetsFromOmdbapi")
         maxRows = 10
@@ -137,8 +137,17 @@ class VodLibDB:
             aImdbid = rowTuple[3]
             aArbmeta = rowTuple[4]
             
-            api_url = "http://www.omdbapi.com/?i=" + aImdbid + "&apikey=87edb0eb"
-            response = requests.get(api_url)
+            uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
+            try:
+                uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+            except:
+                print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
+            pass
+            
+            
+            
+            #api_url = "http://www.omdbapi.com/?i=" + aImdbid + "&apikey=87edb0eb"
+            response = requests.get(uri)
             try:
                 jsonStr = json.dumps(response.json()).replace("'","\\\'")
             except:
@@ -1704,8 +1713,8 @@ class MediaLibraryDB:
         
         
         
-        self.apiKey = '87edb0eb'
-        
+        #self.apiKey = '87edb0eb'
+        #self.config['API_Resources']['omdbapi_key']
         
         
         
@@ -2428,8 +2437,17 @@ class MediaLibraryDB:
         if imdbidIn == 'string' or imdbidIn == 'none' or imdbidIn == '':
             return posterUri
         try:
-            api_url = "http://www.omdbapi.com/?i=" + imdbidIn + "&apikey=87edb0eb"
-            response = requests.get(api_url)
+            uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
+            try:
+                uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+            except:
+                print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
+            pass
+            
+            
+            
+            #api_url = "http://www.omdbapi.com/?i=" + imdbidIn + "&apikey=87edb0eb"
+            response = requests.get(uri)
             responseDict = response.json()
             posterUri = responseDict['Poster']
         except:
@@ -2754,7 +2772,13 @@ class MediaLibraryDB:
         return tmpRetObj
     
     def omdbFetchSingleArti(self,imdbIdIn):
-        uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  imdbIdIn
+        uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
+        try:
+            uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+        except:
+            print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
+        pass
+        
         # print("omdbFetchSingleArti - uri: " + uri)
         response = requests.get(uri)
         return response.json()
@@ -2763,7 +2787,17 @@ class MediaLibraryDB:
         if serDict['Response'] == 'True' \
         and serDict['Type'] == 'series' \
         and seasonNmbrIn <= int(serDict['totalSeasons']):
-            uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
+            
+            uri = "https://www.omdbapi.com/?i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
+            try:
+                uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
+            except:
+                print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
+            pass
+                        
+            
+            
+            #uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
             # print("omdbFetchSeriesSeason - uri: " + uri)
             response = requests.get(uri)
             return response.json()
