@@ -2819,49 +2819,49 @@ class MediaLibraryDB:
             respDict = self.omdbFetchSeriesSeason(serImdbIdIn,seasonNmbr)
             print(json.dumps(respDict))
             if respDict['Response'] == 'True':
-                try:
-                    season = respDict['Season']
-                    for episode in respDict['Episodes']:
-                        seaStr = "S" + season
-                        if int(season) < 10:
-                            seaStr = "S0" + season
-                        epStr = "E" + episode['Episode']
-                        if int(episode['Episode']) < 10:
-                            epStr = "E0" + episode['Episode']
-                        pass
-                        # try to get the corresponding artifact
-                        print(respDict['Title'] + "_" + seaStr + epStr + ": " + episode['Title'])
-                        # epListSql = """SELECT e.artifactid
-                        
-                        # Artifact Update Dict
-                        aud = {}
-                        aud['season'] = int(respDict['Season'])
-                        aud['episode'] = int(episode['Episode'])
-                        aud['relyear'] = int(episode['Released'].split(' ')[2])   #":"23 Sep 1995",
-                        #dirList = episode['Director'].split
-                        aud['director'] = episode['Director'].split(', ')
-                        aud['writer'] = episode['Writer'].split(', ')
-                        aud['primcast'] = episode['Actors'].split(', ')
-                        aud['imdbid'] = episode['imdbID']
-                        aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
-                        
-                        print(json.dumps(aud))
-
-                        ##  This is where we would modify the Episode Artifact
-                        resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
-                        
-                        print(json.dumps(resDict))
-                        
-                        serArtiId = resDict['artifactid']
-                        self.modifyArtifact(serArtiId,aud)
-                        # # print("Series: " + json.dumps(aud))
-                        
-                        print("Episode AUD: " + json.dumps(aud))
-
-                        pass
+                # try:
+                season = respDict['Season']
+                for episode in respDict['Episodes']:
+                    seaStr = "S" + season
+                    if int(season) < 10:
+                        seaStr = "S0" + season
+                    epStr = "E" + episode['Episode']
+                    if int(episode['Episode']) < 10:
+                        epStr = "E0" + episode['Episode']
                     pass
-                except:
-                    print("I cant work like this:\n" + json.dumps(respDict))
+                    # try to get the corresponding artifact
+                    print(respDict['Title'] + "_" + seaStr + epStr + ": " + episode['Title'])
+                    # epListSql = """SELECT e.artifactid
+                    
+                    # Artifact Update Dict
+                    aud = {}
+                    aud['season'] = int(respDict['Season'])
+                    aud['episode'] = int(episode['Episode'])
+                    aud['relyear'] = int(episode['Released'].split(' ')[2])   #":"23 Sep 1995",
+                    #dirList = episode['Director'].split
+                    aud['director'] = episode['Director'].split(', ')
+                    aud['writer'] = episode['Writer'].split(', ')
+                    aud['primcast'] = episode['Actors'].split(', ')
+                    aud['imdbid'] = episode['imdbID']
+                    aud['synopsis'] = episode['Title'] + ' - ' + episode['Plot']
+                    
+                    print(json.dumps(aud))
+
+                    ##  This is where we would modify the Episode Artifact
+                    resDict = vldb.getSeriesEpByImdbIdAndSEStr(serImdbIdIn,epStr)[0]
+                    
+                    print(json.dumps(resDict))
+                    
+                    serArtiId = resDict['artifactid']
+                    self.modifyArtifact(serArtiId,aud)
+                    # # print("Series: " + json.dumps(aud))
+                    
+                    print("Episode AUD: " + json.dumps(aud))
+
+                    pass
+                pass
+                # except:
+                    # print("I cant work like this:\n" + json.dumps(respDict))
             else:
                 print(imdbIdIn + " - Failed to fetch Season " + str(seasonNmbrIn))
             pass
