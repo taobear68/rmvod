@@ -144,9 +144,6 @@ class VodLibDB:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
             
-            
-            
-            #api_url = "http://www.omdbapi.com/?i=" + aImdbid + "&apikey=87edb0eb"
             response = requests.get(uri)
             try:
                 jsonStr = json.dumps(response.json()).replace("'","\\\'")
@@ -1157,9 +1154,6 @@ ORDER BY 3,4"""
         resTuple = self._stdRead(epListSql)
         artiId = resTuple[0][0]
         return self.getArtifactById(artiId)
-
-    
-    
     
     # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  
     
@@ -1638,52 +1632,6 @@ LIMIT 1"""
         # print("getRecJsonFromCache returning " + str(retval))
         return retval
 
-# Commenting out as this has been fully integrated into MediaLibraryDB
-# class RMVOD_Recommendations:
-    # def __init__(self):
-        # pass
-    # def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):
-        # pass
-        # recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
-        # vldb = VodLibDB();
-        
-        # # People
-        # resList = vldb.getRecommendedArtifactPersonsListSimple(clientIdStrIn,sinceDtStrIn)
-        # artiList = vldb.getRecommendedArtifactsByPeopleSimple(resList,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # for recArti in artiList:
-            # recsObj['data']['people'][recArti['majtype']].append(recArti)
-            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-    
-        # # Tags
-        # artiList = vldb.getRecommendedArtifactsByTags(clientIdStrIn,sinceDtStrIn,recLimitIntIn,10)
-        # for recArti in artiList:
-            # recsObj['data']['tags'][recArti['majtype']].append(recArti)
-            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-    
-        # # Others
-        # artiList = vldb.getRecommendedArtifactsByOthers(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # for recArti in artiList:
-            # recsObj['data']['others'][recArti['majtype']].append(recArti)
-            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        
-        # # Server
-        # artiList = vldb.getRecommendedArtifactsByServer(sinceDtStrIn,recLimitIntIn)
-        # for recArti in artiList:
-            # recsObj['data']['server'][recArti['majtype']].append(recArti)
-            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        
-        # # Rewatch
-        # artiList = vldb.getRecommendedArtifactsByRewatch(clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # for recArti in artiList:
-            # recsObj['data']['rewatch'][recArti['majtype']].append(recArti)
-            # recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
-        
-        # now = datetime.now()
-        
-        # recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
-        
-        # return recsObj
-
 
 class MediaLibraryDB:
     def __init__(self):
@@ -1708,16 +1656,7 @@ class MediaLibraryDB:
         self.config['API_Settings'] = {'do_recs': 'on', 'service_name': 'RIBBBITmedia VideoOnDemand', 'service_abbrev': 'RMVOD', 'recs_exp_days': '7'}
         self.config['API_Resources'] = {'image_path': '/rmvod/img', 'poster_path': '/rmvod/img/poster_00', 'video_path': '/rmvod/vidsrc', 'api_path': '/rmvod/api', 'logo_tile_image': '/rmvod/img/rmvod_badge_center.png'}
         self.config['Database'] = {'db_host': 'localhost', 'db_user': 'vodlibapi', 'db_password': 'vodlibapipw', 'db_db': 'vodlib'}
-        
-        
-        
-        
-        
-        #self.apiKey = '87edb0eb'
-        #self.config['API_Resources']['omdbapi_key']
-        
-        
-        
+
         # Update config params from file if present
         self.cfgReader()
         pass
@@ -2444,9 +2383,6 @@ class MediaLibraryDB:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
             
-            
-            
-            #api_url = "http://www.omdbapi.com/?i=" + imdbidIn + "&apikey=87edb0eb"
             response = requests.get(uri)
             responseDict = response.json()
             posterUri = responseDict['Poster']
@@ -2779,7 +2715,6 @@ class MediaLibraryDB:
             print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
         pass
         
-        # print("omdbFetchSingleArti - uri: " + uri)
         response = requests.get(uri)
         return response.json()
     def omdbFetchSeriesSeason(self,serImdbIdIn,seasonNmbrIn):
@@ -2794,11 +2729,7 @@ class MediaLibraryDB:
             except:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
-                        
             
-            
-            #uri = "https://www.omdbapi.com/?apikey=" + self.apiKey + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
-            # print("omdbFetchSeriesSeason - uri: " + uri)
             response = requests.get(uri)
             return response.json()
         else:
@@ -2824,26 +2755,12 @@ class MediaLibraryDB:
 
         # Artifact Update Dict
         aud = {}
-        #aud['season'] = int(respDict['Season'])
-        #aud['episode'] = int(episode['Episode'])
         aud['relyear'] = int(seriesArti['Released'].split(' ')[2])   #":"23 Sep 1995",
-        #dirList = episode['Director'].split
         if seriesArti['Director'] != "N/A":
             aud['director'] = seriesArti['Director'].split(', ')
         aud['writer'] = seriesArti['Writer'].split(', ')
         aud['primcast'] = seriesArti['Actors'].split(', ')
-        # aud['imdbid'] = seriesArti['imdbID']
-        #   aud['synopsis'] = seriesArti['Title'] + ' - ' + seriesArti['Plot']
         aud['synopsis'] = seriesArti['Plot'].replace('"','\\\"')
-        
-        ## THIS IS JUST FOR REFERENCE
-        # {"Title": "Upstart Crow", "Year": "2016\u20132020", "Rated": "TV-PG", "Released": "09 May 2016", "Runtime": "1 min", 
-        # "Genre": "Comedy, History", "Director": "N/A", "Writer": "Ben Elton", "Actors": "David Mitchell, Gemma Whelan, Rob Rouse",
-        # "Plot": "Satirical Blackadderesque sitcom about how friends, family, historical circumstances, and his arch-rival Robert Greene, who first coined the derogatory term \"upstart crow\", influenced William Shakespeare to write his famous plays.", 
-        # "Language": "English", "Country": "United Kingdom", "Awards": "Nominated for 1 BAFTA Award3 wins & 5 nominations total", 
-        # "Poster": "https://m.media-amazon.com/images/M/MV5BNmMwNTIzOWUtN2U5Mi00ZWJhLWFjOWUtYmU5NWIyZTRlMzg3XkEyXkFqcGdeQXVyMjExMjk0ODk@._V1_SX300.jpg", 
-        # "Ratings": [{"Source": "Internet Movie Database", "Value": "7.6/10"}], "Metascore": "N/A", "imdbRating": "7.6", 
-        # "imdbVotes": "3,575", "imdbID": "tt4793190", "Type": "series", "totalSeasons": "4", "Response": "True"}
         
         ##  This is where we would modify the Series Artifact
         whereClause = ' imdbid = "' + serImdbIdIn + '" '
@@ -2874,14 +2791,12 @@ class MediaLibraryDB:
                         seStr = seaStr + epStr
                         # try to get the corresponding artifact
                         # print(respDict['Title'] + "_" + seStr + ": " + episode['Title'])
-                        # epListSql = """SELECT e.artifactid
                         
                         # Artifact Update Dict
                         aud = {}
                         aud['season'] = int(respDict['Season'])
                         aud['episode'] = int(episode['Episode'])
                         aud['relyear'] = int(episode['Released'].split(' ')[2])   #":"23 Sep 1995",
-                        #dirList = episode['Director'].split
                         aud['director'] = episode['Director'].split(', ')
                         aud['writer'] = episode['Writer'].split(', ')
                         aud['primcast'] = episode['Actors'].split(', ')
