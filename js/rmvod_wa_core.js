@@ -2911,8 +2911,6 @@ class RMVodWebApp {
     }
 }
 
-
-
 //
 // NEW CODE TO SUPPORT RECOMMENDATIONS -- START
 //
@@ -3401,11 +3399,6 @@ class WMCWARecommend {
 //
 // NEW CODE TO SUPPORT RECOMMENDATIONS -- END
 //
-
-
-
-
-
 
 // Provide a single entrypoint into the RMVodWebApp
 function switchboard(actionIn,objIdIn,argObjIn) {
