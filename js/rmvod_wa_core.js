@@ -663,6 +663,15 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<b><u>Create a multiple Artifacts</u></b>'
         tmpHtml += '</span></div>';
         
+        //tmpHtml += '<div><span onclick="switchboard(\'formNewMultiArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
+        //tmpHtml += '<b><u>Create a multiple Artifacts</u></b>'
+        //tmpHtml += '</span></div>';
+        
+        tmpHtml += '<div><span onclick="switchboard(\'forcerecrefresh\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
+        tmpHtml += '<b><u>Force Refresh of Recommendations</u></b>'
+        tmpHtml += '</span></div>';
+        
+        //forcerecrefresh
         tmpHtml += '</div>';
         tmpHtml += '</div>';   
         return tmpHtml;     
@@ -2777,6 +2786,29 @@ class RMVodWebApp {
         //const endpoint = apiBase + '/series/artifacts/add';
         this.genericApiCall(payloadObj,endpoint,cbFunc)
     }
+    execRecsForcedRefresh(){
+        //var wa = new RMVodWebApp();
+        var recLimitInt = 30;
+        var sinceDTStr = "2023-02-01 00:00:01";
+        var clientId = "thisIsAFakeId-Netscape-1684665518260";
+        var forceRefresh = true;
+        
+        var cbFunc = function (objIn) {
+            var rec = new WMCWARecommend();
+            rec.targetParentElementId = 'rmvodrecsmastercontouter';
+            rec.setRecSrcData(objIn);
+            //rec.popMasterDiv(sinceDtStrIn);
+            rec.popMasterDiv();
+            rec.qsRecGenerateLinkList(objIn); 
+            
+        }
+        var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt,'forceRefresh':forceRefresh};
+        var endpoint = '/rmvod/api/artifact/recs/get';
+        //var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
+        
+        
+    }
     
     
     // Cookie Handling
@@ -2930,7 +2962,7 @@ function recsWrapper(sinceDtStrIn){
         //rec.recSrcData = objIn;
         rec.setRecSrcData(objIn);
         //rec.renderRecQuickSearchContainer();
-        rec.popMasterDiv(sinceDtStrIn);
+        rec.popMasterDiv();
         rec.qsRecGenerateLinkList(objIn); 
         
     }
@@ -2983,7 +3015,13 @@ class WMCWARecommend {
         sse.ssWrite('recdata',rsdObjIn);
         this.recSrcData = sse.ssRead('recdata');
     }
-    popMasterDiv(sinceDTStrIn) {
+    //popMasterDiv(sinceDTStrIn) {
+    popMasterDiv() {
+        
+        //  HEY  HEY HEY HEY HEY
+        // Looks like sinceDTStrIn is not actually used in this method.
+        // Maybe deprecate it and strip it out.
+        
         
         var recsObj = this.recSrcData['data'];
 
@@ -3573,6 +3611,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case 'popepideets':
             ml.apiPopulateEpisodeDetails(objIdIn);
+            break;
+            
+        case 'forcerecrefresh':
+            ml.execRecsForcedRefresh();
             break;
             
             
