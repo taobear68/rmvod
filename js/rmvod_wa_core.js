@@ -668,7 +668,7 @@ class RMVWAHtmlGenerator {
         //tmpHtml += '</span></div>';
         
         tmpHtml += '<div><span onclick="switchboard(\'forcerecrefresh\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
-        tmpHtml += '<b><u>Force Refresh of Recommendations</u></b>'
+        tmpHtml += '<b><u>Refresh Recs</u></b>'
         tmpHtml += '</span></div>';
         
         //forcerecrefresh
@@ -2800,6 +2800,7 @@ class RMVodWebApp {
             //rec.popMasterDiv(sinceDtStrIn);
             rec.popMasterDiv();
             rec.qsRecGenerateLinkList(objIn); 
+            alert('Recommendation Refresh complete.');
             
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt,'forceRefresh':forceRefresh};
