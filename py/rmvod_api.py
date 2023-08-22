@@ -3593,7 +3593,7 @@ def getRecs():
     
     # print("What came in: " + str(request.json))
     # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
-    
+    print(json.dumps(dictIn))
     forceRefresh = False;
     try:
         pass
