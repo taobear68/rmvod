@@ -3601,7 +3601,7 @@ def getRecs():
         forceRefresh = dictIn['forceRefresh']
     except:
         pass
-        print("Could not set forceRefresh based on requester input.  Using default value: " str(forceRefresh))
+        print("Could not set forceRefresh based on requester input.  Using default value: " + str(forceRefresh))
     
     try:
         # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
