@@ -3597,6 +3597,7 @@ def getRecs():
     forceRefresh = False;
     try:
         pass
+        print("forceRefresh: " + str(dictIn['forceRefresh']))
         assert type(dictIn['forceRefresh']) == type(True)
         forceRefresh = dictIn['forceRefresh']
     except:
