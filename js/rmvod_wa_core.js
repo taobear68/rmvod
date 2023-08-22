@@ -2790,7 +2790,7 @@ class RMVodWebApp {
         //var wa = new RMVodWebApp();
         var recLimitInt = 30;
         var sinceDTStr = "2023-02-01 00:00:01";
-        var clientId = "thisIsAFakeId-Netscape-1684665518260";
+        var clientId = this.cc.getCookie('clientid');
         var forceRefresh = true;
         
         var cbFunc = function (objIn) {
