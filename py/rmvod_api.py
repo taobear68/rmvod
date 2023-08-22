@@ -2637,14 +2637,14 @@ class MediaLibraryDB:
             
         
         return recsObj
-    def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn):
+    def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn, forceBoolIn=False):
         vldb = self.dbHandleConfigged()
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
                 
         
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
         # print('fetchRecsFromCache - recsJson: ' + str(recsJson))
-        if recsJson == None:
+        if recsJson == None or forceBoolIn == True:
             # print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             # print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
@@ -3594,13 +3594,20 @@ def getRecs():
     # print("What came in: " + str(request.json))
     # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
     
-    
+    forceRefresh = False;
+    try:
+        pass
+        assert type(dictIn['forceRefresh']) == type(True)
+        forceRefresh = dictIn['forceRefresh']
+    except:
+        pass
+        print("Could not set forceRefresh based on requester input.  Using default value: " str(forceRefresh))
     
     try:
         # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
         # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
         # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
-        retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
+        retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
         print( "Oh noes!  " + json.dumps(retDict))
         
