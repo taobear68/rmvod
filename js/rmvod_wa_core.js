@@ -1784,6 +1784,7 @@ class RMVodWebApp {
             tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + " ";
             if (factorObj['mode'] == "single") {
                 var key = Object.keys(factorObj['factors'])[0];
+                console.log(typeof key + " - " + key);
                 if (key == undefined) {
                     tmpHtml += "Default - No filter";
                 } else {
