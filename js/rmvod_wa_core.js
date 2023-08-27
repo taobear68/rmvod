@@ -1785,10 +1785,13 @@ class RMVodWebApp {
                 var key = Object.keys(factorObj['factors'])[0];
                 tmpHtml += "Factor " + key + " = " + factorObj['factors'][key];
             } else {
+                tmpHtml += "<br>";
                 var keysList = Object.keys(factorObj['factors']);
                 for (var i = 0; i < keysList.length; i++ ){
                     var key = keysList[i];
-                    tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                    if (factorObj['factors'][key] != "") {
+                        tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                    }
                 }
             }
             //factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);  //tmpHtml
