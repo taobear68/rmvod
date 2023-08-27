@@ -1792,6 +1792,7 @@ class RMVodWebApp {
                 }
             } else {
                 tmpHtml += "<br>";
+                console.log(JSON.stringify(factorObj));
                 var keysList = Object.keys(factorObj['factors']);
                 if ((keysList.length == 1) & (factorObj['factors']['tag'] == '')) {
                     tmpHtml += "Default - No filter";
