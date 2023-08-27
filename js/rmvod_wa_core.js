@@ -1784,7 +1784,11 @@ class RMVodWebApp {
             tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + " ";
             if (factorObj['mode'] == "single") {
                 var key = Object.keys(factorObj['factors'])[0];
-                tmpHtml += "Factor " + key + " = " + factorObj['factors'][key];
+                if (key == undefined) {
+                    tmpHtml += "Default - No filter";
+                } else {
+                    tmpHtml += "Factor " + key + " = " + factorObj['factors'][key];
+                }
             } else {
                 tmpHtml += "<br>";
                 var keysList = Object.keys(factorObj['factors']);
