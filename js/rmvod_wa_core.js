@@ -1779,7 +1779,8 @@ class RMVodWebApp {
             factorDispDiv.style.width = "570px";
             factorDispDiv.style.height = "60px";
             factorDispDiv.style.overflow = "auto";
-            factorDispDiv.style.color = "#0c1c1c"; //#0c0c0c
+            //factorDispDiv.style.backgroundColor = "#0c1c1c"; //#0c0c0c
+            factorDispDiv.style.color = "#c0d0d0"; //#c0c0c0
             
             var tmpHtml = "";
             tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + "; ";
