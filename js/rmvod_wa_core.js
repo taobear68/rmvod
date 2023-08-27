@@ -1697,6 +1697,10 @@ class RMVodWebApp {
             default:
                 console.log("execSearchSingleFactor fell through: ", factorStrIn, JSON.stringify(srchValObjIn));
         }
+        
+        var lastSearch = {'mode':'single','factors':payloadObj};
+        this.cc.setCookie('lastsearch', JSON.stringify(lastSearch), 90);
+        
         if (endpoint != '') { // If we've set an endpoint, call the API
             this.genericApiCall(payloadObj,endpoint,cbFunc);
         } else {
@@ -1725,6 +1729,9 @@ class RMVodWebApp {
         // Get SQL WHERE value
         sfValsObj['sqlwhere'] =  document.getElementById('sql-where-srch').value;// sql-where-srch
         
+        var lastSearch = {'mode':'multi','factors':sfValsObj};
+        this.cc.setCookie('lastsearch', JSON.stringify(lastSearch), 90);
+        
         //put a throbber in to replace any old content
         var editDiv = document.getElementById('sideartilistwidget');
         editDiv.innerHTML = '<div class="throbber-ring"></div>';        
@@ -1750,6 +1757,29 @@ class RMVodWebApp {
         }
         
     }
+    dispLastSrchFactors(){
+        try {
+            var factorJson = this.cc.getCookie('lastsearch');
+            var factorObj = JSON.parse(factorJson);
+            var factorDispDiv = document.createElement('div');
+            factorDispDiv.id = "lastsearchfactors";
+            //factorDispDiv.className = "";
+            factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);
+            
+            
+            try{
+                document.getElementById('lastsearchfactors').innerHTML = factorDispDiv.innerHTML;
+            }catch (e) {
+                var slParentDe = document.getElementById("sideartilistwidget").parentElement;
+                slParentDe.appendChild(factorDispDiv);
+            }
+            // append as child to parent of "sideartilistwidget" if "lastsearchfactors" is not present
+            
+        } catch (e) {
+            console.log("dispLastSrchFactors failed: " + e);
+        }
+    }
+    
     // Render the Artifact Edit form with values from an API call.
     // Performs DOM updates directly.
     renderArtifactEdit(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
