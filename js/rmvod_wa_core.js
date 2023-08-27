@@ -1781,7 +1781,7 @@ class RMVodWebApp {
             factorDispDiv.style.overflow = "auto";
             
             var tmpHtml = "";
-            tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + " ";
+            tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + "; ";
             if (factorObj['mode'] == "single") {
                 var key = Object.keys(factorObj['factors'])[0];
                 console.log(typeof key + " - " + key);
