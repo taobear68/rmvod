@@ -1613,6 +1613,8 @@ class RMVodWebApp {
                     var tmpDiv = wa.renderSALByIdList(objIn);
                     document.getElementById('sideartilistwidget').innerHTML = '';
                     document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                    
+                    wa.dispLastSrchFactors();     
                 }
                 if (srchValObjIn['tag'].length > 0){
                     payloadObj = {'tag':srchValObjIn['tag']};
@@ -1631,6 +1633,8 @@ class RMVodWebApp {
                         var tmpDiv = wa.renderSALByIdList(objIn);
                         document.getElementById('sideartilistwidget').innerHTML = '';
                         document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                        
+                        wa.dispLastSrchFactors();     
                     }
                 }
                 if (srchValObjIn['text'].length > 0){
@@ -1649,6 +1653,8 @@ class RMVodWebApp {
                     var tmpDiv = wa.renderSALByIdList(objIn);
                     document.getElementById('sideartilistwidget').innerHTML = '';
                     document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                    
+                    wa.dispLastSrchFactors();     
                 }
                 if (srchValObjIn['majtype'].length > 0){
                     payloadObj = {'majtype':srchValObjIn['majtype']};
@@ -1666,6 +1672,8 @@ class RMVodWebApp {
                     var tmpDiv = wa.renderSALByIdList(objIn);
                     document.getElementById('sideartilistwidget').innerHTML = '';
                     document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                    
+                    wa.dispLastSrchFactors();     
                 }
                 if (srchValObjIn['relyear2'] > 1900){
                     payloadObj = {'relyear1':srchValObjIn['relyear1'],'relyear2':srchValObjIn['relyear2']};
@@ -1684,6 +1692,8 @@ class RMVodWebApp {
                         var tmpDiv = wa.renderSALByIdList(objIn);
                         document.getElementById('sideartilistwidget').innerHTML = '';
                         document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                        
+                        wa.dispLastSrchFactors();     
                     }
                 }
                 if (srchValObjIn[factorStrIn].length > 0){
@@ -1741,7 +1751,9 @@ class RMVodWebApp {
             var wa = new RMVodWebApp();
             var tmpDiv = wa.renderSALByIdList(objIn);
             document.getElementById('sideartilistwidget').innerHTML = '';
-            document.getElementById('sideartilistwidget').appendChild(tmpDiv);            
+            document.getElementById('sideartilistwidget').appendChild(tmpDiv);  
+            
+            wa.dispLastSrchFactors();          
         }
         
         const endpoint = '/rmvod/api/mfsearch/get';
@@ -1764,14 +1776,30 @@ class RMVodWebApp {
             var factorDispDiv = document.createElement('div');
             factorDispDiv.id = "lastsearchfactors";
             //factorDispDiv.className = "";
-            factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);
+            factorDispDiv.style.width = "570px";
+            factorDispDiv.style.overflow = "auto";
+            
+            var tmpHtml = "";
+            tmpHtml += "<b>Last Search:  </b> Mode = " + factorObj['mode'] + " ";
+            if (factorObj['mode'] == "single") {
+                var key = Object.keys(factorObj['factors'])[0];
+                tmpHtml += "Factor " + key + " = " + factorObj['factors'][key];
+            } else {
+                var keysList = Object.keys(factorObj['factors']);
+                for (var i = 0; i < keysList.length; i++ ){
+                    var key = keysList[i];
+                    tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                }
+            }
+            //factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);  //tmpHtml
+            factorDispDiv.innerHTML = tmpHtml;  //tmpHtml
             
             
             try{
                 document.getElementById('lastsearchfactors').innerHTML = factorDispDiv.innerHTML;
             }catch (e) {
                 var lwDe = document.getElementById("sideartilistwidget");
-                lwDe.style.height = "490px";
+                lwDe.style.height = "470px";
                 console.log(lwDe.style.height);
                 var slParentDe = document.getElementById("sideartilistwidget").parentElement;
                 slParentDe.appendChild(factorDispDiv);
