@@ -1794,17 +1794,19 @@ class RMVodWebApp {
                 tmpHtml += "<br>";
                 console.log(JSON.stringify(factorObj));
                 var keysList = Object.keys(factorObj['factors']);
-                if ((keysList.length == 1) & (factorObj['factors']['tag'] == '')) {
-                    tmpHtml += "Default - No filter";
+                var prFact = 0;
 
-                } else {
-                    for (var i = 0; i < keysList.length; i++ ){
-                        var key = keysList[i];
-                        if (factorObj['factors'][key] != "") {
-                            tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
-                        }
+                for (var i = 0; i < keysList.length; i++ ){
+                    var key = keysList[i];
+                    if (factorObj['factors'][key] != "") {
+                        tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                        prFact += 1;
                     }
                 }
+                if (prFact == 0) {
+                    tmpHtml += "Default - No filter";
+                }
+
             }
             //factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);  //tmpHtml
             factorDispDiv.innerHTML = tmpHtml;  //tmpHtml
