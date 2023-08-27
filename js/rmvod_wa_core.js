@@ -1770,6 +1770,7 @@ class RMVodWebApp {
             try{
                 document.getElementById('lastsearchfactors').innerHTML = factorDispDiv.innerHTML;
             }catch (e) {
+                document.getElementById("sideartilistwidget").style.height = "490px";
                 var slParentDe = document.getElementById("sideartilistwidget").parentElement;
                 slParentDe.appendChild(factorDispDiv);
             }
