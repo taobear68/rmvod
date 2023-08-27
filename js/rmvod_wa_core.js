@@ -1777,6 +1777,7 @@ class RMVodWebApp {
             factorDispDiv.id = "lastsearchfactors";
             //factorDispDiv.className = "";
             factorDispDiv.style.width = "570px";
+            factorDispDiv.style.height = "60px";
             factorDispDiv.style.overflow = "auto";
             
             var tmpHtml = "";
@@ -1802,7 +1803,7 @@ class RMVodWebApp {
                 document.getElementById('lastsearchfactors').innerHTML = factorDispDiv.innerHTML;
             }catch (e) {
                 var lwDe = document.getElementById("sideartilistwidget");
-                lwDe.style.height = "470px";
+                lwDe.style.height = "450px";
                 console.log(lwDe.style.height);
                 var slParentDe = document.getElementById("sideartilistwidget").parentElement;
                 slParentDe.appendChild(factorDispDiv);
