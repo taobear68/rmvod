@@ -1793,11 +1793,15 @@ class RMVodWebApp {
             } else {
                 tmpHtml += "<br>";
                 var keysList = Object.keys(factorObj['factors']);
-                for (var i = 0; i < keysList.length; i++ ){
-                    var key = keysList[i];
-                    if (factorObj['factors'][key] != "") {
-                        tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                if (keysList.length > 0) {
+                    for (var i = 0; i < keysList.length; i++ ){
+                        var key = keysList[i];
+                        if (factorObj['factors'][key] != "") {
+                            tmpHtml += "Factor " + key + " = " + factorObj['factors'][key] + "<br>";
+                        }
                     }
+                } else {
+                    tmpHtml += "Default - No filter";
                 }
             }
             //factorDispDiv.innerHTML = "Last Search: " + JSON.stringify(factorObj);  //tmpHtml
