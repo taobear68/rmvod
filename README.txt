@@ -18,4 +18,4 @@ Major Components:
 
 20230630 - Work begins on r0.9
 
-
+20230828 - Merged branch feat_rec_srch into main, creating r0.9.1.  To transition to this version, the server administrator will need to create a table (common_texts - begins at line 58 in vodlib_setup.sql) in the database, and in /etc/rmvod/rmvod_api.cfg, set do_recs=on in the section [API_Settings], otherwise recommendations won't work.  Alternately, in /etc/rmvod/rmvod_api.cfg, set do_recs=off in the section [API_Settings] to disable recommendations.
