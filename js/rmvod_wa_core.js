@@ -852,158 +852,6 @@ class RMVodWebApp {
         var endpoint = '/rmvod/api/config/get';
         var result = wa.genericApiCall(payloadObj,endpoint,cbFunc); 
         
-        
-        
-        /* This is a bunch of stuff I tried to make "inline" execution
-         * pause here, until the API configuration data had been fully
-         * loaded into Session Storage, but everything is terrible.
-         * Javascript is single-threaded in a way that makes it so an
-         * API call can run separately from the main body of a program, 
-         * but if you do anything to pause the main body of the program
-         * the API call stalls.  What a bonkers execution environment.
-         * 
-         * Preserved here for hysterical raisins... just to show what 
-         * I'd tried so as not to repeat the same mistakes.
-         * */
-        
-        
-        //var sleep = function (miliseconds) {
-            //var currentTime = new Date().getTime();
-            //while (currentTime + miliseconds >= new Date().getTime()) {
-            //}
-        //}  
-        
-        //sleep(500);
-        //console.log("Please work: " + JSON.stringify(this.sse.ssRead('apicfg')['API_Resources']['api_path']));
-        
-        
-        
-        //var sleep = function (miliseconds) {
-            //var currentTime = new Date().getTime();
-            //while (currentTime + miliseconds >= new Date().getTime()) {
-            //}
-        //}        
-        
-        
-        //var itsOk = false;
-        //while (itsOk == false ) {
-            //try {
-                ////var tmpObj = sse.ssRead('apicfg');
-                ////var foo = tmpObj['API_Resources']['api_path'];  
-                //var tmpObj = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //itsOk = true;
-                //console.log("got it: " + JSON.stringify(tmpObj));
-            //} catch(e) {
-                //console.log("Nope.");
-                ////sleep(500);
-                ////for (var i = 0; i < 2000; i++ ) {
-                    ////// console.log("interation");
-                    ////i += 1;
-                ////}
-                //console.log("Moving on...");     
-            //}
-        //}
-        
-        
-        
-        
-        
-        
-        //console.log('Going to try to use a promise to wait here until we can read apicfg from sse');
-        
-        //// USE A PROMISE...?
-        //function myDisplayer(some) {
-            ////document.getElementById("demo").innerHTML = some;
-            ////console.log('document.getElementById("demo").innerHTML = some;');
-            //console.log(some);
-            ////return "poop";
-        //}
-        //console.log('Creating the Promise...');
-        //let myPromise = new Promise(function(myResolve, myReject) {
-            //let x = 99;
-            
-            //// The producing code (this may take some time)
-            ////for (var i = 0; i < 2000; i++ ) {
-                ////console.log("interation");
-                ////i += 1;
-            ////}
-            
-            //try {
-                //var sse = new RMSSSEnhanced();
-                //var foo = sse.ssRead('apicfg');
-                //if (foo != {}) {
-                    //x = 0;
-                    //console.log("Whee: " + JSON.stringify(foo));
-                //} else {
-                    //console.log("Promise read result: " + JSON.stringify(foo));
-                //}
-            //} catch (e) {
-                //console.log(e);
-            //}
-            
-            //if (x == 0) {
-                //myResolve("OK");
-            //} else {
-                //myReject("Error");
-            //}
-            //return "completed Value";
-        //});
-        //console.log('Invoking the Promise...');
-        //myPromise.then(
-            //function(value) {myDisplayer(value);},
-            //function(error) {myDisplayer(error);}
-        //);
-        //console.log('Done with the Promise...');        
-        
-        
-        
-        
-        
-        
-        
-        //console.log("Trying to wait here until we have the API config bits");
-        //// var didIt = false;
-        //var waitFunc = function () {
-            //console.log("Doing waitFunc");
-            //var didIt = false;
-            ////var sse = new RMSSSEnhanced();
-            ////var foo = sse.ssRead('apicfg');
-            ////if (foo != {}) {
-                ////// x = 0;
-                ////didIt = true;
-                ////console.log("Whee: " + JSON.stringify(foo));
-            ////} else {
-                ////console.log("Promise read result: " + JSON.stringify(foo));
-                ////console.log("Trying again...");
-                //////setTimeout(waitFunc,1000);
-            ////}
-            //try {
-                //var sse = new RMSSSEnhanced();
-                //var tmpObj = sse.ssRead('apicfg');
-                //var foo = tmpObj['API_Resources']['api_path'];
-                ////var foo = sse.ssRead('apicfg')['API_Resources']['api_path']; // API_Resources, api_path
-                //console.log("Whee: " + JSON.stringify(foo));
-                //didIt = true;
-            //} catch (e) {
-                //console.log("Promise read result: " + JSON.stringify(foo));
-                //console.log("Trying again...");                
-            //}
-            //return didIt;          
-        //}
-        //var happy = false;
-        //while (happy == false) {
-            //happy = waitFunc();
-            //for (var snooze = 0; snooze < 1000; snooze += 1 ) {
-                //console.log ("snoozing");
-            //}
-        //}
-        
-        
-        /* End of bonkers crap I tried to wait until the config data 
-         * actuall got here.
-         * */
-        
-        
         this.apiFetchPersonsList();
         this.apiFetchCompaniesList();
         this.apiFetchTagsList();
@@ -1011,7 +859,7 @@ class RMVodWebApp {
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
-        this.postJSVer("0.9.1d");
+        this.postJSVer("0.9.1");
     }
     getApiConfigValue(majorKeyIn,minorKeyIn){
         console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
@@ -1185,8 +1033,6 @@ class RMVodWebApp {
         xhttp.send(bodyDataStr);
         return contentRet;
     }
-    
-    
     // METHODS MAKE API CALL
     // Poll the API for the versions of server-side resources.
     // Performs DOM updates directly.
@@ -1829,7 +1675,6 @@ class RMVodWebApp {
             console.log("dispLastSrchFactors failed: " + e);
         }
     }
-    
     // Render the Artifact Edit form with values from an API call.
     // Performs DOM updates directly.
     renderArtifactEdit(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
@@ -2226,8 +2071,6 @@ class RMVodWebApp {
             this.genericApiCall(payload,endpoint,cbFunc);
         }
     }
-    
-    
     // DOM Util
     // Check for, and if they are present, load and respect 
     // cookie-stored option values
@@ -2266,8 +2109,6 @@ class RMVodWebApp {
             document.getElementById('mfsexeccontainer').style.display = 'none';
         }
     }
-
-    
     // HTML Util
     // Take a string in and return the string wrapped in a span, which
     // has an onclick function, which calls execDirectStringSrch.
@@ -2890,8 +2731,6 @@ class RMVodWebApp {
         
         
     }
-    
-    
     // Cookie Handling
     contCookieOnLoad() {
         // OnLoad, if "Resume Playback" is checked, check to see if 3 
@@ -2977,7 +2816,6 @@ class RMVodWebApp {
         this.cc.clearCookie('cont_play_sample_int_handle');
         this.cc.clearCookie('play_aid');
     }
-
     playFirstEpOfSeries(seriesAidIn){
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var cbFunc = function (objIn) {
@@ -3444,7 +3282,6 @@ class WMCWARecommend {
         
         //this.qsRecGenerateLinkList(this.recSrcData); // ['data']
     }
-    
     qsRecCommonPopSideList(deIdIn) {
         //onsole.log('qsRecCommonPopSideList - deIdIn: ' + deIdIn);
         var de = document.getElementById(deIdIn);
@@ -3482,7 +3319,6 @@ class WMCWARecommend {
             }
         }
     }
-    
     // Build the list of "quick links" and stuff them in the target div.
     qsRecGenerateLinkList(recObjIn) {
         //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
@@ -3511,8 +3347,6 @@ class WMCWARecommend {
             containerDiv.appendChild(lDiv);
         }
     }
-    
-
 }
 
 //

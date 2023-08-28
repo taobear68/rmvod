@@ -43,7 +43,7 @@ from datetime import datetime
 
 #fileStr = "vodLibrarydb.py"
 fileStr = "rmvod_api.py"
-versionStr = "0.9.1d"
+versionStr = "0.9.1"
 
 # moving to "proper" deployment via WSGI:  https://flask.palletsprojects.com/en/2.0.x/deploying/mod_wsgi/
 class VodLibDB:
@@ -1038,7 +1038,7 @@ class VodLibDB:
         retval = self._stdInsert(insSql)
         
         return retval
-    # NEWISH - PICKED UP FROM IMDB SCRAPING PROJECT
+    # NEWISH - PICKED UP FROM WEB SCRAPING PROJECT
     def getEpisodeBySeriesIdAndTitleFrag(self,seriesAdiIn,titleFragIn):
         selSql = """SELECT 
   artifactid 
@@ -1056,9 +1056,7 @@ WHERE
     ) 
 LIMIT 1
 """
-        # print(selSql)
         rowsTuple = self._stdRead(selSql)
-        # print(str(rowsTuple))
         EpAid = rowsTuple[0][0]
         return EpAid
     def getListOfSeriesSeasons(self,seriesImdbIn):
@@ -1086,7 +1084,6 @@ WHERE
         ) 
 ORDER BY 
     1"""
-
         rowsTuple = self._stdRead(selSql)
         for row in rowsTuple:
             retList.append(row[0])
@@ -1108,12 +1105,10 @@ WHERE
         ) 
 ORDER BY 
     1"""
-        #    season > -1 AND 
         rowsTuple = self._stdRead(selSql)
         for row in rowsTuple:
             retList.append(row[0])
         return retList
-    
     def getAIDofFirstEpisode(self,seriesAidIn):
         sqlStr = """SELECT s.episodeaid, a.file, a.season, a.episode
 FROM s2e s 
@@ -1123,7 +1118,6 @@ ORDER BY 3,4
 LIMIT 1"""
         interTuple = self._stdRead(sqlStr)
         return interTuple[0][0]
-        
     def getSeriesEpisodeListSingleSeason(self,seriesAidIn,seasonIntIn):
         sqlStr = """SELECT s.episodeaid, a.file, a.season, a.episode
 FROM s2e s 
@@ -1139,9 +1133,6 @@ ORDER BY 3,4"""
         
         pass
     def getSeriesEpByImdbIdAndSEStr(self,serImdbIdIn,epSEStrIn):
-        # print("VodLibDB.getSeriesEpByImdbIdAndSEStr inputs: ", str(serImdbIdIn), str(epSEStrIn))
-        # imdbIdIn = "tt4793190"
-        # seaStr = "S02E01"
         epListSql = """SELECT e.artifactid
     FROM artifacts e
     JOIN s2e s ON e.artifactid = s.episodeaid
@@ -1150,15 +1141,10 @@ ORDER BY 3,4"""
     AND e.title LIKE "%_""" + epSEStrIn + """%"
     ORDER BY e.title
     LIMIT 1"""
-        # print("VodLibDB.getSeriesEpByImdbIdAndSEStr.epListSql: " + epListSql)
         resTuple = self._stdRead(epListSql)
         artiId = resTuple[0][0]
         return self.getArtifactById(artiId)
-    
-    # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  # NEW!!  
-    
     #####  METHODS RELATED TO "RECOMMENDATIONS"
-    
     def getRecommendedArtifactPersonsListSimple(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00"):
         assert ((type(clientIdIn) == type(None) ) or (type(clientIdIn) == type("string")))
         assert type(sinceDTIn) == type("string")        
@@ -1610,7 +1596,6 @@ SET id = '""" + uRecId + """',
         self._stdInsert(tmpSql)
         # print("writtenRecToCache")
         return True
-
     def getRecJsonFromCache(self,clientIdIn=None):
         tmpSql = """SELECT record_data 
 FROM common_texts 
@@ -1618,18 +1603,11 @@ WHERE filt_crit_1 = '""" + clientIdIn + """'
     AND expire_date > NOW()
 ORDER BY expire_date DESC
 LIMIT 1"""
-        # print("getRecJsonFromCache - tmpSql: " + tmpSql)
         rowsTuple = self._stdRead(tmpSql)
-        # print("getRecJsonFromCache - Made it past the query.")
-        # print("getRecJsonFromCache - rowsTuple: " + str(rowsTuple))
-        
         retval = None
         if (len(rowsTuple) > 0):
-            # print("getRecJsonFromCache Processing rowsTuple")
             for row in rowsTuple:
-                # print("getRecJsonFromCache Processing row: " + str(row))
                 retval = row[0]
-        # print("getRecJsonFromCache returning " + str(retval))
         return retval
 
 
@@ -2640,23 +2618,13 @@ class MediaLibraryDB:
     def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn, forceBoolIn=False):
         vldb = self.dbHandleConfigged()
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
-                
-        
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
-        # print('fetchRecsFromCache - recsJson: ' + str(recsJson))
         if recsJson == None or forceBoolIn == True:
-            # print('fetchRecsFromCache - got None back')
             genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
-            # print('fetchRecsFromCache - got back genRecsObj: ' + json.dumps(genRecsObj))
-            # vldb.writeRecToCache(clientIdIn,genRecsObj,7)
             vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
-            # print('fetchRecsFromCache - Done with write call.')
             recsObj = genRecsObj
         else:
-            # print("fetchRecsFromCache: recsJson: " + recsJson[0:600])
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
-        
-        # print("fetchRecsFromCache - recsObj: " + json.dumps(recsObj))
         return recsObj
     def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
@@ -3588,11 +3556,6 @@ def getRecs():
         dictIn = {}
         diKeysList = []
         return json.dumps([])    
-    
-    # retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit']) 
-    
-    # print("What came in: " + str(request.json))
-    # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])
     print(json.dumps(dictIn))
     forceRefresh = False;
     try:
@@ -3603,17 +3566,10 @@ def getRecs():
     except:
         pass
         print("Could not set forceRefresh based on requester input.  Using default value: " + str(forceRefresh))
-    
     try:
-        # generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn)
-        # ml.generateStandardRecs(clientIdStrIn,sinceDtStrIn,recLimitIntIn) 
-        # retDict = ml.generateStandardRecs(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'])  # fetchRecsFromCache
         retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
         print( "Oh noes!  " + json.dumps(retDict))
-        
-        
-        
     return json.dumps(retDict)
 
 @app.route('/artifact/recs/serfirstep/get',methods=['POST'])
