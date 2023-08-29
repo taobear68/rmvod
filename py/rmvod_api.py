@@ -2058,16 +2058,16 @@ class MediaLibraryDB:
         
         # Hard-coded for now.  Should be a .cfg option.
         sillyString = "/rmvod/img/RMVOD_NoPoster.png"
-        print("sillyString: " + sillyString)
-        retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
+        # print("sillyString: " + sillyString)
+        # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
         retval['poster'] = sillyString
-        print(retval['poster'])
+        # print(retval['poster'])
         
         try:
             retval['poster'] = self.fetchPosterFile(retval['imdbid'])
         except:
             print("getArtifactById couldn't get the poster file.  Sad.")
-        print("getArtifactById - retval['poster']: " + retval['poster'])
+        # print("getArtifactById - retval['poster']: " + retval['poster'])
         return retval
     def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         
@@ -2374,7 +2374,7 @@ class MediaLibraryDB:
             responseDict = response.json()
             posterUri = responseDict['Poster']
         except:
-            print("fetchPosterLink Failed to fetch " + api_url)
+            print("fetchPosterLink Failed to fetch " + uri)
             pass
         return posterUri        
     def fetchPosterFile(self,imdbidIn):
