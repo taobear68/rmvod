@@ -2056,9 +2056,12 @@ class MediaLibraryDB:
             print("getArtifactById for " + artiIdIn + " FAILED")
         pass
         
-        # # Hard-coded for now.  Should be a .cfg option.
-        # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
-        # print(retval['poster'])
+        # Hard-coded for now.  Should be a .cfg option.
+        sillyString = "/rmvod/img/RMVOD_NoPoster.png"
+        print("sillyString: " + sillyString)
+        retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
+        retval['poster'] = sillyString
+        print(retval['poster'])
         
         try:
             retval['poster'] = self.fetchPosterFile(retval['imdbid'])
