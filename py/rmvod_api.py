@@ -2372,6 +2372,7 @@ class MediaLibraryDB:
             
             response = requests.get(uri)
             responseDict = response.json()
+            print(json.dumps(responseDict))
             posterUri = responseDict['Poster']
         except:
             print("fetchPosterLink Failed to fetch " + uri)
