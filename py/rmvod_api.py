@@ -2061,6 +2061,7 @@ class MediaLibraryDB:
             print("getArtifactById couldn't get the poster file.  Sad.")
             # Hard-coded for now.  Should be a .cfg option.
             retval['poster'] = '/rmvod/img/RMVOD_NoPoster.png'
+        print("getArtifactById - retval['poster']: " + retval['poster'])
         return retval
     def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         
