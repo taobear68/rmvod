@@ -2399,6 +2399,7 @@ class MediaLibraryDB:
                 uriPath = "/rmvod/img/RMVOD_NoPoster.png"
                 pass
             pass
+        print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
         return uriPath
     def librarifyTitle(self,titleIn):
         titleOut = titleIn
