@@ -2049,32 +2049,36 @@ class MediaLibraryDB:
         return tmpRetObj
     ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
-        retval = None
-        try:
-            #vldb = VodLibDB()
-            vldb = self.dbHandleConfigged()
-            retval = vldb.getArtifactById(artiIdIn,False)[0]
-            retval = self.titleLibTweak(retval)
-        except:
-            print("getArtifactById for " + artiIdIn + " FAILED")
-        pass
+        print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
+        raise Exception("Called deprecated method getArtifactById -- Time to die.")
         
-        # Hard-coded for now.  Should be a .cfg option.
-        sillyString = "/rmvod/img/RMVOD_NoPoster.png"
-        # print("sillyString: " + sillyString)
-        # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
-        retval['poster'] = sillyString
-        # print(retval['poster'])
-        
-        
-        retval['poster'] = self.fetchPosterFile(retval['imdbid'])
+        # retval = None
         # try:
-            # retval['poster'] = self.fetchPosterFile(retval['imdbid'])
+            # #vldb = VodLibDB()
+            # vldb = self.dbHandleConfigged()
+            # retval = vldb.getArtifactById(artiIdIn,False)[0]
+            # retval = self.titleLibTweak(retval)
         # except:
-            # print("getArtifactById couldn't get the poster file.  Sad.")
+            # print("getArtifactById for " + artiIdIn + " FAILED")
+        # pass
         
-        # print("getArtifactById - retval['poster']: " + retval['poster'])
-        return retval
+        # # Hard-coded for now.  Should be a .cfg option.
+        # sillyString = "/rmvod/img/RMVOD_NoPoster.png"
+        # # print("sillyString: " + sillyString)
+        # # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
+        # retval['poster'] = sillyString
+        # # print(retval['poster'])
+        
+        
+        # retval['poster'] = self.fetchPosterFile(retval['imdbid'])
+        # # try:
+            # # retval['poster'] = self.fetchPosterFile(retval['imdbid'])
+        # # except:
+            # # print("getArtifactById couldn't get the poster file.  Sad.")
+        
+        # # print("getArtifactById - retval['poster']: " + retval['poster'])
+        # return retval
+        pass
     def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
