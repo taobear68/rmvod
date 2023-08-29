@@ -2041,11 +2041,14 @@ class MediaLibraryDB:
         try:
             tmpRetObj['data'][0]['poster'] = self.fetchPosterFile(retval['imdbid'])
         except:
+            # Hard-coded for now.  Should be a .cfg option.
+            tmpRetObj['data'][0]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
             print("getArtifactById couldn't get the poster file.  Sad.")
             
         
         return tmpRetObj
-    def getArtifactById(self,artiIdIn): # Updated to use .cfg
+    ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
+    def getArtifactById(self,artiIdIn): # Updated to use .cfg  
         retval = None
         try:
             #vldb = VodLibDB()
