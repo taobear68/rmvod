@@ -2405,11 +2405,7 @@ class MediaLibraryDB:
             except:
                 print('Tried to fetch ' + posterUri + ' and save it as ' + filnm + ' but failed miserably')
                 uriPath = ''
-                
-                
                 # # Hard-coded for now.  Should be a .cfg option.
-                # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
-                # print(retval['poster'])
                 uriPath = "/rmvod/img/RMVOD_NoPoster.png"
                 pass
             pass
