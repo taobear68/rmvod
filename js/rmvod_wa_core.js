@@ -1347,6 +1347,7 @@ class RMVodWebApp {
             const colList = ['title','majtype','relyear','tags','synopsis','runmins','director','writer','primcast','relorg','season','episode','file','filepath','eidrid','imdbid','arbmeta','artifactid'];
             var dValStr = "" ;
             
+            console.log("RMVodWebApp.populateArtifactDetails - objIn['poster']: " + objIn['poster']);
             try {
                 if ((objIn['poster'] != '') && (objIn['imdbid'] != 'string') && (objIn['imdbid'] != 'none') && (objIn['imdbid'] != '')){
                     dValStr += '<img src="'  + objIn['poster'] + '" width="300" height="460"><br>';
