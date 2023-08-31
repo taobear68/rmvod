@@ -2051,7 +2051,7 @@ class MediaLibraryDB:
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
         #return self.getArtifactByIdNew(artiIdIn)['data']
         tmpObj = self.getArtifactByIdNew(artiIdIn)
-        print(json.dumps(tmpObj)['data'][0])
+        print(json.dumps(tmpObj['data'][0]))
         print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
         raise Exception("Called deprecated method getArtifactById -- Time to die.")
         
