@@ -2049,6 +2049,8 @@ class MediaLibraryDB:
         return tmpRetObj
     ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
+        return self.getArtifactByIdNew(artiIdIn)['data']
+        
         print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
         raise Exception("Called deprecated method getArtifactById -- Time to die.")
         
