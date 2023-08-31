@@ -2050,39 +2050,10 @@ class MediaLibraryDB:
     ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
         return self.getArtifactByIdNew(artiIdIn)['data'][0]
-        
-        
-        tmpObj = self.getArtifactByIdNew(artiIdIn)
-        print(json.dumps(tmpObj['data'][0]))
-        print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
-        raise Exception("Called deprecated method getArtifactById -- Time to die.")
-        
-        # retval = None
-        # try:
-            # #vldb = VodLibDB()
-            # vldb = self.dbHandleConfigged()
-            # retval = vldb.getArtifactById(artiIdIn,False)[0]
-            # retval = self.titleLibTweak(retval)
-        # except:
-            # print("getArtifactById for " + artiIdIn + " FAILED")
-        # pass
-        
-        # # Hard-coded for now.  Should be a .cfg option.
-        # sillyString = "/rmvod/img/RMVOD_NoPoster.png"
-        # # print("sillyString: " + sillyString)
-        # # retval['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
-        # retval['poster'] = sillyString
-        # # print(retval['poster'])
-        
-        
-        # retval['poster'] = self.fetchPosterFile(retval['imdbid'])
-        # # try:
-            # # retval['poster'] = self.fetchPosterFile(retval['imdbid'])
-        # # except:
-            # # print("getArtifactById couldn't get the poster file.  Sad.")
-        
-        # # print("getArtifactById - retval['poster']: " + retval['poster'])
-        # return retval
+        # tmpObj = self.getArtifactByIdNew(artiIdIn)
+        # print(json.dumps(tmpObj['data'][0]))
+        # print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
+        # raise Exception("Called deprecated method getArtifactById -- Time to die.")
         pass
     def getNextEpisodeArtifactById(self,artiIdIn): # UPDATED FOR NEW RETURN OBJECT MODEL # Updated to use .cfg
         
@@ -2414,7 +2385,7 @@ class MediaLibraryDB:
                 uriPath = "/rmvod/img/RMVOD_NoPoster.png"
                 pass
             pass
-        print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
+        # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
         return uriPath
     def librarifyTitle(self,titleIn):
         titleOut = titleIn
