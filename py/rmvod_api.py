@@ -2049,7 +2049,9 @@ class MediaLibraryDB:
         return tmpRetObj
     ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
-        #return self.getArtifactByIdNew(artiIdIn)['data']
+        return self.getArtifactByIdNew(artiIdIn)['data'][0]
+        
+        
         tmpObj = self.getArtifactByIdNew(artiIdIn)
         print(json.dumps(tmpObj['data'][0]))
         print("THIS IS MediaLibraryDB.getArtifactById!  THIS SHOULD NEVER BE USED!  FIX YOUR SHIT!  USE getArtifactByIdNew INSTEAD!")
