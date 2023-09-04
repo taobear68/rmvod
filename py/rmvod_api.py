@@ -140,6 +140,7 @@ class VodLibDB:
             uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
             try:
                 uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+                print(uri)
             except:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
@@ -2352,6 +2353,7 @@ class MediaLibraryDB:
             uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
             try:
                 uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+                print(uri)
             except:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
@@ -2678,6 +2680,7 @@ class MediaLibraryDB:
         uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
         try:
             uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  imdbIdIn
+            print(uri)
         except:
             print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
         pass
@@ -2693,6 +2696,7 @@ class MediaLibraryDB:
             uri = "https://www.omdbapi.com/?i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
             try:
                 uri = "https://www.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" +  serImdbIdIn + "&season=" + str(seasonNmbrIn) + "&detail=full"
+                print(uri)
             except:
                 print("No OMDBAPI Key set.  Access to resources may be limited.  See https://www.omdbapi.com/ for details.")
             pass
