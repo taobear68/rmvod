@@ -2404,6 +2404,7 @@ class MediaLibraryDB:
                 print("fetchPosterFile2 - posterUri: " + posterUri)
                 response = requests.get(posterUri)
                 print("fetchPosterFile2 - HTTP Response: " + str(response.status_code))
+                #whitespace
                 fh = open(filnm,"wb")
                 fh.write(response.content)
                 fh.close()
