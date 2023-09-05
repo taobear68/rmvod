@@ -2404,6 +2404,8 @@ class MediaLibraryDB:
                 print("fetchPosterFile2 - posterUri: " + posterUri)
                 response = requests.get(posterUri)
                 print("fetchPosterFile2 - HTTP Response: " + str(response.status_code))
+                if (int(response.status_code) >= 400):
+                    raise Exception("Poster fetch failed with code " + str(response.status_code))
                 #whitespace
                 fh = open(filnm,"wb")
                 fh.write(response.content)
