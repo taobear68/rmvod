@@ -2040,7 +2040,7 @@ class MediaLibraryDB:
             print("getArtifactById for " + artiIdIn + " FAILED")
         pass
         try:
-            tmpRetObj['data'][0]['poster'] = self.fetchPosterFile(retval['imdbid'])
+            tmpRetObj['data'][0]['poster'] = self.fetchPosterFile2(retval['imdbid'])
         except:
             # Hard-coded for now.  Should be a .cfg option.
             tmpRetObj['data'][0]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
@@ -2401,6 +2401,7 @@ class MediaLibraryDB:
             try: 
                 # posterUri = self.fetchPosterLink(imdbidIn)
                 posterUri = "http://img.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" + imdbidIn
+                print("fetchPosterFile2 - posterUri: " + posterUri)
                 response = requests.get(posterUri)
                 fh = open(filnm,"wb")
                 fh.write(response.content)
