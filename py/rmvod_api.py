@@ -2403,6 +2403,7 @@ class MediaLibraryDB:
                 posterUri = "http://img.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" + imdbidIn
                 print("fetchPosterFile2 - posterUri: " + posterUri)
                 response = requests.get(posterUri)
+                print("fetchPosterFile2 - HTTP Response: " + str(response.status_code))
                 fh = open(filnm,"wb")
                 fh.write(response.content)
                 fh.close()
