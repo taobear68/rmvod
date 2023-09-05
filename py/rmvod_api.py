@@ -2389,6 +2389,33 @@ class MediaLibraryDB:
             pass
         # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
         return uriPath
+        
+    def fetchPosterFile2(self,imdbidIn):
+        if imdbidIn == '' or imdbidIn == 'string' or imdbidIn == 'none':
+            print("fetchPosterFile - Got a bad imdbid: " + str(imdbidIn))
+            return ''
+        baseDir = '/var/www/html'
+        uriPath = '/rmvod/img/poster_00/' + imdbidIn + '.jpg'
+        filnm = baseDir + uriPath
+        if not (os.path.exists(filnm)):
+            try: 
+                # posterUri = self.fetchPosterLink(imdbidIn)
+                posterUri = "http://img.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" + imdbidIn
+                response = requests.get(posterUri)
+                fh = open(filnm,"wb")
+                fh.write(response.content)
+                fh.close()
+            except:
+                print('Tried to fetch ' + posterUri + ' and save it as ' + filnm + ' but failed miserably')
+                uriPath = ''
+                # # Hard-coded for now.  Should be a .cfg option.
+                uriPath = "/rmvod/img/RMVOD_NoPoster.png"
+                pass
+            pass
+        # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
+        return uriPath
+        
+        
     def librarifyTitle(self,titleIn):
         titleOut = titleIn
         if titleIn[0:4] == "The ":
