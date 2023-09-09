@@ -1084,6 +1084,14 @@ class RMVodWebApp {
         //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
+    apiFetchSiteStats(){
+        var cbFunc = function (objIn) {
+            console.log(objIn);
+        }
+        const payloadObj = {};
+        const endpoint = '/rmvod/api/site/stats/get';
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
+    }
     // Retrieves a fresh copy of the "tags" list
     // Stores result in Session Storage
     apiFetchTagsList(){ //UPDATED FOR NEW RETURN OBJECT MODEL
