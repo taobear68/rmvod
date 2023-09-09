@@ -1089,6 +1089,7 @@ class RMVodWebApp {
             //console.log(objIn);
             
             var jsTreeWalker = function(objIn) {
+                console.log(JSON.stringify(objIn));
                 switch (typeof objIn) {
                     case typeof "string":
                         console.log("leaf string " + objIn);
