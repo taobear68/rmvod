@@ -1610,6 +1610,180 @@ LIMIT 1"""
             for row in rowsTuple:
                 retval = row[0]
         return retval
+    def getSiteStats(self,intervalIntIn):  ####    NEW!!   WORK IN PROGRESS!!!
+        retval = None
+        topCnt = 10;
+        tmpTagsList = []
+        retDict = {"artifacts":{},"listings":{}}
+        # {
+            # "artifacts":{
+                # "457e6c3c-591e-46ab-8b75-c7ed31d0cfbc":{"title":"Tim Minchin: Back","artifactid":"457e6c3c-591e-46ab-8b75-c7ed31d0cfbc","majtype":"movie"},
+                # "c7e34b0f-d3ea-4521-b39a-99b3d89812a6":{"title":"Jo Brand: Barely Live","artifactid":"c7e34b0f-d3ea-4521-b39a-99b3d89812a6","majtype":"movie"},
+                # "08c74e39-e523-4d4f-864c-7a0cc67c4419":{"title":"Dara O'Briain: Talks Funny","artifactid":"08c74e39-e523-4d4f-864c-7a0cc67c4419","majtype":"movie"},
+                # "53aade09-535b-4c96-9c1e-695284f476c6":{"title":"ElephantParts","artifactid":"53aade09-535b-4c96-9c1e-695284f476c6","majtype":"movie"},
+                # "1a06de9a-9a5b-4423-8bd8-1bd66ead0d9f":{"title":"A Shot In The Dark","artifactid":"1a06de9a-9a5b-4423-8bd8-1bd66ead0d9f","majtype":"movie"},
+                # "e9253d1b-0711-4f65-b6e2-a6decc050ef6":{"title":"1941","artifactid":"e9253d1b-0711-4f65-b6e2-a6decc050ef6","majtype":"movie"},
+                # "da235d5e-b37b-41a5-9f03-284cb902e89e":{"title":"Greg Davies: The Back Of My Mums Head","artifactid":"da235d5e-b37b-41a5-9f03-284cb902e89e","majtype":"movie"},
+                # "c8f35db3-7525-418e-b23a-4a610ae4654f":{"title":"Jon Richardson: Nidiot","artifactid":"c8f35db3-7525-418e-b23a-4a610ae4654f","majtype":"movie"},
+                # "69583984-ebab-46c1-be6b-86796c6fef22":{"title":"Sarah Millican: Bobby Dazzler","artifactid":"69583984-ebab-46c1-be6b-86796c6fef22","majtype":"movie"},
+                # "04fb8351-651e-4740-9b50-13a9392a7897":{"title":"Beerfest","artifactid":"04fb8351-651e-4740-9b50-13a9392a7897","majtype":"movie"},
+                # "da22e03b-bc63-4332-b527-dd9f082797f1":{"title":"The Sand Pebbles","artifactid":"da22e03b-bc63-4332-b527-dd9f082797f1","majtype":"movie"},
+                # "05ebd587-7fe7-4739-ba27-8d0f1d9bf57d":{"title":"There Will Be Blood","artifactid":"05ebd587-7fe7-4739-ba27-8d0f1d9bf57d","majtype":"movie"},
+                # "a39ce7c8-6484-48b5-9a2e-d1d055e0a176":{"title":"Vertigo","artifactid":"a39ce7c8-6484-48b5-9a2e-d1d055e0a176","majtype":"movie"},
+                # "a8fa58c5-3cf0-40fb-a2d8-9ed4453bbd69":{"title":"M*A*S*H","artifactid":"a8fa58c5-3cf0-40fb-a2d8-9ed4453bbd69","majtype":"movie"},
+                # "14ada598-05a0-4f95-8f64-1f26877b0a69":{"title":"No Country For Old Men","artifactid":"14ada598-05a0-4f95-8f64-1f26877b0a69","majtype":"movie"},
+                # "8eba8eed-77f1-4eb4-a703-ce2cdf099c5e":{"title":"I Am Sam","artifactid":"8eba8eed-77f1-4eb4-a703-ce2cdf099c5e","majtype":"movie"},
+                # "b53e9f60-b76b-4781-9014-85be9bed1679":{"title":"Ice Station Zebra","artifactid":"b53e9f60-b76b-4781-9014-85be9bed1679","majtype":"movie"},
+                # "5f71c282-7620-4793-9166-4356dfc90846":{"title":"Westworld","artifactid":"5f71c282-7620-4793-9166-4356dfc90846","majtype":"movie"},
+                # "d4f2e83f-1ec2-42fd-8e13-aaa6e80121ab":{"title":"Everything Everywhere All At Once","artifactid":"d4f2e83f-1ec2-42fd-8e13-aaa6e80121ab","majtype":"movie"},
+                # "487598cb-9b6c-47e5-8908-500a6d32e986":{"title":"The Aviator","artifactid":"487598cb-9b6c-47e5-8908-500a6d32e986","majtype":"movie"},
+                # "03189fe8-a68f-4631-8eb2-8277c248a987":{"title":"Jojo Rabbit","artifactid":"03189fe8-a68f-4631-8eb2-8277c248a987","majtype":"movie"},
+                # "d32185ed-3f6d-4501-ace4-494f7ceeec43":{"title":"The Maltese Falcon","artifactid":"d32185ed-3f6d-4501-ace4-494f7ceeec43","majtype":"movie"}
+        
+            # }
+            # "listings":{
+                # "movie":{
+                    # "tags":{
+                        # "comedy":{
+                            # "count":46,
+                            # "artifacts":[
+                                # "457e6c3c-591e-46ab-8b75-c7ed31d0cfbc",
+                                # "c7e34b0f-d3ea-4521-b39a-99b3d89812a6",
+                                # "08c74e39-e523-4d4f-864c-7a0cc67c4419",
+                                # "53aade09-535b-4c96-9c1e-695284f476c6",
+                                # "1a06de9a-9a5b-4423-8bd8-1bd66ead0d9f",
+                                # "e9253d1b-0711-4f65-b6e2-a6decc050ef6",
+                                # "da235d5e-b37b-41a5-9f03-284cb902e89e",
+                                # "c8f35db3-7525-418e-b23a-4a610ae4654f",
+                                # "69583984-ebab-46c1-be6b-86796c6fef22",
+                                # "04fb8351-651e-4740-9b50-13a9392a7897",
+                            # ]
+                        # },
+                        # "new":{
+                            # "count":25,
+                            # "artifacts":[
+                                # "c7e34b0f-d3ea-4521-b39a-99b3d89812a6",
+                                # "da22e03b-bc63-4332-b527-dd9f082797f1",
+                                # "08c74e39-e523-4d4f-864c-7a0cc67c4419",
+                                # "05ebd587-7fe7-4739-ba27-8d0f1d9bf57d",
+                                # "c8f35db3-7525-418e-b23a-4a610ae4654f",
+                                # "1a06de9a-9a5b-4423-8bd8-1bd66ead0d9f",
+                                # "69583984-ebab-46c1-be6b-86796c6fef22",
+                                # "a39ce7c8-6484-48b5-9a2e-d1d055e0a176",
+                                # "a8fa58c5-3cf0-40fb-a2d8-9ed4453bbd69",
+                                # "14ada598-05a0-4f95-8f64-1f26877b0a69",
+                            # ]
+                        # },
+                        # "drama":{
+                            # "count":24,
+                            # "artifacts":[
+                                # "da22e03b-bc63-4332-b527-dd9f082797f1",
+                                # "8eba8eed-77f1-4eb4-a703-ce2cdf099c5e",
+                                # "b53e9f60-b76b-4781-9014-85be9bed1679",
+                                # "5f71c282-7620-4793-9166-4356dfc90846",
+                                # "a39ce7c8-6484-48b5-9a2e-d1d055e0a176",
+                                # "d4f2e83f-1ec2-42fd-8e13-aaa6e80121ab",
+                                # "05ebd587-7fe7-4739-ba27-8d0f1d9bf57d",
+                                # "487598cb-9b6c-47e5-8908-500a6d32e986",
+                                # "03189fe8-a68f-4631-8eb2-8277c248a987",
+                                # "d32185ed-3f6d-4501-ace4-494f7ceeec43",
+                            # ]
+                        # }
+                    # }
+                # }
+            # }
+        # }        
+        
+        majtypeCntSql = """SELECT majtype, COUNT(artifactid) 
+FROM artifacts 
+GROUP BY 1 
+ORDER BY 1 """
+        rowsTuple = self._stdRead(majtypeCntSql)
+        majtypeList = []
+        for rowTuple in rowsTuple:
+            tmpDict = {"name":rowTuple[0],"count":rowTuple[1]}
+            majtypeList.append(tmpDict)
+            retDict["listings"][rowTuple[0]] = {"tags":{},"count":rowTuple[1]}
+        pass
+        
+        # Most Played Tags Last 6 Months (movie)
+        movieTagsSQL = """SELECT t.tag, COUNT(l.reqtime) 
+FROM playlog_live l 
+JOIN t2a t ON l.artifactid = t.artifactid 
+JOIN artifacts a ON l.artifactid = a.artifactid 
+WHERE l.reqtime > INTERVAL -""" + str(intervalIntIn) + """ DAY + NOW() 
+AND a. majtype = 'movie' 
+GROUP BY 1 
+ORDER BY 2 DESC 
+LIMIT """ + str(topCnt) + """ """
+        rowsTuple = self._stdRead(movieTagsSQL)
+        for rowTuple in rowsTuple:
+            retDict["listings"]["movie"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
+            tmpTagsList.append([rowTuple[0]])
+        pass
+        
+        
+        for tagName in tmpTagsList:
+            # Most Played artifacts for a specified tag Last 6 Months (movie)
+            movieTitlesByTagSQL = """SELECT a.title, a.artifactid, COUNT(l.reqtime) 
+FROM playlog_live l 
+JOIN t2a t ON l.artifactid = t.artifactid 
+JOIN artifacts a ON l.artifactid = a.artifactid 
+WHERE l.reqtime > INTERVAL -""" + str(intervalIntIn) + """ DAY + NOW() 
+AND a. majtype = 'movie' 
+AND t.tag = '""" + tagName + """' 
+GROUP BY 1 
+ORDER BY 2 DESC 
+LIMIT """ + str(topCnt) + """  """
+            rowsTuple = self._stdRead(movieTitlesByTagSQL)
+            for rowTuple in rowsTuple:
+                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"movie","count":rowTuple[3]}
+                retDict["listings"]["movie"]["tags"][tagName]['artifacts'].append(rowTuple[1])
+            pass
+        pass
+        
+        
+        
+        tmpTagsList = []
+        
+        # Most Played Tags Last 6 Months (tvseries)
+        tvseriesTagsSQL = """SELECT t.tag, COUNT(l.reqtime) 
+FROM playlog_live l 
+JOIN s2e s ON l.artifactid = s.episodeaid 
+JOIN t2a t ON s.seriesaid = t.artifactid 
+JOIN artifacts a ON s.seriesaid = a.artifactid
+WHERE l.reqtime > INTERVAL -""" + str(intervalIntIn) + """ DAY + NOW() 
+AND a. majtype = 'tvseries' 
+GROUP BY 1 
+ORDER BY 2 DESC 
+LIMIT """ + str(topCnt) + """ """
+        rowsTuple = self._stdRead(tvseriesTagsSQL)
+        for rowTuple in rowsTuple:
+            retDict["listings"]["tvseries"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
+            tmpTagsList.append([rowTuple[0]])
+        pass
+        
+        
+        for tagName in tmpTagsList:
+            # Most Played artifacts for a specified tag Last 6 Months (tvseries)
+            tvseriesTitlesByTagSQL = """SELECT a.title, a.artifactid, COUNT(l.reqtime) 
+FROM playlog_live l
+JOIN s2e s ON l.artifactid = s.episodeaid
+JOIN t2a t ON s.seriesaid = t.artifactid
+JOIN artifacts a ON s.seriesaid = a.artifactid
+WHERE l.reqtime > INTERVAL -""" + str(intervalIntIn) + """ DAY + NOW()
+AND a. majtype = 'tvseries'
+AND t.tag = '""" + tagName + """'
+GROUP BY 1
+ORDER BY 2 DESC
+LIMIT """ + str(topCnt) + """  """
+            rowsTuple = self._stdRead(tvseriesTitlesByTagSQL)
+            for rowTuple in rowsTuple:
+                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"tvseries","count":rowTuple[3]}
+                retDict["listings"]["tvseries"]["tags"][tagName]['artifacts'].append(rowTuple[1])
+            pass
+        pass
+        return retDict
 
 
 class MediaLibraryDB:
@@ -2345,7 +2519,13 @@ class MediaLibraryDB:
         retval = self.modifyArtifact(artiIdIn,updateDict)
         
         return retval
-    def fetchPosterLink(self,imdbidIn):
+    def fetchPosterLink(self,imdbidIn):  # Deprecated
+        # This version tries to pull posters from IMDB... as of 
+        # 20230905 IMDB has tucked their poster image files away 
+        # somewhere and are throwing 404s now, so this is prolly 
+        # deprecated.
+        raise Exception("MediaLibraryDB.fetchPosterLink DEPRECATED")
+        
         posterUri = ''
         if imdbidIn == 'string' or imdbidIn == 'none' or imdbidIn == '':
             return posterUri
@@ -2366,7 +2546,13 @@ class MediaLibraryDB:
             print("fetchPosterLink Failed to fetch " + uri)
             pass
         return posterUri        
-    def fetchPosterFile(self,imdbidIn):
+    def fetchPosterFile(self,imdbidIn): # Deprecated
+        # This version tries to pull posters from IMDB... as of 
+        # 20230905 IMDB has tucked their poster image files away 
+        # somewhere and are throwing 404s now, so this is prolly 
+        # deprecated.
+        raise Exception("MediaLibraryDB.fetchPosterFile DEPRECATED")
+        
         if imdbidIn == '' or imdbidIn == 'string' or imdbidIn == 'none':
             print("fetchPosterFile - Got a bad imdbid: " + str(imdbidIn))
             return ''
@@ -2389,8 +2575,8 @@ class MediaLibraryDB:
             pass
         # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
         return uriPath
-        
     def fetchPosterFile2(self,imdbidIn):
+        # This version pulls from OMDbAPI, and depends on a key being set in the config file
         if imdbidIn == '' or imdbidIn == 'string' or imdbidIn == 'none':
             print("fetchPosterFile - Got a bad imdbid: " + str(imdbidIn))
             return ''
@@ -2419,8 +2605,6 @@ class MediaLibraryDB:
             pass
         # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
         return uriPath
-        
-        
     def librarifyTitle(self,titleIn):
         titleOut = titleIn
         if titleIn[0:4] == "The ":
@@ -2707,7 +2891,6 @@ class MediaLibraryDB:
         tmpRetObj['data'] = clientCfg
         
         return tmpRetObj
-    
     def omdbFetchSingleArti(self,imdbIdIn):
         uri = "https://www.omdbapi.com/?i=" +  imdbIdIn
         try:
@@ -3688,11 +3871,19 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
     # Switch
     parser.add_argument('--cli', action='store_true', help='A boolean switch')
+    parser.add_argument('--onerun', action='store_true', help='Run once')
     args = parser.parse_args()
 
     if (args.cli == True):
         mlc = MLCLI()
         mlc.mainLoop()
+    elif (args.onerun == True):
+        
+        # Do the "onerun"
+        #VodLibDB.getSiteStats(180)
+        vldb = VodLibDB()
+        print(json.dumps(vldb.getSiteStats(180)))
+
     else:
         app.run(host='0.0.0.0',port=5000)
     pass
