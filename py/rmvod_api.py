@@ -1737,7 +1737,7 @@ ORDER BY 2 DESC
 LIMIT """ + str(topCnt) + """  """
             rowsTuple = self._stdRead(movieTitlesByTagSQL)
             for rowTuple in rowsTuple:
-                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"movie","count":rowTuple[3]}
+                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"movie","count":rowTuple[2]}
                 retDict["listings"]["movie"]["tags"][tagName]['artifacts'].append(rowTuple[1])
             pass
         pass
@@ -1779,7 +1779,7 @@ ORDER BY 2 DESC
 LIMIT """ + str(topCnt) + """  """
             rowsTuple = self._stdRead(tvseriesTitlesByTagSQL)
             for rowTuple in rowsTuple:
-                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"tvseries","count":rowTuple[3]}
+                retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"tvseries","count":rowTuple[2]}
                 retDict["listings"]["tvseries"]["tags"][tagName]['artifacts'].append(rowTuple[1])
             pass
         pass
