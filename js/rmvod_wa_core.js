@@ -1105,6 +1105,7 @@ class RMVodWebApp {
                     case typeof [0]:
                         console.log("Array - Recursing");
                         for (var i = 0; i < objIn.length; i++){
+                            console.log("..index " + i.toString());
                             jsTreeWalker(objIn[i]);
                         }
                         break;;
@@ -1112,12 +1113,14 @@ class RMVodWebApp {
                         console.log("Object - Recursing");
                         var keysList = Object.keys(objIn);
                         for (var i = 0; i < keysList.length; i++){
+                            console.log("..key " + keysList[i]);
                             jsTreeWalker(objIn[keysList[i]]);
                         }
                         break;;
                     case typeof ('foo','bar'):
                         console.log("Tuple - Recursing");
                         for (var i = 0; i < objIn.length; i++){
+                            console.log("..index " + i.toString());
                             jsTreeWalker(objIn[i]);
                         }
                         break;;
