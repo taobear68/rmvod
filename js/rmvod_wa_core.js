@@ -1104,7 +1104,7 @@ class RMVodWebApp {
                         console.log("leaf boolean " + objIn.toString());
                         break;;
                     case typeof {'foo':'bar'}:
-                        if Array.isArray(objIn){
+                        if (Array.isArray(objIn)){
                         console.log("Array - Recursing " + objIn.length.toString());
                             for (var i = 0; i < objIn.length; i++){
                                 console.log("..index " + i.toString());
