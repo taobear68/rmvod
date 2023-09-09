@@ -1085,8 +1085,51 @@ class RMVodWebApp {
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     apiFetchSiteStats(){
-        var cbFunc = function (objIn) {
-            console.log(objIn);
+        var cbFunc = function (dataObjIn) {
+            //console.log(objIn);
+            
+            var jsTreeWalker = function(objIn) {
+                switch (typeof objIn) {
+                    case typeof "string":
+                        console.log("leaf string " + objIn);
+                        break;;
+                    case typeof 3:
+                        console.log("leaf integer " + objIn.toString());
+                        break;;
+                    case typeof 3.2:
+                        console.log("leaf float " + objIn.toString());
+                        break;;
+                    case typeof true:
+                        console.log("leaf boolean " + objIn.toString());
+                        break;;
+                    case typeof [0]:
+                        console.log("Array - Recursing");
+                        for (var i = 0; i < objIn.length; i++){
+                            jsTreeWalker(objIn[i]);
+                        }
+                        break;;
+                    case typeof {'foo':'bar'}:
+                        console.log("Object - Recursing");
+                        var keysList = Object.keys(objIn);
+                        for (var i = 0; i < keysList.length; i++){
+                            jsTreeWalker(objIn[keysList[i]]);
+                        }
+                        break;;
+                    case typeof ('foo','bar'):
+                        console.log("Tuple - Recursing");
+                        for (var i = 0; i < objIn.length; i++){
+                            jsTreeWalker(objIn[i]);
+                        }
+                        break;;
+                    default:
+                        console.log("I don't know what to do with this " + typeof objIn);
+                }
+            };
+            
+            jsTreeWalker(dataObjIn)
+            
+            
+            
         }
         const payloadObj = {};
         const endpoint = '/rmvod/api/site/stats/get';
