@@ -1719,7 +1719,7 @@ LIMIT """ + str(topCnt) + """ """
         rowsTuple = self._stdRead(movieTagsSQL)
         for rowTuple in rowsTuple:
             retDict["listings"]["movie"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
-            tmpTagsList.append([rowTuple[0]])
+            tmpTagsList.append(rowTuple[0])
         pass
         
         
@@ -1760,7 +1760,7 @@ LIMIT """ + str(topCnt) + """ """
         rowsTuple = self._stdRead(tvseriesTagsSQL)
         for rowTuple in rowsTuple:
             retDict["listings"]["tvseries"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
-            tmpTagsList.append([rowTuple[0]])
+            tmpTagsList.append(rowTuple[0])
         pass
         
         
