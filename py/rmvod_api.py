@@ -3028,7 +3028,21 @@ class MediaLibraryDB:
         tmpRetObj['data'] = []
         
         return tmpRetObj
-
+    def getSiteStats(self):
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getSiteStats'
+        tmpRetObj['params'] = []
+        tmpRetObj['status']['success'] = False
+        try:
+            vldb = self.dbHandleConfigged()
+            statsDict = vldb.getSiteStats(180)
+            tmpRetObj['data'] = statsDict
+            tmpRetObj['status']['success'] = True
+        except:
+            tmpRetObj['status']['detail'] = "Could not fetch Site Statistics"
+            tmpRetObj['status']['success'] = False
+            tmpRetObj['data'] = []
+        return tmpRetObj
 
 class MLCLI:
     def __init__(self):
@@ -3848,6 +3862,11 @@ def getSeriesSeasonNmbrList():
 def getApiConfig():
     ml = MediaLibraryDB()
     return json.dumps(ml.fetchApiConfig())
+    
+@app.route('/site/stats/get',methods=['POST'])
+def getSiteStats():
+    ml = MediaLibraryDB()
+    return json.dumps(ml.getSiteStats())
 
 @app.route('/artifact/tvseries/detail/fetch',methods=['POST'])
 def runOmdbApiUpdateTvseries():
@@ -3880,9 +3899,13 @@ if __name__ == '__main__':
     elif (args.onerun == True):
         
         # Do the "onerun"
-        #VodLibDB.getSiteStats(180)
-        vldb = VodLibDB()
-        print(json.dumps(vldb.getSiteStats(180)))
+        # #VodLibDB.getSiteStats(180)
+        # vldb = VodLibDB()
+        # print(json.dumps(vldb.getSiteStats(180)))
+        
+        ml = MediaLibraryDB()
+        print(json.dumps(ml.getSiteStats()))
+        #MediaLibraryDB
 
     else:
         app.run(host='0.0.0.0',port=5000)
