@@ -1103,7 +1103,7 @@ class RMVodWebApp {
                         console.log("leaf boolean " + objIn.toString());
                         break;;
                     case typeof [0]:
-                        console.log("Array - Recursing");
+                        console.log("Array - Recursing " + objIn.length.toStrong());
                         for (var i = 0; i < objIn.length; i++){
                             console.log("..index " + i.toString());
                             jsTreeWalker(objIn[i]);
