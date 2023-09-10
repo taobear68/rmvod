@@ -1106,7 +1106,7 @@ class RMVodWebApp {
                     case typeof {'foo':'bar'}:
                         if (Array.isArray(objIn)){
                         //console.log("Array - Recursing " + objIn.length.toString());
-                            console.log(".".repeat(indentInt) + "[");
+                            console.log(".".repeat(indentInt) + continueString + "[");
                             for (var i = 0; i < objIn.length; i++){
                                 //console.log("..index " + i.toString());
                                 jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
@@ -1115,7 +1115,7 @@ class RMVodWebApp {
                         } else {
                             //console.log("Object - Recursing");
                             var keysList = Object.keys(objIn);
-                            console.log(".".repeat(indentInt) + "{");
+                            console.log(".".repeat(indentInt) + continueString + "{");
                             for (var i = 0; i < keysList.length; i++){
                                 //console.log("..key " + keysList[i]);
                                 jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
