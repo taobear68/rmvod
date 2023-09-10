@@ -1105,13 +1105,13 @@ class RMVodWebApp {
                         break;;
                     case typeof {'foo':'bar'}:
                         if (Array.isArray(objIn)){
-                        console.log("Array - Recursing " + objIn.length.toString());
+                        //console.log("Array - Recursing " + objIn.length.toString());
                             for (var i = 0; i < objIn.length; i++){
                                 //console.log("..index " + i.toString());
                                 jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
                             }                            
                         } else {
-                            console.log("Object - Recursing");
+                            //console.log("Object - Recursing");
                             var keysList = Object.keys(objIn);
                             for (var i = 0; i < keysList.length; i++){
                                 //console.log("..key " + keysList[i]);
@@ -1126,7 +1126,7 @@ class RMVodWebApp {
                 }
             };
             
-            jsTreeWalker(dataObjIn)
+            jsTreeWalker(dataObjIn,0,"")
             
             
             
