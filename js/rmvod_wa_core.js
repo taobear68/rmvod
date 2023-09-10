@@ -1088,62 +1088,39 @@ class RMVodWebApp {
         var cbFunc = function (dataObjIn) {
             //console.log(objIn);
             
-            var jsTreeWalker = function(objIn) {
+            var jsTreeWalker = function(objIn, indentInt, continueString) {
                 // console.log(typeof objIn);
                 switch (typeof objIn) {
                     case typeof "string":
-                        console.log("leaf string " + objIn);
+                        console.log(".".repeat(indentInt) + continueString + objIn); // "leaf string "
                         break;;
                     case typeof 3:
-                        console.log("leaf integer " + objIn.toString());
+                        console.log(".".repeat(indentInt) + continueString + objIn.toString()); // "leaf integer "
                         break;;
                     case typeof 3.2:
-                        console.log("leaf float " + objIn.toString());
+                        console.log(".".repeat(indentInt) + continueString +  objIn.toString()); //"leaf float "
                         break;;
                     case typeof true:
-                        console.log("leaf boolean " + objIn.toString());
+                        console.log(".".repeat(indentInt) + continueString +  objIn.toString()); // "leaf boolean "
                         break;;
                     case typeof {'foo':'bar'}:
                         if (Array.isArray(objIn)){
                         console.log("Array - Recursing " + objIn.length.toString());
                             for (var i = 0; i < objIn.length; i++){
-                                console.log("..index " + i.toString());
-                                jsTreeWalker(objIn[i]);
+                                //console.log("..index " + i.toString());
+                                jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
                             }                            
                         } else {
                             console.log("Object - Recursing");
                             var keysList = Object.keys(objIn);
                             for (var i = 0; i < keysList.length; i++){
-                                console.log("..key " + keysList[i]);
-                                jsTreeWalker(objIn[keysList[i]]);
+                                //console.log("..key " + keysList[i]);
+                                jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
                             }
                         }                        
                         
                         break;;
-                        
-                        
-                    //case typeof [0]:
-                        //console.log("Array - Recursing " + objIn.length.toString());
-                        //for (var i = 0; i < objIn.length; i++){
-                            //console.log("..index " + i.toString());
-                            //jsTreeWalker(objIn[i]);
-                        //}
-                        //break;;
-                    //case typeof {'foo':'bar'}:
-                        //console.log("Object - Recursing");
-                        //var keysList = Object.keys(objIn);
-                        //for (var i = 0; i < keysList.length; i++){
-                            //console.log("..key " + keysList[i]);
-                            //jsTreeWalker(objIn[keysList[i]]);
-                        //}
-                        //break;;
-                    //case typeof ('foo','bar'):
-                        //console.log("Tuple - Recursing");
-                        //for (var i = 0; i < objIn.length; i++){
-                            //console.log("..index " + i.toString());
-                            //jsTreeWalker(objIn[i]);
-                        //}
-                        //break;;
+
                     default:
                         console.log("I don't know what to do with this " + typeof objIn);
                 }
