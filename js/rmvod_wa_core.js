@@ -2995,7 +2995,7 @@ class RMVodWebApp {
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
-        headerDiv.style.height = "60px";
+        headerDiv.style.height = "70px";
         headerDiv.innerHTML = "Artifact count by <b>Major Type</b>";
         document.getElementById(targetDEIdIn).appendChild(headerDiv);
         document.getElementById(targetDEIdIn).appendChild(wrapDiv);
@@ -3032,7 +3032,7 @@ class RMVodWebApp {
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
-        headerDiv.style.height = "60px";
+        headerDiv.style.height = "70px";
         headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last 30 days for Major Type " + majTypeIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
@@ -3103,7 +3103,7 @@ class RMVodWebApp {
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
-        headerDiv.style.height = "60px";
+        headerDiv.style.height = "70px";
         headerDiv.innerHTML = "Top 10 <b>Titles</b> by views in the last 30 days for Tag " + tagIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
@@ -3144,7 +3144,7 @@ class RMVodWebApp {
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
-        headerDiv.style.height = "60px";
+        headerDiv.style.height = "70px";
         headerDiv.innerHTML = "<b>Title Details</b> for " + dObj['artifacts'][artiIdIn]['title'];
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
