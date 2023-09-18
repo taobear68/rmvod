@@ -2984,7 +2984,7 @@ class RMVodWebApp {
         wrapDiv.style.display = "block";
         for (var i = 0; i < mtAry.length; i++ ){
             var rowDiv = document.createElement('div');
-            rowDiv.style.backgroudColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+            rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "65%";
