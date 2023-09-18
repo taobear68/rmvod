@@ -673,6 +673,9 @@ class RMVWAHtmlGenerator {
         
         //forcerecrefresh
         tmpHtml += '</div>';
+        
+        tmpHtml += '<div id="sitestatsouter">Show Site Stats</div>';
+        
         tmpHtml += '</div>';   
         return tmpHtml;     
     }
@@ -1106,7 +1109,7 @@ class RMVodWebApp {
                     case typeof {'foo':'bar'}:
                         if (Array.isArray(objIn)){
                         //console.log("Array - Recursing " + objIn.length.toString());
-                            console.log(".".repeat(indentInt) + continueString + "[");
+                            console.log(".".repeat(indentInt) + continueString + " [");
                             for (var i = 0; i < objIn.length; i++){
                                 //console.log("..index " + i.toString());
                                 jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
@@ -1115,7 +1118,7 @@ class RMVodWebApp {
                         } else {
                             //console.log("Object - Recursing");
                             var keysList = Object.keys(objIn);
-                            console.log(".".repeat(indentInt) + continueString + "{");
+                            console.log(".".repeat(indentInt) + continueString + " {");
                             for (var i = 0; i < keysList.length; i++){
                                 //console.log("..key " + keysList[i]);
                                 jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
@@ -2916,6 +2919,215 @@ class RMVodWebApp {
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
         
     }
+    
+    // Stats things
+    renderStatsContainer(targetDEIdIn){
+        var contentHtmlStr = "";
+        contentHtmlStr = '\
+            <div style="width:100%;height:100%;display:block;">\
+                <div style="width:10%;height:100%;display:inline-flex;">\
+                    <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
+                        Major Type\
+                    </div>\
+                </div>\
+                <div style="width:20%;height:100%;display:inline-flex;">\
+                    <div  id="stats_tags_column" style="width:100%;height:100%;display:block;">\
+                        Tags\
+                    </div>\
+                </div>\
+                <div style="width:25%;height:100%;display:inline-flex;">\
+                    <div  id="stats_titles_column" style="width:100%;height:100%;display:block;">\
+                        Titles\
+                    </div>\
+                </div>\
+                <div style="width:40%;height:100%;display:inline-flex;">\
+                    <div id="stats_title_detail_column" style="width:100%;height:100%;display:block;">\
+                        Title Details\
+                    </div>\
+                </div>\
+            </div>';
+        document.getElementById(targetDEIdIn).innerHTML = contentHtmlStr;
+    }
+    renderStatsMajIdCol(targetDEIdIn){
+        console.log(targetDEIdIn);
+        console.log(this.dObj['listings']['movie']['count']);
+        var mtAry = Object.keys(this.dObj['listings']);
+        var wrapDiv = document.createElement('div');
+        wrapDiv.style.width = "100%";
+        wrapDiv.style.display = "block";
+        for (var i = 0; i < mtAry.length; i++ ){
+            var rowDiv = document.createElement('div');
+            var labelDiv = document.createElement('div');
+            labelDiv.style.display = "inline-flex";
+            labelDiv.style.width = "65%";
+            labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTags\",\"" + mtAry[i] + "\",{})'>" + mtAry[i] + "</span>";
+            var countDiv = document.createElement('div');
+            countDiv.style.display = "inline-flex";
+            countDiv.innerHTML = this.dObj['listings'][mtAry[i]]['count'];
+            rowDiv.appendChild(labelDiv);
+            rowDiv.appendChild(countDiv);
+            wrapDiv.appendChild(rowDiv);
+        }
+        document.getElementById(targetDEIdIn).innerHTML = "";
+        var headerDiv = document.createElement("div");
+        headerDiv.style.width = "100%";
+        headerDiv.style.display = "block";
+        headerDiv.style.backgroundColor = "#e0e0e0";
+        headerDiv.style.height = "40px";
+        headerDiv.innerHTML = "Artifact count by <b>Major Type</b>";
+        document.getElementById(targetDEIdIn).appendChild(headerDiv);
+        document.getElementById(targetDEIdIn).appendChild(wrapDiv);
+        
+        var clearList = ["stats_tags_column","stats_titles_column","stats_title_detail_column"];
+        for (var i = 0; i < clearList.length; i++ ) {
+            console.log(clearList[i]);
+            document.getElementById(clearList[i]).innerHTML = "&nbsp;";
+        }
+        
+    }
+    renderStatsTagsCol(majTypeIn,targetDEIdIn){
+        var mtAry = Object.keys(this.dObj['listings'][majTypeIn]['tags']);
+        var wrapDiv = document.createElement('div');
+        wrapDiv.style.width = "100%";
+        wrapDiv.style.display = "block";
+        for (var i = 0; i < mtAry.length; i++ ){
+            var rowDiv = document.createElement('div');
+            var labelDiv = document.createElement('div');
+            labelDiv.style.display = "inline-flex";
+            labelDiv.style.width = "80%";
+            labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTitles\",\"" + majTypeIn + "\",{\"tag\":\"" + mtAry[i] + "\"})'>" + mtAry[i] + "</span>";
+            var countDiv = document.createElement('div');
+            countDiv.style.display = "inline-flex";
+            countDiv.innerHTML = this.dObj['listings'][majTypeIn]['tags'][mtAry[i]]['count'];
+            rowDiv.appendChild(labelDiv);
+            rowDiv.appendChild(countDiv);
+            wrapDiv.appendChild(rowDiv);
+        }
+        document.getElementById(targetDEIdIn).innerHTML = "";
+        
+        var headerDiv = document.createElement("div");
+        headerDiv.style.width = "100%";
+        headerDiv.style.display = "block";
+        headerDiv.style.backgroundColor = "#e0e0e0";
+        headerDiv.style.height = "40px";
+        headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last 30 days for Major Type " + majTypeIn;
+        document.getElementById(targetDEIdIn).appendChild(headerDiv);        
+        
+        document.getElementById(targetDEIdIn).appendChild(wrapDiv);   
+        
+        var clearList = ["stats_titles_column","stats_title_detail_column"];
+        for (var i = 0; i < clearList.length; i++ ) {
+            document.getElementById(clearList[i]).innerHTML = "&nbsp;";
+            //try {
+                //document.getElementById(clearList[i]).innerHTML = "&nbsp;";
+            //} catch (e) {
+                //console.log("Failed to clear div " + clearList[i] + " because " + e);
+            //}
+        }
+    }
+    renderStatsTitlesCol(majTypeIn,tagIn,targetDEIdIn){
+        var mtAry =this.dObj['listings'][majTypeIn]['tags'][tagIn]['artifacts'];
+        var wrapDiv = document.createElement('div');
+        wrapDiv.style.width = "100%";
+        wrapDiv.style.display = "block";
+        
+        var tmpSortObj = {};
+        var tmpPreSortList = [];
+        for (var i = 0; i < mtAry.length; i++ ) {
+            var tmpArtiObj = this.dObj['artifacts'][mtAry[i]]
+            var tmpKeysList = Object.keys(tmpSortObj);
+            var tmpCountNumberString = tmpArtiObj['count'].toString();
+            if (tmpKeysList.indexOf(tmpCountNumberString) < 0) {
+                tmpSortObj[tmpArtiObj['count'].toString()] = [tmpArtiObj];
+            } else {
+                tmpSortObj[tmpArtiObj['count'].toString()].push(tmpArtiObj);
+            }
+            if (tmpPreSortList.indexOf(tmpArtiObj['count']) < 0) {
+                tmpPreSortList.push(tmpArtiObj['count']);
+            }
+        }
+        tmpPreSortList.sort((a,b) => a-b);
+        tmpPreSortList.reverse();
+        
+        //console.log(JSON.stringify(tmpSortObj));
+        //console.log(JSON.stringify(tmpPreSortList));
+        
+        for (var i = 0; i < tmpPreSortList.length; i++ ) {
+            var cntStr = tmpPreSortList[i].toString();
+            for (var j = 0; j < tmpSortObj[cntStr].length; j++ ) {
+                var artiObj = tmpSortObj[cntStr][j];
+                
+                var rowDiv = document.createElement('div');
+                var labelDiv = document.createElement('div');
+                labelDiv.style.display = "inline-flex";
+                labelDiv.style.width = "85%";
+                labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTitleDeets\",\"" + artiObj['artifactid'] + "\",{})'>" + artiObj['title'] + "</span>";
+                
+                var countDiv = document.createElement('div');
+                countDiv.style.display = "inline-flex";
+                countDiv.innerHTML = artiObj['count'];
+                rowDiv.appendChild(labelDiv);
+                rowDiv.appendChild(countDiv);
+                wrapDiv.appendChild(rowDiv);                
+                
+            }
+        }
+        
+        document.getElementById(targetDEIdIn).innerHTML = "";
+        
+        var headerDiv = document.createElement("div");
+        headerDiv.style.width = "100%";
+        headerDiv.style.display = "block";
+        headerDiv.style.backgroundColor = "#e0e0e0";
+        headerDiv.style.height = "40px";
+        headerDiv.innerHTML = "Top 10 <b>Titles</b> by views in the last 30 days for Tag " + tagIn;
+        document.getElementById(targetDEIdIn).appendChild(headerDiv);        
+        
+        document.getElementById(targetDEIdIn).appendChild(wrapDiv);    
+        
+        var clearList = ["stats_title_detail_column"];
+        for (var i = 0; i < clearList.length; i++ ) {
+            document.getElementById(clearList[i]).innerHTML = "&nbsp;";
+        }
+    }
+    renderStatsTitleDetailsCol(artiIdIn){
+        console.log("renderStatsTitleDetailsCol: " + artiIdIn);
+        var targetDEIdIn = "stats_title_detail_column";
+        var mtAry = Object.keys(this.dObj['artifacts'][artiIdIn]);
+        console.log(JSON.stringify(mtAry));
+        var wrapDiv = document.createElement('div');
+        wrapDiv.style.width = "100%";
+        wrapDiv.style.display = "block";
+        for (var i = 0; i < mtAry.length; i++ ){
+            console.log(mtAry[i]);
+            var rowDiv = document.createElement('div');
+            var labelDiv = document.createElement('div');
+            labelDiv.style.display = "inline-flex";
+            labelDiv.style.width = "30%";
+            labelDiv.innerHTML = mtAry[i];
+            var countDiv = document.createElement('div');
+            countDiv.style.display = "inline-flex";
+            countDiv.innerHTML = this.dObj['artifacts'][artiIdIn][mtAry[i]];
+            rowDiv.appendChild(labelDiv);
+            rowDiv.appendChild(countDiv);
+            wrapDiv.appendChild(rowDiv);
+        }
+        document.getElementById(targetDEIdIn).innerHTML = "";
+        
+        var headerDiv = document.createElement("div");
+        headerDiv.style.width = "100%";
+        headerDiv.style.display = "block";
+        headerDiv.style.backgroundColor = "#e0e0e0";
+        headerDiv.style.height = "40px";
+        headerDiv.innerHTML = "<b>Title Details</b> for " + this.dObj['artifacts'][artiIdIn]['title'];
+        document.getElementById(targetDEIdIn).appendChild(headerDiv);        
+        
+        document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
+    }
+    
+    
+    
+    
 }
 
 //
