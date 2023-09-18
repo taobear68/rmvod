@@ -3170,6 +3170,22 @@ class RMVodWebApp {
         headerDiv.innerHTML = "<b>Title Details</b> for " + dObj['artifacts'][artiIdIn]['title'];
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
+        var cbFunc = function (dObjIn) {
+            console.log(JSON.stringify(dObjIn));
+            
+            
+            
+            
+        };
+        // Do the API call.
+        const apiEndpoint = '/rmvod/api/artifact/get'; 
+        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
+        //const apiEndpoint = apiBase + '/artifact/get'; 
+        const payload = {'artifactid':artiIdIn};
+        this.genericApiCall(payload,apiEndpoint,cbFunc);
+
+        
+        
         document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
     }
     
