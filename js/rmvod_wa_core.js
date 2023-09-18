@@ -3021,6 +3021,7 @@ class RMVodWebApp {
         wrapDiv.style.display = "block";
         for (var i = 0; i < mtAry.length; i++ ){
             var rowDiv = document.createElement('div');
+            rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "80%";
@@ -3088,6 +3089,7 @@ class RMVodWebApp {
                 var artiObj = tmpSortObj[cntStr][j];
                 
                 var rowDiv = document.createElement('div');
+                rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
                 var labelDiv = document.createElement('div');
                 labelDiv.style.display = "inline-flex";
                 labelDiv.style.width = "85%";
@@ -3132,6 +3134,7 @@ class RMVodWebApp {
         for (var i = 0; i < mtAry.length; i++ ){
             console.log(mtAry[i]);
             var rowDiv = document.createElement('div');
+            rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "29%";
