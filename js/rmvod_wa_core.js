@@ -672,7 +672,7 @@ class RMVWAHtmlGenerator {
         tmpHtml += '</span></div>';
         
         
-        tmpHtml += '<div id="sitestatsouter">Show Site Stats</div>';
+        tmpHtml += '<div id="sitestatsouter" style="width:100%;">Show Site Stats</div>';
         
         
         
@@ -1091,51 +1091,58 @@ class RMVodWebApp {
     }
     apiFetchSiteStats(){
         var cbFunc = function (dataObjIn) {
+            
+            var wa = new RMVodWebApp();
+            //<div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>
+            var dsDiv = document.getElementById("sitestatsdatastore");
+            dsDiv.dataset.sitestats = JSON.stringify(dataObjIn);
+            
+            
             //console.log(objIn);
             
-            var jsTreeWalker = function(objIn, indentInt, continueString) {
-                // console.log(typeof objIn);
-                switch (typeof objIn) {
-                    case typeof "string":
-                        console.log(".".repeat(indentInt) + continueString + objIn); // "leaf string "
-                        break;;
-                    case typeof 3:
-                        console.log(".".repeat(indentInt) + continueString + objIn.toString()); // "leaf integer "
-                        break;;
-                    case typeof 3.2:
-                        console.log(".".repeat(indentInt) + continueString +  objIn.toString()); //"leaf float "
-                        break;;
-                    case typeof true:
-                        console.log(".".repeat(indentInt) + continueString +  objIn.toString()); // "leaf boolean "
-                        break;;
-                    case typeof {'foo':'bar'}:
-                        if (Array.isArray(objIn)){
-                        //console.log("Array - Recursing " + objIn.length.toString());
-                            console.log(".".repeat(indentInt) + continueString + " [");
-                            for (var i = 0; i < objIn.length; i++){
-                                //console.log("..index " + i.toString());
-                                jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
-                            }                            
-                            console.log(".".repeat(indentInt) + "]");
-                        } else {
-                            //console.log("Object - Recursing");
-                            var keysList = Object.keys(objIn);
-                            console.log(".".repeat(indentInt) + continueString + " {");
-                            for (var i = 0; i < keysList.length; i++){
-                                //console.log("..key " + keysList[i]);
-                                jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
-                            }
-                            console.log(".".repeat(indentInt) + "}");
-                        }                        
+            //var jsTreeWalker = function(objIn, indentInt, continueString) {
+                //// console.log(typeof objIn);
+                //switch (typeof objIn) {
+                    //case typeof "string":
+                        //console.log(".".repeat(indentInt) + continueString + objIn); // "leaf string "
+                        //break;;
+                    //case typeof 3:
+                        //console.log(".".repeat(indentInt) + continueString + objIn.toString()); // "leaf integer "
+                        //break;;
+                    //case typeof 3.2:
+                        //console.log(".".repeat(indentInt) + continueString +  objIn.toString()); //"leaf float "
+                        //break;;
+                    //case typeof true:
+                        //console.log(".".repeat(indentInt) + continueString +  objIn.toString()); // "leaf boolean "
+                        //break;;
+                    //case typeof {'foo':'bar'}:
+                        //if (Array.isArray(objIn)){
+                        ////console.log("Array - Recursing " + objIn.length.toString());
+                            //console.log(".".repeat(indentInt) + continueString + " [");
+                            //for (var i = 0; i < objIn.length; i++){
+                                ////console.log("..index " + i.toString());
+                                //jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
+                            //}                            
+                            //console.log(".".repeat(indentInt) + "]");
+                        //} else {
+                            ////console.log("Object - Recursing");
+                            //var keysList = Object.keys(objIn);
+                            //console.log(".".repeat(indentInt) + continueString + " {");
+                            //for (var i = 0; i < keysList.length; i++){
+                                ////console.log("..key " + keysList[i]);
+                                //jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
+                            //}
+                            //console.log(".".repeat(indentInt) + "}");
+                        //}                        
                         
-                        break;;
+                        //break;;
 
-                    default:
-                        console.log("I don't know what to do with this " + typeof objIn);
-                }
-            };
+                    //default:
+                        //console.log("I don't know what to do with this " + typeof objIn);
+                //}
+            //};
             
-            jsTreeWalker(dataObjIn,0,"")
+            //jsTreeWalker(dataObjIn,0,"")
             
             
             
@@ -2927,6 +2934,7 @@ class RMVodWebApp {
         var contentHtmlStr = "";
         contentHtmlStr = '\
             <div style="width:100%;height:100%;display:block;">\
+                <div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>\
                 <div style="width:10%;height:100%;display:inline-flex;">\
                     <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
                         Major Type\
@@ -2950,10 +2958,16 @@ class RMVodWebApp {
             </div>';
         document.getElementById(targetDEIdIn).innerHTML = contentHtmlStr;
     }
+    fetchLocalStatsData(){
+        var dsDiv = document.getElementById("sitestatsdatastore");
+        var sdo = JSON.parse(dsDiv.dataset.sitestats);
+        return sdo;
+    }
     renderStatsMajIdCol(targetDEIdIn){
+        var dObj = this.fetchLocalStatsData();
         console.log(targetDEIdIn);
-        console.log(this.dObj['listings']['movie']['count']);
-        var mtAry = Object.keys(this.dObj['listings']);
+        console.log(dObj['listings']['movie']['count']);
+        var mtAry = Object.keys(dObj['listings']);
         var wrapDiv = document.createElement('div');
         wrapDiv.style.width = "100%";
         wrapDiv.style.display = "block";
@@ -2965,7 +2979,7 @@ class RMVodWebApp {
             labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTags\",\"" + mtAry[i] + "\",{})'>" + mtAry[i] + "</span>";
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
-            countDiv.innerHTML = this.dObj['listings'][mtAry[i]]['count'];
+            countDiv.innerHTML = dObj['listings'][mtAry[i]]['count'];
             rowDiv.appendChild(labelDiv);
             rowDiv.appendChild(countDiv);
             wrapDiv.appendChild(rowDiv);
@@ -2988,7 +3002,8 @@ class RMVodWebApp {
         
     }
     renderStatsTagsCol(majTypeIn,targetDEIdIn){
-        var mtAry = Object.keys(this.dObj['listings'][majTypeIn]['tags']);
+        var dObj = this.fetchLocalStatsData();
+        var mtAry = Object.keys(dObj['listings'][majTypeIn]['tags']);
         var wrapDiv = document.createElement('div');
         wrapDiv.style.width = "100%";
         wrapDiv.style.display = "block";
@@ -3000,7 +3015,7 @@ class RMVodWebApp {
             labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTitles\",\"" + majTypeIn + "\",{\"tag\":\"" + mtAry[i] + "\"})'>" + mtAry[i] + "</span>";
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
-            countDiv.innerHTML = this.dObj['listings'][majTypeIn]['tags'][mtAry[i]]['count'];
+            countDiv.innerHTML = dObj['listings'][majTypeIn]['tags'][mtAry[i]]['count'];
             rowDiv.appendChild(labelDiv);
             rowDiv.appendChild(countDiv);
             wrapDiv.appendChild(rowDiv);
@@ -3028,7 +3043,8 @@ class RMVodWebApp {
         }
     }
     renderStatsTitlesCol(majTypeIn,tagIn,targetDEIdIn){
-        var mtAry =this.dObj['listings'][majTypeIn]['tags'][tagIn]['artifacts'];
+        var dObj = this.fetchLocalStatsData();
+        var mtAry =dObj['listings'][majTypeIn]['tags'][tagIn]['artifacts'];
         var wrapDiv = document.createElement('div');
         wrapDiv.style.width = "100%";
         wrapDiv.style.display = "block";
@@ -3036,7 +3052,7 @@ class RMVodWebApp {
         var tmpSortObj = {};
         var tmpPreSortList = [];
         for (var i = 0; i < mtAry.length; i++ ) {
-            var tmpArtiObj = this.dObj['artifacts'][mtAry[i]]
+            var tmpArtiObj = dObj['artifacts'][mtAry[i]]
             var tmpKeysList = Object.keys(tmpSortObj);
             var tmpCountNumberString = tmpArtiObj['count'].toString();
             if (tmpKeysList.indexOf(tmpCountNumberString) < 0) {
@@ -3093,9 +3109,10 @@ class RMVodWebApp {
         }
     }
     renderStatsTitleDetailsCol(artiIdIn){
+        var dObj = this.fetchLocalStatsData();
         console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
-        var mtAry = Object.keys(this.dObj['artifacts'][artiIdIn]);
+        var mtAry = Object.keys(dObj['artifacts'][artiIdIn]);
         console.log(JSON.stringify(mtAry));
         var wrapDiv = document.createElement('div');
         wrapDiv.style.width = "100%";
@@ -3109,7 +3126,7 @@ class RMVodWebApp {
             labelDiv.innerHTML = mtAry[i];
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
-            countDiv.innerHTML = this.dObj['artifacts'][artiIdIn][mtAry[i]];
+            countDiv.innerHTML = dObj['artifacts'][artiIdIn][mtAry[i]];
             rowDiv.appendChild(labelDiv);
             rowDiv.appendChild(countDiv);
             wrapDiv.appendChild(rowDiv);
@@ -3121,7 +3138,7 @@ class RMVodWebApp {
         headerDiv.style.display = "block";
         headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "40px";
-        headerDiv.innerHTML = "<b>Title Details</b> for " + this.dObj['artifacts'][artiIdIn]['title'];
+        headerDiv.innerHTML = "<b>Title Details</b> for " + dObj['artifacts'][artiIdIn]['title'];
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
         document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
@@ -3642,6 +3659,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //
             recsWrapper('2023-05-25 11:39:05');
             //
+            ml.renderStatsContainer('sitestatsouter');
+            //ml.renderStatsContainer('statstabbody');
+            ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
             
             break;
 
@@ -3801,6 +3821,26 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         case 'forcerecrefresh':
             ml.execRecsForcedRefresh();
             break;
+            
+            
+        case "renderStats" :
+            ml.renderStatsContainer('statstabbody');
+            ml.renderStatsMajIdCol('stats_majid_column');
+            break;;
+        case "renderStatsTags":
+            ml.renderStatsTagsCol(objIdIn,'stats_tags_column');
+            console.log(actionIn + ": " + objIdIn);
+            break;;
+        case "renderStatsTitles":
+            ml.renderStatsTitlesCol(objIdIn,argObjIn['tag'],'stats_titles_column');
+            console.log(actionIn + ": " + objIdIn + ", " + argObjIn['tag']);
+            break;;
+        case "renderStatsTitleDeets":
+            ml.renderStatsTitleDetailsCol(objIdIn);
+            break;;
+            
+            
+            
             
             
         /* 
