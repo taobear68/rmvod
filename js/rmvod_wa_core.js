@@ -3128,11 +3128,11 @@ class RMVodWebApp {
             var rowDiv = document.createElement('div');
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
-            labelDiv.style.width = "30%";
+            labelDiv.style.width = "29%";
             labelDiv.innerHTML = mtAry[i];
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
-            countDiv.style.width = "70%";
+            countDiv.style.width = "69%";
             countDiv.innerHTML = dObj['artifacts'][artiIdIn][mtAry[i]];
             rowDiv.appendChild(labelDiv);
             rowDiv.appendChild(countDiv);
