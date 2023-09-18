@@ -648,8 +648,9 @@ class RMVWAHtmlGenerator {
     renderHTMLSettingsTab(){
         
         var tmpHtml = '';
-        tmpHtml += '<div class="headerflexcell" id="headerblock4">';
-        tmpHtml += '<div class="" id="" style="display:block">';
+        //tmpHtml += '<div class="headerflexcell" id="headerblock4">';
+        tmpHtml += '<div id="headerblock4" style="width:100%; height:100%; overflow:auto;>'; //  class="headerflexcell"
+        tmpHtml += '<div class="" id="" style="display:block;overflow:auto;">';
         tmpHtml += '<div><b>Settings</b></div>';
         tmpHtml += '<div><b>Play next in series: </b><input name="serplaynext" id="serplaynext" type="checkbox"></div>';
         tmpHtml += '<div><b>Resume play: </b><input name="resumeplay" id="resumeplay" type="checkbox"></div>';
@@ -672,7 +673,7 @@ class RMVWAHtmlGenerator {
         tmpHtml += '</span></div>';
         
         
-        tmpHtml += '<div id="sitestatsouter" style="width:100%;">Show Site Stats</div>';
+        tmpHtml += '<div id="sitestatsouter" style="width:1160px;">Show Site Stats</div>';
         
         
         
