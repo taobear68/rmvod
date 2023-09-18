@@ -2938,7 +2938,7 @@ class RMVodWebApp {
         console.log("renderStatsContainer - targetDEIdIn: " + targetDEIdIn);
         var contentHtmlStr = "";
         contentHtmlStr = '\
-            <div style="width:100%;height:100%;display:block;">\
+            <div style="width:1150px;height:100%;display:block;">\
                 <div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>\
                 <div style="width:10%;height:100%;display:inline-flex;">\
                     <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
