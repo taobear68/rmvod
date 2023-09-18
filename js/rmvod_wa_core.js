@@ -3170,11 +3170,33 @@ class RMVodWebApp {
         headerDiv.innerHTML = "<b>Title Details</b> for " + dObj['artifacts'][artiIdIn]['title'];
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
+        
         var cbFunc = function (dObjIn) {
+            var tmpOuterDiv = document.createElement("div");
+            tmpOuterDiv.style.width = "100%";
+            
             console.log(JSON.stringify(dObjIn));
+            artiObj = dObjIn['data'][0];
+            var keys = Object.keys(artiObj);
+            for (var i = 0; i < keys.length; i++ ) {
+                    
+                var rowDiv = document.createElement('div');
+                rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+                var labelDiv = document.createElement('div');
+                labelDiv.style.display = "inline-flex";
+                labelDiv.style.width = "29%";
+                labelDiv.innerHTML = keys[i];
+                var countDiv = document.createElement('div');
+                countDiv.style.display = "inline-flex";
+                countDiv.style.width = "69%";
+                countDiv.innerHTML = artiObj[keys[i]];
+                rowDiv.appendChild(labelDiv);
+                rowDiv.appendChild(countDiv);
+                tmpOuterDiv.appendChild(rowDiv);
+                
+            }
             
-            
-            
+            document.getElementById(targetDEIdIn).appendChild(tmpOuterDiv); 
             
         };
         // Do the API call.
@@ -3186,7 +3208,7 @@ class RMVodWebApp {
 
         
         
-        document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
+        //document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
     }
     
     
