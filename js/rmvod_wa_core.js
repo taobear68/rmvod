@@ -3176,7 +3176,7 @@ class RMVodWebApp {
             tmpOuterDiv.style.width = "100%";
             
             console.log(JSON.stringify(dObjIn));
-            artiObj = dObjIn['data'][0];
+            var artiObj = dObjIn['data'][0];
             var keys = Object.keys(artiObj);
             for (var i = 0; i < keys.length; i++ ) {
                     
