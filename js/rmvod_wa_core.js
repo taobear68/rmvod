@@ -2956,7 +2956,7 @@ class RMVodWebApp {
                         Titles\
                     </div>\
                 </div>\
-                <div style="width:30%;height:100%;display:inline-flex;">\
+                <div style="width:35%;height:100%;display:inline-flex;">\
                     <div id="stats_title_detail_column" style="width:100%;height:100%;display:block;">\
                         Title Details\
                     </div>\
