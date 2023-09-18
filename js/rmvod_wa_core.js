@@ -2975,7 +2975,10 @@ class RMVodWebApp {
     }
     getStatsPeriodAsString(unitStrIn){
         var periodValueString = "";
-        var pvObj = this.sse.ssOKRead('localcfg','sitestatsperiod')[unitStrIn].toString();
+        var pvObj = this.sse.ssOKRead('localcfg','sitestatsperiod'); //[unitStrIn].toString();
+        console.log(JSON.stringify(pvObj));
+        periodValueString = pvObj[unitStrIn].toString();
+        console.log('periodValueString: ' + periodValueString);
         return periodValueString;
     }
     renderStatsMajIdCol(targetDEIdIn){
