@@ -1098,7 +1098,7 @@ class RMVodWebApp {
             wa.renderStatsContainer('sitestatsouter');
             //ml.renderStatsContainer('statstabbody');
             var dsDiv = document.getElementById("sitestatsdatastore");
-            dsDiv.dataset.sitestats = JSON.stringify(dataObjIn);
+            dsDiv.dataset.sitestats = JSON.stringify(dataObjIn['data']);
             
             wa.renderStatsMajIdCol('stats_majid_column');              
             
