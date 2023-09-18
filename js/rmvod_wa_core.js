@@ -817,7 +817,7 @@ class RMVodWebApp {
         this.sse.ssOKWrite('localcfg','apibaseuri','/freezer/api/');       // API Base URI
         this.sse.ssOKWrite('localcfg','apiepblobget','blob/get');    // API Endpoint - Single Object Fetch
         
-        this.sse.ssOKWrite('localcfg','rowsbgc',['#444444','#c0c0c0']); 
+        this.sse.ssOKWrite('localcfg','rowsbgc',['#444444','#0c0c0c']); 
         this.sse.ssOKWrite('localcfg','apiepblobget','blob/get'); 
         
         
