@@ -2973,6 +2973,11 @@ class RMVodWebApp {
         var sdo = JSON.parse(dsDiv.dataset.sitestats);
         return sdo;
     }
+    getStatsPeriodAsString(unitStrIn){
+        var periodValueString = "";
+        var pvObj = this.sse.ssOKRead('localcfg','sitestatsperiod')[unitStrIn].toString();
+        return periodValueString;
+    }
     renderStatsMajIdCol(targetDEIdIn){
         var dObj = this.fetchLocalStatsData();
         console.log(targetDEIdIn);
@@ -3040,10 +3045,10 @@ class RMVodWebApp {
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
-        var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
+        //var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
         // this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':180,'weeks':26,'months':6}); 
         //headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last 30 days for Major Type " + majTypeIn;
-        headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last " + daysStr + " days for Major Type " + majTypeIn;
+        headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last " + this.getStatsPeriodAsString('days') + " days for Major Type " + majTypeIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
         document.getElementById(targetDEIdIn).appendChild(wrapDiv);   
@@ -3116,8 +3121,8 @@ class RMVodWebApp {
         headerDiv.style.display = "block";
         //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
-        var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
-        headerDiv.innerHTML = "Top 10 <b>Titles</b> by views in the last " + daysStr + " days for Tag " + tagIn;
+        //var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
+        headerDiv.innerHTML = "Top 10 <b>Titles</b> by views in the last " + this.getStatsPeriodAsString('days') + " days for Tag " + tagIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
         document.getElementById(targetDEIdIn).appendChild(wrapDiv);    
