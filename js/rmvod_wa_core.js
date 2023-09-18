@@ -3082,14 +3082,15 @@ class RMVodWebApp {
         
         //console.log(JSON.stringify(tmpSortObj));
         //console.log(JSON.stringify(tmpPreSortList));
-        
+        var k = 0;
         for (var i = 0; i < tmpPreSortList.length; i++ ) {
             var cntStr = tmpPreSortList[i].toString();
             for (var j = 0; j < tmpSortObj[cntStr].length; j++ ) {
                 var artiObj = tmpSortObj[cntStr][j];
                 
                 var rowDiv = document.createElement('div');
-                rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+                rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[k%2];
+                k += 1
                 var labelDiv = document.createElement('div');
                 labelDiv.style.display = "inline-flex";
                 labelDiv.style.width = "85%";
