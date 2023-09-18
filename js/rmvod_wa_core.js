@@ -3179,9 +3179,10 @@ class RMVodWebApp {
             var artiObj = dObjIn['data'][0];
             var keys = Object.keys(artiObj);
             for (var i = 0; i < keys.length; i++ ) {
-                    
+                
+                var wa = new RMVodWebApp();
                 var rowDiv = document.createElement('div');
-                rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+                rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[i%2];
                 var labelDiv = document.createElement('div');
                 labelDiv.style.display = "inline-flex";
                 labelDiv.style.width = "29%";
