@@ -2934,6 +2934,7 @@ class RMVodWebApp {
     
     // Stats things
     renderStatsContainer(targetDEIdIn){
+        console.log("renderStatsContainer - targetDEIdIn: " + targetDEIdIn);
         var contentHtmlStr = "";
         contentHtmlStr = '\
             <div style="width:100%;height:100%;display:block;">\
@@ -3666,6 +3667,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ////ml.renderStatsContainer('statstabbody');
             //ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
             ml.apiFetchSiteStats();
+            
+            
             break;
 
         case 'simpleNamesList':  
