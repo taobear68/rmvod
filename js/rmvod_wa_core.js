@@ -2951,7 +2951,7 @@ class RMVodWebApp {
                         Tags\
                     </div>\
                 </div>\
-                <div style="width:25%;height:100%;display:inline-flex;">\
+                <div style="width:24%;height:100%;display:inline-flex;">\
                     <div  id="stats_titles_column" style="width:100%;height:100%;display:block;">\
                         Titles\
                     </div>\
