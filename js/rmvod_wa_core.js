@@ -1097,6 +1097,9 @@ class RMVodWebApp {
             var dsDiv = document.getElementById("sitestatsdatastore");
             dsDiv.dataset.sitestats = JSON.stringify(dataObjIn);
             
+            wa.renderStatsContainer('sitestatsouter');
+            //ml.renderStatsContainer('statstabbody');
+            wa.renderStatsMajIdCol('stats_majid_column');              
             
             //console.log(objIn);
             
@@ -3659,10 +3662,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //
             recsWrapper('2023-05-25 11:39:05');
             //
-            ml.renderStatsContainer('sitestatsouter');
-            //ml.renderStatsContainer('statstabbody');
-            ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
-            
+            //ml.renderStatsContainer('sitestatsouter');
+            ////ml.renderStatsContainer('statstabbody');
+            //ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
+            ml.apiFetchSiteStats();
             break;
 
         case 'simpleNamesList':  
