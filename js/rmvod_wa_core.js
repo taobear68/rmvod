@@ -817,6 +817,10 @@ class RMVodWebApp {
         this.sse.ssOKWrite('localcfg','apibaseuri','/freezer/api/');       // API Base URI
         this.sse.ssOKWrite('localcfg','apiepblobget','blob/get');    // API Endpoint - Single Object Fetch
         
+        this.sse.ssOKWrite('localcfg','rowsbgc',['#444444','#c0c0c0']); 
+        this.sse.ssOKWrite('localcfg','apiepblobget','blob/get'); 
+        
+        
         // This needs to happen later due to API Config fetch
         //this.apiFetchPersonsList();
         //this.apiFetchCompaniesList();
@@ -2975,10 +2979,12 @@ class RMVodWebApp {
         console.log(dObj['listings']['movie']['count']);
         var mtAry = Object.keys(dObj['listings']);
         var wrapDiv = document.createElement('div');
+        //wrapDiv.style.backgroudColor = this.sse.ssOKRead('localcfg','rowsbgc')[];
         wrapDiv.style.width = "100%";
         wrapDiv.style.display = "block";
         for (var i = 0; i < mtAry.length; i++ ){
             var rowDiv = document.createElement('div');
+            rowDiv.style.backgroudColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "65%";
