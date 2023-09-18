@@ -671,11 +671,13 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<b><u>Refresh Recs</u></b>'
         tmpHtml += '</span></div>';
         
-        //forcerecrefresh
-        tmpHtml += '</div>';
         
         tmpHtml += '<div id="sitestatsouter">Show Site Stats</div>';
         
+        
+        
+        //forcerecrefresh
+        tmpHtml += '</div>';
         tmpHtml += '</div>';   
         return tmpHtml;     
     }
