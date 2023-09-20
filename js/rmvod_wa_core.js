@@ -3238,6 +3238,11 @@ class RMVodWebApp {
                         tmpHtmlStr += artiObj[key];
                         tmpHtmlStr += '</span></u></b>';
                         //tmpHtmlStr += '';
+                        if (artiObj['majtype'] == 'tvseries') {
+                            tmpHtmlStr += ' (click to watch from beginning)';
+                        } else {
+                            tmpHtmlStr += ' (click to watch)';
+                        }
                         countDiv.innerHTML = tmpHtmlStr;
                     } else {
                         countDiv.innerHTML = artiObj[key];
