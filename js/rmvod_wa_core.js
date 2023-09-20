@@ -3137,6 +3137,30 @@ class RMVodWebApp {
     }
     renderStatsTitleDetailsCol(artiIdIn){
         var dObj = this.fetchLocalStatsData();
+        
+                
+        //artifactid69583984-ebab-46c1-be6b-86796c6fef22
+        //titleSarah Millican: Bobby Dazzler
+        //majtypemovie
+        //runmins-1
+        //season-1
+        //episode-1
+        //fileSarahMillican_BobbyDazzler.m4v
+        //filepathcomedy
+        //directorstring
+        //writerstring
+        //primcaststring
+        //relorgstring
+        //relyear-1
+        //eidridstring
+        //imdbidtt26687384
+        //arbmeta{"string": "string", "titleorig": "Sarah Millican: Bobby Dazzler", "titlelibrary": "Sarah Millican: Bobby Dazzler"}
+        //tagsbritish,comedy,new,stand-up
+        //poster/rmvod/img/poster_00/        
+                
+        var fieldDisplayOrderAry = ['title','seasons','episodes','tags','primcast','writer','director','runmins','relyear','artifactid','majtype','filepath','file','eidridstring','imdbid','arbmeta','artifactid','poster'];
+        
+        
         console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
         
@@ -3183,22 +3207,24 @@ class RMVodWebApp {
             console.log(JSON.stringify(dObjIn));
             var artiObj = dObjIn['data'][0];
             var keys = Object.keys(artiObj);
-            for (var i = 0; i < keys.length; i++ ) {
+            for (var i = 0; i < fieldDisplayOrderAry.length; i++ ) {
+                var key = fieldDisplayOrderAry[i];
+                if (keys.indexOf(key) > -1) {
                 
-                
-                var rowDiv = document.createElement('div');
-                rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[i%2];
-                var labelDiv = document.createElement('div');
-                labelDiv.style.display = "inline-flex";
-                labelDiv.style.width = "29%";
-                labelDiv.innerHTML = keys[i];
-                var countDiv = document.createElement('div');
-                countDiv.style.display = "inline-flex";
-                countDiv.style.width = "69%";
-                countDiv.innerHTML = artiObj[keys[i]];
-                rowDiv.appendChild(labelDiv);
-                rowDiv.appendChild(countDiv);
-                tmpOuterDiv.appendChild(rowDiv);
+                    var rowDiv = document.createElement('div');
+                    rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+                    var labelDiv = document.createElement('div');
+                    labelDiv.style.display = "inline-flex";
+                    labelDiv.style.width = "29%";
+                    labelDiv.innerHTML = key;
+                    var countDiv = document.createElement('div');
+                    countDiv.style.display = "inline-flex";
+                    countDiv.style.width = "69%";
+                    countDiv.innerHTML = artiObj[key]];
+                    rowDiv.appendChild(labelDiv);
+                    rowDiv.appendChild(countDiv);
+                    tmpOuterDiv.appendChild(rowDiv);
+                }
                 
             }
             
