@@ -3220,7 +3220,24 @@ class RMVodWebApp {
                     var countDiv = document.createElement('div');
                     countDiv.style.display = "inline-flex";
                     countDiv.style.width = "69%";
-                    countDiv.innerHTML = artiObj[key];
+                    
+                    //<span data-artifactid="2c0d048e-6cc2-418c-9229-cc9a6f77769b" onclick="switchboard(&quot;recPlaySeriesFromStart&quot;,&quot;2c0d048e-6cc2-418c-9229-cc9a6f77769b&quot;,{})">Play Series from start</span>                    
+                    
+                    if (i == 0) {
+                        // display as clickable thingy
+                        tmpHtmlStr = "";
+                        tmpHtmlStr += '<b><u><span data-artifactid="';
+                        tmpHtmlStr += artiObj['artifactid'];
+                        tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                        tmpHtmlStr += artiObj['artifactid'];
+                        tmpHtmlStr += '\',{})">';
+                        tmpHtmlStr += artiObj[key];
+                        tmpHtmlStr += '</span></u></b>';
+                        //tmpHtmlStr += '';
+                    } else {
+                        countDiv.innerHTML = artiObj[key];
+                    }
+                    
                     rowDiv.appendChild(labelDiv);
                     rowDiv.appendChild(countDiv);
                     tmpOuterDiv.appendChild(rowDiv);
