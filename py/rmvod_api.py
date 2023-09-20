@@ -347,7 +347,7 @@ class VodLibDB:
 FROM s2e s  
 JOIN artifacts a ON s.episodeaid = a.artifactid 
 JOIN artifacts r ON s.seriesaid = r.artifactid 
-WHERE s.seriesaid = '62852250-d1dc-400c-8586-7809e41a23fa' """
+WHERE s.seriesaid = '""" + artiIdIn + """' """
 
         retDict = {"episodes":-1,"seasons":-1}
         try:
