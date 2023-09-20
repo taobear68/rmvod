@@ -342,6 +342,32 @@ class VodLibDB:
             field = company[2]
             retDict[field].append(name)
         return retDict
+    def getSeriesStats(self,artiIdIn):
+        sqlStr = """SELECT r.title, COUNT(s.episodeaid) AS "episodes", COUNT(DISTINCT a.season) AS "seasons" 
+FROM s2e s  
+JOIN artifacts a ON s.episodeaid = a.artifactid 
+JOIN artifacts r ON s.seriesaid = r.artifactid 
+WHERE s.seriesaid = '62852250-d1dc-400c-8586-7809e41a23fa' """
+
+        retDict = {"episodes":-1,"seasons":-1}
+        try:
+            pass
+            baseTuple = self._stdRead(sqlStr)
+            # +-------+----------+---------+
+            # | title | episodes | seasons |
+            # +-------+----------+---------+
+            # | QI    |      185 |      13 |
+            # +-------+----------+---------+
+            retDict["episodes"] = baseTuple[0][1]
+            retDict["seasons"] = baseTuple[0][2]
+
+        except:
+            pass
+            print("getSeriesStats failed for Artifact ID " + artiIdIn)
+        
+        
+        pass
+        return retDict
     def getArtifactById(self,artiIdIn,listJsonFlagIn=False):
         keyList = self.keylists['artifact']
         sqlStr = "SELECT " 
@@ -370,6 +396,14 @@ class VodLibDB:
                     retDict[lfdKey] = json.dumps(listFieldDict[lfdKey])
                 pass
             pass
+            
+            # Get Episode and Season Counts
+            if retDict['majtype'] == 'tvseries':
+                serStatDict = self.getSeriesStats(artiIdIn)
+                retDict['seasons'] = serStatDict['seasons']
+                retDict['episodes'] = serStatDict['episodes']
+                pass
+            
             # Get the tags
             tagList = self.getArtifactTagsById(artiIdIn)
             if listJsonFlagIn == False:
