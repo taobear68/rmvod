@@ -3225,7 +3225,7 @@ class RMVodWebApp {
                     
                     if (i == 0) {
                         // display as clickable thingy
-                        tmpHtmlStr = "";
+                        var tmpHtmlStr = "";
                         tmpHtmlStr += '<b><u><span data-artifactid="';
                         tmpHtmlStr += artiObj['artifactid'];
                         tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
@@ -3234,6 +3234,7 @@ class RMVodWebApp {
                         tmpHtmlStr += artiObj[key];
                         tmpHtmlStr += '</span></u></b>';
                         //tmpHtmlStr += '';
+                        countDiv.innerHTML = tmpHtmlStr;
                     } else {
                         countDiv.innerHTML = artiObj[key];
                     }
