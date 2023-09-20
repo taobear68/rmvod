@@ -3139,27 +3139,29 @@ class RMVodWebApp {
         var dObj = this.fetchLocalStatsData();
         console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
-        var mtAry = Object.keys(dObj['artifacts'][artiIdIn]);
-        console.log(JSON.stringify(mtAry));
-        var wrapDiv = document.createElement('div');
-        wrapDiv.style.width = "100%";
-        wrapDiv.style.display = "block";
-        for (var i = 0; i < mtAry.length; i++ ){
-            console.log(mtAry[i]);
-            var rowDiv = document.createElement('div');
-            rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
-            var labelDiv = document.createElement('div');
-            labelDiv.style.display = "inline-flex";
-            labelDiv.style.width = "29%";
-            labelDiv.innerHTML = mtAry[i];
-            var countDiv = document.createElement('div');
-            countDiv.style.display = "inline-flex";
-            countDiv.style.width = "69%";
-            countDiv.innerHTML = dObj['artifacts'][artiIdIn][mtAry[i]];
-            rowDiv.appendChild(labelDiv);
-            rowDiv.appendChild(countDiv);
-            wrapDiv.appendChild(rowDiv);
-        }
+        
+        //var mtAry = Object.keys(dObj['artifacts'][artiIdIn]);
+        //console.log(JSON.stringify(mtAry));
+        //var wrapDiv = document.createElement('div');
+        //wrapDiv.style.width = "100%";
+        //wrapDiv.style.display = "block";
+        //for (var i = 0; i < mtAry.length; i++ ){
+            //console.log(mtAry[i]);
+            //var rowDiv = document.createElement('div');
+            //rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+            //var labelDiv = document.createElement('div');
+            //labelDiv.style.display = "inline-flex";
+            //labelDiv.style.width = "29%";
+            //labelDiv.innerHTML = mtAry[i];
+            //var countDiv = document.createElement('div');
+            //countDiv.style.display = "inline-flex";
+            //countDiv.style.width = "69%";
+            //countDiv.innerHTML = dObj['artifacts'][artiIdIn][mtAry[i]];
+            //rowDiv.appendChild(labelDiv);
+            //rowDiv.appendChild(countDiv);
+            //wrapDiv.appendChild(rowDiv);
+        //}
+        
         document.getElementById(targetDEIdIn).innerHTML = "";
         
         var headerDiv = document.createElement("div");
@@ -3172,6 +3174,9 @@ class RMVodWebApp {
         
         
         var cbFunc = function (dObjIn) {
+            
+            var wa = new RMVodWebApp();
+            
             var tmpOuterDiv = document.createElement("div");
             tmpOuterDiv.style.width = "100%";
             
@@ -3180,7 +3185,7 @@ class RMVodWebApp {
             var keys = Object.keys(artiObj);
             for (var i = 0; i < keys.length; i++ ) {
                 
-                var wa = new RMVodWebApp();
+                
                 var rowDiv = document.createElement('div');
                 rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[i%2];
                 var labelDiv = document.createElement('div');
