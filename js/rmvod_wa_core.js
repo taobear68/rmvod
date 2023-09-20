@@ -3228,7 +3228,11 @@ class RMVodWebApp {
                         var tmpHtmlStr = "";
                         tmpHtmlStr += '<b><u><span data-artifactid="';
                         tmpHtmlStr += artiObj['artifactid'];
-                        tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                        if (artiObj['majtype'] == 'tvseries') {
+                            tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                        } else {
+                            tmpHtmlStr += '" onclick="switchboard(\'vodPlayTitle\',\'';
+                        }
                         tmpHtmlStr += artiObj['artifactid'];
                         tmpHtmlStr += '\',{})">';
                         tmpHtmlStr += artiObj[key];
