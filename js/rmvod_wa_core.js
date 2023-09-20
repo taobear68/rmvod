@@ -3220,7 +3220,7 @@ class RMVodWebApp {
                     var countDiv = document.createElement('div');
                     countDiv.style.display = "inline-flex";
                     countDiv.style.width = "69%";
-                    countDiv.innerHTML = artiObj[key]];
+                    countDiv.innerHTML = artiObj[key];
                     rowDiv.appendChild(labelDiv);
                     rowDiv.appendChild(countDiv);
                     tmpOuterDiv.appendChild(rowDiv);
