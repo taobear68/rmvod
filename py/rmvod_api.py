@@ -2969,10 +2969,17 @@ class MediaLibraryDB:
         
         seriesArti = self.omdbFetchSingleArti(serImdbIdIn)
         
-        if seriesArti['Response'] == "False" or seriesArti['Type'] != "series" or int(seriesArti['totalSeasons']) < 1:
-            # Can't process this one.
-            raise Exception("IMDB ID " + serImdbIdIn + " Cannot be processed as a series.")
+        # if seriesArti['Response'] == "False" or seriesArti['Type'] != "series" or int(seriesArti['totalSeasons']) < 1:
+            # # Can't process this one.
+            # raise Exception("IMDB ID " + serImdbIdIn + " Cannot be processed as a series.")
 
+        try:
+            assert seriesArti['Response'] != "False"
+            assert seriesArti['Type'] == "series"
+            assert int(seriesArti['totalSeasons']) > 0
+        except:
+            raise Exception("IMDB ID " + serImdbIdIn + " Cannot be processed as a series.  JSON: " + json.dumps(seriesArti))
+        
         # Artifact Update Dict
         aud = {}
         aud['relyear'] = int(seriesArti['Released'].split(' ')[2])   #":"23 Sep 1995",
