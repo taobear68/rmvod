@@ -3201,11 +3201,56 @@ class RMVodWebApp {
             
             var wa = new RMVodWebApp();
             
+            
+            
             var tmpOuterDiv = document.createElement("div");
             tmpOuterDiv.style.width = "100%";
             
             console.log(JSON.stringify(dObjIn));
             var artiObj = dObjIn['data'][0];
+            
+            var actionDiv = document.createElement('div');
+            actionDiv.style.width = "100%";
+            if (artiObj['majType'] == 'tvseries') {
+                var tmpHtml = '';
+                tmpHtml += '<b><u><span data-artifactid="';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '\',{})">';
+                tmpHtml += 'Play from the beginning';
+                tmpHtml += '</span></u></b>';
+                tmpHtml += '&nbsp;|&nbsp';
+                tmpHtml += '<b><u><span data-artifactid="';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '" onclick="switchboard(\'showArtiInList\',\'';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '\',{})">';
+                tmpHtml += 'View in List';
+                tmpHtml += '</span></u></b>';
+                actionDiv.innerHTML = tmpHtml;
+            } else {
+                var tmpHtml = '';
+                tmpHtml += '<b><u><span data-artifactid="';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '" onclick="switchboard(\'vodPlayTitle\',\'';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '\',{})">';
+                tmpHtml += 'Play this Title';
+                tmpHtml += '</span></u></b>';
+                tmpHtml += '&nbsp;|&nbsp';
+                tmpHtml += '<b><u><span data-artifactid="';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '" onclick="switchboard(\'showArtiInList\',\'';
+                tmpHtml += artiObj['artifactid'];
+                tmpHtml += '\',{})">';
+                tmpHtml += 'View in List';
+                tmpHtml += '</span></u></b>';
+                actionDiv.innerHTML = tmpHtml;
+            }
+            
+            tmpOuterDiv.appendChild(actionDiv);
+            
             var keys = Object.keys(artiObj);
             for (var i = 0; i < fieldDisplayOrderAry.length; i++ ) {
                 var key = fieldDisplayOrderAry[i];
@@ -3223,30 +3268,32 @@ class RMVodWebApp {
                     
                     //<span data-artifactid="2c0d048e-6cc2-418c-9229-cc9a6f77769b" onclick="switchboard(&quot;recPlaySeriesFromStart&quot;,&quot;2c0d048e-6cc2-418c-9229-cc9a6f77769b&quot;,{})">Play Series from start</span>                    
                     
-                    if (i == 0) {
-                        // display as clickable thingy
-                        var tmpHtmlStr = "";
-                        tmpHtmlStr += '<b><u><span data-artifactid="';
-                        tmpHtmlStr += artiObj['artifactid'];
-                        if (artiObj['majtype'] == 'tvseries') {
-                            tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
-                        } else {
-                            tmpHtmlStr += '" onclick="switchboard(\'vodPlayTitle\',\'';
-                        }
-                        tmpHtmlStr += artiObj['artifactid'];
-                        tmpHtmlStr += '\',{})">';
-                        tmpHtmlStr += artiObj[key];
-                        tmpHtmlStr += '</span></u></b>';
-                        //tmpHtmlStr += '';
-                        if (artiObj['majtype'] == 'tvseries') {
-                            tmpHtmlStr += ' (click to watch from beginning)';
-                        } else {
-                            tmpHtmlStr += ' (click to watch)';
-                        }
-                        countDiv.innerHTML = tmpHtmlStr;
-                    } else {
-                        countDiv.innerHTML = artiObj[key];
-                    }
+                    //if (i == 0) {
+                        //// display as clickable thingy
+                        //var tmpHtmlStr = "";
+                        //tmpHtmlStr += '<b><u><span data-artifactid="';
+                        //tmpHtmlStr += artiObj['artifactid'];
+                        //if (artiObj['majtype'] == 'tvseries') {
+                            //tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                        //} else {
+                            //tmpHtmlStr += '" onclick="switchboard(\'vodPlayTitle\',\'';
+                        //}
+                        //tmpHtmlStr += artiObj['artifactid'];
+                        //tmpHtmlStr += '\',{})">';
+                        //tmpHtmlStr += artiObj[key];
+                        //tmpHtmlStr += '</span></u></b>';
+                        ////tmpHtmlStr += '';
+                        //if (artiObj['majtype'] == 'tvseries') {
+                            //tmpHtmlStr += ' (click to watch from beginning)';
+                        //} else {
+                            //tmpHtmlStr += ' (click to watch)';
+                        //}
+                        //countDiv.innerHTML = tmpHtmlStr;
+                    //} else {
+                        //countDiv.innerHTML = artiObj[key];
+                    //}
+                    
+                    countDiv.innerHTML = artiObj[key];
                     
                     rowDiv.appendChild(labelDiv);
                     rowDiv.appendChild(countDiv);
