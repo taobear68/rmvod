@@ -3137,71 +3137,24 @@ class RMVodWebApp {
     }
     renderStatsTitleDetailsCol(artiIdIn){
         var dObj = this.fetchLocalStatsData();
-        
-                
-        //artifactid69583984-ebab-46c1-be6b-86796c6fef22
-        //titleSarah Millican: Bobby Dazzler
-        //majtypemovie
-        //runmins-1
-        //season-1
-        //episode-1
-        //fileSarahMillican_BobbyDazzler.m4v
-        //filepathcomedy
-        //directorstring
-        //writerstring
-        //primcaststring
-        //relorgstring
-        //relyear-1
-        //eidridstring
-        //imdbidtt26687384
-        //arbmeta{"string": "string", "titleorig": "Sarah Millican: Bobby Dazzler", "titlelibrary": "Sarah Millican: Bobby Dazzler"}
-        //tagsbritish,comedy,new,stand-up
-        //poster/rmvod/img/poster_00/        
-                
+     
         var fieldDisplayOrderAry = ['title','seasons','episodes','tags','primcast','writer','director','runmins','relyear','artifactid','majtype','filepath','file','eidridstring','imdbid','arbmeta','artifactid','poster'];
-        
         
         console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
-        
-        //var mtAry = Object.keys(dObj['artifacts'][artiIdIn]);
-        //console.log(JSON.stringify(mtAry));
-        //var wrapDiv = document.createElement('div');
-        //wrapDiv.style.width = "100%";
-        //wrapDiv.style.display = "block";
-        //for (var i = 0; i < mtAry.length; i++ ){
-            //console.log(mtAry[i]);
-            //var rowDiv = document.createElement('div');
-            //rowDiv.style.backgroundColor = this.sse.ssOKRead('localcfg','rowsbgc')[i%2];
-            //var labelDiv = document.createElement('div');
-            //labelDiv.style.display = "inline-flex";
-            //labelDiv.style.width = "29%";
-            //labelDiv.innerHTML = mtAry[i];
-            //var countDiv = document.createElement('div');
-            //countDiv.style.display = "inline-flex";
-            //countDiv.style.width = "69%";
-            //countDiv.innerHTML = dObj['artifacts'][artiIdIn][mtAry[i]];
-            //rowDiv.appendChild(labelDiv);
-            //rowDiv.appendChild(countDiv);
-            //wrapDiv.appendChild(rowDiv);
-        //}
         
         document.getElementById(targetDEIdIn).innerHTML = "";
         
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
-        //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
         headerDiv.innerHTML = "<b>Title Details</b> for " + dObj['artifacts'][artiIdIn]['title'];
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
-        
         var cbFunc = function (dObjIn) {
             
             var wa = new RMVodWebApp();
-            
-            
             
             var tmpOuterDiv = document.createElement("div");
             tmpOuterDiv.style.width = "100%";
@@ -3266,32 +3219,6 @@ class RMVodWebApp {
                     countDiv.style.display = "inline-flex";
                     countDiv.style.width = "69%";
                     
-                    //<span data-artifactid="2c0d048e-6cc2-418c-9229-cc9a6f77769b" onclick="switchboard(&quot;recPlaySeriesFromStart&quot;,&quot;2c0d048e-6cc2-418c-9229-cc9a6f77769b&quot;,{})">Play Series from start</span>                    
-                    
-                    //if (i == 0) {
-                        //// display as clickable thingy
-                        //var tmpHtmlStr = "";
-                        //tmpHtmlStr += '<b><u><span data-artifactid="';
-                        //tmpHtmlStr += artiObj['artifactid'];
-                        //if (artiObj['majtype'] == 'tvseries') {
-                            //tmpHtmlStr += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
-                        //} else {
-                            //tmpHtmlStr += '" onclick="switchboard(\'vodPlayTitle\',\'';
-                        //}
-                        //tmpHtmlStr += artiObj['artifactid'];
-                        //tmpHtmlStr += '\',{})">';
-                        //tmpHtmlStr += artiObj[key];
-                        //tmpHtmlStr += '</span></u></b>';
-                        ////tmpHtmlStr += '';
-                        //if (artiObj['majtype'] == 'tvseries') {
-                            //tmpHtmlStr += ' (click to watch from beginning)';
-                        //} else {
-                            //tmpHtmlStr += ' (click to watch)';
-                        //}
-                        //countDiv.innerHTML = tmpHtmlStr;
-                    //} else {
-                        //countDiv.innerHTML = artiObj[key];
-                    //}
                     
                     countDiv.innerHTML = artiObj[key];
                     
@@ -3307,14 +3234,8 @@ class RMVodWebApp {
         };
         // Do the API call.
         const apiEndpoint = '/rmvod/api/artifact/get'; 
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //const apiEndpoint = apiBase + '/artifact/get'; 
         const payload = {'artifactid':artiIdIn};
         this.genericApiCall(payload,apiEndpoint,cbFunc);
-
-        
-        
-        //document.getElementById(targetDEIdIn).appendChild(wrapDiv);        
     }
     
     
@@ -4014,8 +3935,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.renderStatsTitleDetailsCol(objIdIn);
             break;;
             
+        case "showArtiInList":
             
             
+            break;;
             
             
         /* 
