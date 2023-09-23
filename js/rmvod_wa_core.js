@@ -3176,7 +3176,7 @@ class RMVodWebApp {
                 tmpHtml += '&nbsp;|&nbsp';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'showArtiInList\',\'';
+                tmpHtml += '" onclick="switchboard(\'statpopsidelist\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'View in List';
@@ -3194,7 +3194,7 @@ class RMVodWebApp {
                 tmpHtml += '&nbsp;|&nbsp';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'showArtiInList\',\'';
+                tmpHtml += '" onclick="switchboard(\'statpopsidelist\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'View in List';
@@ -3909,6 +3909,23 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             document.getElementById('sideartilistwidget').innerHTML = '';
             document.getElementById('sideartilistwidget').appendChild(slDiv);
             break;
+            
+        case 'statpopsidelist':
+            console.log('statpopsidelist: ' + objIdIn);
+            //var rec = new WMCWARecommend();
+            //var popList = rec.qsRecCommonPopSideList(objIdIn);
+            var tmpArtiListObj = [{"artifactid":"","majtype":"","title":""}];
+            var tmpDEID = document.getElementById('sitestatsdatastore');
+            tmpArtiListObj[0] = JSON.parse(tmpDEID.dataSet.sitestats)['artifacts'][objIdIn];
+        
+            //tmpArtiListObj[0]['artifactid'] = "";
+            //tmpArtiListObj[0]['majtype'] = "";
+            //tmpArtiListObj[0]['title'] = "";
+            var slDiv = ml.renderSALByIdList(tmpArtiListObj);
+            document.getElementById('sideartilistwidget').innerHTML = '';
+            document.getElementById('sideartilistwidget').appendChild(slDiv);
+            document.getElementById('RNWATabWidget-tabspan-1').click();  //  RNWATabWidget-tabspan-0
+            break;            
             
         case 'popepideets':
             ml.apiPopulateEpisodeDetails(objIdIn);
