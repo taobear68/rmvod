@@ -3916,7 +3916,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //var popList = rec.qsRecCommonPopSideList(objIdIn);
             var tmpArtiListObj = [{"artifactid":"","majtype":"","title":""}];
             var tmpDEID = document.getElementById('sitestatsdatastore');
-            tmpArtiListObj[0] = JSON.parse(tmpDEID.dataSet.sitestats)['artifacts'][objIdIn];
+            tmpArtiListObj[0] = JSON.parse(tmpDEID.dataset.sitestats)['artifacts'][objIdIn];
         
             //tmpArtiListObj[0]['artifactid'] = "";
             //tmpArtiListObj[0]['majtype'] = "";
