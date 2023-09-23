@@ -3164,7 +3164,7 @@ class RMVodWebApp {
             
             var actionDiv = document.createElement('div');
             actionDiv.style.width = "100%";
-            if (artiObj['majType'] == 'tvseries') {
+            if (artiObj['majtype'] == 'tvseries') {
                 var tmpHtml = '';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
