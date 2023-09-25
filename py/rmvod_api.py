@@ -1809,7 +1809,7 @@ WHERE l.reqtime > INTERVAL -""" + str(intervalIntIn) + """ DAY + NOW()
 AND a. majtype = 'tvseries'
 AND t.tag = '""" + tagName + """'
 GROUP BY 1
-ORDER BY 2 DESC
+ORDER BY 3 DESC
 LIMIT """ + str(topCnt) + """  """
             rowsTuple = self._stdRead(tvseriesTitlesByTagSQL)
             for rowTuple in rowsTuple:

@@ -1076,7 +1076,7 @@ class RMVodWebApp {
         //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
-    // Retrieves a fresh copy of the "vompanies" list
+    // Retrieves a fresh copy of the "companies" list
     // Stores result in Session Storage
     apiFetchCompaniesList(){ //UPDATED FOR NEW RETURN OBJECT MODEL
         //// Write to Session Store
@@ -1094,67 +1094,18 @@ class RMVodWebApp {
         //const endpoint = apiBase + '/suplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
+    // Retrieves a copy of the current "site statistics" and stores
+    // resulting JSON in a dataset of a specific div
     apiFetchSiteStats(){
         var cbFunc = function (dataObjIn) {
             
             var wa = new RMVodWebApp();
-            //<div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>
 
             wa.renderStatsContainer('sitestatsouter');
-            //ml.renderStatsContainer('statstabbody');
             var dsDiv = document.getElementById("sitestatsdatastore");
             dsDiv.dataset.sitestats = JSON.stringify(dataObjIn['data']);
             
             wa.renderStatsMajIdCol('stats_majid_column');              
-            
-            //console.log(objIn);
-            
-            //var jsTreeWalker = function(objIn, indentInt, continueString) {
-                //// console.log(typeof objIn);
-                //switch (typeof objIn) {
-                    //case typeof "string":
-                        //console.log(".".repeat(indentInt) + continueString + objIn); // "leaf string "
-                        //break;;
-                    //case typeof 3:
-                        //console.log(".".repeat(indentInt) + continueString + objIn.toString()); // "leaf integer "
-                        //break;;
-                    //case typeof 3.2:
-                        //console.log(".".repeat(indentInt) + continueString +  objIn.toString()); //"leaf float "
-                        //break;;
-                    //case typeof true:
-                        //console.log(".".repeat(indentInt) + continueString +  objIn.toString()); // "leaf boolean "
-                        //break;;
-                    //case typeof {'foo':'bar'}:
-                        //if (Array.isArray(objIn)){
-                        ////console.log("Array - Recursing " + objIn.length.toString());
-                            //console.log(".".repeat(indentInt) + continueString + " [");
-                            //for (var i = 0; i < objIn.length; i++){
-                                ////console.log("..index " + i.toString());
-                                //jsTreeWalker(objIn[i], indentInt + 1, i.toString() + "-");
-                            //}                            
-                            //console.log(".".repeat(indentInt) + "]");
-                        //} else {
-                            ////console.log("Object - Recursing");
-                            //var keysList = Object.keys(objIn);
-                            //console.log(".".repeat(indentInt) + continueString + " {");
-                            //for (var i = 0; i < keysList.length; i++){
-                                ////console.log("..key " + keysList[i]);
-                                //jsTreeWalker(objIn[keysList[i]], indentInt + 1, keysList[i] + "-");
-                            //}
-                            //console.log(".".repeat(indentInt) + "}");
-                        //}                        
-                        
-                        //break;;
-
-                    //default:
-                        //console.log("I don't know what to do with this " + typeof objIn);
-                //}
-            //};
-            
-            //jsTreeWalker(dataObjIn,0,"")
-            
-            
-            
         }
         const payloadObj = {};
         const endpoint = '/rmvod/api/site/stats/get';
@@ -3237,10 +3188,6 @@ class RMVodWebApp {
         const payload = {'artifactid':artiIdIn};
         this.genericApiCall(payload,apiEndpoint,cbFunc);
     }
-    
-    
-    
-    
 }
 
 //
