@@ -3089,7 +3089,7 @@ class RMVodWebApp {
     renderStatsTitleDetailsCol(artiIdIn){
         var dObj = this.fetchLocalStatsData();
      
-        var fieldDisplayOrderAry = ['title','seasons','episodes','tags','primcast','writer','director','runmins','relyear','artifactid','majtype','filepath','file','eidridstring','imdbid','arbmeta','artifactid','poster'];
+        var fieldDisplayOrderAry = ['title','seasons','episodes','tags','synopsis','primcast','writer','director','runmins','relyear','artifactid','majtype','filepath','file','eidridstring','imdbid','arbmeta','artifactid','poster'];
         
         console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
