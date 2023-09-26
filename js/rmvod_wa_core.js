@@ -2915,22 +2915,22 @@ class RMVodWebApp {
                 <div id="sitestatsclicker"><b><u><span onclick="switchboard(\'sitestatsrefresh\',\'\',{})">Click for Site Statistics</span></u></b></div>\
                 <div style="width:20%;height:100%;display:inline-flex;">\
                     <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
-                        Major Type\
+                        &nbsp;<!-- Major Type -->\
                     </div>\
                 </div>\
                 <div style="width:20%;height:100%;display:inline-flex;">\
                     <div  id="stats_tags_column" style="width:100%;height:100%;display:block;">\
-                        Tags\
+                        &nbsp;<!-- Tags -->\
                     </div>\
                 </div>\
                 <div style="width:24%;height:100%;display:inline-flex;">\
                     <div  id="stats_titles_column" style="width:100%;height:100%;display:block;">\
-                        Titles\
+                        &nbsp;<!-- Titles -->\
                     </div>\
                 </div>\
                 <div style="width:34%;height:100%;display:inline-flex;">\
                     <div id="stats_title_detail_column" style="width:100%;height:100%;display:block;">\
-                        Title Details\
+                        &nbsp;<!-- Title Details -->\
                     </div>\
                 </div>\
             </div>';
