@@ -3750,10 +3750,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //
             recsWrapper('2023-05-25 11:39:05');
             //
-            //ml.renderStatsContainer('sitestatsouter');
+            ml.renderStatsContainer('sitestatsouter');
             ////ml.renderStatsContainer('statstabbody');
             //ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
-            ml.apiFetchSiteStats();
+            
+            //ml.apiFetchSiteStats();
+            
             
             
             break;
@@ -3953,6 +3955,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
             
             break;;
+            
+        case "sitestatsrefresh":
+            ml.apiFetchSiteStats();
+            break;;
+            
+            
             
             
         /* 
