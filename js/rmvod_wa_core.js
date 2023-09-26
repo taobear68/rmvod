@@ -2735,6 +2735,7 @@ class RMVodWebApp {
         //const endpoint = apiBase + '/series/artifacts/add';
         this.genericApiCall(payloadObj,endpoint,cbFunc)
     }
+    // Execute forced-refresh of Recommendations.
     execRecsForcedRefresh(){
         //var wa = new RMVodWebApp();
         var recLimitInt = 30;
@@ -2760,6 +2761,8 @@ class RMVodWebApp {
         
     }
     // Cookie Handling
+    //
+    // Handle "Resume Playback" cookie on load.
     contCookieOnLoad() {
         // OnLoad, if "Resume Playback" is checked, check to see if 3 
         // "Continue" cookies are set.  If so, get the values of the 
@@ -2801,6 +2804,8 @@ class RMVodWebApp {
             this.cc.setCookie('cont_play_sample_int_handle',intervHandle,5);
         }
     }
+    // Initiate an interval to post details needed for the "resume
+    // playback" functionality to cookies
     contCookiePostInterval(delayMsIn){
         // On Start of "Normal" Playback, an Interval is started (6000ms, 
         // for example) which periodically writes cookies to track the 
@@ -2836,6 +2841,8 @@ class RMVodWebApp {
         this.cc.setCookie('cont_play_sample_int_handle',intervalHandle,5);
         return intervalHandle;
     }
+    // Clean-up the "resume playback" detail cookies on natural end of
+    // playback.
     contCookieNaturalEnd () {
         var intHandleIn = this.cc.getCookie('cont_play_sample_int_handle');
         clearInterval(intHandleIn);
@@ -2844,6 +2851,8 @@ class RMVodWebApp {
         this.cc.clearCookie('cont_play_sample_int_handle');
         this.cc.clearCookie('play_aid');
     }
+    // Play the first episode of a tvseries -- needs the artifactid
+    // of the tvseries artifact as an argument
     playFirstEpOfSeries(seriesAidIn){
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var cbFunc = function (objIn) {
@@ -2859,6 +2868,11 @@ class RMVodWebApp {
         var rec = new WMCWARecommend();
         rec.hideartiDetailDiv();        
     }
+    // Get the list of episodes for a season of a tvseries - - works with
+    // Recommendations Artifact Detail pane.  Takes the Document 
+    // Element ID for the DE which contains the data for the tvseries 
+    // artifact.  Episode list is displayed reusing the code for the 
+    // episodes under a series in the main list.
     getEpiListForSeriesSeason(deIdIn){
         console.log('getEpiListForSeriesSeason: ' + deIdIn);
         var de = document.getElementById(deIdIn);
@@ -2890,12 +2904,15 @@ class RMVodWebApp {
     }
     
     // Stats things
+    //
+    // Render the skeleton for the Site Statistics container
     renderStatsContainer(targetDEIdIn){
         console.log("renderStatsContainer - targetDEIdIn: " + targetDEIdIn);
         var contentHtmlStr = "";
         contentHtmlStr = '\
             <div style="width:1150px;height:100%;display:block;">\
                 <div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>\
+                <div id="sitestatsclicker"><b><u><span onclick="switchboard(\'sitestatsrefresh\',\'\',{})">Click for Site Statistics</span></u></b></div>\
                 <div style="width:20%;height:100%;display:inline-flex;">\
                     <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
                         Major Type\
@@ -2919,11 +2936,17 @@ class RMVodWebApp {
             </div>';
         document.getElementById(targetDEIdIn).innerHTML = contentHtmlStr;
     }
+    // Fetch the site statistics JSON block from the DE dataset that's
+    // storing it.  Returns an Object.
     fetchLocalStatsData(){
         var dsDiv = document.getElementById("sitestatsdatastore");
         var sdo = JSON.parse(dsDiv.dataset.sitestats);
         return sdo;
     }
+    // Does what it says on the tin:  Takes unitStrIn as an input 
+    // (days, weeks, months).  Retrieves the Site Stats period 
+    // (in unitStrIn, as an integer) from session storage, an returns 
+    // it as a string.
     getStatsPeriodAsString(unitStrIn){
         var periodValueString = "";
         var pvObj = this.sse.ssOKRead('localcfg','sitestatsperiod'); //[unitStrIn].toString();
@@ -2932,6 +2955,11 @@ class RMVodWebApp {
         console.log('periodValueString: ' + periodValueString);
         return periodValueString;
     }
+    // Render the "Major Type" colum of the stats display, with majtype 
+    // value as a clickable which pulls up the top 10 tags for that 
+    // majtype.
+    // Takes targetDEIdIn as the Document Element ID to which this stat 
+    // set will be appended as a child.
     renderStatsMajIdCol(targetDEIdIn){
         var dObj = this.fetchLocalStatsData();
         console.log(targetDEIdIn);
@@ -2972,6 +3000,12 @@ class RMVodWebApp {
         }
         
     }
+    // Render the "Top 10 Tags" column of the stats display, with the 
+    // tag name as a clickable which pulls up the top 10 titles for that 
+    // tag.
+    // Takes majTypeIn, the majtype value clicked in the previous 
+    // column, and targetDEIdIn as the Document Element ID to which 
+    // this stat set will be appended as a child.
     renderStatsTagsCol(majTypeIn,targetDEIdIn){
         var dObj = this.fetchLocalStatsData();
         var mtAry = Object.keys(dObj['listings'][majTypeIn]['tags']);
@@ -3017,6 +3051,13 @@ class RMVodWebApp {
             //}
         }
     }
+    // Render the "Top 10 Title" column of the stats display, with the 
+    // title as a clickable which pulls up the artifact details for the 
+    // title.
+    // takes majTypeIn, the majtype value clicked in the previous 
+    // column, tagIn, the tag name from the previous column, and 
+    // targetDEIdIn as the Document Element ID to which this stat set 
+    // will be appended as a child.
     renderStatsTitlesCol(majTypeIn,tagIn,targetDEIdIn){
         var dObj = this.fetchLocalStatsData();
         var mtAry =dObj['listings'][majTypeIn]['tags'][tagIn]['artifacts'];
@@ -3086,6 +3127,13 @@ class RMVodWebApp {
             document.getElementById(clearList[i]).innerHTML = "&nbsp;";
         }
     }
+    // Render Artifact Details for the title clicked in the previous 
+    // column.  Output includes a "play title" link  and a 
+    // "show in list" link.  For "tvseries" artifacts, the 
+    // "play title" link is labeled "play series from beginning", 
+    // similar to behavior in recommendations artifact detail.
+    // Takes the artifactid of the artifact selected in the previous 
+    // column.
     renderStatsTitleDetailsCol(artiIdIn){
         var dObj = this.fetchLocalStatsData();
      
