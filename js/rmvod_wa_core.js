@@ -3156,12 +3156,13 @@ class RMVodWebApp {
             tmpOuterDiv.appendChild(actionDiv);
             
             var keys = Object.keys(artiObj);
+            var rn = 1;
             for (var i = 0; i < fieldDisplayOrderAry.length; i++ ) {
                 var key = fieldDisplayOrderAry[i];
                 if (keys.indexOf(key) > -1) {
                 
                     var rowDiv = document.createElement('div');
-                    rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[i%2];
+                    rowDiv.style.backgroundColor = wa.sse.ssOKRead('localcfg','rowsbgc')[rn%2];
                     var labelDiv = document.createElement('div');
                     labelDiv.style.display = "inline-flex";
                     labelDiv.style.width = "29%";
@@ -3176,6 +3177,7 @@ class RMVodWebApp {
                     rowDiv.appendChild(labelDiv);
                     rowDiv.appendChild(countDiv);
                     tmpOuterDiv.appendChild(rowDiv);
+                    rn += 1;
                 }
                 
             }
