@@ -2132,8 +2132,18 @@ class RMVodWebApp {
             var tmpCookie = this.cc.getCookie('opt_' + optNm);
             var cbDE = document.getElementById(optNm);      
             cbDE.value = tmpCookie;
+            switch(optNm) {
+                case "playspeed":
+                    if (['0.5','0.75','1.0','1.25','1.5'].indexOf(tmpCookie) < 0) {
+                        cbDE.value = '1.0';
+                    }
+                    break;;
+                default:
+                    break;;
+            }
             var tmpFunc = function(){switchboard('updateselect',this.id ,{});};
-            cbDE.addEventListener("change", tmpFunc);        
+            cbDE.addEventListener("change", tmpFunc);  
+                  
         }
         
         for (var idx=0; idx < tfList.length; idx++ ) {
