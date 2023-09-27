@@ -658,7 +658,7 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div><b>Playback speed: </b>';
         tmpHtml += '<select id="playspeed" onchange="';
-        tmpHtml += 'switchboard("udpateoptplayspeed",this.id,{})';
+        tmpHtml += 'switchboard(\"udpateoptplayspeed\",this.id,{})';
         tmpHtml += '">';
         tmpHtml += '<option value="1.5">1.5</option>';
         tmpHtml += '<option value="1.25">1.25</option>';
