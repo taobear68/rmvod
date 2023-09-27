@@ -657,8 +657,10 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<div><b>Play fullscreen: </b><input name="fullscreenplay" id="fullscreenplay" type="checkbox"></div>';
         
         tmpHtml += '<div><b>Playback speed: </b>';
-        tmpHtml += '<select id="playspeed" onchange="';
-        tmpHtml += 'switchboard(\'udpateoptplayspeed\',this.id,{})';
+        tmpHtml += '<select id="playspeed" ';
+        //tmpHtml += 'onchange="';
+        ////tmpHtml += 'switchboard(\'udpateoptplayspeed\',this.id,{})';
+        //tmpHtml += 'switchboard(\'updateselect\',this.id,{})';
         tmpHtml += '">';
         tmpHtml += '<option value="1.5">1.5</option>';
         tmpHtml += '<option value="1.25">1.25</option>';
@@ -2115,10 +2117,21 @@ class RMVodWebApp {
     // Check for, and if they are present, load and respect 
     // cookie-stored option values
     onloadOptions(){
-        var optList = ['serplaynext','resumeplay','fullscreenplay'];
+        var tfList = ['serplaynext','resumeplay','fullscreenplay'];
+        var selectList = ['playspeed'];
+        //var optList = ['serplaynext','resumeplay','fullscreenplay','playspeed']; // playspeed
         
-        for (var idx=0; idx < optList.length; idx++ ) {
-            var optNm = optList[idx];
+        for (var idx=0; idx < selectList.length; idx++ ) {
+            var optNm = selectList[idx];
+            var tmpCookie = this.cc.getCookie('opt_' + optNm);
+            var cbDE = document.getElementById(optNm);      
+            cbDE.value = tmpCookie;
+            var tmpFunc = function(){switchboard('updateselect',this.id ,{});};
+            cbDE.addEventListener("change", tmpFunc);        
+        }
+        
+        for (var idx=0; idx < tfList.length; idx++ ) {
+            var optNm = tfList[idx];
             var tmpCookie = this.cc.getCookie('opt_' + optNm);
             var cbDE = document.getElementById(optNm);
             switch (tmpCookie) {
@@ -3972,9 +3985,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.apiFetchSiteStats();
             break;;
             
-            
-            
-            
+        case "updateselect":
+        //case "udpateoptplayspeed":
+            var pbsVal = document.getElementById(objIdIn).value;
+            ml.cc.setCookie('opt_' + objIdIn,pbsVal,180);
+            break;;
         /* 
          * Oh no... we should never get here!
          * */
