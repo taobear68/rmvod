@@ -656,6 +656,18 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<div><b>Resume play: </b><input name="resumeplay" id="resumeplay" type="checkbox"></div>';
         tmpHtml += '<div><b>Play fullscreen: </b><input name="fullscreenplay" id="fullscreenplay" type="checkbox"></div>';
         
+        tmpHtml += '<div><b>Playback speed: </b>';
+        tmpHtml += '<select id="playspeed" onchange="';
+        tmpHtml += 'switchboard("udpateoptplayspeed",this.id,{})';
+        tmpHtml += '">';
+        tmpHtml += '<option value="1.5">1.5</option>';
+        tmpHtml += '<option value="1.25">1.25</option>';
+        tmpHtml += '<option value="1.0">1.0</option>';
+        tmpHtml += '<option value="0.75">0.75</option>';
+        tmpHtml += '<option value="0.5">0.5</option>';
+        tmpHtml += '</select>';
+        tmpHtml += '</div>';
+        
         tmpHtml += '<div><span onclick="switchboard(\'formNewSingleArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         tmpHtml += '<b><u>Create a single Artifact</u></b>'
         tmpHtml += '</span></div>';
