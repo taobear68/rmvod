@@ -1253,6 +1253,12 @@ class RMVodWebApp {
                 console.log("webkitEnterFullScreen not supported.  " + e);
             }
                     
+            try {
+                var pbsStr = wa.cc.getCookie('opt_playspeed');
+                document.getElementById('actualvideoplayer').playbackRate = parseFloat(pbsStr);
+            } catch (e) {
+                console.log("Could not set Playback Rate to " + pbsStr);
+            }
             
         }
         // Add this artifactid to the "recent plays" cookie
