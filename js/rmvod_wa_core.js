@@ -1303,6 +1303,7 @@ class RMVodWebApp {
             var pNextTF = String(document.getElementById('serplaynext').checked);
             var pFullTF = String(document.getElementById('fullscreenplay').checked);
             if ((pNextTF == 'false') & (pFullTF == 'true')) {
+                console.log("Closing out fullscreen - pNextTF: " + pNextTF + ", pFullTF: " + pFullTF);
                 // YES
                 document.getElementById('actualvideoplayer').webkitExitFullScreen(); // requestFullscreen
                 // NO
