@@ -1321,16 +1321,25 @@ class RMVodWebApp {
         //// Confirm checkbox is checked
         if (document.getElementById('serplaynext').checked == false) {
             console.log('serplaynext not checked');
+            // Clear browser title
+            //this.resetPageTitle();            
             return;
         } else {
-            // Clear browser title
-            //this.resetPageTitle();
+
             console.log("vodPlayNextTitle skipping title reset.");
         }
         var cbFunc = function(dataObjIn){
             var objIn = dataObjIn['data'][0];
             var wa = new RMVodWebApp();
-            wa.vodPlayTitleApi3(objIn['artifactid']);
+            if (objIn.length > 0 ) {
+                // We actually have a "next title"
+                console.log("vodPlayNextTitle.cbFunc: next title == true");
+                wa.vodPlayTitleApi3(objIn['artifactid']);
+            } else {
+                // We don't actually have a "next title"
+                console.log("vodPlayNextTitle.cbFunc: next title == true");
+                wa.resetPageTitle(); 
+            }
         }
         const payloadObj = {'artifactid':artiIdIn};
         const endpoint = '/rmvod/api/nextepisode/get';
