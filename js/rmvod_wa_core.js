@@ -1235,8 +1235,9 @@ class RMVodWebApp {
             wa.renderArtifactDetailHeader(dataObjIn);
             // Set the browser title to the title of the artifact
             var clientAbbrev = wa.sse.ssRead('apicfg')['API_Settings']['service_abbrev'];
-            //wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
-            wa.setPageTitle(clientAbbrev + ': ' + dataObjIn['title']);
+            console.log("vodPlayTitleApi3.cbFunc attempting to set page title.");
+            wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
+            //wa.setPageTitle(clientAbbrev + ': ' + dataObjIn['title']);
             // Setup an "interval" to post the current play time to a 
             // cookie to be used in "resume payback"
             try {
