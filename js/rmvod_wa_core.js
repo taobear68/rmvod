@@ -946,6 +946,7 @@ class RMVodWebApp {
         } 
     }
     setPageTitle(titleStrIn){
+        console.log("Setting Title to " + titleStrIn);
         document.title = titleStrIn;
     }
     // Returns a "likely unique" ID for this browser to be used in 
