@@ -1324,7 +1324,8 @@ class RMVodWebApp {
             return;
         } else {
             // Clear browser title
-            this.resetPageTitle();
+            //this.resetPageTitle();
+            console.log("vodPlayNextTitle skipping title reset.");
         }
         var cbFunc = function(dataObjIn){
             var objIn = dataObjIn['data'][0];
