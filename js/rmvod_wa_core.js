@@ -1330,14 +1330,15 @@ class RMVodWebApp {
         }
         var cbFunc = function(dataObjIn){
             var objIn = dataObjIn['data'][0];
+            console.log("vodPlayNextTitle.cbFunc: next title: " objIn['title']);
             var wa = new RMVodWebApp();
             if (objIn.length > 0 ) {
                 // We actually have a "next title"
-                console.log("vodPlayNextTitle.cbFunc: next title == true");
+                console.log("vodPlayNextTitle.cbFunc: next title == true " + objIn['title']);
                 wa.vodPlayTitleApi3(objIn['artifactid']);
             } else {
                 // We don't actually have a "next title"
-                console.log("vodPlayNextTitle.cbFunc: next title == true");
+                console.log("vodPlayNextTitle.cbFunc: next title == false");
                 wa.resetPageTitle(); 
             }
         }
