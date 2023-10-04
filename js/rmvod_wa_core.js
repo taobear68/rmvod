@@ -1233,11 +1233,14 @@ class RMVodWebApp {
             document.getElementById('RNWATabWidget-tabspan-0').click();  //  RNWATabWidget-tabspan-0
             // Populate the artifact details in the page header
             wa.renderArtifactDetailHeader(dataObjIn);
-            // Set the browser title to the title of the artifact
-            var clientAbbrev = wa.sse.ssRead('apicfg')['API_Settings']['service_abbrev'];
+            
+            //// Set the browser title to the title of the artifact
+            //var clientAbbrev = wa.sse.ssRead('apicfg')['API_Settings']['service_abbrev'];
+            
             console.log("vodPlayTitleApi3.cbFunc attempting to set page title.");
             wa.setPageTitle('RMVOD: ' + dataObjIn['title']);
             //wa.setPageTitle(clientAbbrev + ': ' + dataObjIn['title']);
+            
             // Setup an "interval" to post the current play time to a 
             // cookie to be used in "resume payback"
             try {
@@ -1297,8 +1300,8 @@ class RMVodWebApp {
     // what the "next" episode in the series is, and intiate playback
     // of that espisode by way of vodPlayTitleApi3.
     vodPlayNextTitle(artiIdIn){ //UPDATED FOR NEW RETURN OBJECT MODEL
-        // Clear browser title
-        this.resetPageTitle();
+        //// Clear browser title
+        //this.resetPageTitle();
         
         //dump out of FullScreen
         try {
@@ -1319,6 +1322,9 @@ class RMVodWebApp {
         if (document.getElementById('serplaynext').checked == false) {
             console.log('serplaynext not checked');
             return;
+        } else {
+            // Clear browser title
+            this.resetPageTitle();
         }
         var cbFunc = function(dataObjIn){
             var objIn = dataObjIn['data'][0];
