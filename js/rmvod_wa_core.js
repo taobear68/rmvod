@@ -1333,7 +1333,7 @@ class RMVodWebApp {
             // console.log("vodPlayNextTitle.cbFunc: next title: " + objIn['title']);
             var wa = new RMVodWebApp();
             console.log("vodPlayNextTitle.cbFunc: typeof objIn: " +  typeof objIn);
-            if (Object.keys(objIn).length > 0 ) {
+            if (typeof objIn == "object" ) {
                 // We actually have a "next title"
                 console.log("vodPlayNextTitle.cbFunc: next title == true " + objIn['title']);
                 wa.vodPlayTitleApi3(objIn['artifactid']);
