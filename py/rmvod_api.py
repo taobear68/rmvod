@@ -2862,8 +2862,11 @@ class MediaLibraryDB:
         for artiId in artiIdList:
             pass
             # print("Iterating over: " + artiId)
-            recsObj['artifacts'][artiId]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
-            print("Iterating over: " + artiId + " - " + recsObj['artifacts'][artiId]['poster'])
+            print("Iterating over: " + artiId + " - " + recsObj['artifacts'][artiId]['title'])
+            
+            # recsObj['artifacts'][artiId]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
+            # print("Iterating over: " + artiId + " - " + recsObj['artifacts'][artiId]['poster'])
+            
             #  self.fetchPosterFile2(retval['imdbid'])
             
             # posterLink = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
