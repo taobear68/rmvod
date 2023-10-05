@@ -3456,7 +3456,8 @@ class WMCWARecommend {
                         posterImg.width = iw ;
                         posterImg.height = ih ;
                         
-                        posterImg.src = artiObj['artifacts'][artiId]['poster']
+                        //posterImg.src = artiObj['artifacts'][artiId]['poster']
+                        posterImg.src = artiObj['poster']
                         
                         //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
                             ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
