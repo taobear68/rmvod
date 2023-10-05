@@ -3463,8 +3463,10 @@ class WMCWARecommend {
                         posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
                         
                         
+                        // this.recSrcData['artifacts'][artiId]
+                        
                         //console.log(artiObj['artifactid'] + " poster: " + recsObj['artifacts'][artiObj['artifactid']][0]['poster']);
-                        //posterImg.src = recsObj['artifacts'][artiObj['artifactid']][0]['poster'];
+                        posterImg.src = this.recSrcData['artifacts'][artiId][0]['poster'];
                         
                         //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
                             ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
