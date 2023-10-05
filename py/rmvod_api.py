@@ -2862,7 +2862,7 @@ class MediaLibraryDB:
         for artiId in artiIdList:
             pass
             # print("Iterating over: " + artiId)
-            print("Iterating over: " + artiId + " - " + recsObj['artifacts'][artiId]['title'])
+            print("Iterating over: " + artiId + " - " + json.dumps(recsObj['artifacts'][artiId]))
             
             # recsObj['artifacts'][artiId]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
             # print("Iterating over: " + artiId + " - " + recsObj['artifacts'][artiId]['poster'])
