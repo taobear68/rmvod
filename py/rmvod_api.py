@@ -2855,7 +2855,7 @@ class MediaLibraryDB:
         
         ###
         artiIdList = list(recsObj['artifacts'].keys())
-        print(str(artiIdList))
+        # print(str(artiIdList))
         
         
         
@@ -2870,7 +2870,7 @@ class MediaLibraryDB:
             #  self.fetchPosterFile2(retval['imdbid'])
             
             posterLink = self.fetchPosterFile2(recsObj['artifacts'][artiId][0]['imdbid'])
-            print(artiId + " Poster Link: " + posterLink)
+            # print(artiId + " Poster Link: " + posterLink)
             
             # recsObj['artifacts'][artiId][0]['poster'] = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
             recsObj['artifacts'][artiId][0]['poster'] = posterLink

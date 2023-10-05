@@ -3457,8 +3457,11 @@ class WMCWARecommend {
                         posterImg.height = ih ;
                         
                         //posterImg.src = artiObj['artifacts'][artiId]['poster']
-                        console.log(artiObj['artifactid'] + " poster: " + recsObj['artifacts'][artiObj['artifactid']][0]['poster']);
-                        posterImg.src = recsObj['artifacts'][artiObj['artifactid']][0]['poster'];
+                        
+                        console.log(artiObj['artifactid'] + " artifact: "  + JSON.stringify(recsObj['artifacts'][artiObj['artifactid']]));
+                        
+                        //console.log(artiObj['artifactid'] + " poster: " + recsObj['artifacts'][artiObj['artifactid']][0]['poster']);
+                        //posterImg.src = recsObj['artifacts'][artiObj['artifactid']][0]['poster'];
                         
                         //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
                             ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
