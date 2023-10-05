@@ -2854,7 +2854,7 @@ class MediaLibraryDB:
         # print ("generateStandardRecs: Rewatch artiList" + str(artiList))
         
         ###
-        artiIdList = recsObj['artifacts'].keys()
+        artiIdList = list(recsObj['artifacts'].keys())
         
         for artiId in artiIdList:
             pass
