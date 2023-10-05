@@ -2859,7 +2859,9 @@ class MediaLibraryDB:
         for artiId in artiIdList:
             pass
             #  self.fetchPosterFile2(retval['imdbid'])
-            recsObj['artifacts'][artiId]['poster'] = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
+            posterLink = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
+            print(artiId + " Poster Link: " + posterLink)
+            #recsObj['artifacts'][artiId]['poster'] = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
             
         
         ###
