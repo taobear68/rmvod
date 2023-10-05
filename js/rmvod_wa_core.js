@@ -3385,6 +3385,7 @@ class WMCWARecommend {
         
         
         var recsObj = this.recSrcData['data'];
+        console.log(JSON.stringify(recsObj));
 
         // Event Handler Functions
         var mouseEnterFunc = function(fooIn){
