@@ -1332,7 +1332,7 @@ class RMVodWebApp {
             var objIn = dataObjIn['data'][0];
             // console.log("vodPlayNextTitle.cbFunc: next title: " + objIn['title']);
             var wa = new RMVodWebApp();
-            console.log("vodPlayNextTitle.cbFunc: typeof objIn: " +  typeof objIn);
+            //console.log("vodPlayNextTitle.cbFunc: typeof objIn: " +  typeof objIn);
             if (typeof objIn == "object" ) {
                 // We actually have a "next title"
                 console.log("vodPlayNextTitle.cbFunc: next title == true " + objIn['title']);
@@ -3455,14 +3455,19 @@ class WMCWARecommend {
                         var posterImg = document.createElement('img');
                         posterImg.width = iw ;
                         posterImg.height = ih ;
-                        if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
-                            //posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
-                            posterImg.src = '/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
-                        } else {
-                            //posterDiv.innerHTML = "<b>Oops!  No Poster!</b>";
-                            posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
-                            // RMVOD_NoPoster.png
-                        }
+                        
+                        posterImg.src = artiObj['artifacts'][artiId]['poster']
+                        
+                        //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
+                            ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
+                            //posterImg.src = '/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
+                            
+                        //} else {
+                            ////posterDiv.innerHTML = "<b>Oops!  No Poster!</b>";
+                            //posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
+                            //// RMVOD_NoPoster.png
+                        //}
+                        
                         posterDiv.appendChild(posterImg);
                         
                         // Prep the "Title Div"

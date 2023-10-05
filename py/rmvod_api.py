@@ -2853,6 +2853,17 @@ class MediaLibraryDB:
             recsObj['artifacts'][recArti['artifactid']] = vldb.getArtifactById(recArti['artifactid'])
         # print ("generateStandardRecs: Rewatch artiList" + str(artiList))
         
+        ###
+        artiIdList = recsObj['artifacts'].keys()
+        
+        for artiId in artiIdList:
+            pass
+            #  self.fetchPosterFile2(retval['imdbid'])
+            recsObj['artifacts'][artiId]['poster'] = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
+            
+        
+        ###
+        
         now = datetime.now()
         
         recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
