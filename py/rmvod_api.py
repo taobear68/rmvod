@@ -2855,10 +2855,11 @@ class MediaLibraryDB:
         
         ###
         artiIdList = list(recsObj['artifacts'].keys())
+        print(str(artiIdList))
         
         for artiId in artiIdList:
             pass
-            print(artiId)
+            print("Iterating over: " + artiId)
             #  self.fetchPosterFile2(retval['imdbid'])
             
             # posterLink = self.fetchPosterFile2(recsObj['artifacts'][artiId]['imdbid'])
