@@ -3462,11 +3462,19 @@ class WMCWARecommend {
                         console.log(artiObj['artifactid'] + " artifact: " + JSON.stringify(recsObj['artifacts'])); // [artiObj['artifactid']]
                         posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
                         
-                        
+                        var posterStr = this.recSrcData['artifacts'][artiId][0]['poster'];
+                        if ((posterStr != "") & (posterStr != undefined) {
+                            posterImg.src = posterStr;
+                        }
                         // this.recSrcData['artifacts'][artiId]
                         
                         //console.log(artiObj['artifactid'] + " poster: " + recsObj['artifacts'][artiObj['artifactid']][0]['poster']);
-                        posterImg.src = this.recSrcData['artifacts'][artiId][0]['poster'];
+                        
+                        
+                        
+                        //posterImg.src = this.recSrcData['artifacts'][artiId][0]['poster'];
+                        
+                        
                         
                         //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
                             ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
