@@ -3459,7 +3459,8 @@ class WMCWARecommend {
                         
                         //posterImg.src = artiObj['artifacts'][artiId]['poster']
                         
-                        console.log(artiObj['artifactid'] + " artifact: " + JSON.stringify(recsObj['artifacts'])); // [artiObj['artifactid']]
+                        //console.log(artiObj['artifactid'] + " artifact: " + JSON.stringify(recsObj['artifacts'])); // [artiObj['artifactid']]
+                        
                         posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
                         
                         var posterStr = this.recSrcData['artifacts'][artiId][0]['poster'];
