@@ -3463,7 +3463,7 @@ class WMCWARecommend {
                         posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
                         
                         var posterStr = this.recSrcData['artifacts'][artiId][0]['poster'];
-                        if ((posterStr != "") & (posterStr != undefined) {
+                        if ((posterStr != "") & (posterStr != undefined)) {
                             posterImg.src = posterStr;
                         }
                         // this.recSrcData['artifacts'][artiId]
