@@ -348,23 +348,27 @@ class RMVWAHtmlGenerator {
         //cell3Div.innerHTML = tmpHtml;
         
         var htmlStr = "";
-        htmlStr += '<div id="clockdisp" style="display:block; background-color:#bbbbbb; padding: 2px; ">2023-10-23 01:23:45</div>';
-        htmlStr += '<div id="sessiondisp"  style="display:block; background-color:#999999; padding: 2px; ">';
+        htmlStr += '<div id="clockdisp" style="display:block; padding: 2px; ">2023-10-23 01:23:45</div>'; // background-color:#bbbbbb; 
+        htmlStr += '<div id="sessiondisp"  style="display:block;  padding: 2px; ">'; // background-color:#999999;
         htmlStr += '<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;NONE&quot;, &quot;userdetail&quot;:{},&quot;sessiondetails&quot;:{,&quot;sessionjson&quot;:{}}}"></div>';
-        htmlStr += '<div id="sessionno" style="display:block; background-color:#ffdddd;">';
-        htmlStr += '<span id="loginbutton" onclick="doLoginButton()"><b><u>Login</u></b></span>';
+        htmlStr += '<div id="sessionno" style="display:block;">'; // background-color:#ffdddd;
+        //htmlStr += '<span id="loginbutton" onclick="doLoginButton()"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="loginbutton" onclick="switchboard(&quot;doLogin&quot;,&quot;&quot;,{})"><b><u>Login</u></b></span>';
         htmlStr += '</div>';
-        htmlStr += '<div id="sessionyes" style="display:none; background-color:#ddffdd;">';
+        htmlStr += '<div id="sessionyes" style="display:none;">'; //  background-color:#ddffdd;
         htmlStr += '<i>Watching as</i><br>';
         htmlStr += '<span id="sessionpersonname"></span><br>';
-        htmlStr += '(<span id="logoutbutton" onclick="doLogoutButton()"><u>Logout</u></span>)&nbsp;';
-        htmlStr += '(<span id="closesessbutton" onclick="doCloseSessButton()"><u>Close Session</u></span>)';
+        //htmlStr += '(<span id="logoutbutton" onclick="doLogoutButton()"><u>Logout</u></span>)&nbsp;';
+        //htmlStr += '(<span id="closesessbutton" onclick="doCloseSessButton()"><u>Close Session</u></span>)';
+        htmlStr += '(<span id="logoutbutton" onclick="switchboard(&quot;doLogout&quot;,&quot;&quot;,{})"><u>Logout</u></span>)&nbsp;';
+        htmlStr += '(<span id="closesessbutton" onclick="switchboard(&quot;doCloseSession&quot;,&quot;&quot;,{})"><u>Close Session</u></span>)';
         htmlStr += '</div>';
-        htmlStr += '<div id="sessionstart" style="display:none; background-color:#ddddff;">';
+        htmlStr += '<div id="sessionstart" style="display:none;">'; //  background-color:#ddddff;
         htmlStr += '<form id="loginform">';
         htmlStr += 'Username:&nbsp;<input id="username" type="text" tabindex="1"><br>';
         htmlStr += 'Password:&nbsp;<input id="password" type="password" tabindex="1"><br>';
-        htmlStr += '<span id="logingobutton" onclick="doLoginGoButton()" tabindex="3"><b><u>Login</u></b></span>';
+        //htmlStr += '<span id="logingobutton" onclick="doLoginGoButton()" tabindex="3"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="logingobutton" onclick="switchboard(&quot;doLoginGo&quot;,&quot;&quot;,{})" tabindex="3"><b><u>Login</u></b></span>';
         htmlStr += '</form>';
         htmlStr += '</div>';
         htmlStr += '</div>';            
@@ -3369,11 +3373,11 @@ class RMVodWebApp {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
         doLogoutButton();
     }
-    handleKeyPress(e) {
-        if (e.keycode === 13) {
-            doLoginGoButton();
-        }
-    }
+    //handleKeyPress(e) {
+        //if (e.keycode === 13) {
+            //doLoginGoButton();
+        //}
+    //}
     renderHB3Content () {
         var htmlStr = "";
         htmlStr += '<div id="clockdisp" style="display:block; background-color:#bbbbbb; padding: 2px; ">2023-10-23 01:23:45</div>';
@@ -4233,6 +4237,23 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             var pbsVal = document.getElementById(objIdIn).value;
             ml.cc.setCookie('opt_' + objIdIn,pbsVal,180);
             break;;
+            
+        case "doLogin":
+            ml.doLoginButton();
+            break;;
+            
+        case "doLogout":
+            ml.doLogoutButton();
+            break;;
+            
+        case "doCloseSession":
+            ml.doCloseSessButton();
+            break;;
+            
+        case "doLoginGo":
+            ml.doCloseSessButton();
+            break;;
+            
         /* 
          * Oh no... we should never get here!
          * */
