@@ -4251,7 +4251,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;;
             
         case "doLoginGo":
-            ml.doCloseSessButton();
+            ml.doLoginGoButton();
             break;;
             
         /* 
