@@ -340,8 +340,8 @@ class RMVWAHtmlGenerator {
         var cell3Div = document.createElement('div');
         cell3Div.style.width = "200px";
         cell3Div.style.height = "100px";
-        cell3Div.style.marginLeft = "10px";
-        cell3Div.style.marginTop = "30px";
+        //cell3Div.style.marginLeft = "10px";
+        //cell3Div.style.marginTop = "30px";
         cell3Div.id = "headerblock3";
         //var tmpHtml = '';
         //tmpHtml += "<b>0000-11-22 11:22</b>"
