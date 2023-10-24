@@ -349,7 +349,7 @@ class RMVWAHtmlGenerator {
         
         var htmlStr = "";
         htmlStr += '<div id="clockdisp" style="display:block; padding: 2px; ">2023-10-23 01:23:45</div>'; // background-color:#bbbbbb; 
-        htmlStr += '<div id="sessiondisp"  style="display:block;  padding: 2px; ">'; // background-color:#999999;
+        htmlStr += '<div id="sessiondisp"  style="display:block;  padding: 2px; font-size: 14px;">'; // background-color:#999999;
         htmlStr += '<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;NONE&quot;, &quot;userdetail&quot;:{},&quot;sessiondetails&quot;:{,&quot;sessionjson&quot;:{}}}"></div>';
         htmlStr += '<div id="sessionno" style="display:block;">'; // background-color:#ffdddd;
         //htmlStr += '<span id="loginbutton" onclick="doLoginButton()"><b><u>Login</u></b></span>';
