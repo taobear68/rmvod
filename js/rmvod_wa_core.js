@@ -3371,7 +3371,7 @@ class RMVodWebApp {
     }
     doCloseSessButton() {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
-        doLogoutButton();
+        this.doLogoutButton();
     }
     //handleKeyPress(e) {
         //if (e.keycode === 13) {
