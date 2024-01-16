@@ -138,6 +138,25 @@ CREATE UNIQUE INDEX IF NOT EXISTS artitexts_comp_pk ON artitexts (
     artifield
 );
 
+CREATE TABLE IF NOT EXISTS users (
+    userid VARCHAR(40) NOT NULL PRIMARY KEY, 
+    loginname VARCHAR(100) NOT NULL UNIQUE, 
+    propername VARCHAR(100) NOT NULL, 
+    activetf BOOLEAN NOT NULL DEFAULT false, 
+    confirmtf BOOLEAN NOT NULL DEFAULT false, 
+    lockedtf BOOLEAN NOT NULL DEFAULT false, 
+    password VARCHAR(100) NOT NULL, 
+    email VARCHAR(250) NOT NULL,  
+    createdt DATETIME NOT NULL, 
+    lastlogindt DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00', 
+    sessiontoken VARCHAR(40) NOT NULL UNIQUE, 
+    sessionexpiredt DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00', 
+    comment TEXT, 
+    metajson MEDIUMTEXT NOT NULL DEFAULT '{}'
+);
+
+
+
 
 CREATE USER IF NOT EXISTS vodlibapi IDENTIFIED BY 'vodlibapipw';
 flush privileges;

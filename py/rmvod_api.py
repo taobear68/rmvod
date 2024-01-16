@@ -2646,18 +2646,62 @@ class MediaLibraryDB:
         elif titleIn[0:2] == "A ":
             titleOut = titleIn[2:] + ", A"
         return titleOut
+    
+    # def titleLibTweak(self,artiObjIn):
+        # arbmetaDict = {}
+        # try:
+            # arbmetaDict = json.loads(artiObjIn['arbmeta'])
+        # except:
+            # print('titleLibTweak - json.loads failed on arbmeta for ' + artiObjIn['title']);
+        # straightTitle = artiObjIn['title']
+        # libTitle = self.librarifyTitle(straightTitle)
+        # arbmetaDict['titleorig'] = straightTitle
+        # arbmetaDict['titlelibrary'] = libTitle
+        # artiObjIn['arbmeta'] = json.dumps(arbmetaDict)
+        # return artiObjIn
+    
+    
     def titleLibTweak(self,artiObjIn):
         arbmetaDict = {}
         try:
             arbmetaDict = json.loads(artiObjIn['arbmeta'])
         except:
             print('titleLibTweak - json.loads failed on arbmeta for ' + artiObjIn['title']);
+            #return artiObjIn
+
+        if 'addeddt' not in list(arbmetaDict.keys()):
+            print('/var/www/html/rmvod/vidsrc', artiObjIn['filepath'], artiObjIn['file'])
+            dateStr = '2000-01-01'
+            try:
+                pass
+                dateStr = self.getArtiFileCTime('/var/www/html/rmvod/vidsrc/',artiObjIn['filepath'],artiObjIn['file'])
+                #print("dateStr",dateStr)
+                arbmetaDict['addeddt'] = dateStr
+                #print("arbmetaDict",json.dumps(arbmetaDict))
+                #print("arbmetaDict",str(arbmetaDict))
+            except:
+                print("Dammitall -- Could not get dateStr from file")
+
+            #arbmetaDict['addeddt'] = self.getArtiFileCTime('/var/www/html/rmvod/vidsrc/',artiObjIn['filepath'],artiObjIn['file'])
+            #arbmetaDict['addeddt'] = dateStr + ' 00:00:01'
+            #arbmetaDict['addeddt'] = dateStr
+
+
+        print("arbmetaDict",json.dumps(arbmetaDict))
+
+
         straightTitle = artiObjIn['title']
+        #print("straightTitle",straightTitle)
         libTitle = self.librarifyTitle(straightTitle)
+        #print("libTitle",libTitle)
         arbmetaDict['titleorig'] = straightTitle
         arbmetaDict['titlelibrary'] = libTitle
+        #print("arbmetaDict",json.dumps(arbmetaDict))
         artiObjIn['arbmeta'] = json.dumps(arbmetaDict)
+        #print(artiObjIn['arbmeta'])
         return artiObjIn
+    
+    
     def addEpisodesToSeries(self,seriesArtiIdIn,filePathIn,fnFragIn): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
         #vldb = VodLibDB()
         vldb = self.dbHandleConfigged()
@@ -3098,6 +3142,256 @@ class MediaLibraryDB:
             tmpRetObj['status']['success'] = False
             tmpRetObj['data'] = []
         return tmpRetObj
+    def sessionDBHandle(self):
+        pass
+    def sessCreateUser(self,loginNameIn,properNameIn,passwordIn,emailIn,commentIn):
+        pass
+    def sessGetUserAttrsByLoginName(self,loginnameIn):
+        pass
+    def sessGetUserAttrsByUserID(self,loginnameIn):
+        pass
+    def sessGetUserAttrsBySessionToken(self,loginnameIn):
+        pass
+    def sessConfirmUser(self,useridIn):
+        pass
+    def sessGetActiveSessionTimeout(self,loginnameIn):
+        pass
+    def sessStartSessionWithCreds(self,loginnameIn,passwordIn):
+        pass
+    def sessEndSessionWithToken(self,sessiontokenIn):
+        pass
+    def sessUpdateUserMeta(self,useridIn, metadictIn):
+        pass
+    def sessUserAuthCheck(self,useridIn):
+        pass
+    def sessUpdateCookies(self,useridIn,cookieDictIn):
+        pass
+    
+    def getArtiFileCTime(self,basedirIn,artidirIn,artifileIn):
+        workingpath = basedirIn + artidirIn + "/" + artifileIn
+        retval = None
+        try:
+            filCTime = os.path.getctime(workingpath)
+            #print("filCTime", filCTime)
+            filCTimeInt = int(filCTime)
+            #print("filCTimeInt", filCTimeInt)
+            dtstr = str(datetime.fromtimestamp(filCTimeInt))
+            #dtstr = datetime.fromtimestamp(filCTimeInt))
+            #print("dtstr",dtstr)
+            #dtstr = datetime.fromtimestamp(int(os.path.getctime(workingpath)))
+            retval = dtstr
+        except:
+            print("Could not get file create time for " + workingpath)
+        return retval
+
+
+
+class RNUserSession:
+    def __init__(self):
+        self.dbc = {"host":"","database":"","user":"","password":""}
+        self.dbc['host'] = 'localhost'
+        self.dbc['database'] = 'vodlib'
+        self.dbc['user'] = ''
+        self.dbc['password'] = ''
+        self.sessionMaxDurationDays = 365
+        pass
+    def echoDb(self):
+        print(str(self.dbc))
+    def _connect(self):
+        dbc = pymysql.connect(host=self.dbc['host'],user=self.dbc['user'],password=self.dbc['password'],database=self.dbc['database'])
+        return dbc
+        pass
+    def _stdRead(self,sqlIn):
+        data = None
+        try:
+            assert sqlIn.split(" ")[0].upper() == "SELECT"
+            dbc = self._connect()
+            cursor = dbc.cursor()
+            cursor.execute(sqlIn)
+            data = cursor.fetchall()
+            dbc.close()
+        except:
+            print("_stdRead FAILED to execute: " + sqlIn)
+        return data
+    def _stdUpdate(self,sqlIn):
+        retval = None
+        try:
+            assert sqlIn.split(" ")[0].upper() == "UPDATE"
+            dbc = self._connect()
+            cursor = dbc.cursor()
+            cursor.execute(sqlIn)
+            dbc.commit()
+            dbc.close()
+            pass
+        except:
+            print("_stdUpdate FAILED to execute: " + sqlIn)
+            raise Exception("Update failed!")
+        return retval
+    def _stdInsert(self,sqlIn):
+        retval = None
+        try:
+            assert sqlIn.split(" ")[0].upper() == "INSERT"
+            dbc = self._connect()
+            cursor = dbc.cursor()
+            cursor.execute(sqlIn)
+            dbc.commit()
+            dbc.close()
+            pass
+        except:
+            print("_stdInsert FAILED to execute: " + sqlIn)
+        return retval
+    def _stdDelete(self,sqlIn):
+        retval = None
+        try:
+            assert sqlIn.split(" ")[0].upper() == "DELETE"
+            dbc = self._connect()
+            cursor = dbc.cursor()
+            cursor.execute(sqlIn)
+            dbc.commit()
+            dbc.close()
+            pass
+        except:
+            print("_stdDelete:  FAILED to execute: " + sqlIn)
+        return retval
+    def createUser(self,loginNameIn,properNameIn,passwordIn,emailIn,commentIn):
+        # Generate UserID
+        uId = str(uuid.uuid4())
+        # artifactDictIn['artifactid'] = aId
+        sqlStr = """INSERT INTO users 
+        SET 
+            userid = '""" + uId + """', 
+            loginname = '""" + loginNameIn + """', 
+            propername = '""" + properNameIn + """', 
+            activetf = true, 
+            confirmtf = false, 
+            lockedtf = false,
+            password = PASSWORD('""" + passwordIn + """'),
+            email = '""" + emailIn + """', 
+            createdt = NOW(), 
+            sessiontoken = '""" + uId + """', 
+            comment = '""" + commentIn + """' """
+        
+        self._stdRead(sqlStr)
+        pass
+    def getUserAttrsByLoginName(self,loginnameIn):
+        keylist = ['userid', 'loginname', 'propername', 'activetf', 'confirmtf', 'lockedtf', 'createdt', 'sessiontoken', 'sessionexpiredt', 'comment', 'metajson']
+        retDict = {}
+        sqlStr = """SELECT userid, loginname, propername, activetf, confirmtf, lockedtf, createdt, sessiontoken, sessionexpiredt, comment, metajson
+FROM users 
+WHERE loginname = '""" + loginnameIn + """' """
+        resultTuple = self._stdRead(sqlStr)
+        for i in range(0,len(keylist)):
+            retDict[keylist[i]] = resultTuple[0][i]
+        return retDict
+    def getUserAttrsByUserID(self,useridIn):
+        keylist = ['userid', 'loginname', 'propername', 'activetf', 'confirmtf', 'lockedtf', 'createdt', 'sessiontoken', 'sessionexpiredt', 'comment', 'metajson']
+        retDict = {}
+        sqlStr = """SELECT userid, loginname, propername, activetf, confirmtf, lockedtf, createdt, sessiontoken, sessionexpiredt, comment, metajson
+FROM users 
+WHERE userid = '""" + useridIn + """' """
+        resultTuple = self._stdRead(sqlStr)
+        for i in range(0,len(keylist)):
+            retDict[keylist[i]] = resultTuple[0][i]
+        return retDict
+    def getUserAttrsBySessionToken(self,sessiontokenIn):
+        keylist = ['userid', 'loginname', 'propername', 'activetf', 'confirmtf', 'lockedtf', 'createdt', 'sessiontoken', 'sessionexpiredt', 'comment', 'metajson']
+        retDict = {}
+        sqlStr = """SELECT userid, loginname, propername, activetf, confirmtf, lockedtf, createdt, sessiontoken, sessionexpiredt, comment, metajson
+FROM users 
+WHERE sessiontoken = '""" + sessiontokenIn + """' """
+        resultTuple = self._stdRead(sqlStr)
+        for i in range(0,len(keylist)):
+            retDict[keylist[i]] = resultTuple[0][i]
+        return retDict
+    def confirmUser(self,useridIn):
+        sqlStr = """UPDATE users 
+SET confirmtf = true 
+WHERE userid = '""" + useridIn + """'
+AND confirmtf = false """
+        self._stdUpdate(sqlStr)
+        pass
+    def getActiveSessionTimeout(self,loginnameIn):
+        sqlStr = """SELECT sessionexpiredt 
+FROM users 
+WHERE loginname = '""" + loginnameIn + """' 
+AND activetf = true 
+AND confirmtf = true 
+AND lockedtf = false
+AND sessionexpiredt > NOW()
+AND sessiontoken != userid """  ### AND password = PASSWORD('password') 
+
+        resultTuple = self._stdRead(sqlStr)
+        return resultTuple
+        pass
+    def startSessionWithCreds(self,loginnameIn,passwordIn):
+        sessToken = str(uuid.uuid4())
+        print(sessToken)
+        sqlStr = """UPDATE users 
+SET sessiontoken = '""" +  sessToken + """', 
+    sessionexpiredt = NOW() + INTERVAL +""" + str(self.sessionMaxDurationDays) + """ DAY,
+    lastlogindt = NOW()
+WHERE loginname = '""" + loginnameIn + """' 
+AND password = PASSWORD('""" + passwordIn + """') 
+AND activetf = true 
+AND confirmtf = true 
+AND lockedtf = false""" 
+        
+        try:
+            self._stdUpdate(sqlStr)
+            return self.getUserAttrsByLoginName(loginnameIn)
+        except:
+            print("Could not create Session for user " + loginnameIn + " with Token " + sessToken)
+        pass
+    def endSessionWithToken(self,sessiontokenIn):
+        sqlStr = """UPDATE users
+SET sessiontoken = userid, 
+    sessionexpiredt = NOW()
+WHERE sessiontoken = '""" + sessiontokenIn + """'  """
+        try:
+            self._stdUpdate(sqlStr)
+        except:
+            print("Could not end Session for Token " + sessiontokenIn)
+        pass
+    def udpateUserMeta(self,userIdIn, metaDictIn):
+        # Take in a Dictionary of KVPs to be added/updated in the metajson field for the user
+        # Load the User's data from the DB and load the metajson into a Dictionary
+        # Iterate over the keys in the supplied Dictionary, and update the metajson Dictionary
+        # Dump the updated metajson Dictionary back out to a string, and update the value in the DB
+        
+        
+        #assert type(metaDictIn) == type({'foo':'bar'})
+        uAttr = self.getUserAttrsByUserID(userIdIn)
+        uMDict = json.loads(uAttr['metajson'])
+        updKeys = list(metaDictIn.keys())
+        for key in updKeys:
+            uMDict[key] = metaDictIn[key]
+        
+        sqlStr = """UPDATE users SET metajson = '""" + json.dumps(uMDict) + """' WHERE userid = '""" + userIdIn + """' """
+        return self._stdUpdate(sqlStr)
+    def userAuthCheck(self,userIDIn):
+        retDict = {'success':False,'details':{}}
+        try: 
+            sqlStr = """SELECT sessiontoken, metajson 
+FROM users 
+WHERE userid = '""" + userIDIn + """' 
+    AND sessiontoken != userid 
+    AND sessionexpiredt > NOW() 
+    AND activetf = true 
+    AND confirmtf = true 
+    AND lockedtf = false """
+            resTuple = self._stdRead(sqlStr)
+            retDict['success'] = True
+            retDict['details'] = {'sessiontoken': resTuple[0][0], 'metajson': json.loads(resTuple[0][1])}
+        except:
+            print("userAuthCheck failed for user " + userIDIn)
+        return retDict
+    def updateCookies(self,userIdIn,cookieDictIn):
+        assert type(cookieDictIn) == type({'this':'that'})
+        return self.udpateUserMeta(userIdIn, {'cookies':cookieDictIn})
+        
+        pass
+
+
 
 class MLCLI:
     def __init__(self):
