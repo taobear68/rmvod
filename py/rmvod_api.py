@@ -3281,7 +3281,7 @@ FROM users
 WHERE loginname = '""" + loginnameIn + """' """
         resultTuple = self._stdRead(sqlStr)
         for i in range(0,len(keylist)):
-            if keylist[i] in ['createddt', 'sessionexpiredt']:
+            if keylist[i] in ['createdt', 'sessionexpiredt']:
                 retDict[keylist[i]] = resultTuple[0][i].strftime('%Y-%m-%d %H:%M:%S')
             else:
                 retDict[keylist[i]] = resultTuple[0][i]
