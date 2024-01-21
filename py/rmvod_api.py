@@ -3336,6 +3336,7 @@ AND activetf = true
 AND confirmtf = true 
 AND lockedtf = false""" 
         
+        print(sqlStr)
         try:
             self._stdUpdate(sqlStr)
             return self.getUserAttrsByLoginName(loginnameIn)
