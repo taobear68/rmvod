@@ -3359,15 +3359,29 @@ class RMVodWebApp {
         
         var cbFunc = function (objIn) {
             console.log("doLoginGoButton.cbFunc: " + JSON.stringify(objIn));
+            
+            // {"userid":"T0TALLYFAKEUSERID01","loginname":"fakeguy1","propername":"Fake Guy","activetf":1,"confirmtf":1,"lockedtf":0,"createdt":"2024-01-21 09:08:34","sessiontoken":"16f516ad-f9e8-4654-96c3-1453f510b472","sessionexpiredt":"2025-01-20 10:41:04","comment":"First fake user","metajson":"{}"}
+            
+            //var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
+            var sessDetObj = {"userid":objIn['userid']}
+            sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
+            sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":{"cookies":{}}};
+            
+            
+            document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
+            document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+            
+            
+            
         }
         var payloadObj = {"credu":unm,"credp":pw};
         var endpoint = "/rmvod/api/session/start";
         var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
         
         
-        var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
-        document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
-        document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+        //var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
+        //document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
+        //document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
     }
     doLogoutButton () {
         // Logout reverts this browser to "not logged in" status, reporting its own ID as the userid, and respecting local cookies
