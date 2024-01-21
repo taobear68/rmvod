@@ -3373,6 +3373,7 @@ class RMVodWebApp {
                 document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
             } catch (e) {
                 console.log("doLoginGoButton.cbFunc: LOGIN FAILED!  DO SOMETHING CORRECT HERE!");
+            }
             
             
             
