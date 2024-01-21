@@ -3281,7 +3281,10 @@ FROM users
 WHERE loginname = '""" + loginnameIn + """' """
         resultTuple = self._stdRead(sqlStr)
         for i in range(0,len(keylist)):
-            retDict[keylist[i]] = resultTuple[0][i]
+            if keylist[i] in ['createddt', 'sessionexpiredt']:
+                retDict[keylist[i]] = resultTuple[0][i].strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                retDict[keylist[i]] = resultTuple[0][i]
         return retDict
     def getUserAttrsByUserID(self,useridIn):
         keylist = ['userid', 'loginname', 'propername', 'activetf', 'confirmtf', 'lockedtf', 'createdt', 'sessiontoken', 'sessionexpiredt', 'comment', 'metajson']
