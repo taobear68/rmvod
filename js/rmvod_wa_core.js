@@ -3348,9 +3348,9 @@ class RMVodWebApp {
         //document.getElementById('').style.display = "none";
     }
     doLoginGoButton () {
-        document.getElementById('sessionstart').style.display = "none";
-        document.getElementById('clockdisp').style.display = "block";
-        document.getElementById('sessionyes').style.display = "block";
+        //document.getElementById('sessionstart').style.display = "none";
+        //document.getElementById('clockdisp').style.display = "block";
+        //document.getElementById('sessionyes').style.display = "block";
         var unm = document.getElementById('username').value;
         document.getElementById('username').value = "";
         var pw = document.getElementById('password').value
@@ -3371,7 +3371,13 @@ class RMVodWebApp {
                 
                 document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
                 document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+                
+                document.getElementById('sessionstart').style.display = "none";
+                document.getElementById('clockdisp').style.display = "block";
+                document.getElementById('sessionyes').style.display = "block";                
+                
             } catch (e) {
+                alert("Could not log in with provided credentials.  Try again.");
                 console.log("doLoginGoButton.cbFunc: LOGIN FAILED!  DO SOMETHING CORRECT HERE!");
             }
             
