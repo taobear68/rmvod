@@ -4258,6 +4258,7 @@ def startUserSession():
         diKeysList = []
         return json.dumps([])
     sessStartResult = rus.startSessionWithCreds(dictIn['credu'],dictIn['credp'])
+    print(sessStartResult)
     return json.dumps(sessStartResult)
 
 @app.route('/session/verify',methods=['POST'])
