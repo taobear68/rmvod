@@ -3191,8 +3191,8 @@ class RNUserSession:
         self.dbc = {"host":"","database":"","user":"","password":""}
         self.dbc['host'] = 'localhost'
         self.dbc['database'] = 'vodlib'
-        self.dbc['user'] = ''
-        self.dbc['password'] = ''
+        self.dbc['user'] = 'vodlibapi'
+        self.dbc['password'] = 'vodlibapipw'
         self.sessionMaxDurationDays = 365
         pass
     def echoDb(self):
