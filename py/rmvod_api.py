@@ -3340,7 +3340,8 @@ AND lockedtf = false"""
             self._stdUpdate(sqlStr)
             return self.getUserAttrsByLoginName(loginnameIn)
         except:
-            print("Could not create Session for user " + loginnameIn + " with Token " + sessToken)
+            print("Could not create Session for user " + loginnameIn) # + " with Token " + sessToken)
+            return {'status':-1, 'message': "Could not create Session for user " + loginnameIn}
         pass
     def endSessionWithToken(self,sessiontokenIn):
         sqlStr = """UPDATE users
@@ -3391,7 +3392,12 @@ WHERE userid = '""" + userIDIn + """'
         
         pass
 
+# Example first user for dev/testing.
 
+# INSERT INTO users SET userid = "T0TALLYFAKEUSERID01", loginname = "fakeguy1",
+# propername = "Fake Guy", activetf = TRUE, confirmtf = TRUE, lockedtf = FALSE,
+# password = PASSWORD("password"), email = "fakeguy@example.com", createdt = NOW(),
+# lastlogindt = NOW(), sessiontoken = "", comment = "First fake user";
 
 class MLCLI:
     def __init__(self):
@@ -4234,6 +4240,62 @@ def runOmdbApiUpdateTvseries():
     artiDict = ml.getArtifactByIdNew(dictIn['artifactid'])
     print(json.dumps(artiDict))
     return json.dumps(ml.omdbProcessSeries(artiDict['data'][0]['imdbid']))
+
+@app.route('/session/start',methods=['POST'])
+def startUserSession():
+    #ml = MediaLibraryDB()
+    rus = RNUserSession()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])
+    sessStartResult = rus.startSessionWithCreds(dictIn['credu'],dictIn['credp'])
+    return json.dumps(sessStartResult)
+
+@app.route('/session/verify',methods=['POST'])
+def verifyUserSession():
+    #ml = MediaLibraryDB()
+    rus = RNUserSession()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])
+    result = rus.getUserAttrsBySessionToken(dictIn['token'])
+    return json.dumps(result)
+
+@app.route('/session/end',methods=['POST'])
+def endUserSession():
+    #ml = MediaLibraryDB()
+    rus = RNUserSession()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])
+    result = rus.endSessionWithToken(dictIn['token'])
+    return json.dumps(result)
+
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')

@@ -1050,7 +1050,7 @@ class RMVodWebApp {
     // Returns an empty Object
     genericApiCall(payloadObjIn,endpointIn,cbFuncIn){
         /*
-         * payloadeObjIn must minimally be {}
+         * payloadObjIn must minimally be {}
          * 
          * endpointIn should be the full path to the endpoint
          * 
@@ -3356,6 +3356,15 @@ class RMVodWebApp {
         var pw = document.getElementById('password').value
         document.getElementById('password').value = "";
         // Do the "start session" thing
+        
+        var cbFunc = function (objIn) {
+            console.log("doLoginGoButton.cbFunc: " + JSON.stringify(objIn));
+        }
+        var payloadObj = {"credu":unm,"credp":pw};
+        var endpoint = "/rmvod/api/session/start";
+        var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
+        
+        
         var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
         document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
