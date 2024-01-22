@@ -2884,6 +2884,29 @@ class RMVodWebApp {
                     // If the user details come back OK, then set up the session locally
                     // if the user details don't come back OK, then clear the cookies and pop an alert to say that, and allow them to re-log-in
                     // Populate sessiondata div, set cookies, and 
+                    
+                    
+                    // {"userid":"T0TALLYFAKEUSERID01","loginname":"fakeguy1","propername":"Fake Guy","activetf":1,"confirmtf":1,"lockedtf":0,"createdt":"2024-01-21 09:08:34","sessiontoken":"d5ce4901-a4e1-4aec-a9b0-458c2cf1816c","sessionexpiredt":"2025-01-21 13:20:28","comment":"First fake user","metajson":"{}"}
+                    if (objIn['sessiontoken'].length == 36) {
+                        
+                        var sessDetObj = {"userid":objIn['userid']}
+                        sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
+                        sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":{"cookies":{}}};
+                        
+                        
+                        document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
+                        document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+                        
+                        document.getElementById('sessionstart').style.display = "none";
+                        document.getElementById('clockdisp').style.display = "block";
+                        document.getElementById('sessionyes').style.display = "block";    
+                    } else {
+                        
+                    }
+                
+                                    
+                    
+                    
                 }
                 var payloadObj = {"token":sessToken};
                 var endpoint = "/rmvod/api/session/verify";
