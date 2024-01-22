@@ -3304,7 +3304,7 @@ FROM users
 WHERE sessiontoken = '""" + sessiontokenIn + """' """
         print("getUserAttrsBySessionToken - sessiontokenIn: " + sessiontokenIn + ", " + sqlStr )
         resultTuple = self._stdRead(sqlStr)
-        print("getUserAttrsBySessionToken - resultTuple: " + resultTuple)
+        print("getUserAttrsBySessionToken - resultTuple: " + str(resultTuple))
         for i in range(0,len(keylist)):
             #retDict[keylist[i]] = resultTuple[0][i]
             if keylist[i] in ['createdt', 'sessionexpiredt']:
