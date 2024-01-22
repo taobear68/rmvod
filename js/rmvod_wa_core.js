@@ -2862,7 +2862,7 @@ class RMVodWebApp {
         var actSess = false
         var sessToken = this.cc.getCookie("clientid")
         // Try to load the activesession cookie
-        try {
+        //try {
             actSess = this.cc.getCookie("activesessiontf");
             if (actSess != true && actSess != false) {
                 this.cc.setCookie(activesessiontf, false, 365);
@@ -2890,10 +2890,10 @@ class RMVodWebApp {
                 console.log("sessCookieOnLoad: No active session stored.");
             }
                 
-        } catch (e) {
-            console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
-            // If we don't have an active session or token, use the browser client ID and proceed 
-        }
+        //} catch (e) {
+            //console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
+            //// If we don't have an active session or token, use the browser client ID and proceed 
+        //}
         
         // If we have an active session and token do an api call to verify the session and get back the user details
         // If the user details come back OK, then set up the session locally
