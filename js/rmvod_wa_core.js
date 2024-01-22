@@ -4149,6 +4149,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.execSearchSingleFactor2('tag',{'tag':''});
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
+            
+            ml.sessCookieOnLoad();
+            
             ml.contCookieOnLoad();
             ml.resetPageTitle();
             
