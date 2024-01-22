@@ -2871,7 +2871,7 @@ class RMVodWebApp {
             // If it succeeds, try to get the session token
             sessToken = this.cc.getCookie("sessiontoken");
             if (sessToken == "") {
-                this.cc.setCookie("sessiontoken",,365);
+                this.cc.setCookie("sessiontoken",this.cc.getCookie("clientid"),365);
                 sessToken = this.cc.getCookie("sessiontoken");
             }
             // If we have an active session and token do an api call to verify the session and get back the user details
