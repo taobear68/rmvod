@@ -3374,7 +3374,10 @@ class RMVodWebApp {
                 
                 document.getElementById('sessionstart').style.display = "none";
                 document.getElementById('clockdisp').style.display = "block";
-                document.getElementById('sessionyes').style.display = "block";                
+                document.getElementById('sessionyes').style.display = "block";    
+                
+                
+                // TODO check to make sure we're properly handling the "broswer userid"
                 
             } catch (e) {
                 alert("Could not log in with provided credentials.  Try again.");
@@ -3394,9 +3397,18 @@ class RMVodWebApp {
         //document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
     }
     doLogoutButton () {
-        // Logout reverts this browser to "not logged in" status, reporting its own ID as the userid, and respecting local cookies
+        // Logout reverts this browser to "not logged in" status, 
+        // reporting its own ID as the userid, and respecting local 
+        // cookies
+        // In other words, as far as I can determine, this should be a 
+        // completely local activity, and should not require an API call
         document.getElementById('sessionyes').style.display = "none";
         document.getElementById('sessionno').style.display = "block";
+        
+        // get browser's userid from the cookie
+        // make up a fake "sessDetObj" using the browser's userid
+        // write sessDetObj to sessiondata div
+        // 
         
         var sessDetObj = {"userid":"thisIsAFakeId-Netscape-1683026819380", "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
@@ -3404,6 +3416,59 @@ class RMVodWebApp {
     }
     doCloseSessButton() {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
+        
+        // Do API call to close the session
+        var cbFunc = function (objIn) {
+            try {
+                console.log("doCloseSessButton.cbFunc: " + JSON.stringify(objIn));
+                
+                //// {"userid":"T0TALLYFAKEUSERID01","loginname":"fakeguy1","propername":"Fake Guy","activetf":1,"confirmtf":1,"lockedtf":0,"createdt":"2024-01-21 09:08:34","sessiontoken":"16f516ad-f9e8-4654-96c3-1453f510b472","sessionexpiredt":"2025-01-20 10:41:04","comment":"First fake user","metajson":"{}"}
+                
+                ////var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
+                //var sessDetObj = {"userid":objIn['userid']}
+                //sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
+                //sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":{"cookies":{}}};
+                
+                
+                //document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
+                //document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+                
+                //document.getElementById('sessionstart').style.display = "none";
+                //document.getElementById('clockdisp').style.display = "block";
+                //document.getElementById('sessionyes').style.display = "block";    
+                
+                
+                // TODO check to make sure we're properly handling the "broswer userid"
+                
+            } catch (e) {
+                alert("Could not close session.");
+                console.log("doCloseSessButton.cbFunc: CLOSE SESSION FAILED!  DO SOMETHING CORRECT HERE!");
+            }
+        }
+        // Get session tokem from sessiondata div
+        var sessObj = {};
+        try {
+            var sessObj = JSON.parse(document.getElementById('sessiondata').dataset.session);
+            if (sessObj['sessiondetails']['sessiontoken'] != sessObj['userid']) {
+                // Go ahead and try to close the session
+                var payloadObj = {"token":sessObj['sessiontoken']};
+                var endpoint = "/rmvod/api/session/end";
+                var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
+                         
+                
+                
+            } else {
+                // We should never have gotten here.  We're already 
+                // logged out but also presenting the logout button.
+                // Fail gracefully.
+                alert("There is no currently active session.");
+            }
+        } catch (e) {
+            alert("Could not read or interpret local session data.");
+        }
+       
+        
+        // Run doLogoutButton
         this.doLogoutButton();
     }
     //handleKeyPress(e) {
