@@ -3491,7 +3491,7 @@ class RMVodWebApp {
         
         
         this.cc.setCookie("activesessiontf","false",365);
-        this.cc.setCookie("sessiontoken",this.cc.getCookie("userid"),365);
+        this.cc.setCookie("sessiontoken",this.cc.getCookie("clientid"),365);
                           
         // get browser's userid from the cookie
         // make up a fake "sessDetObj" using the browser's userid
