@@ -3448,11 +3448,13 @@ class RMVodWebApp {
         // Get session tokem from sessiondata div
         var sessObj = {};
         try {
-            var sessObj = JSON.parse(document.getElementById('sessiondata').dataset.session);
+            var sessJson = document.getElementById('sessiondata').dataset.session;
+            console.log("doCloseSessButton: JSON = " + sessJson);
+            var sessObj = JSON.parse(sessJson);
             if (sessObj['sessiondetails']['sessiontoken'] != sessObj['userid']) {
                 // Go ahead and try to close the session
-                console.log("doCloseSessButton: About to do API call: " + sessObj['sessiontoken']);
-                var payloadObj = {"token":sessObj['sessiontoken']};
+                console.log("doCloseSessButton: About to do API call: " + sessObj['sessiondetails']['sessiontoken']);
+                var payloadObj = {"token": sessObj['sessiondetails']['sessiontoken']};
                 var endpoint = "/rmvod/api/session/end";
                 var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
                 console.log("doCloseSessButton: Got past the API call");
