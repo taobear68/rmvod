@@ -3416,7 +3416,7 @@ class RMVodWebApp {
     }
     doCloseSessButton() {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
-        
+        console.log("doCloseSessButton: START");
         // Do API call to close the session
         var cbFunc = function (objIn) {
             try {
@@ -3451,10 +3451,11 @@ class RMVodWebApp {
             var sessObj = JSON.parse(document.getElementById('sessiondata').dataset.session);
             if (sessObj['sessiondetails']['sessiontoken'] != sessObj['userid']) {
                 // Go ahead and try to close the session
+                console.log("doCloseSessButton: About to do API call: " + sessObj['sessiontoken']);
                 var payloadObj = {"token":sessObj['sessiontoken']};
                 var endpoint = "/rmvod/api/session/end";
                 var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
-                         
+                console.log("doCloseSessButton: Got past the API call");
                 
                 
             } else {
