@@ -3499,7 +3499,7 @@ class RMVodWebApp {
         // 
         
         //var sessDetObj = {"userid":"thisIsAFakeId-Netscape-1683026819380", "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
-        var sessDetObj = {"userid":this.cc.getCookie("userid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
+        var sessDetObj = {"userid":this.cc.getCookie("clientid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
         document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
     }
