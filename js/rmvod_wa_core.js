@@ -3489,12 +3489,17 @@ class RMVodWebApp {
         document.getElementById('sessionyes').style.display = "none";
         document.getElementById('sessionno').style.display = "block";
         
+        
+        this.cc.setCookie("activesessiontf","false",365);
+        this.cc.setCookie("sessiontoken",this.cc.getCookie("userid"),365);
+                          
         // get browser's userid from the cookie
         // make up a fake "sessDetObj" using the browser's userid
         // write sessDetObj to sessiondata div
         // 
         
-        var sessDetObj = {"userid":"thisIsAFakeId-Netscape-1683026819380", "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
+        //var sessDetObj = {"userid":"thisIsAFakeId-Netscape-1683026819380", "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
+        var sessDetObj = {"userid":this.cc.getCookie("userid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
         document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
     }
