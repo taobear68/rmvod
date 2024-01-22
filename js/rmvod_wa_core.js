@@ -2875,7 +2875,7 @@ class RMVodWebApp {
             var endpoint = "/rmvod/api/session/verify";
             var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
                     
-        } except (e) {
+        } catch (e) {
             console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
             // If we don't have an active session or token, use the browser client ID and proceed 
         }
