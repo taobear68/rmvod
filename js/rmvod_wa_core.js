@@ -2865,7 +2865,7 @@ class RMVodWebApp {
         //try {
             actSess = this.cc.getCookie("activesessiontf");
             if (actSess != true && actSess != false) {
-                this.cc.setCookie(activesessiontf, false, 365);
+                this.cc.setCookie("activesessiontf", false, 365);
                 actSess = this.cc.getCookie("activesessiontf");
             }
             // If it succeeds, try to get the session token
