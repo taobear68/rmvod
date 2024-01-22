@@ -2854,6 +2854,8 @@ class RMVodWebApp {
     }
     // Cookie Handling
     //
+    // activesessiontf
+    // sessiontoken
     
     // Handle Session state base on cookie on load
     sessCookieOnLoad() {
@@ -2862,19 +2864,32 @@ class RMVodWebApp {
         // Try to load the activesession cookie
         try {
             actSess = this.cc.getCookie("activesessiontf");
+            if (actSess != true && actSess != false) {
+                this.cc.setCookie(activesessiontf, false, 365);
+                actSess = this.cc.getCookie("activesessiontf");
+            }
             // If it succeeds, try to get the session token
             sessToken = this.cc.getCookie("sessiontoken");
-            // If we have an active session and token do an api call to verify the session and get back the user details
-            var cbFunc = function (objIn) {
-                console.log("sessCookieOnLoad.cbFunc: Got back data: " + JSON.stringify(objIn));
-                // If the user details come back OK, then set up the session locally
-                // if the user details don't come back OK, then clear the cookies and pop an alert to say that, and allow them to re-log-in
-                // Populate sessiondata div, set cookies, and 
+            if (sessToken == "") {
+                this.cc.setCookie("sessiontoken",,365);
+                sessToken = this.cc.getCookie("sessiontoken");
             }
-            var payloadObj = {"token":sessToken};
-            var endpoint = "/rmvod/api/session/verify";
-            var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
-                    
+            // If we have an active session and token do an api call to verify the session and get back the user details
+            if (actSess == true) {
+                
+                var cbFunc = function (objIn) {
+                    console.log("sessCookieOnLoad.cbFunc: Got back data: " + JSON.stringify(objIn));
+                    // If the user details come back OK, then set up the session locally
+                    // if the user details don't come back OK, then clear the cookies and pop an alert to say that, and allow them to re-log-in
+                    // Populate sessiondata div, set cookies, and 
+                }
+                var payloadObj = {"token":sessToken};
+                var endpoint = "/rmvod/api/session/verify";
+                var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
+            } else {
+                console.log("sessCookieOnLoad: No active session stored.");
+            }
+                
         } catch (e) {
             console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
             // If we don't have an active session or token, use the browser client ID and proceed 
