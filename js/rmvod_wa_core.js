@@ -2864,7 +2864,7 @@ class RMVodWebApp {
         // Try to load the activesession cookie
         //try {
             actSess = this.cc.getCookie("activesessiontf");
-            if (actSess != true && actSess != false) {
+            if (actSess != true) {
                 this.cc.setCookie("activesessiontf", false, 365);
                 actSess = this.cc.getCookie("activesessiontf");
             }
