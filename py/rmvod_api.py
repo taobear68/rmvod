@@ -3302,7 +3302,9 @@ WHERE userid = '""" + useridIn + """' """
         sqlStr = """SELECT userid, loginname, propername, activetf, confirmtf, lockedtf, createdt, sessiontoken, sessionexpiredt, comment, metajson
 FROM users 
 WHERE sessiontoken = '""" + sessiontokenIn + """' """
+        print("getUserAttrsBySessionToken - sessiontokenIn: " + sessiontokenIn + ", " + sqlStr )
         resultTuple = self._stdRead(sqlStr)
+        print("getUserAttrsBySessionToken - resultTuple: " + resultTuple)
         for i in range(0,len(keylist)):
             #retDict[keylist[i]] = resultTuple[0][i]
             if keylist[i] in ['createdt', 'sessionexpiredt']:
