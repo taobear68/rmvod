@@ -2874,6 +2874,7 @@ class RMVodWebApp {
                 this.cc.setCookie("sessiontoken",this.cc.getCookie("clientid"),365);
                 sessToken = this.cc.getCookie("sessiontoken");
             }
+            console.log("sessCookieOnLoad: actSess: " + actSess + ", sessToken: " + sessToken);
             // If we have an active session and token do an api call to verify the session and get back the user details
             if (actSess == true) {
                 
