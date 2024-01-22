@@ -3304,7 +3304,12 @@ FROM users
 WHERE sessiontoken = '""" + sessiontokenIn + """' """
         resultTuple = self._stdRead(sqlStr)
         for i in range(0,len(keylist)):
-            retDict[keylist[i]] = resultTuple[0][i]
+            #retDict[keylist[i]] = resultTuple[0][i]
+            if keylist[i] in ['createdt', 'sessionexpiredt']:
+                retDict[keylist[i]] = resultTuple[0][i].strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                retDict[keylist[i]] = resultTuple[0][i]
+            
         return retDict
     def confirmUser(self,useridIn):
         sqlStr = """UPDATE users 
