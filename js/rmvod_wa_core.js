@@ -1319,7 +1319,10 @@ class RMVodWebApp {
         const apiEndpoint = '/rmvod/api/logplay/post'; 
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
         //const apiEndpoint = apiBase + '/logplay/post'; 
-        const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
+        //const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
+        
+        var sessionObj = JSON.parse(document.getElementById("sessiondata").dataset.session);
+        const payload = {'artifactid':artiIdIn,'clientid':sessionObj['userid']};
         this.genericApiCall(payload,apiEndpoint,cbFunc);        
     }
     // This method is called when playback completes -- that is, the 
