@@ -2864,7 +2864,8 @@ class RMVodWebApp {
         // Try to load the activesession cookie
         //try {
             actSess = this.cc.getCookie("activesessiontf");
-            if (actSess != true) {
+            if (actSess === true) {
+                console.log("sessCookieOnLoad: Cookie activesessiontf appears to not be true. (" + actSess + ") setting it to false.");
                 this.cc.setCookie("activesessiontf", false, 365);
                 actSess = this.cc.getCookie("activesessiontf");
             }
