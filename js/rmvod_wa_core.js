@@ -2864,9 +2864,9 @@ class RMVodWebApp {
         // Try to load the activesession cookie
         //try {
             actSess = this.cc.getCookie("activesessiontf");
-            if (actSess === true) {
+            if (actSess != "true") {
                 console.log("sessCookieOnLoad: Cookie activesessiontf appears to not be true. (" + actSess + ") setting it to false.");
-                this.cc.setCookie("activesessiontf", false, 365);
+                this.cc.setCookie("activesessiontf", "false", 365);
                 actSess = this.cc.getCookie("activesessiontf");
             }
             // If it succeeds, try to get the session token
@@ -2877,7 +2877,7 @@ class RMVodWebApp {
             }
             console.log("sessCookieOnLoad: actSess: " + actSess + ", sessToken: " + sessToken);
             // If we have an active session and token do an api call to verify the session and get back the user details
-            if (actSess == true) {
+            if (actSess == "true") {
                 
                 var cbFunc = function (objIn) {
                     console.log("sessCookieOnLoad.cbFunc: Got back data: " + JSON.stringify(objIn));
