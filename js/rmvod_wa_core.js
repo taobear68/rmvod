@@ -3416,12 +3416,24 @@ class RMVodWebApp {
                 sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":{"cookies":{}}};
                 
                 
+                
+                // activesessiontf
+                // sessiontoken
+                // Set Session Persist cookies
+                var cc = new CookieCrisp();
+                cc.setCookie("activesessiontf",true,365);
+                cc.setCookie("sessiontoken",sessDetObj['sessiondetails']["sessiontoken"],365);
+                                
                 document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
                 document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
                 
                 document.getElementById('sessionstart').style.display = "none";
                 document.getElementById('clockdisp').style.display = "block";
                 document.getElementById('sessionyes').style.display = "block";    
+                
+                
+                
+                
                 
                 
                 // TODO check to make sure we're properly handling the "broswer userid"
