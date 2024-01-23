@@ -3644,6 +3644,7 @@ class RMVodWebApp {
     
     sessSettingSetBulk (cookiesObjIn) {
         try {
+            console.log("sessSettingSetBulk - Setting cookies based on " + JSON.stringify(cookiesObjIn));
             var keysList = Object.keys(cookiesObjIn);
             for (var i = 0; i < keysList.length; i++ ){
                 this.sessSettingSet(keysList[i],cookiesObjIn[keysList[i]]);
