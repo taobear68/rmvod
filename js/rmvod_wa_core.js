@@ -3446,7 +3446,7 @@ class RMVodWebApp {
                 //var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
                 var sessDetObj = {"userid":objIn['userid']}
                 sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
-                sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":JSON.parse(objIn['metajson'])};
+                sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":objIn['metajson']};
                 
                 
                 
