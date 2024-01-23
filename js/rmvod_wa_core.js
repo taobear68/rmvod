@@ -3618,7 +3618,7 @@ class RMVodWebApp {
             var sessJson = document.getElementById('sessiondata').dataset.session;
             var sessObj = JSON.parse(sessJson);
             sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
-            document.getElementById('sessiondata').dataset.session = JSON.strignify(sessObj);
+            document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
             // Do we want to set the cookie?  I mean... I guess so.  
             // Seems like we would leave some cruft behind after we 
             // logout or close the session... hmm
@@ -3667,7 +3667,7 @@ class RMVodWebApp {
                     var sessJson = document.getElementById('sessiondata').dataset.session;
                     var sessObj = JSON.parse(sessJson);
                     sessObj['sessiondetails']['sessionjson']['cookies'][nameIn] = settingVal;
-                    document.getElementById('sessiondata').dataset.session = JSON.strignify(sessObj)
+                    document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj)
                     // store updated session data now?
                 } catch (g) {
                     console.log("sessSettingGet - Could not set " + nameIn + " to " + settingVal + " from cookie." + g);
