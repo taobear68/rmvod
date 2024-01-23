@@ -3024,13 +3024,18 @@ class RMVodWebApp {
             if (playerDE.paused == false) {
                 var currTime = parseInt(playerDE.currentTime);
                 var currSrc = playerDE.currentSrc;
+                
                 wa.cc.setCookie('artifact_source_uri',currSrc);
                 wa.cc.setCookie('playback_offset',currTime);
+                
+                wa.sessSettingSet('artifact_source_uri',currSrc);
+                wa.sessSettingSet('playback_offset',currTime);
             }
         }
         
         var intervalHandle = setInterval(cbFunc,delayMs);
         this.cc.setCookie('cont_play_sample_int_handle',intervalHandle,5);
+        this.sessSettingSet('cont_play_sample_int_handle',intervalHandle);this.sessSettingSet('cont_play_sample_int_handle',intervalHandle)
         return intervalHandle;
     }
     // Clean-up the "resume playback" detail cookies on natural end of
