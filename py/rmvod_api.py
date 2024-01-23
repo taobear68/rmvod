@@ -3334,6 +3334,24 @@ AND sessiontoken != userid """  ### AND password = PASSWORD('password')
         return resultTuple
         pass
     def startSessionWithCreds(self,loginnameIn,passwordIn):
+        wrkToken = ''
+        currSessSQL = """SELECT sessiontoken 
+FROM users 
+WHERE sessiontoken != userid
+AND loginname = '""" + loginnameIn + """' 
+AND password = PASSWORD('""" + passwordIn + """')  
+AND sessionexpiredt > NOW() 
+AND activetf = true 
+AND confirmtf = true 
+AND lockedtf = false"""
+        try:
+            currSessTuple = self._stdRead(currSessSQL)
+            wrkToken = [0][0]
+            return self.getUserAttrsBySessionToken(wrkToken)
+        except:
+            print("startSessionWithCreds: Could not find current session for " + loginname)
+        
+        
         sessToken = str(uuid.uuid4())
         # print(sessToken)
         sqlStr = """UPDATE users 
