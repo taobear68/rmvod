@@ -3626,6 +3626,7 @@ class RMVodWebApp {
             } catch (f) {
                 console.log("sessSettingGet - Could not set cookie" + nameIn + " to " + newValueIn + "." + f);
             }  
+            this.sessSettingsPush();
         } catch (e) {
             console.log("sessSettingGet - Could not set sessiondata " + nameIn + " to " + newValueIn + "." + e);
         }
@@ -3646,6 +3647,8 @@ class RMVodWebApp {
                 var endpoint = "/rmvod/api/session/setcookies";
                 var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
             }
+        } else {
+            console.log("sessSettingsPush - Skipping - no active session.");
         }
     }
     sessSettingGet (nameIn) {
@@ -4399,6 +4402,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             const cookieNm = 'opt_' + objIdIn;
             const cookieVal = document.getElementById(objIdIn).checked;
             ml.cc.setCookie(cookieNm,cookieVal,365);
+            ml.sessSettingSet(cookieNm,cookieVal);
             break;
         
         case 'listAction':
