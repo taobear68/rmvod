@@ -3622,8 +3622,19 @@ class RMVodWebApp {
             console.log("sessSettingSet - sessJson: " + sessJson);
             var sessObj = JSON.parse(sessJson);
             console.log("sessSettingSet - sessObj: " + typeof sessObj);
-            sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
-            console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']['cookies'][cookieName]);
+            
+            //sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
+            
+            
+            var sjObj = JSON.parse(sessObj['sessiondetails']['sessionjson']);
+            //console.log(sjObj);
+            sjObj['cookies'][cookieName] = newValueIn;
+            sessObj['sessiondetails']['sessionjson']['cookies'] = JSON.stringify(sjObj);
+            
+            
+            
+                        
+            console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']);
             document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
             console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session);
             // Do we want to set the cookie?  I mean... I guess so.  
