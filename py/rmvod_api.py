@@ -3302,9 +3302,9 @@ WHERE userid = '""" + useridIn + """' """
         sqlStr = """SELECT userid, loginname, propername, activetf, confirmtf, lockedtf, createdt, sessiontoken, sessionexpiredt, comment, metajson
 FROM users 
 WHERE sessiontoken = '""" + sessiontokenIn + """' """
-        print("getUserAttrsBySessionToken - sessiontokenIn: " + sessiontokenIn + ", " + sqlStr )
+        # print("getUserAttrsBySessionToken - sessiontokenIn: " + sessiontokenIn + ", " + sqlStr )
         resultTuple = self._stdRead(sqlStr)
-        print("getUserAttrsBySessionToken - resultTuple: " + str(resultTuple))
+        # print("getUserAttrsBySessionToken - resultTuple: " + str(resultTuple))
         for i in range(0,len(keylist)):
             #retDict[keylist[i]] = resultTuple[0][i]
             if keylist[i] in ['createdt', 'sessionexpiredt']:
@@ -3335,7 +3335,7 @@ AND sessiontoken != userid """  ### AND password = PASSWORD('password')
         pass
     def startSessionWithCreds(self,loginnameIn,passwordIn):
         sessToken = str(uuid.uuid4())
-        print(sessToken)
+        # print(sessToken)
         sqlStr = """UPDATE users 
 SET sessiontoken = '""" +  sessToken + """', 
     sessionexpiredt = NOW() + INTERVAL +""" + str(self.sessionMaxDurationDays) + """ DAY,
@@ -3346,7 +3346,7 @@ AND activetf = true
 AND confirmtf = true 
 AND lockedtf = false""" 
         
-        print(sqlStr)
+        # print(sqlStr)
         try:
             self._stdUpdate(sqlStr)
             return self.getUserAttrsByLoginName(loginnameIn)
