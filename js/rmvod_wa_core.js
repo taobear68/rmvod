@@ -3482,7 +3482,9 @@ class RMVodWebApp {
                 //var sessDetObj = {"userid":"12345678-9abc-defg-hijk-lmnopqrstuvw", "userdetail":{"loginname": "PaulTourville", "propername": "Paul Tourville", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "9694eb13-6507-4ee3-8c1a-bc598ac31372", "sessionexpiredt": "2024-10-12 06:11:07","sessionjson":{"cookies":{}}}};
                 var sessDetObj = {"userid":objIn['userid']}
                 sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": objIn['metajson']};
-                sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":objIn['metajson']};
+                //sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername']};
+                //sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":objIn['metajson']};
+                sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt']};
                 
                 
                 
@@ -3547,7 +3549,8 @@ class RMVodWebApp {
         // 
         
         //var sessDetObj = {"userid":"thisIsAFakeId-Netscape-1683026819380", "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
-        var sessDetObj = {"userid":this.cc.getCookie("clientid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
+        //var sessDetObj = {"userid":this.cc.getCookie("clientid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": "","sessionjson":{"cookies":{}}}};
+        var sessDetObj = {"userid":this.cc.getCookie("clientid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": ""}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
         document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
     }
@@ -3664,7 +3667,7 @@ class RMVodWebApp {
             //sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
             
             
-            var sjObj = JSON.parse(sessObj['sessiondetails']['sessionjson']);
+            var sjObj = JSON.parse(sessObj['userdetail']['metajson']);
             //console.log(sjObj);
             //console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
@@ -3704,7 +3707,7 @@ class RMVodWebApp {
                     //console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
                 //var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
-                var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['sessiondetails']['sessionjson'])['cookies']};
+                var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['userdetail']['metajson'])['cookies']};
                 var endpoint = "/rmvod/api/session/setcookies";
                 var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
             }
@@ -3717,7 +3720,8 @@ class RMVodWebApp {
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
             var sessObj = JSON.parse(sessJson);
-            settingVal = sessObj['sessiondetails']['sessionjson']['cookies'][nameIn]
+            //settingVal = sessObj['sessiondetails']['sessionjson']['cookies'][nameIn];
+            settingVal = sessObj['userdetail']['metajson']['cookies'][nameIn];
             console.log("sessSettingGet - " + nameIn + ": " + settingVal);
         } catch (e) {
             console.log("sessSettingGet - Could not get " + nameIn + " from sessiondata." + e);
@@ -3726,7 +3730,8 @@ class RMVodWebApp {
                 try {
                     var sessJson = document.getElementById('sessiondata').dataset.session;
                     var sessObj = JSON.parse(sessJson);
-                    sessObj['sessiondetails']['sessionjson']['cookies'][nameIn] = settingVal;
+                    //sessObj['sessiondetails']['sessionjson']['cookies'][nameIn] = settingVal;
+                    sessObj['userdetail']['metajson']['cookies'][nameIn] = settingVal;
                     document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj)
                     // store updated session data now?
                 } catch (g) {
