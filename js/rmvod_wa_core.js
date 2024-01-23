@@ -3638,26 +3638,26 @@ class RMVodWebApp {
         var cookieName = nameIn.replace("opt_","");
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
-            console.log("sessSettingSet - sessJson: " + sessJson);
+            //console.log("sessSettingSet - sessJson: " + sessJson);
             var sessObj = JSON.parse(sessJson);
-            console.log("sessSettingSet - sessObj: " + typeof sessObj);
+            //console.log("sessSettingSet - sessObj: " + typeof sessObj);
             
             //sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
             
             
             var sjObj = JSON.parse(sessObj['sessiondetails']['sessionjson']);
-            console.log(sjObj);
-            console.log(typeof sjObj);
+            //console.log(sjObj);
+            //console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
-            console.log(sjObj);
+            //console.log(sjObj);
             sessObj['sessiondetails']['sessionjson'] = JSON.stringify(sjObj);
             
             
             
                         
-            console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']);
+            //console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']);
             document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
-            console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session);
+            //console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session);
             // Do we want to set the cookie?  I mean... I guess so.  
             // Seems like we would leave some cruft behind after we 
             // logout or close the session... hmm
@@ -3681,7 +3681,7 @@ class RMVodWebApp {
                 var sessObj = JSON.parse(sessJson);
                 // API call to push updated cookies upstream
                 var cbFunc = function (objIn) {
-                    console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
+                    //console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
                 //var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
                 var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['sessiondetails']['sessionjson'])['cookies']};
