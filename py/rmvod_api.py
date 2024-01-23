@@ -3347,7 +3347,7 @@ AND lockedtf = false"""
         try:
             print(currSessSQL)
             currSessTuple = self._stdRead(currSessSQL)
-            wrkToken = [0][0]
+            wrkToken = currSessTuple[0][0]
             print(wrkToken)
             return self.getUserAttrsBySessionToken(wrkToken)
         except:
