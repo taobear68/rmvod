@@ -2907,7 +2907,9 @@ class RMVodWebApp {
                         
                         document.getElementById('sessionstart').style.display = "none";
                         document.getElementById('clockdisp').style.display = "block";
-                        document.getElementById('sessionyes').style.display = "block";    
+                        document.getElementById('sessionyes').style.display = "block";   
+                        
+                        this.sessSettingSetBulk(JSON.parse(objIn['metajson'])); 
                     } else {
                         
                     }
