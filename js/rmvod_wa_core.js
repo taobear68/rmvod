@@ -2909,7 +2909,8 @@ class RMVodWebApp {
                         document.getElementById('clockdisp').style.display = "block";
                         document.getElementById('sessionyes').style.display = "block";   
                         
-                        this.sessSettingSetBulk(JSON.parse(objIn['metajson'])); 
+                        var wa = new RMVodWebApp();
+                        wa.sessSettingSetBulk(JSON.parse(objIn['metajson'])); 
                     } else {
                         
                     }
