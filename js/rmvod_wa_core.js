@@ -3606,7 +3606,7 @@ class RMVodWebApp {
         try {
             var keysList = Object.keys(cookiesObjIn);
             for (var i = 0; i < keysList.length; i++ ){
-                this.sessSettingSet(keysList[i],cookiesObjIn[keysList[i]];
+                this.sessSettingSet(keysList[i],cookiesObjIn[keysList[i]]);
             }
         } catch (e) {
             console.log("sessSettingSetBulk - Could not process cookiesObjIn");
