@@ -1237,6 +1237,7 @@ class RMVodWebApp {
             wa.cc.setCookie('opt_fullscreenplay',String(fstf),365);
             
             wa.cc.setCookie('playing_aid',dataObjIn['artifactid'],365);
+            wa.sessSettingSet('playing_aid',dataObjIn['artifactid']);
             try {
                 const tmpIntvHandle = this.cc.getCookie('cont_play_sample_int_handle');
                 clearInterval(tmpIntvHandle);
