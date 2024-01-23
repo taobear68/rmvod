@@ -2189,7 +2189,14 @@ class RMVodWebApp {
         for (var idx=0; idx < selectList.length; idx++ ) {
             var optNm = selectList[idx];
             var tmpCookie = this.cc.getCookie('opt_' + optNm);
-            var cbDE = document.getElementById(optNm);      
+            var cbDE = document.getElementById(optNm);  
+            
+            try {
+                cbDE.removeEventListener("change",tmpFunc);    
+            } catch (e) {
+                console.log("onloadOptions - Could not remove change listener from " + optNm);
+            }
+            
             cbDE.value = tmpCookie;
             switch(optNm) {
                 case "playspeed":
@@ -2209,6 +2216,13 @@ class RMVodWebApp {
             var optNm = tfList[idx];
             var tmpCookie = this.cc.getCookie('opt_' + optNm);
             var cbDE = document.getElementById(optNm);
+            
+            try {
+                cbDE.removeEventListener("change",tmpFunc);    
+            } catch (e) {
+                console.log("onloadOptions - Could not remove change listener from " + optNm);
+            }
+            
             switch (tmpCookie) {
                 case true:
                 case 'true':
