@@ -1324,7 +1324,7 @@ class RMVodWebApp {
         //const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
         
         // This gets the "userid" from the sessiondata div rather than the
-        // clietid cookie.
+        // clientid cookie.
         var sessionObj = JSON.parse(document.getElementById("sessiondata").dataset.session);
         
         const payload = {'artifactid':artiIdIn,'clientid':sessionObj['userid']};
@@ -2925,6 +2925,8 @@ class RMVodWebApp {
                         
                         var wa = new RMVodWebApp();
                         wa.sessSettingSetBulk(JSON.parse(objIn['metajson'])['cookies']); 
+                        
+                        wa.contCookieOnLoad();
                     } else {
                         
                     }
@@ -2938,6 +2940,7 @@ class RMVodWebApp {
                 var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
             } else {
                 console.log("sessCookieOnLoad: No active session stored.");
+                this.contCookieOnLoad();
             }
                 
         //} catch (e) {
@@ -4331,7 +4334,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
             ml.sessCookieOnLoad();
             
-            ml.contCookieOnLoad();
+            //ml.contCookieOnLoad();
+            
             ml.resetPageTitle();
             
             //
