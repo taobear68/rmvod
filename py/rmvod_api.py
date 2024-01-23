@@ -3345,10 +3345,10 @@ AND activetf = true
 AND confirmtf = true 
 AND lockedtf = false"""
         try:
-            print(currSessSQL)
+            # print(currSessSQL)
             currSessTuple = self._stdRead(currSessSQL)
             wrkToken = currSessTuple[0][0]
-            print(wrkToken)
+            # print(wrkToken)
             return self.getUserAttrsBySessionToken(wrkToken)
         except:
             print("startSessionWithCreds: Could not find current session for " + loginnameIn)
