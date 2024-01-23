@@ -4515,6 +4515,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         //case "udpateoptplayspeed":
             var pbsVal = document.getElementById(objIdIn).value;
             ml.cc.setCookie('opt_' + objIdIn,pbsVal,180);
+            ml.sessSettingSet(objIdIn,pbsVal);
             break;;
             
         case "doLogin":
