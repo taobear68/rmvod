@@ -3631,7 +3631,7 @@ class RMVodWebApp {
             console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
             console.log(sjObj);
-            sessObj['sessiondetails']['sessionjson']['cookies'] = JSON.stringify(sjObj);
+            sessObj['sessiondetails']['sessionjson'] = JSON.stringify(sjObj);
             
             
             
