@@ -3633,7 +3633,7 @@ class RMVodWebApp {
         }
     }
     sessSettingsPush () {
-        var sessTF = this.cc.getCookie(activesessiontf);
+        var sessTF = this.cc.getCookie("activesessiontf");
         if (sessTF == "true") {
             var clientId = this.cc.getCookie("clientid");
             var sessToken = this.cc.getCookie("sessiontoken");
