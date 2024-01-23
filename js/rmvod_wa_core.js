@@ -3619,9 +3619,13 @@ class RMVodWebApp {
         var cookieName = nameIn.replace("opt_","");
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
+            console.log("sessSettingSet - sessJson: " + sessJson);
             var sessObj = JSON.parse(sessJson);
+            console.log("sessSettingSet - sessObj: " + typeof sessObj);
             sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
+            console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']['cookies'][cookieName]);
             document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
+            console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session));
             // Do we want to set the cookie?  I mean... I guess so.  
             // Seems like we would leave some cruft behind after we 
             // logout or close the session... hmm
