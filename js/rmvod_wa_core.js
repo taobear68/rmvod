@@ -3664,7 +3664,8 @@ class RMVodWebApp {
                 var cbFunc = function (objIn) {
                     console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
-                var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
+                //var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
+                var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['sessiondetails']['sessionjson'])['cookies']};
                 var endpoint = "/rmvod/api/session/setcookies";
                 var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
             }
