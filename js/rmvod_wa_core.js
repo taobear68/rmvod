@@ -3628,7 +3628,9 @@ class RMVodWebApp {
             
             var sjObj = JSON.parse(sessObj['sessiondetails']['sessionjson']);
             console.log(sjObj);
+            console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
+            console.log(sjObj);
             sessObj['sessiondetails']['sessionjson']['cookies'] = JSON.stringify(sjObj);
             
             
