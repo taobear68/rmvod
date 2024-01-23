@@ -3349,7 +3349,7 @@ AND lockedtf = false"""
             wrkToken = [0][0]
             return self.getUserAttrsBySessionToken(wrkToken)
         except:
-            print("startSessionWithCreds: Could not find current session for " + loginname)
+            print("startSessionWithCreds: Could not find current session for " + loginnameIn)
         
         
         sessToken = str(uuid.uuid4())
