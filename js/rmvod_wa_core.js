@@ -3679,7 +3679,8 @@ class RMVodWebApp {
             // Seems like we would leave some cruft behind after we 
             // logout or close the session... hmm
             try {
-                this.cc.setCookie("opt_" + cookieName,newValueIn,365)
+                this.cc.setCookie("opt_" + cookieName,newValueIn,365);
+                this.cc.setCookie(cookieName,newValueIn,365);
             } catch (f) {
                 console.log("sessSettingGet - Could not set cookie" + cookieName + " to " + newValueIn + "." + f);
             }  
