@@ -910,7 +910,7 @@ class RMVodWebApp {
         // These version bits will eventually need to involve polling 
         // the API and DB for their versions
         this.apiFetchRemoteVersions();
-        this.postJSVer("0.9.1");
+        this.postJSVer("0.9.2");
     }
     getApiConfigValue(majorKeyIn,minorKeyIn){
         console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
@@ -2969,7 +2969,16 @@ class RMVodWebApp {
             try {
                 var playerDE = document.getElementById('actualvideoplayer');
                 var wa = new RMVodWebApp();
+                
+                // TODO:  This seems to throw an error on load, when 
+                // resuming playback... but it works anyway.  No obvious 
+                // cause other than possibly running before the player 
+                // has been rendered.  Something to look into later.  
+                // Cookies and pushed configs look good, and the resume 
+                // playback appears to work properly, so... Gonna ship 
+                // it for now.
                 playerDE.currentTime = wa.cc.getCookie('playback_offset');
+                
                 if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
                     clearInterval(intervHandle);
                 } else {
