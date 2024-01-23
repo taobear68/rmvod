@@ -3517,7 +3517,9 @@ class RMVodWebApp {
             
         }
         var payloadObj = {"credu":unm,"credp":pw};
+        console.log("doLoginGoButton - payloadObj: " + JSON.stringify(payloadObj));
         var endpoint = "/rmvod/api/session/start";
+        console.log("doLoginGoButton - endpoint: " + endpoint);
         var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
         
         
