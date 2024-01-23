@@ -2912,7 +2912,7 @@ class RMVodWebApp {
                     if (objIn['sessiontoken'].length == 36) {
                         
                         var sessDetObj = {"userid":objIn['userid']}
-                        sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
+                        sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": objIn['metajson']};
                         sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":objIn['metajson']};
                         
                         
@@ -3484,6 +3484,7 @@ class RMVodWebApp {
                 var wa = new RMVodWebApp();
                 wa.sessSettingSetBulk(JSON.parse(sessDetObj['userdetail']['metajson'])['cookies']);
                 
+                wa.onloadOptions();
                 
                 
                 
