@@ -2910,7 +2910,7 @@ class RMVodWebApp {
                         document.getElementById('sessionyes').style.display = "block";   
                         
                         var wa = new RMVodWebApp();
-                        wa.sessSettingSetBulk(JSON.parse(objIn['metajson'])); 
+                        wa.sessSettingSetBulk(JSON.parse(objIn['metajson'])['cookies']); 
                     } else {
                         
                     }
