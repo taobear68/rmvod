@@ -3402,6 +3402,12 @@ WHERE userid = '""" + userIDIn + """'
         return self.udpateUserMeta(userIdIn, {'cookies':cookieDictIn})
         
         pass
+    def setUserCookiesByToken(self,tokenIn,cookieDictIn):
+        userDict = self.getUserAttrsBySessionToken(tokenIn)
+        userId = userDict['userid']
+        return self.updateCookies(userId,cookieDictIn)
+        pass
+        
 
 # Example first user for dev/testing.
 
@@ -4307,6 +4313,23 @@ def endUserSession():
     result = rus.endSessionWithToken(dictIn['token'])
     return json.dumps(result)
 
+@app.route('/session/setcookies',methods=['POST'])
+def userSessionSetCookies():
+    #ml = MediaLibraryDB()
+    rus = RNUserSession()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])
+    result = rus.setUserCookiesByToken(dictIn['token'],dictIn['cookies'])
+    return json.dumps(result)
 
 
 if __name__ == '__main__':

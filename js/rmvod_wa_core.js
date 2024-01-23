@@ -1319,9 +1319,14 @@ class RMVodWebApp {
         const apiEndpoint = '/rmvod/api/logplay/post'; 
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
         //const apiEndpoint = apiBase + '/logplay/post'; 
+        
+        // this gets the "userid" from the clientid cookie
         //const payload = {'artifactid':artiIdIn,'clientid':this.cc.getCookie('clientid')};
         
+        // This gets the "userid" from the sessiondata div rather than the
+        // clietid cookie.
         var sessionObj = JSON.parse(document.getElementById("sessiondata").dataset.session);
+        
         const payload = {'artifactid':artiIdIn,'clientid':sessionObj['userid']};
         this.genericApiCall(payload,apiEndpoint,cbFunc);        
     }
@@ -3595,7 +3600,80 @@ class RMVodWebApp {
         htmlStr += '</div>';            
         document.getElementById('headerblock3').innerHTML = htmlStr;
     }        
-        
+    
+    
+    sessSettingSetBulk (cookiesObjIn) {
+        try {
+            var keysList = Object.keys(cookiesObjIn);
+            for (var i = 0; i < keysList.length; i++ ){
+                this.sessSettingSet(keysList[i],cookiesObjIn[keysList[i]];
+            }
+        } catch (e) {
+            console.log("sessSettingSetBulk - Could not process cookiesObjIn");
+        }
+    }
+    sessSettingSet (nameIn,newValueIn) {
+        try {
+            var sessJson = document.getElementById('sessiondata').dataset.session;
+            var sessObj = JSON.parse(sessJson);
+            sessObj['sessiondetails']['sessionjson']['cookies'][nameIn] = settingVal;
+            document.getElementById('sessiondata').dataset.session = JSON.strignify(sessObj);
+            // Do we want to set the cookie?  I mean... I guess so.  
+            // Seems like we would leave some cruft behind after we 
+            // logout or close the session... hmm
+            try {
+                this.cc.setCookie(nameIn,newValueIn,365)
+            } catch (f) {
+                console.log("sessSettingGet - Could not set cookie" + nameIn + " to " + newValueIn + "." + f);
+            }  
+        } catch (e) {
+            console.log("sessSettingGet - Could not set sessiondata " + nameIn + " to " + newValueIn + "." + e);
+        }
+    }
+    sessSettingsPush () {
+        var sessTF = this.cc.getCookie(activesessiontf);
+        if (sessTF == "true") {
+            var clientId = this.cc.getCookie("clientid");
+            var sessToken = this.cc.getCookie("sessiontoken");
+            if (clientId != sessToken) {
+                var sessJson = document.getElementById('sessiondata').dataset.session;
+                var sessObj = JSON.parse(sessJson);
+                // API call to push updated cookies upstream
+                var cbFunc = function (objIn) {
+                    console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
+                };
+                var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
+                var endpoint = "/rmvod/api/session/setcookies";
+                var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
+            }
+        }
+    }
+    sessSettingGet (nameIn) {
+        var settingVal;
+        try {
+            var sessJson = document.getElementById('sessiondata').dataset.session;
+            var sessObj = JSON.parse(sessJson);
+            settingVal = sessObj['sessiondetails']['sessionjson']['cookies'][nameIn]
+            console.log("sessSettingGet - " + nameIn + ": " + settingVal);
+        } catch (e) {
+            console.log("sessSettingGet - Could not get " + nameIn + " from sessiondata." + e);
+            try {
+                settingVal = this.cc.getCookie(nameIn);
+                try {
+                    var sessJson = document.getElementById('sessiondata').dataset.session;
+                    var sessObj = JSON.parse(sessJson);
+                    sessObj['sessiondetails']['sessionjson']['cookies'][nameIn] = settingVal;
+                    document.getElementById('sessiondata').dataset.session = JSON.strignify(sessObj)
+                    // store updated session data now?
+                } catch (g) {
+                    console.log("sessSettingGet - Could not set " + nameIn + " to " + settingVal + " from cookie." + g);
+                }
+            } catch (f) {
+                console.log("sessSettingGet - Could not get " + nameIn + " from cookies." + f);
+            }
+        }
+        return settingVal;
+    }
     //
     //
     // User Session bits -- BEGIN
