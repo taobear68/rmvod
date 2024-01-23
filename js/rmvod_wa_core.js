@@ -2899,7 +2899,7 @@ class RMVodWebApp {
                         
                         var sessDetObj = {"userid":objIn['userid']}
                         sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": JSON.parse(objIn['metajson'])};
-                        sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":{"cookies":{}}};
+                        sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt'],"sessionjson":objIn['metajson']};
                         
                         
                         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
