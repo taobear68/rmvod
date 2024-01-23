@@ -4403,7 +4403,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             const cookieNm = 'opt_' + objIdIn;
             const cookieVal = document.getElementById(objIdIn).checked;
             ml.cc.setCookie(cookieNm,cookieVal,365);
-            ml.sessSettingSet(cookieNm,cookieVal);
+            ml.sessSettingSet(objIdIn,cookieVal);
             break;
         
         case 'listAction':
