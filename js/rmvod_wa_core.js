@@ -1259,6 +1259,7 @@ class RMVodWebApp {
             // artifact_source_uri cookie
             var currSrc = avpDE.currentSrc;
             wa.cc.setCookie('artifact_source_uri',currSrc,5);
+            wa.sessSettingSet('artifact_source_uri',currSrc);
             // Event to set Tab 0  as the active tab
             document.getElementById('RNWATabWidget-tabspan-0').click();  //  RNWATabWidget-tabspan-0
             // Populate the artifact details in the page header
@@ -2886,7 +2887,7 @@ class RMVodWebApp {
         var actSess = false
         var sessToken = this.cc.getCookie("clientid")
         // Try to load the activesession cookie
-        //try {
+        try {
             actSess = this.cc.getCookie("activesessiontf");
             if (actSess != "true") {
                 console.log("sessCookieOnLoad: Cookie activesessiontf appears to not be true. (" + actSess + ") setting it to false.");
@@ -2932,10 +2933,6 @@ class RMVodWebApp {
                     } else {
                         
                     }
-                
-                                    
-                    
-                    
                 }
                 var payloadObj = {"token":sessToken};
                 var endpoint = "/rmvod/api/session/verify";
@@ -2945,15 +2942,10 @@ class RMVodWebApp {
                 this.contCookieOnLoad();
             }
                 
-        //} catch (e) {
-            //console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
+        } catch (e) {
+            console.log("sessCookieOnLoad: Local session cookies aren't baked.  Revert to local session");
             //// If we don't have an active session or token, use the browser client ID and proceed 
-        //}
-        
-        // If we have an active session and token do an api call to verify the session and get back the user details
-        // If the user details come back OK, then set up the session locally
-        // if the user details don't come back OK, then clear the cookies and pop an alert to say that, and allow them to re-log-in
-        // If we don't have an active session or token, use the browser client ID and proceed 
+        }
     }
     
     // Handle "Resume Playback" cookie on load.
@@ -3046,7 +3038,8 @@ class RMVodWebApp {
         
         var intervalHandle = setInterval(cbFunc,delayMs);
         this.cc.setCookie('cont_play_sample_int_handle',intervalHandle,5);
-        this.sessSettingSet('cont_play_sample_int_handle',intervalHandle);this.sessSettingSet('cont_play_sample_int_handle',intervalHandle)
+        this.sessSettingSet('cont_play_sample_int_handle',intervalHandle);
+        //this.sessSettingSet('cont_play_sample_int_handle',intervalHandle);
         return intervalHandle;
     }
     // Clean-up the "resume playback" detail cookies on natural end of
@@ -3058,6 +3051,12 @@ class RMVodWebApp {
         this.cc.clearCookie('playback_offset');
         this.cc.clearCookie('cont_play_sample_int_handle');
         this.cc.clearCookie('play_aid');
+
+        //this.cc.clearCookie('artifact_source_uri');
+        //this.cc.clearCookie('playback_offset');
+        //this.cc.clearCookie('cont_play_sample_int_handle');
+        //this.cc.clearCookie('play_aid');
+
     }
     // Play the first episode of a tvseries -- needs the artifactid
     // of the tvseries artifact as an argument
@@ -3657,29 +3656,24 @@ class RMVodWebApp {
         }
     }
     sessSettingSet (nameIn,newValueIn) {
+        console.log("sessSettingSet - Setting " + nameIn + " to " + newValueIn);
         var cookieName = nameIn.replace("opt_","");
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
             //console.log("sessSettingSet - sessJson: " + sessJson);
             var sessObj = JSON.parse(sessJson);
             //console.log("sessSettingSet - sessObj: " + typeof sessObj);
-            
             //sessObj['sessiondetails']['sessionjson']['cookies'][cookieName] = newValueIn;
-            
-            
             var sjObj = JSON.parse(sessObj['userdetail']['metajson']);
             //console.log(sjObj);
             //console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
             //console.log(sjObj);
             sessObj['sessiondetails']['sessionjson'] = JSON.stringify(sjObj);
-            
-            
-            
-                        
             //console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']);
             document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
             //console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session);
+            
             // Do we want to set the cookie?  I mean... I guess so.  
             // Seems like we would leave some cruft behind after we 
             // logout or close the session... hmm
@@ -3689,6 +3683,8 @@ class RMVodWebApp {
             } catch (f) {
                 console.log("sessSettingGet - Could not set cookie" + cookieName + " to " + newValueIn + "." + f);
             }  
+            
+            
             this.sessSettingsPush();
         } catch (e) {
             console.log("sessSettingGet - Could not set sessiondata " + cookieName + " to " + newValueIn + "." + e);
@@ -3697,6 +3693,7 @@ class RMVodWebApp {
     sessSettingsPush () {
         var sessTF = this.cc.getCookie("activesessiontf");
         if (sessTF == "true") {
+            console.log("sessSettingsPush - We have a session, so we're going to try to push upstream.");
             var clientId = this.cc.getCookie("clientid");
             var sessToken = this.cc.getCookie("sessiontoken");
             if (clientId != sessToken) {
@@ -3704,10 +3701,11 @@ class RMVodWebApp {
                 var sessObj = JSON.parse(sessJson);
                 // API call to push updated cookies upstream
                 var cbFunc = function (objIn) {
-                    //console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
+                    console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
                 //var payloadObj = {"token": sessToken,"cookies":sessObj['sessiondetails']['sessionjson']['cookies']};
                 var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['userdetail']['metajson'])['cookies']};
+                console.log("sessSettingsPush - payloadObj: " + JSON.stringify(payloadObj));
                 var endpoint = "/rmvod/api/session/setcookies";
                 var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
             }
