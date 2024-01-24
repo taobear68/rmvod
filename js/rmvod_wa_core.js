@@ -974,7 +974,7 @@ class RMVodWebApp {
         } 
     }
     setPageTitle(titleStrIn){
-        console.log("Setting Title to " + titleStrIn);
+        console.log("setPageTitle - Setting Title to " + titleStrIn);
         document.title = titleStrIn;
     }
     // Returns a "likely unique" ID for this browser to be used in 
@@ -2973,11 +2973,14 @@ class RMVodWebApp {
                 playerDE.currentTime = wa.cc.getCookie('playback_offset');
                 
                 if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
+                    console.log("contCookieOnLoad.cbFunc - Player URI matches cookie.  Time to die.");
                     clearInterval(intervHandle);
                 } else {
                     if ((playerDE.currentSrc != "") & (wa.cc.getCookie('artifact_source_uri') == "")) {
                         wa.cc.setCookie('artifact_source_uri', playerDE.currentSrc,5);
+                        wa.sessSettingSet('artifact_source_uri', playerDE.currentSrc);
                         if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
+                            console.log("contCookieOnLoad.cbFunc - Player URI did not matche cookie.  Set cookie to match player: " + playerDE.currentSrc + ".  Time to die."));
                             clearInterval(intervHandle);
                         }
                     } else {
