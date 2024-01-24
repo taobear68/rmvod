@@ -3028,6 +3028,10 @@ class RMVodWebApp {
                 var currTime = parseInt(playerDE.currentTime);
                 var currSrc = playerDE.currentSrc;
                 
+                console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
+                console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
+                //console.log("");
+                
                 wa.cc.setCookie('artifact_source_uri',currSrc);
                 wa.cc.setCookie('playback_offset',currTime);
                 
