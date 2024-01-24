@@ -3676,7 +3676,8 @@ class RMVodWebApp {
             //console.log(typeof sjObj);
             sjObj['cookies'][cookieName] = newValueIn;
             //console.log(sjObj);
-            sessObj['sessiondetails']['sessionjson'] = JSON.stringify(sjObj);
+            //sessObj['sessiondetails']['sessionjson'] = JSON.stringify(sjObj);
+            sessObj['userdetail']['metajson'] = JSON.stringify(sjObj);
             //console.log("sessSettingSet - " + cookieName + ": " + sessObj['sessiondetails']['sessionjson']);
             document.getElementById('sessiondata').dataset.session = JSON.stringify(sessObj);
             //console.log("sessSettingSet - " + document.getElementById('sessiondata').dataset.session);
