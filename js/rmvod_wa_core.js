@@ -2980,7 +2980,7 @@ class RMVodWebApp {
                         wa.cc.setCookie('artifact_source_uri', playerDE.currentSrc,5);
                         wa.sessSettingSet('artifact_source_uri', playerDE.currentSrc);
                         if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
-                            console.log("contCookieOnLoad.cbFunc - Player URI did not matche cookie.  Set cookie to match player: " + playerDE.currentSrc + ".  Time to die."));
+                            console.log("contCookieOnLoad.cbFunc - Player URI did not matche cookie.  Set cookie to match player: " + playerDE.currentSrc + ".  Time to die.");
                             clearInterval(intervHandle);
                         }
                     } else {
