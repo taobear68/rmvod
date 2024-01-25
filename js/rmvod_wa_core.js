@@ -1143,6 +1143,8 @@ class RMVodWebApp {
     // resulting JSON in a dataset of a specific div
     apiFetchSiteStats(){
         console.log("RMVodWebApp.apiFetchSiteStats - BEGIN");
+        // this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':60,'weeks':8,'months':2}); 
+        var spDays = this.sse.ssOKRead('localcfg','sitestatsperiod')['days']
         var cbFunc = function (dataObjIn) {
             console.log("RMVodWebApp.apiFetchSiteStats.cbFunc - BEGIN");
             
@@ -1156,7 +1158,7 @@ class RMVodWebApp {
             
             wa.renderStatsMajIdCol('stats_majid_column');              
         }
-        const payloadObj = {};
+        const payloadObj = {'days':spDays};
         const endpoint = '/rmvod/api/site/stats/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }

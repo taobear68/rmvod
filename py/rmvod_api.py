@@ -3135,13 +3135,16 @@ class MediaLibraryDB:
         tmpRetObj['data'] = []
         
         return tmpRetObj
-    def getSiteStats(self):
+    def getSiteStats(self,perDaysIn):
         print("getSiteStats - BEGIN")
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSiteStats'
         tmpRetObj['params'] = []
         tmpRetObj['status']['success'] = False
         try:
+            assert type(perDaysIn) == type(1)
+            assert perDaysIn > 0
+            assert perDaysIn < 180
             print("getSiteStats - BEGIN try block")
             vldb = self.dbHandleConfigged()
             statsDict = vldb.getSiteStats(60)
@@ -3149,7 +3152,7 @@ class MediaLibraryDB:
             tmpRetObj['status']['success'] = True
             print("getSiteStats - END try block")
         except:
-            print("getSiteStats - BARF!")
+            print("getSiteStats - BARF!  perDaysIn: " + perDaysIn)
             tmpRetObj['status']['detail'] = "Could not fetch Site Statistics"
             tmpRetObj['status']['success'] = False
             tmpRetObj['data'] = []
@@ -4269,8 +4272,20 @@ def getApiConfig():
     
 @app.route('/site/stats/get',methods=['POST'])
 def getSiteStats():
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([])    
+    
     ml = MediaLibraryDB()
-    return json.dumps(ml.getSiteStats())
+    return json.dumps(ml.getSiteStats(dictIn['days']))
 
 @app.route('/artifact/tvseries/detail/fetch',methods=['POST'])
 def runOmdbApiUpdateTvseries():
