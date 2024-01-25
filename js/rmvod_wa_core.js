@@ -2857,7 +2857,8 @@ class RMVodWebApp {
         //var wa = new RMVodWebApp();
         var recLimitInt = 30;
         var sinceDTStr = "2023-02-01 00:00:01";
-        var clientId = this.cc.getCookie('clientid');
+        // var clientId = this.cc.getCookie('clientid');
+        var clientId = this.sessSettingGet('userid');
         var forceRefresh = true;
         
         var cbFunc = function (objIn) {
