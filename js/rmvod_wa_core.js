@@ -3664,7 +3664,7 @@ class RMVodWebApp {
                 var sessObj = JSON.parse(sessJson);
                 // API call to push updated cookies upstream
                 var cbFunc = function (objIn) {
-                    console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
+                    //console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
                 var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['userdetail']['metajson'])['cookies']};
                 //console.log("sessSettingsPush - payloadObj: " + JSON.stringify(payloadObj));
