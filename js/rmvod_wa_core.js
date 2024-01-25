@@ -3713,6 +3713,7 @@ class RMVodWebApp {
 
 function recsWrapper(sinceDtStrIn){
     //put a thobber in the recs tab
+    console.log("recsWrapper - BEGIN");
     document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
     var rec = new WMCWARecommend();
     rec.renderRecQuickSearchContainer();
