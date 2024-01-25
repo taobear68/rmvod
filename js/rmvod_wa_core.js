@@ -2922,6 +2922,7 @@ class RMVodWebApp {
                         
                         document.getElementById('sessionstart').style.display = "none";
                         document.getElementById('clockdisp').style.display = "block";
+                        document.getElementById('sessionno').style.display = "none";
                         document.getElementById('sessionyes').style.display = "block";   
                         
                         var wa = new RMVodWebApp();
