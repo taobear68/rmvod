@@ -3601,6 +3601,8 @@ class RMVodWebApp {
     sessGetUserId() {
             var sessJson = document.getElementById('sessiondata').dataset.session;
             var sessObj = JSON.parse(sessJson);
+            var userID = sessObj['userid'];
+            console.log("sessGetUserId - userID = " + userID );
             return sessObj['userid'];
     }
     sessSettingSetBulk (cookiesObjIn) {
