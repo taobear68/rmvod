@@ -223,7 +223,7 @@ class CookieCrisp {
     }
     setCookie(cname, cvalue, exdays) {
         const d = new Date();
-        console.log("CookieCrisp.setCookie - Setting " + cname + " to " + cvalue);
+        //console.log("CookieCrisp.setCookie - Setting " + cname + " to " + cvalue);
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
         let expires = "expires="+ d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
@@ -892,7 +892,7 @@ class RMVodWebApp {
         console.log('bid: ' + bid);
         
         // Set local copy of the API's configuration
-        console.log('Attempting to fetch API Config values');
+        console.log('initStorage - Attempting to fetch API Config values');
         var wa = new RMVodWebApp();
         var cbFunc = function (objIn) {
             // console.log('apicfg => storing ' + JSON.stringify(objIn));
@@ -914,7 +914,7 @@ class RMVodWebApp {
         this.postJSVer("0.9.2");
     }
     getApiConfigValue(majorKeyIn,minorKeyIn){
-        console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
+        //console.log('getApiConfigValue: ' + majorKeyIn + ', ' + minorKeyIn);
         var retval;
         //try {
             retval = this.sse.ssRead('apicfg')[majorKeyIn][minorKeyIn];
@@ -2857,7 +2857,6 @@ class RMVodWebApp {
         //var wa = new RMVodWebApp();
         var recLimitInt = 30;
         var sinceDTStr = "2023-02-01 00:00:01";
-        // var clientId = this.cc.getCookie('clientid');
         var clientId = this.sessGetUserId();
         var forceRefresh = true;
         
@@ -2901,12 +2900,12 @@ class RMVodWebApp {
                 this.cc.setCookie("sessiontoken",this.cc.getCookie("clientid"),365);
                 sessToken = this.cc.getCookie("sessiontoken");
             }
-            console.log("sessCookieOnLoad: actSess: " + actSess + ", sessToken: " + sessToken);
+            //console.log("sessCookieOnLoad: actSess: " + actSess + ", sessToken: " + sessToken);
             // If we have an active session and token do an api call to verify the session and get back the user details
             if (actSess == "true") {
                 
                 var cbFunc = function (objIn) {
-                    console.log("sessCookieOnLoad.cbFunc: Got back data: " + JSON.stringify(objIn));
+                    //console.log("sessCookieOnLoad.cbFunc: Got back data: " + JSON.stringify(objIn));
                     // If the user details come back OK, then set up the session locally
                     // if the user details don't come back OK, then clear the cookies and pop an alert to say that, and allow them to re-log-in
                     // Populate sessiondata div, set cookies, and 
@@ -2930,16 +2929,10 @@ class RMVodWebApp {
                         
                         wa.contCookieOnLoad();
                         
-                        
-                        //console.log("switchboard.firstthing - About to fire off recsWrapper...");
                         recsWrapper('2023-10-01 11:39:05');
-                        //console.log("switchboard.firstthing - ...just got back from recsWrapper...");
-                        ////
+                        
                         wa.renderStatsContainer('sitestatsouter');
             
-            
-                                    
-                        
                     } else {
                         
                     }
@@ -2983,14 +2976,14 @@ class RMVodWebApp {
                 playerDE.currentTime = wa.cc.getCookie('playback_offset');
                 
                 if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
-                    console.log("contCookieOnLoad.cbFunc - Player URI matches cookie.  Time to die.");
+                    //console.log("contCookieOnLoad.cbFunc - Player URI matches cookie.  Time to die.");
                     clearInterval(intervHandle);
                 } else {
                     if ((playerDE.currentSrc != "") & (wa.cc.getCookie('artifact_source_uri') == "")) {
                         wa.cc.setCookie('artifact_source_uri', playerDE.currentSrc,5);
                         wa.sessSettingSet('artifact_source_uri', playerDE.currentSrc);
                         if (playerDE.currentSrc == wa.cc.getCookie('artifact_source_uri')) {
-                            console.log("contCookieOnLoad.cbFunc - Player URI did not matche cookie.  Set cookie to match player: " + playerDE.currentSrc + ".  Time to die.");
+                            //console.log("contCookieOnLoad.cbFunc - Player URI did not matche cookie.  Set cookie to match player: " + playerDE.currentSrc + ".  Time to die.");
                             clearInterval(intervHandle);
                         }
                     } else {
@@ -3041,8 +3034,8 @@ class RMVodWebApp {
                 var currTime = parseInt(playerDE.currentTime);
                 var currSrc = playerDE.currentSrc;
                 
-                console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
-                console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
+                //console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
+                //console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
                 //console.log("");
                 
                 wa.cc.setCookie('artifact_source_uri',currSrc);
@@ -3097,7 +3090,7 @@ class RMVodWebApp {
     // artifact.  Episode list is displayed reusing the code for the 
     // episodes under a series in the main list.
     getEpiListForSeriesSeason(deIdIn){
-        console.log('getEpiListForSeriesSeason: ' + deIdIn);
+        //console.log('getEpiListForSeriesSeason: ' + deIdIn);
         var de = document.getElementById(deIdIn);
         var deetDE = document.getElementById('artifactDetailDiv');
         var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
@@ -3130,7 +3123,7 @@ class RMVodWebApp {
     //
     // Render the skeleton for the Site Statistics container
     renderStatsContainer(targetDEIdIn){
-        console.log("renderStatsContainer - targetDEIdIn: " + targetDEIdIn);
+        //console.log("renderStatsContainer - targetDEIdIn: " + targetDEIdIn);
         var contentHtmlStr = "";
         contentHtmlStr = '\
             <div style="width:1150px;height:100%;display:block;">\
@@ -3173,9 +3166,9 @@ class RMVodWebApp {
     getStatsPeriodAsString(unitStrIn){
         var periodValueString = "";
         var pvObj = this.sse.ssOKRead('localcfg','sitestatsperiod'); //[unitStrIn].toString();
-        console.log(JSON.stringify(pvObj));
+        //console.log(JSON.stringify(pvObj));
         periodValueString = pvObj[unitStrIn].toString();
-        console.log('periodValueString: ' + periodValueString);
+        //console.log('periodValueString: ' + periodValueString);
         return periodValueString;
     }
     // Render the "Major Type" colum of the stats display, with majtype 
@@ -3362,7 +3355,7 @@ class RMVodWebApp {
      
         var fieldDisplayOrderAry = ['title','seasons','episodes','tags','synopsis','primcast','writer','director','runmins','relyear','artifactid','majtype','filepath','file','eidridstring','imdbid','arbmeta','artifactid','poster'];
         
-        console.log("renderStatsTitleDetailsCol: " + artiIdIn);
+        //console.log("renderStatsTitleDetailsCol: " + artiIdIn);
         var targetDEIdIn = "stats_title_detail_column";
         
         document.getElementById(targetDEIdIn).innerHTML = "";
@@ -3381,7 +3374,7 @@ class RMVodWebApp {
             var tmpOuterDiv = document.createElement("div");
             tmpOuterDiv.style.width = "100%";
             
-            console.log(JSON.stringify(dObjIn));
+            //console.log(JSON.stringify(dObjIn));
             var artiObj = dObjIn['data'][0];
             
             var actionDiv = document.createElement('div');
@@ -3484,7 +3477,7 @@ class RMVodWebApp {
         
         var cbFunc = function (objIn) {
             try {
-                console.log("doLoginGoButton.cbFunc: " + JSON.stringify(objIn));
+                //console.log("doLoginGoButton.cbFunc: " + JSON.stringify(objIn));
                 var sessDetObj = {"userid":objIn['userid']}
                 sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": objIn['metajson']};
                 sessDetObj['sessiondetails'] = {"sessiontoken": objIn['sessiontoken'], "sessionexpiredt": objIn['sessionexpiredt']};
@@ -3515,9 +3508,9 @@ class RMVodWebApp {
             }
         }
         var payloadObj = {"credu":unm,"credp":pw};
-        console.log("doLoginGoButton - payloadObj: " + JSON.stringify(payloadObj));
+        //console.log("doLoginGoButton - payloadObj: " + JSON.stringify(payloadObj));
         var endpoint = "/rmvod/api/session/start";
-        console.log("doLoginGoButton - endpoint: " + endpoint);
+        //console.log("doLoginGoButton - endpoint: " + endpoint);
         var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
     doLogoutButton () {
@@ -3544,7 +3537,7 @@ class RMVodWebApp {
     }
     doCloseSessButton() {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
-        console.log("doCloseSessButton: START");
+        //console.log("doCloseSessButton: START");
         // Do API call to close the session
         var cbFunc = function (objIn) {
             try {
@@ -3561,15 +3554,15 @@ class RMVodWebApp {
         var sessObj = {};
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
-            console.log("doCloseSessButton: JSON = " + sessJson);
+            //console.log("doCloseSessButton: JSON = " + sessJson);
             var sessObj = JSON.parse(sessJson);
             if (sessObj['sessiondetails']['sessiontoken'] != sessObj['userid']) {
                 // Go ahead and try to close the session
-                console.log("doCloseSessButton: About to do API call: " + sessObj['sessiondetails']['sessiontoken']);
+                //console.log("doCloseSessButton: About to do API call: " + sessObj['sessiondetails']['sessiontoken']);
                 var payloadObj = {"token": sessObj['sessiondetails']['sessiontoken']};
                 var endpoint = "/rmvod/api/session/end";
                 var userObj = this.genericApiCall(payloadObj,endpoint,cbFunc);
-                console.log("doCloseSessButton: Got past the API call");
+                //console.log("doCloseSessButton: Got past the API call");
                 
                 
             } else {
@@ -3619,7 +3612,7 @@ class RMVodWebApp {
     }
     sessSettingSetBulk (cookiesObjIn) {
         try {
-            console.log("sessSettingSetBulk - Setting cookies based on " + JSON.stringify(cookiesObjIn));
+            //console.log("sessSettingSetBulk - Setting cookies based on " + JSON.stringify(cookiesObjIn));
             var keysList = Object.keys(cookiesObjIn);
             for (var i = 0; i < keysList.length; i++ ){
                 this.sessSettingSet(keysList[i],cookiesObjIn[keysList[i]]);
@@ -3629,7 +3622,7 @@ class RMVodWebApp {
         }
     }
     sessSettingSet (nameIn,newValueIn) {
-        console.log("sessSettingSet - Setting " + nameIn + " to " + newValueIn);
+        //console.log("sessSettingSet - Setting " + nameIn + " to " + newValueIn);
         var cookieName = nameIn.replace("opt_","");
         try {
             var sessJson = document.getElementById('sessiondata').dataset.session;
@@ -3663,7 +3656,7 @@ class RMVodWebApp {
     sessSettingsPush () {
         var sessTF = this.cc.getCookie("activesessiontf");
         if (sessTF == "true") {
-            console.log("sessSettingsPush - We have a session, so we're going to try to push upstream.");
+            //console.log("sessSettingsPush - We have a session, so we're going to try to push upstream.");
             var clientId = this.cc.getCookie("clientid");
             var sessToken = this.cc.getCookie("sessiontoken");
             if (clientId != sessToken) {
@@ -3674,7 +3667,7 @@ class RMVodWebApp {
                     console.log("sessSettingsPush.cbfunc - Got back " + JSON.stringify(objIn));
                 };
                 var payloadObj = {"token": sessToken,"cookies":JSON.parse(sessObj['userdetail']['metajson'])['cookies']};
-                console.log("sessSettingsPush - payloadObj: " + JSON.stringify(payloadObj));
+                //console.log("sessSettingsPush - payloadObj: " + JSON.stringify(payloadObj));
                 var endpoint = "/rmvod/api/session/setcookies";
                 var result = this.genericApiCall(payloadObj,endpoint,cbFunc);                
             }
@@ -3688,7 +3681,7 @@ class RMVodWebApp {
             var sessJson = document.getElementById('sessiondata').dataset.session;
             var sessObj = JSON.parse(sessJson);
             settingVal = sessObj['userdetail']['metajson']['cookies'][nameIn];
-            console.log("sessSettingGet - " + nameIn + ": " + settingVal);
+            //console.log("sessSettingGet - " + nameIn + ": " + settingVal);
         } catch (e) {
             console.log("sessSettingGet - Could not get " + nameIn + " from sessiondata." + e);
             try {
@@ -3724,7 +3717,7 @@ class RMVodWebApp {
 
 function recsWrapper(sinceDtStrIn){
     //put a thobber in the recs tab
-    console.log("recsWrapper - BEGIN");
+    //console.log("recsWrapper - BEGIN");
     document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
     var rec = new WMCWARecommend();
     rec.renderRecQuickSearchContainer();
@@ -3732,28 +3725,22 @@ function recsWrapper(sinceDtStrIn){
     
     
     var wa = new RMVodWebApp();
-    // var clientId = wa.cc.getCookie('clientid');
     var clientId = wa.sessGetUserId();
     console.log("recsWrapper - clientId: " + clientId);
-    //var sinceDTStr = "2023-02-01 00:00:01";
     var sinceDTStr = sinceDtStrIn;
     var recLimitInt = 30;
     var cbFunc = function (objIn) {
         var rec = new WMCWARecommend();
-        rec.targetParentElementId = 'rmvodrecsmastercontouter';  //rmvodrecsmastercontouter rmvodmasterdiv
-        //rec.recSrcData = objIn;
+        rec.targetParentElementId = 'rmvodrecsmastercontouter';
         rec.setRecSrcData(objIn);
-        //rec.renderRecQuickSearchContainer();
         rec.popMasterDiv();
         rec.qsRecGenerateLinkList(objIn); 
-        console.log("recsWrapper.cbFunc - DONE.");
+        //console.log("recsWrapper.cbFunc - DONE.");
         
     }
     var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
-    console.log("recsWrapper - payloadObj: " + JSON.stringify(payloadObj));
+    //console.log("recsWrapper - payloadObj: " + JSON.stringify(payloadObj));
     var endpoint = '/rmvod/api/artifact/recs/get';
-    //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-    //const endpoint = apiBase + '/artifact/recs/get';
     var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
 }
 function deetShow(eventObjIn){
@@ -3769,7 +3756,7 @@ function recArtiDeetSeasonEpisodes(selectDEIdIn){
     var de = document.getElementById(selectDEIdIn);
     var deetDE = document.getElementById('artifactDetailDiv');
     var artiObj = JSON.parse(deetDE.dataset.artifact)[0];
-    console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(selectDEIdIn).value);
+    //console.log("recArtiDeetSeasonEpisodes: " + document.getElementById(selectDEIdIn).value);
     document.getElementById('rec-series-ep-list').innerHTML = "Show episode list for " + artiObj['title'] + " season " + String(de.value);
 }
 
@@ -3838,7 +3825,7 @@ class WMCWARecommend {
                 mtClass = rtKeys[j];
                 recClass = roKeys[i];
                 if (recsObj[roKeys[i]][rtKeys[j]].length < 1) {
-                    console.log('recsObj[' + roKeys[i] + '][' + rtKeys[j] + '] has no elements.  Skipping.')
+                    console.log('popMasterDiv - recsObj[' + roKeys[i] + '][' + rtKeys[j] + '] has no elements.  Skipping.')
                     continue;
                 }
                 rowCont = document.createElement('div');
@@ -4258,31 +4245,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
             
-            console.log("switchboard.firstthing - About to fire off sessCookieOnLoad...");
             ml.sessCookieOnLoad();
-            console.log("switchboard.firstthing - ...just got back from sessCookieOnLoad...");
             
-            //ml.contCookieOnLoad();
-            console.log("switchboard.firstthing - About to fire off resetPageTitle...");
             ml.resetPageTitle();
-            console.log("switchboard.firstthing - ...just got back from resetPageTitle...");
-            
-            ////
-            //console.log("switchboard.firstthing - About to fire off recsWrapper...");
-            //recsWrapper('2023-10-01 11:39:05');
-            //console.log("switchboard.firstthing - ...just got back from recsWrapper...");
-            ////
-            //ml.renderStatsContainer('sitestatsouter');
-            
-            
-            
-            
-            ////ml.renderStatsContainer('statstabbody');
-            //ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
-            
-            //ml.apiFetchSiteStats();
-            
-            
             
             break;
 
@@ -4428,7 +4393,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;
             
         case 'recqspopsidelist':
-            console.log('recqspopsidelist: ' + objIdIn);
+            //console.log('recqspopsidelist: ' + objIdIn);
             var rec = new WMCWARecommend();
             var popList = rec.qsRecCommonPopSideList(objIdIn);
             var slDiv = ml.renderSALByIdList(popList);
@@ -4437,20 +4402,15 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;
             
         case 'statpopsidelist':
-            console.log('statpopsidelist: ' + objIdIn);
-            //var rec = new WMCWARecommend();
-            //var popList = rec.qsRecCommonPopSideList(objIdIn);
+            //console.log('statpopsidelist: ' + objIdIn);
             var tmpArtiListObj = [{"artifactid":"","majtype":"","title":""}];
             var tmpDEID = document.getElementById('sitestatsdatastore');
             tmpArtiListObj[0] = JSON.parse(tmpDEID.dataset.sitestats)['artifacts'][objIdIn];
         
-            //tmpArtiListObj[0]['artifactid'] = "";
-            //tmpArtiListObj[0]['majtype'] = "";
-            //tmpArtiListObj[0]['title'] = "";
             var slDiv = ml.renderSALByIdList(tmpArtiListObj);
             document.getElementById('sideartilistwidget').innerHTML = '';
             document.getElementById('sideartilistwidget').appendChild(slDiv);
-            document.getElementById('RNWATabWidget-tabspan-1').click();  //  RNWATabWidget-tabspan-0
+            document.getElementById('RNWATabWidget-tabspan-1').click();
             break;            
             
         case 'popepideets':
@@ -4468,11 +4428,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;;
         case "renderStatsTags":
             ml.renderStatsTagsCol(objIdIn,'stats_tags_column');
-            console.log(actionIn + ": " + objIdIn);
+            //console.log(actionIn + ": " + objIdIn);
             break;;
         case "renderStatsTitles":
             ml.renderStatsTitlesCol(objIdIn,argObjIn['tag'],'stats_titles_column');
-            console.log(actionIn + ": " + objIdIn + ", " + argObjIn['tag']);
+            //console.log(actionIn + ": " + objIdIn + ", " + argObjIn['tag']);
             break;;
         case "renderStatsTitleDeets":
             ml.renderStatsTitleDetailsCol(objIdIn);
