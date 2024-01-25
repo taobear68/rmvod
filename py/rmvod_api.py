@@ -1646,10 +1646,11 @@ LIMIT 1"""
         return retval
     def getSiteStats(self,intervalIntIn):  ####    NEW!!   WORK IN PROGRESS!!!
         retval = None
+        print("VodLibDB.getSiteStats - START")
         topCnt = 10;
         tmpTagsList = []
         retDict = {"artifacts":{},"listings":{}}
-        print("VodLibDB.getSiteStats - intervalIntIn: " + intervalIntIn)
+        #print("VodLibDB.getSiteStats - intervalIntIn: " + intervalIntIn)
         # {
             # "artifacts":{
                 # "457e6c3c-591e-46ab-8b75-c7ed31d0cfbc":{"title":"Tim Minchin: Back","artifactid":"457e6c3c-591e-46ab-8b75-c7ed31d0cfbc","majtype":"movie"},
@@ -3135,16 +3136,20 @@ class MediaLibraryDB:
         
         return tmpRetObj
     def getSiteStats(self):
+        print("getSiteStats - BEGIN")
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getSiteStats'
         tmpRetObj['params'] = []
         tmpRetObj['status']['success'] = False
         try:
+            print("getSiteStats - BEGIN try block")
             vldb = self.dbHandleConfigged()
             statsDict = vldb.getSiteStats(60)
             tmpRetObj['data'] = statsDict
             tmpRetObj['status']['success'] = True
+            print("getSiteStats - END try block")
         except:
+            print("getSiteStats - BARF!")
             tmpRetObj['status']['detail'] = "Could not fetch Site Statistics"
             tmpRetObj['status']['success'] = False
             tmpRetObj['data'] = []
