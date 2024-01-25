@@ -2929,6 +2929,17 @@ class RMVodWebApp {
                         wa.sessSettingSetBulk(JSON.parse(objIn['metajson'])['cookies']); 
                         
                         wa.contCookieOnLoad();
+                        
+                        
+                        //console.log("switchboard.firstthing - About to fire off recsWrapper...");
+                        recsWrapper('2023-10-01 11:39:05');
+                        //console.log("switchboard.firstthing - ...just got back from recsWrapper...");
+                        ////
+                        wa.renderStatsContainer('sitestatsouter');
+            
+            
+                                    
+                        
                     } else {
                         
                     }
@@ -3717,6 +3728,9 @@ function recsWrapper(sinceDtStrIn){
     document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
     var rec = new WMCWARecommend();
     rec.renderRecQuickSearchContainer();
+    
+    
+    
     var wa = new RMVodWebApp();
     // var clientId = wa.cc.getCookie('clientid');
     var clientId = wa.sessGetUserId();
@@ -4253,12 +4267,16 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.resetPageTitle();
             console.log("switchboard.firstthing - ...just got back from resetPageTitle...");
             
-            //
-            console.log("switchboard.firstthing - About to fire off recsWrapper...");
-            recsWrapper('2023-10-01 11:39:05');
-            console.log("switchboard.firstthing - ...just got back from recsWrapper...");
-            //
-            ml.renderStatsContainer('sitestatsouter');
+            ////
+            //console.log("switchboard.firstthing - About to fire off recsWrapper...");
+            //recsWrapper('2023-10-01 11:39:05');
+            //console.log("switchboard.firstthing - ...just got back from recsWrapper...");
+            ////
+            //ml.renderStatsContainer('sitestatsouter');
+            
+            
+            
+            
             ////ml.renderStatsContainer('statstabbody');
             //ml.renderStatsMajIdCol('stats_majid_column');            //sitestatsouter
             
