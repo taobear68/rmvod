@@ -3709,8 +3709,10 @@ function recsWrapper(sinceDtStrIn){
     var rec = new WMCWARecommend();
     rec.renderRecQuickSearchContainer();
     var wa = new RMVodWebApp();
-    var clientId = wa.cc.getCookie('clientid')
-    var sinceDTStr = "2023-02-01 00:00:01";
+    // var clientId = wa.cc.getCookie('clientid');
+    var clientId = this.sessSettingGet('userid');
+    //var sinceDTStr = "2023-02-01 00:00:01";
+    var sinceDTStr = sinceDtStrIn;
     var recLimitInt = 30;
     var cbFunc = function (objIn) {
         var rec = new WMCWARecommend();
@@ -4237,7 +4239,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.resetPageTitle();
             
             //
-            recsWrapper('2023-05-25 11:39:05');
+            recsWrapper('2023-10-01 11:39:05');
             //
             ml.renderStatsContainer('sitestatsouter');
             ////ml.renderStatsContainer('statstabbody');
