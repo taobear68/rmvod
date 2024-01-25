@@ -860,7 +860,8 @@ class RMVodWebApp {
         this.sse.ssOKWrite('localcfg','apiepblobget','blob/get');    // API Endpoint - Single Object Fetch
         
         this.sse.ssOKWrite('localcfg','rowsbgc',['#444444','#0c0c0c']); 
-        this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':180,'weeks':26,'months':6}); 
+        //this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':180,'weeks':26,'months':6}); 
+        this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':60,'weeks':8,'months':2}); 
         
         
         // This needs to happen later due to API Config fetch
