@@ -4251,7 +4251,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.resetPageTitle();
             
             //
+            console.log("switchboard.firstthing - About to fire off recsWrapper...");
             recsWrapper('2023-10-01 11:39:05');
+            console.log("switchboard.firstthing - ...just got back from recsWrapper...");
             //
             ml.renderStatsContainer('sitestatsouter');
             ////ml.renderStatsContainer('statstabbody');
