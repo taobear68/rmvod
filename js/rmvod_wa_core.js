@@ -2858,7 +2858,7 @@ class RMVodWebApp {
         var recLimitInt = 30;
         var sinceDTStr = "2023-02-01 00:00:01";
         // var clientId = this.cc.getCookie('clientid');
-        var clientId = this.sessSettingGet('userid');
+        var clientId = this.sessGetUserId();
         var forceRefresh = true;
         
         var cbFunc = function (objIn) {
@@ -3598,6 +3598,11 @@ class RMVodWebApp {
         htmlStr += '</div>';            
         document.getElementById('headerblock3').innerHTML = htmlStr;
     }        
+    sessGetUserId() {
+            var sessJson = document.getElementById('sessiondata').dataset.session;
+            var sessObj = JSON.parse(sessJson);
+            return sessObj['userid'];
+    }
     sessSettingSetBulk (cookiesObjIn) {
         try {
             console.log("sessSettingSetBulk - Setting cookies based on " + JSON.stringify(cookiesObjIn));
@@ -3710,7 +3715,7 @@ function recsWrapper(sinceDtStrIn){
     rec.renderRecQuickSearchContainer();
     var wa = new RMVodWebApp();
     // var clientId = wa.cc.getCookie('clientid');
-    var clientId = this.sessSettingGet('userid');
+    var clientId = wa.sessGetUserId();
     //var sinceDTStr = "2023-02-01 00:00:01";
     var sinceDTStr = sinceDtStrIn;
     var recLimitInt = 30;
