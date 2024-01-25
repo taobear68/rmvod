@@ -4247,8 +4247,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.sessCookieOnLoad();
             
             //ml.contCookieOnLoad();
-            
+            console.log("switchboard.firstthing - About to fire off resetPageTitle...");
             ml.resetPageTitle();
+            console.log("switchboard.firstthing - ...just got back from  resetPageTitle...");
             
             //
             console.log("switchboard.firstthing - About to fire off recsWrapper...");
