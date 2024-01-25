@@ -1142,13 +1142,17 @@ class RMVodWebApp {
     // Retrieves a copy of the current "site statistics" and stores
     // resulting JSON in a dataset of a specific div
     apiFetchSiteStats(){
+        console.log("RMVodWebApp.apiFetchSiteStats - BEGIN");
         var cbFunc = function (dataObjIn) {
+            console.log("RMVodWebApp.apiFetchSiteStats.cbFunc - BEGIN");
             
             var wa = new RMVodWebApp();
 
             wa.renderStatsContainer('sitestatsouter');
             var dsDiv = document.getElementById("sitestatsdatastore");
             dsDiv.dataset.sitestats = JSON.stringify(dataObjIn['data']);
+            
+            console.log("RMVodWebApp.apiFetchSiteStats.cbFunc - dsDiv.dataset.sitestats: " + dsDiv.dataset.sitestats);
             
             wa.renderStatsMajIdCol('stats_majid_column');              
         }
