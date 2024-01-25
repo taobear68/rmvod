@@ -1649,6 +1649,7 @@ LIMIT 1"""
         topCnt = 10;
         tmpTagsList = []
         retDict = {"artifacts":{},"listings":{}}
+        print("VodLibDB.getSiteStats - intervalIntIn: " + intervalIntIn)
         # {
             # "artifacts":{
                 # "457e6c3c-591e-46ab-8b75-c7ed31d0cfbc":{"title":"Tim Minchin: Back","artifactid":"457e6c3c-591e-46ab-8b75-c7ed31d0cfbc","majtype":"movie"},
@@ -1732,6 +1733,7 @@ LIMIT 1"""
 FROM artifacts 
 GROUP BY 1 
 ORDER BY 1 """
+        print("VodLibDB.getSiteStats - majtypeCntSql: " + majtypeCntSql)
         rowsTuple = self._stdRead(majtypeCntSql)
         majtypeList = []
         for rowTuple in rowsTuple:
@@ -1750,6 +1752,7 @@ AND a. majtype = 'movie'
 GROUP BY 1 
 ORDER BY 2 DESC 
 LIMIT """ + str(topCnt) + """ """
+        print("VodLibDB.getSiteStats - movieTagsSQL: " + movieTagsSQL)
         rowsTuple = self._stdRead(movieTagsSQL)
         for rowTuple in rowsTuple:
             retDict["listings"]["movie"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
@@ -1769,6 +1772,8 @@ AND t.tag = '""" + tagName + """'
 GROUP BY 1 
 ORDER BY 2 DESC 
 LIMIT """ + str(topCnt) + """  """
+            print("VodLibDB.getSiteStats - movieTitlesByTagSQL: " + movieTitlesByTagSQL)
+
             rowsTuple = self._stdRead(movieTitlesByTagSQL)
             for rowTuple in rowsTuple:
                 retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"movie","count":rowTuple[2]}
@@ -1792,6 +1797,7 @@ GROUP BY 1
 ORDER BY 2 DESC 
 LIMIT """ + str(topCnt) + """ """
         rowsTuple = self._stdRead(tvseriesTagsSQL)
+        print("VodLibDB.getSiteStats - tvseriesTagsSQL: " + tvseriesTagsSQL)
         for rowTuple in rowsTuple:
             retDict["listings"]["tvseries"]["tags"][rowTuple[0]] = {"count":rowTuple[1],"artifacts":[]}
             tmpTagsList.append(rowTuple[0])
@@ -1811,6 +1817,7 @@ AND t.tag = '""" + tagName + """'
 GROUP BY 1
 ORDER BY 3 DESC
 LIMIT """ + str(topCnt) + """  """
+            print("VodLibDB.getSiteStats - tvseriesTitlesByTagSQL: " + tvseriesTitlesByTagSQL)
             rowsTuple = self._stdRead(tvseriesTitlesByTagSQL)
             for rowTuple in rowsTuple:
                 retDict['artifacts'][rowTuple[1]] = {"title":rowTuple[0],"artifactid":rowTuple[1],"majtype":"tvseries","count":rowTuple[2]}
