@@ -3134,7 +3134,7 @@ class MediaLibraryDB:
         tmpRetObj['status']['success'] = False
         try:
             vldb = self.dbHandleConfigged()
-            statsDict = vldb.getSiteStats(180)
+            statsDict = vldb.getSiteStats(90)
             tmpRetObj['data'] = statsDict
             tmpRetObj['status']['success'] = True
         except:
