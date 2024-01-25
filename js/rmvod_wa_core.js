@@ -3485,6 +3485,7 @@ class RMVodWebApp {
                 document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
                 
                 document.getElementById('sessionstart').style.display = "none";
+                document.getElementById('sessionno').style.display = "none";
                 document.getElementById('clockdisp').style.display = "block";
                 document.getElementById('sessionyes').style.display = "block";    
                 
