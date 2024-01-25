@@ -3183,6 +3183,9 @@ class RMVodWebApp {
     // set will be appended as a child.
     renderStatsMajIdCol(targetDEIdIn){
         var dObj = this.fetchLocalStatsData();
+        if (dObj.length == 0) {
+            throw new Error('renderStatsMajIdCol - No local Stats data.');
+        }
         console.log(targetDEIdIn);
         console.log(dObj['listings']['movie']['count']);
         var mtAry = Object.keys(dObj['listings']);
