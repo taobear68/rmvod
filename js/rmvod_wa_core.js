@@ -3719,6 +3719,7 @@ function recsWrapper(sinceDtStrIn){
     var wa = new RMVodWebApp();
     // var clientId = wa.cc.getCookie('clientid');
     var clientId = wa.sessGetUserId();
+    console.log("recsWrapper - clientId: " + clientId);
     //var sinceDTStr = "2023-02-01 00:00:01";
     var sinceDTStr = sinceDtStrIn;
     var recLimitInt = 30;
@@ -3730,9 +3731,11 @@ function recsWrapper(sinceDtStrIn){
         //rec.renderRecQuickSearchContainer();
         rec.popMasterDiv();
         rec.qsRecGenerateLinkList(objIn); 
+        console.log("recsWrapper.cbFunc - DONE.");
         
     }
     var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
+    console.log("recsWrapper - payloadObj: " + JSON.stringify(payloadObj));
     var endpoint = '/rmvod/api/artifact/recs/get';
     //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
     //const endpoint = apiBase + '/artifact/recs/get';
