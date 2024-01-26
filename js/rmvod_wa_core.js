@@ -1169,13 +1169,13 @@ class RMVodWebApp {
     apiFetchUserRecentEpisodes(){
         var clientid = this.sessGetUserId();
         var cbFunc = function(objIn) {
-            console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
+            //console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
             var dataDE = document.getElementById('recentepisodesdata');
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
             var tblDiv = document.createElement('div');
             for (var row in objIn['data']) {
-                console.log(JSON.stringify(row));
+                //console.log(JSON.stringify(row));
                 // Row Container
                 var rowDiv = document.createElement('div');
                 rowDiv.style.display = "block";
