@@ -1186,7 +1186,7 @@ class RMVodWebApp {
                 cellDiv1.style.display = "inline-flex";
                 cellDiv1.style.width = colWidthPct[0];
                 // cellDiv1.innerText = objIn['data'][row]['seriestitle']
-                cellDiv1.innerHTML = "<span onclick=\"switchboard('statpopsidelist','" + objIn['data'][row]['serieseartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                cellDiv1.innerHTML = "<span onclick=\"switchboard('statpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
