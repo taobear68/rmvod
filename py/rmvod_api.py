@@ -1857,7 +1857,10 @@ LIMIT 30"""
         for rowTuple in rowsTuple:
             retDict = {};
             for colLbl in colList:
-                retDict[colLbl] = rowTuple[colList.index(colLbl)]
+                if colLbl == "reqtime":
+                    retDict[colLbl] = rowTuple[colList.index(colLbl)].strftime('%Y-%m-%d %H:%M:%S')
+                else:
+                    retDict[colLbl] = rowTuple[colList.index(colLbl)]
             retList.append(retDict)
         pass
         return retList
