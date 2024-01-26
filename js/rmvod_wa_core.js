@@ -1186,7 +1186,7 @@ class RMVodWebApp {
                 cellDiv1.style.display = "inline-flex";
                 cellDiv1.style.width = colWidthPct[0];
                 // cellDiv1.innerText = objIn['data'][row]['seriestitle']
-                cellDiv1.innerHTML = "<span onclick=\"switchboard('statpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                cellDiv1.innerHTML = "<span onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
@@ -1234,6 +1234,7 @@ class RMVodWebApp {
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);        
         
     }
+    
     // Retrieves a fresh copy of the "tags" list
     // Stores result in Session Storage
     apiFetchTagsList(){ //UPDATED FOR NEW RETURN OBJECT MODEL
@@ -1619,6 +1620,7 @@ class RMVodWebApp {
         const payloadObj = {'artifactid':artiIdIn};
         this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
+    
     // Execute a single-factor artifact search based on the value
     // in the search widget most recently changed.
     // Performs DOM updates directly.
@@ -1748,6 +1750,25 @@ class RMVodWebApp {
                 //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
                 //endpoint = apiBase + '/titleidlist/get';
                 break;
+            //case "artifactid":
+                //cbFunc = function (dataObjIn){
+                    //var objIn = dataObjIn['data'];
+                    //var wa = new RMVodWebApp();
+                    //var artiTitleIdList = wa.sse.ssRead('titleidlist');
+                    //if (objIn.length > 0) {
+                        //var tmpDiv = wa.renderSALByIdList(objIn);
+                        //document.getElementById('sideartilistwidget').innerHTML = '';
+                        //document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+                        
+                        //wa.dispLastSrchFactors();     
+                    //}
+                //}
+                //if (srchValObjIn[factorStrIn].length > 0){
+                    //payloadObj = {'whereclause':"artifactid = '" + srchValObjIn['artifactid'] + "'"};
+                //}
+                //endpoint = "/rmvod/api/titleidlist/get";
+                //break;
+                
             default:
                 console.log("execSearchSingleFactor fell through: ", factorStrIn, JSON.stringify(srchValObjIn));
         }
@@ -4513,7 +4534,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             document.getElementById('sideartilistwidget').innerHTML = '';
             document.getElementById('sideartilistwidget').appendChild(slDiv);
             document.getElementById('RNWATabWidget-tabspan-1').click();
-            break;            
+            break;      
+            
+        case 'recentpopsidelist':
+            console.log('recentpopsidelist - TODO:  Display slidelist for tvseries with artifactid ' + objIdIn);
+            break;
+                  
             
         case 'popepideets':
             ml.apiPopulateEpisodeDetails(objIdIn);
