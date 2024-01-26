@@ -718,7 +718,7 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<div id="sitestatsouter" style="width:1160px;">Show Site Stats</div>';
         
         tmpHtml += '<div id="recentepisodesouter" style="width:1160px;">Recent Episopdes';
-        tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}">'
+        tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}"></div>'
         tmpHtml += '<div id="recentepisodescontent" style="width:1160px;"></div>';
         tmpHtml += '</div>';
         
@@ -1181,17 +1181,17 @@ class RMVodWebApp {
                 // Series Title
                 var cellDiv1 = document.createElement('div');
                 cellDiv1.style.display = "inline-flex";
-                cellDiv1.innerText = objIn['data']['seriestitle']
+                cellDiv1.innerText = row['seriestitle']
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
-                cellDiv2.innerText = objIn['data']['episodetitle']
+                cellDiv2.innerText = row['episodetitle']
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
                 cellDiv3.style.display = "inline-flex";
-                cellDiv3.innerText = "S" + objIn['data']['season'] + "E" +  objIn['data']['episode']
+                cellDiv3.innerText = "S" + row['season'] + "E" +  row['episode']
                 rowDiv.appendChild(cellDiv3);
                 // Replay
                 var cellDiv4 = document.createElement('div');
