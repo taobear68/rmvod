@@ -1827,6 +1827,40 @@ LIMIT """ + str(topCnt) + """  """
         pass
         print("VodLibDB.getSiteStats - END")
         return retDict
+    def getRecentEpisodes(self,clientidIn):
+        
+        colList = ['clientid','seriestitle','seriesartifactid','episodetitle','episodeartifactid','season','episode','reqtime']
+        
+        sql = """SELECT 
+    m.clientid AS 'clientid', 
+    m.title AS "seriestitle", 
+    m.artifactid AS "seriesartifactid", 
+    f.title AS "episodetitle", 
+    f.artifactid AS "episodeartifactid", 
+    f.season, 
+    f.episode, 
+    m.reqtime  
+FROM user_series_last_episode m  
+JOIN playlog_live h ON (m.reqtime = h.reqtime AND m.clientid = h.clientid)
+JOIN artifacts f ON h.artifactid = f.artifactid  
+JOIN s2e t ON (h.artifactid = t.episodeaid AND m.artifactid = t.seriesaid)  
+"""
+        if type(clientidIn) == type("string") && len clientidIn > 10 :
+            sql += """WHERE m.clientid = '""" + clientidIn + """' 
+"""
+          
+        sql += """ORDER BY 8 DESC
+LIMIT 30"""
+
+        retList = []
+        rowsTuple = self._stdRead(sql)
+        for rowTuple in rowsTuple:
+            retDict = {};
+            for coLbl in colList:
+                retDict[colLbl] = rowTuple[colList.index(colLbl)]
+            retList.append(retDict)
+        pass
+        return retList
 
 
 class MediaLibraryDB:
@@ -2655,21 +2689,6 @@ class MediaLibraryDB:
         elif titleIn[0:2] == "A ":
             titleOut = titleIn[2:] + ", A"
         return titleOut
-    
-    # def titleLibTweak(self,artiObjIn):
-        # arbmetaDict = {}
-        # try:
-            # arbmetaDict = json.loads(artiObjIn['arbmeta'])
-        # except:
-            # print('titleLibTweak - json.loads failed on arbmeta for ' + artiObjIn['title']);
-        # straightTitle = artiObjIn['title']
-        # libTitle = self.librarifyTitle(straightTitle)
-        # arbmetaDict['titleorig'] = straightTitle
-        # arbmetaDict['titlelibrary'] = libTitle
-        # artiObjIn['arbmeta'] = json.dumps(arbmetaDict)
-        # return artiObjIn
-    
-    
     def titleLibTweak(self,artiObjIn):
         arbmetaDict = {}
         try:
@@ -2709,8 +2728,6 @@ class MediaLibraryDB:
         artiObjIn['arbmeta'] = json.dumps(arbmetaDict)
         #print(artiObjIn['arbmeta'])
         return artiObjIn
-    
-    
     def addEpisodesToSeries(self,seriesArtiIdIn,filePathIn,fnFragIn): # UPDATED FOR NEW RETURN OBJECT MODEL   # Updated to use .cfg
         #vldb = VodLibDB()
         vldb = self.dbHandleConfigged()
@@ -3182,7 +3199,25 @@ class MediaLibraryDB:
         pass
     def sessUpdateCookies(self,useridIn,cookieDictIn):
         pass
-    
+    def userGetRecentEpisodes(self,clientIdIn):
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'userGetRecentEpisodes'
+        tmpRetObj['params'] = [clientIdIn]
+        tmpRetObj['status']['success'] = False
+        try:
+            vldb = self.dbHandleConfigged()
+            rowsList = vldb.getRecentEpisodes(clientIdIn)
+            tmpRetObj['data'] = rowsList
+            tmpRetObj['status']['success'] = True
+        except:
+            pass
+            print("userGetRecentEpisodes - BARF!  clientIdIn: " + clientIdIn)
+            tmpRetObj['status']['detail'] = "Could not userGetRecentEpisodes"
+            tmpRetObj['status']['success'] = False
+            tmpRetObj['data'] = []            
+        pass
+        return tmpRetObj
+        
     def getArtiFileCTime(self,basedirIn,artidirIn,artifileIn):
         workingpath = basedirIn + artidirIn + "/" + artifileIn
         retval = None
@@ -4377,6 +4412,24 @@ def userSessionSetCookies():
         diKeysList = []
         return json.dumps([])
     result = rus.setUserCookiesByToken(dictIn['token'],dictIn['cookies'])
+    return json.dumps(result)
+    
+@app.route('/user/recent/episodes/get',methods=['POST'])
+def userRecentEpisodes():
+    ml = MediaLibraryDB()
+    #rus = RNUserSession()
+    dictIn = {}
+    diKeysList = []
+    reqJson = request.json
+    try:
+        dictIn = yaml.safe_load(json.dumps(request.json))
+        diKeysList = list(dictIn.keys())
+    except:
+        print("FAIL!  What came in: " + str(request.json))
+        dictIn = {}
+        diKeysList = []
+        return json.dumps([]) 
+    result = ml.userGetRecentEpisodes(dictIn['clientid'])
     return json.dumps(result)
 
 

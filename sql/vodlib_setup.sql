@@ -156,6 +156,15 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
+CREATE OR REPLACE VIEW user_series_last_episode AS
+    SELECT DISTINCT l.clientid AS "clientid", s.artifactid AS "artifactid", s.title AS "title", MAX(l.reqtime) AS "reqtime" 
+    FROM artifacts s 
+    JOIN s2e j ON s.artifactid = j.seriesaid 
+    JOIN playlog_live l on j.episodeaid = l.artifactid 
+    WHERE s.majtype = "tvseries"
+    AND l.reqtime > (NOW() - INTERVAL 60 DAY)  
+    GROUP BY 1,2
+
 
 
 CREATE USER IF NOT EXISTS vodlibapi IDENTIFIED BY 'vodlibapipw';
