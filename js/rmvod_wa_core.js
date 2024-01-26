@@ -717,6 +717,9 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div id="sitestatsouter" style="width:1160px;">Show Site Stats</div>';
         
+        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;">Recent Episopdes';
+        tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}">'
+        tmpHtml += '</div>';
         
         
         //forcerecrefresh
@@ -1166,6 +1169,9 @@ class RMVodWebApp {
         var clientid = this.sessGetUserId();
         var cbFunc = function(objIn) {
             console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
+            // recentepisodesdata
+            dataDE = document.getElementById('recentepisodesdata');
+            dataDE.dataset.recenteps = JSON.stringify(objIn);
         }
         const payloadObj = {'clientid':clientid};
         const endpoint = '/rmvod/api/user/recent/episodes/get';
