@@ -1189,25 +1189,25 @@ class RMVodWebApp {
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
-                cellDiv2.style.width = "20%";
+                cellDiv2.style.width = "30%";
                 cellDiv2.innerText = objIn['data'][row]['episodetitle']
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
                 cellDiv3.style.display = "inline-flex";
-                cellDiv3.style.width = "15%";
+                cellDiv3.style.width = "10%";
                 cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  objIn['data'][row]['episode']
                 rowDiv.appendChild(cellDiv3);
                 // Replay
                 var cellDiv4 = document.createElement('div');
                 cellDiv4.style.display = "inline-flex";
-                cellDiv4.style.width = "15%";
+                cellDiv4.style.width = "10%";
                 cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
                 rowDiv.appendChild(cellDiv4);
                 // Play Next
                 var cellDiv5 = document.createElement('div');
                 cellDiv5.style.display = "inline-flex";
-                cellDiv5.style.width = "15%";
+                cellDiv5.style.width = "10%";
                 cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
                 rowDiv.appendChild(cellDiv5);
                 
@@ -2999,6 +2999,12 @@ class RMVodWebApp {
                         recsWrapper('2023-10-01 11:39:05');
                         
                         wa.renderStatsContainer('sitestatsouter');
+                        
+                        wa.resetPageTitle();
+                        
+                        wa.apiFetchUserRecentEpisodes();  
+                                  
+            
             
                     } else {
                         
@@ -4315,12 +4321,13 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
 
-            //ml.apiFetchUserRecentEpisodes();
+            
             
             
             ml.sessCookieOnLoad();
-            
-            ml.resetPageTitle();
+
+            //ml.apiFetchUserRecentEpisodes();            
+            //ml.resetPageTitle();
             
             
             break;
