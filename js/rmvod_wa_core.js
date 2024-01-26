@@ -1171,7 +1171,7 @@ class RMVodWebApp {
             console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
             var dataDE = document.getElementById('recentepisodesdata');
-            dataDE.dataset.recenteps = JSON.stringify(objIn);
+            dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
         }
         const payloadObj = {'clientid':clientid};
         const endpoint = '/rmvod/api/user/recent/episodes/get';
