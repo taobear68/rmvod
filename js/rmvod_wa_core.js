@@ -4309,10 +4309,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.onloadOptions();
             
             ml.sessCookieOnLoad();
+
+            ml.apiFetchUserRecentEpisodes();
             
             ml.resetPageTitle();
             
-            ml.apiFetchUserRecentEpisodes();
             
             break;
 
