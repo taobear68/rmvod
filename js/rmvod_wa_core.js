@@ -1205,7 +1205,7 @@ class RMVodWebApp {
                 cellDiv4.style.width = "10%";
                 var tmpHtml = "<span onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + ",{})\">Replay</span>";
                 //cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
-                cellDiv4.innerText = tmpHtml;
+                cellDiv4.innerHTML = tmpHtml;
                 rowDiv.appendChild(cellDiv4);
                 // Play Next
                 //onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
@@ -1215,7 +1215,7 @@ class RMVodWebApp {
                 cellDiv5.style.width = "10%";
                 var tmpHtml = "<span onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + ",{})\">Play Next</span>";
                 //cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
-                cellDiv5.innerText = tmpHtml;
+                cellDiv5.innerHTML = tmpHtml;
                 rowDiv.appendChild(cellDiv5);
                 
                 tblDiv.appendChild(rowDiv);
