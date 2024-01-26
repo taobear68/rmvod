@@ -4309,7 +4309,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
 
-            ml.apiFetchUserRecentEpisodes();
+            //ml.apiFetchUserRecentEpisodes();
             
             
             ml.sessCookieOnLoad();
