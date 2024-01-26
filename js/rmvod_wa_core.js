@@ -1170,7 +1170,7 @@ class RMVodWebApp {
         var cbFunc = function(objIn) {
             console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
-            dataDE = document.getElementById('recentepisodesdata');
+            var dataDE = document.getElementById('recentepisodesdata');
             dataDE.dataset.recenteps = JSON.stringify(objIn);
         }
         const payloadObj = {'clientid':clientid};
