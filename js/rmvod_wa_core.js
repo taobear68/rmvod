@@ -1171,6 +1171,7 @@ class RMVodWebApp {
         var cbFunc = function(objIn) {
             //console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
+            var colWidthPct = ["25%","35%","8%","8%","8%"];
             var dataDE = document.getElementById('recentepisodesdata');
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
             var tblDiv = document.createElement('div');
@@ -1183,13 +1184,13 @@ class RMVodWebApp {
                 // Series Title
                 var cellDiv1 = document.createElement('div');
                 cellDiv1.style.display = "inline-flex";
-                cellDiv1.style.width = "20%";
+                cellDiv1.style.width = colWidthPct[0];
                 cellDiv1.innerText = objIn['data'][row]['seriestitle']
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
-                cellDiv2.style.width = "30%";
+                cellDiv2.style.width = colWidthPct[1];
                 //console.log("apiFetchUserRecentEpisodes.cbFunc - episodetitle: " + typeof objIn['data'][row]['episodetitle'] + " - " + objIn['data'][row]['episodetitle']);
                 //cellDiv2.innerText = objIn['data'][row]['episodetitle'];
                 //cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,32);
@@ -1198,14 +1199,14 @@ class RMVodWebApp {
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
                 cellDiv3.style.display = "inline-flex";
-                cellDiv3.style.width = "10%";
+                cellDiv3.style.width = colWidthPct[2];
                 cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  objIn['data'][row]['episode']
                 rowDiv.appendChild(cellDiv3);
                 // Replay
                 //onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
                 var cellDiv4 = document.createElement('div');
                 cellDiv4.style.display = "inline-flex";
-                cellDiv4.style.width = "10%";
+                cellDiv4.style.width = colWidthPct[3];
                 var tmpHtml = "<span onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Replay</u></span>";
                 //cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
                 cellDiv4.innerHTML = tmpHtml;
@@ -1215,7 +1216,7 @@ class RMVodWebApp {
                 //switchboard('vodPlayNextTitle',artiIdIn,{});
                 var cellDiv5 = document.createElement('div');
                 cellDiv5.style.display = "inline-flex";
-                cellDiv5.style.width = "10%";
+                cellDiv5.style.width = colWidthPct[4];
                 var tmpHtml = "<span onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Play Next</u></span>";
                 //cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
                 cellDiv5.innerHTML = tmpHtml;
