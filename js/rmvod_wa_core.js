@@ -1351,7 +1351,7 @@ class RMVodWebApp {
             try {
                 wa.contCookiePostInterval(60000);
             } catch (e) {
-                console.log('vodPlayTitleApi2 cbFunc barfed on trying wa.contCookiePostInterval(60000): ' + e);
+                console.log('vodPlayTitleApi3 cbFunc barfed on trying wa.contCookiePostInterval(60000): ' + e);
             }
             
             // If we're supposed to play in full screen, let's do that now.
@@ -1380,6 +1380,11 @@ class RMVodWebApp {
         } catch (e) {
             console.log('vodPlayTitleApi2 - Setting the classname for the playing artifact failed');
         }
+        
+        
+        // update apiFetchUserRecentEpisodes ?
+        
+        
         // Do the API call.
         const apiEndpoint = '/rmvod/api/artifact/get'; 
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
@@ -1392,6 +1397,10 @@ class RMVodWebApp {
     apiLogPlay(artiIdIn){
         var cbFunc = function(dataObjIn){
             //console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
+            
+            var wa = new RMVodWebApp();
+            wa.apiFetchUserRecentEpisodes();
+            
         }
         const apiEndpoint = '/rmvod/api/logplay/post'; 
         //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
