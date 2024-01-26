@@ -717,7 +717,7 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div id="sitestatsouter" style="width:1160px;">Show Site Stats</div>';
         
-        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><b>Recent Episopdes<b>';
+        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><b>Recent Episopdes</b>';
         tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}"></div>'
         tmpHtml += '<div id="recentepisodescontent" style="width:1160px;"></div>';
         tmpHtml += '</div>';
