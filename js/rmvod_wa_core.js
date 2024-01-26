@@ -1162,6 +1162,16 @@ class RMVodWebApp {
         const endpoint = '/rmvod/api/site/stats/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
     }
+    apiFetchUserRecentEpisodes(){
+        var clientid = this.sessGetUserId();
+        var cbFunc = function(objIn) {
+            console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
+        }
+        const payloadObj = {'clientid':clientid};
+        const endpoint = '/rmvod/api/user/recent/episodes/gett';
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc);        
+        
+    }
     // Retrieves a fresh copy of the "tags" list
     // Stores result in Session Storage
     apiFetchTagsList(){ //UPDATED FOR NEW RETURN OBJECT MODEL
