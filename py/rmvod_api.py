@@ -3206,7 +3206,9 @@ class MediaLibraryDB:
         tmpRetObj['status']['success'] = False
         try:
             vldb = self.dbHandleConfigged()
+            print("userGetRecentEpisodes - got vldb")
             rowsList = vldb.getRecentEpisodes(clientIdIn)
+            print("userGetRecentEpisodes - got rowsList")
             tmpRetObj['data'] = rowsList
             tmpRetObj['status']['success'] = True
         except:
