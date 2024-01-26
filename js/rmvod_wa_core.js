@@ -1396,7 +1396,7 @@ class RMVodWebApp {
     // Make an API call to log what is being played
     apiLogPlay(artiIdIn){
         var cbFunc = function(dataObjIn){
-            //console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
+            console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
             
             var wa = new RMVodWebApp();
             wa.apiFetchUserRecentEpisodes();
