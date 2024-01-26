@@ -1175,6 +1175,7 @@ class RMVodWebApp {
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
             var tblDiv = document.createElement('div');
             for (var row in objIn['data']) {
+                console.log(JSON.stringify(row));
                 // Row Container
                 var rowDiv = document.createElement('div');
                 rowDiv.style.display = "block";
@@ -4307,10 +4308,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.execSearchSingleFactor2('tag',{'tag':''});
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
-            
-            ml.sessCookieOnLoad();
 
             ml.apiFetchUserRecentEpisodes();
+            
+            
+            ml.sessCookieOnLoad();
             
             ml.resetPageTitle();
             
