@@ -1190,7 +1190,8 @@ class RMVodWebApp {
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
                 cellDiv2.style.width = "30%";
-                cellDiv2.innerText = objIn['data'][row]['episodetitle'].substring(60);
+                cellDiv2.innerText = objIn['data'][row]['episodetitle'];
+                cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(60);
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
