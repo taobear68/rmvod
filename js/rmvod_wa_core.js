@@ -1168,7 +1168,7 @@ class RMVodWebApp {
             console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
         }
         const payloadObj = {'clientid':clientid};
-        const endpoint = '/rmvod/api/user/recent/episodes/gett';
+        const endpoint = '/rmvod/api/user/recent/episodes/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);        
         
     }
