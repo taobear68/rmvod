@@ -1179,29 +1179,35 @@ class RMVodWebApp {
                 // Row Container
                 var rowDiv = document.createElement('div');
                 rowDiv.style.display = "block";
+                //rowDiv.style.width = "20%";
                 // Series Title
                 var cellDiv1 = document.createElement('div');
                 cellDiv1.style.display = "inline-flex";
+                cellDiv1.style.width = "20%";
                 cellDiv1.innerText = objIn['data'][row]['seriestitle']
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
+                cellDiv2.style.width = "20%";
                 cellDiv2.innerText = objIn['data'][row]['episodetitle']
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
                 cellDiv3.style.display = "inline-flex";
-                cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  row['episode']
+                cellDiv3.style.width = "15%";
+                cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  objIn['data'][row]['episode']
                 rowDiv.appendChild(cellDiv3);
                 // Replay
                 var cellDiv4 = document.createElement('div');
                 cellDiv4.style.display = "inline-flex";
+                cellDiv4.style.width = "15%";
                 cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
                 rowDiv.appendChild(cellDiv4);
                 // Play Next
                 var cellDiv5 = document.createElement('div');
                 cellDiv5.style.display = "inline-flex";
+                cellDiv5.style.width = "15%";
                 cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
                 rowDiv.appendChild(cellDiv5);
                 
