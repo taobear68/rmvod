@@ -1845,7 +1845,7 @@ JOIN playlog_live h ON (m.reqtime = h.reqtime AND m.clientid = h.clientid)
 JOIN artifacts f ON h.artifactid = f.artifactid  
 JOIN s2e t ON (h.artifactid = t.episodeaid AND m.artifactid = t.seriesaid)  
 """
-        if type(clientidIn) == type("string") && len clientidIn > 10 :
+        if type(clientidIn) == type("string") and len clientidIn > 10 :
             sql += """WHERE m.clientid = '""" + clientidIn + """' 
 """
           
