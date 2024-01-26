@@ -4441,6 +4441,7 @@ def userRecentEpisodes():
         diKeysList = []
         return json.dumps([]) 
     result = ml.userGetRecentEpisodes(dictIn['clientid'])
+    print(str(result))
     return json.dumps(result)
 
 
