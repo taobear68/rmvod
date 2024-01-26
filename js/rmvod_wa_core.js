@@ -1182,17 +1182,17 @@ class RMVodWebApp {
                 // Series Title
                 var cellDiv1 = document.createElement('div');
                 cellDiv1.style.display = "inline-flex";
-                cellDiv1.innerText = row['seriestitle']
+                cellDiv1.innerText = objIn['data'][row]['seriestitle']
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
-                cellDiv2.innerText = row['episodetitle']
+                cellDiv2.innerText = objIn['data'][row]['episodetitle']
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
                 cellDiv3.style.display = "inline-flex";
-                cellDiv3.innerText = "S" + row['season'] + "E" +  row['episode']
+                cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  row['episode']
                 rowDiv.appendChild(cellDiv3);
                 // Replay
                 var cellDiv4 = document.createElement('div');
