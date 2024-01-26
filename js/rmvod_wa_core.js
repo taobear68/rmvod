@@ -1190,9 +1190,10 @@ class RMVodWebApp {
                 var cellDiv2 = document.createElement('div');
                 cellDiv2.style.display = "inline-flex";
                 cellDiv2.style.width = "30%";
-                console.log("apiFetchUserRecentEpisodes.cbFunc - episodetitle: " + typeof objIn['data'][row]['episodetitle'] + " - " + objIn['data'][row]['episodetitle']);
+                //console.log("apiFetchUserRecentEpisodes.cbFunc - episodetitle: " + typeof objIn['data'][row]['episodetitle'] + " - " + objIn['data'][row]['episodetitle']);
                 //cellDiv2.innerText = objIn['data'][row]['episodetitle'];
-                cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,60);
+                //cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,32);
+                cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,32);
                 rowDiv.appendChild(cellDiv2);
                 // SXEY notation
                 var cellDiv3 = document.createElement('div');
