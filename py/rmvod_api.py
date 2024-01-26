@@ -1856,7 +1856,7 @@ LIMIT 30"""
         rowsTuple = self._stdRead(sql)
         for rowTuple in rowsTuple:
             retDict = {};
-            for coLbl in colList:
+            for colLbl in colList:
                 retDict[colLbl] = rowTuple[colList.index(colLbl)]
             retList.append(retDict)
         pass
