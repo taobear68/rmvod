@@ -719,6 +719,7 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div id="recentepisodesouter" style="width:1160px;">Recent Episopdes';
         tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}">'
+        tmpHtml += '<div id="recentepisodescontent" style="width:1160px;"></div>';
         tmpHtml += '</div>';
         
         
@@ -1172,6 +1173,42 @@ class RMVodWebApp {
             // recentepisodesdata
             var dataDE = document.getElementById('recentepisodesdata');
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
+            var tblDiv = document.createElement('div');
+            for (var row in objIn['data']) {
+                // Row Container
+                var rowDiv = document.createElement('div');
+                rowDiv.style.display = "block";
+                // Series Title
+                var cellDiv1 = document.createElement('div');
+                cellDiv1.style.display = "inline-flex";
+                cellDiv1.innerText = objIn['data']['seriestitle']
+                rowDiv.appendChild(cellDiv1);
+                // Episode Title
+                var cellDiv2 = document.createElement('div');
+                cellDiv2.style.display = "inline-flex";
+                cellDiv2.innerText = objIn['data']['episodetitle']
+                rowDiv.appendChild(cellDiv2);
+                // SXEY notation
+                var cellDiv3 = document.createElement('div');
+                cellDiv3.style.display = "inline-flex";
+                cellDiv3.innerText = "S" + objIn['data']['season'] + "E" +  objIn['data']['episode']
+                rowDiv.appendChild(cellDiv3);
+                // Replay
+                var cellDiv4 = document.createElement('div');
+                cellDiv4.style.display = "inline-flex";
+                cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
+                rowDiv.appendChild(cellDiv4);
+                // Play Next
+                var cellDiv5 = document.createElement('div');
+                cellDiv5.style.display = "inline-flex";
+                cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
+                rowDiv.appendChild(cellDiv5);
+                
+                tblDiv.appendChild(rowDiv);
+                
+            }
+            document.getElementById('recentepisodescontent').innerHTML = '';
+            document.getElementById('recentepisodescontent').appendChild(tblDiv);
         }
         const payloadObj = {'clientid':clientid};
         const endpoint = '/rmvod/api/user/recent/episodes/get';
@@ -4274,6 +4311,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.sessCookieOnLoad();
             
             ml.resetPageTitle();
+            
+            ml.apiFetchUserRecentEpisodes();
             
             break;
 
