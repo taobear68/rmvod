@@ -3207,31 +3207,30 @@ class MediaLibraryDB:
         tmpRetObj['method'] = 'userGetRecentEpisodes'
         tmpRetObj['params'] = [clientIdIn]
         tmpRetObj['status']['success'] = False
-        # try:
-            # vldb = self.dbHandleConfigged()
-            # print("userGetRecentEpisodes - got vldb")
-            # rowsList = vldb.getRecentEpisodes(clientIdIn)
-            # print("userGetRecentEpisodes - got rowsList")
-            # tmpRetObj['data'] = rowsList
-            # tmpRetObj['status']['success'] = True
-        # except:
-            # pass
-            # print("userGetRecentEpisodes - BARF!  clientIdIn: " + clientIdIn)
-            # tmpRetObj['status']['detail'] = "Could not userGetRecentEpisodes"
-            # tmpRetObj['status']['success'] = False
-            # tmpRetObj['data'] = []            
+        try:
+            vldb = self.dbHandleConfigged()
+            print("userGetRecentEpisodes - got vldb")
+            rowsList = vldb.getRecentEpisodes(clientIdIn)
+            print("userGetRecentEpisodes - got rowsList")
+            tmpRetObj['data'] = rowsList
+            tmpRetObj['status']['success'] = True
+        except:
+            pass
+            print("userGetRecentEpisodes - BARF!  clientIdIn: " + clientIdIn)
+            tmpRetObj['status']['detail'] = "Could not userGetRecentEpisodes"
+            tmpRetObj['status']['success'] = False
+            tmpRetObj['data'] = []            
         
-        vldb = self.dbHandleConfigged()
-        print("userGetRecentEpisodes - got vldb")
-        rowsList = vldb.getRecentEpisodes(clientIdIn)
-        print("userGetRecentEpisodes - got rowsList")
-        tmpRetObj['data'] = rowsList
-        tmpRetObj['status']['success'] = True        
+        # vldb = self.dbHandleConfigged()
+        # print("userGetRecentEpisodes - got vldb")
+        # rowsList = vldb.getRecentEpisodes(clientIdIn)
+        # print("userGetRecentEpisodes - got rowsList")
+        # tmpRetObj['data'] = rowsList
+        # tmpRetObj['status']['success'] = True        
         
         
         pass
         return tmpRetObj
-        
     def getArtiFileCTime(self,basedirIn,artidirIn,artifileIn):
         workingpath = basedirIn + artidirIn + "/" + artifileIn
         retval = None
