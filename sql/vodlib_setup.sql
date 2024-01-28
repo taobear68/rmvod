@@ -1,6 +1,6 @@
 
 
--- # vodlib_setup.sql  Copyright 2022, 2023 Paul Tourville
+-- # vodlib_setup.sql  Copyright 2022, 2023, 2024 Paul Tourville
 
 -- # This file is part of RIBBBITmedia VideoOnDemand (a.k.a. "rmvod").
 

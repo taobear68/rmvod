@@ -1,0 +1,24 @@
+Release Notes for v0.9.2 (since Aug 29) Jan 29, 2024
+
+Big New Features:
+User Accounts - In order to improve "resume playback" and make it cross-device viable, as well as improving recommendations (by picking up plays for the same user across multiple devices), RMVOD should have a "user session" capability.
+
+A user with a registered account on the server can log in at a client, and their played artifacts will be logged against their userid. If no one is logged in at the browser, the plays will be attributed to the browser's "clientid"
+
+...Also, users should be able to bring their preferences (as captured on the Settings tab) with them from device to device, so they should be captured in the user's profile on the server, and delivered upon login.
+
+Sessions should persist across browser sessions, with the session token stored in a cookie. If there was an active login at the time the RMVOD page was last visited, the client will attempt to validate the session token, and if the session is still valid, register the user's details locally, and if not, operate as the amonymous browser.
+
+Recent Episodes - Shows a record of the most recent TV Series Episodes watched by the currently-logged-in user with clickable buttons to rewatch or watch next
+
+
+Bug Fixes and Minor Tweaks:
+Posters now fetched from OMDbAPI
+Added "stats"
+Fix end-of-play kill-fullscreen
+OMDbAPI "Series Fetch" bug fix
+Added Playback Speed option to "Settings"
+Fix title set on play.
+Fix Recs Poster Image thing.
+Reworked statistics to have the period delivered by the client, rather than hard-coded in the API
+
