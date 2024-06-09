@@ -3891,6 +3891,7 @@ class WMCWARecommend {
         this.artiHoverDelayMs = 1000;
         
         this.recClassDefLU = {};
+        this.recClassDefLU['new'] = "New Arrivals on the server";
         this.recClassDefLU['tags'] = "Based on Tags of things you've watched";
         this.recClassDefLU['people'] = "Based on People involved in creating things you've watched";
         this.recClassDefLU['others'] = "Based on what other people have watched on this server";

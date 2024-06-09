@@ -22,7 +22,7 @@ import time
 
 from datetime import datetime
 
-# vod_api.py  Copyright 2022, 2023, 2024 Paul Tourville
+# rmvod_api.py  Copyright 2022, 2023, 2024 Paul Tourville
 
 # This file is part of RIBBBITmedia VideoOnDemand (a.k.a. "rmvod").
 
@@ -1864,6 +1864,299 @@ LIMIT 30"""
             retList.append(retDict)
         pass
         return retList
+    def generateRecsAllUsers(self, sinceDtIn='2023-02-01 00:00:00', limitIn=30, omdbapiKeyIn=""):
+        
+        # We'll use this to get "poster" links to use in the recommendations
+        # NOTE:  There is a known problem with this, which is that the 
+        # "omdbapi_key" is not accessible by the means listed below.  
+        # Probably the simplest way to access it is to have it passed in 
+        # as a parameter.  Alternately, this could be trimmed down to 
+        # just check to see if the poster file is there, and if not, 
+        # return the "oops no poster" link.
+        def fetchPosterFile(imdbidIn,apiKeyIn=""):
+            # This version pulls from OMDbAPI, and depends on a key being set in the config file
+            if imdbidIn == '' or imdbidIn == 'string' or imdbidIn == 'none':
+                print("fetchPosterFile - Got a bad imdbid: " + str(imdbidIn))
+                return ''
+            baseDir = '/var/www/html'
+            uriPath = '/rmvod/img/poster_00/' + imdbidIn + '.jpg'
+            filnm = baseDir + uriPath
+            if not (os.path.exists(filnm)):
+                try: 
+                    # posterUri = self.fetchPosterLink(imdbidIn)
+                    #posterUri = "http://img.omdbapi.com/?apikey=" + self.config['API_Resources']['omdbapi_key'] + "&i=" + imdbidIn
+                    posterUri = "http://img.omdbapi.com/?apikey=" + apiKeyIn + "&i=" + imdbidIn
+                    print("fetchPosterFile2 - posterUri: " + posterUri)
+                    response = requests.get(posterUri)
+                    print("fetchPosterFile2 - HTTP Response: " + str(response.status_code))
+                    if (int(response.status_code) >= 400):
+                        raise Exception("Poster fetch failed with code " + str(response.status_code))
+                    #whitespace
+                    fh = open(filnm,"wb")
+                    fh.write(response.content)
+                    fh.close()
+                except:
+                    print('Tried to fetch ' + posterUri + ' and save it as ' + filnm + ' but failed miserably')
+                    uriPath = ''
+                    # # Hard-coded for now.  Should be a .cfg option.
+                    uriPath = "/rmvod/img/RMVOD_NoPoster.png"
+                    pass
+                pass
+            # print("MediaLibraryDB.fetchPosterFile - uriPath: " + uriPath)
+            return uriPath        
+        
+        
+        
+        # Get the list of unique userids from the user table
+        #  ==> SELECT DISTINCT userid FROM users WHERE lockedtf = false AND activetf = true AND confirmtf = true
+        sql_client_id = """SELECT DISTINCT userid FROM users WHERE lockedtf = false AND activetf = true AND confirmtf = true """
+        result_tuple = self._stdRead(sql_client_id);
+        client_id_list = []
+        for rt_row in result_tuple:
+            client_id_list.append(rt_row[0])
+        pass
+        
+        now = datetime.now()
+        currDTS = now.strftime("%Y-%m-%d %H:%M:%S")
+        #recsObj['meta']['create_date'] = now.strftime("%Y-%m-%d %H:%M:%S")
+        
+        # retDict = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+        
+        dbc = self._connect()
+        cursor = dbc.cursor()
+        # cursor.execute(sqlIn)
+        # dbc.commit()
+        # dbc.close()        
+        # Setup reference tables...
+        # Trunc and Repopulate rec_logged_plays
+        sql_rec_logged_plays = """CREATE OR REPLACE TEMPORARY TABLE rec_logged_plays
+SELECT 
+  l.clientid, 
+  l.artifactid, 
+  e.title, 
+  e.majtype, 
+  MAX(l.reqtime) AS "reqtime", 
+  s.seriesaid, 
+  a.title AS "seriestitle"
+FROM playlog_live l
+JOIN artifacts e ON l.artifactid = e.artifactid 
+LEFT OUTER JOIN s2e s ON l.artifactid = s.episodeaid 
+LEFT OUTER JOIN artifacts a ON s.seriesaid = a.artifactid
+WHERE l.reqtime > '""" + sinceDtIn + """'
+GROUP BY 1, 2 
+ORDER BY reqtime DESC """
+        # ACTION: Exec sql_rec_logged_plays
+        cursor = dbc.cursor()
+        cursor.execute(sql_rec_logged_plays)
+        dbc.commit()
+        cursor.close()
+        
+        #
+        # Trunc and Repopulate rec_tag_plays_by_client
+        sql_rec_tag_plays_by_client = """CREATE OR REPLACE TEMPORARY TABLE rec_tag_plays_by_client
+SELECT p.clientid, "tvseries" as "majtype", t.tag, COUNT(p.seriesaid) AS "artifactcount"
+FROM rec_logged_plays p 
+JOIN t2a t ON p.seriesaid = t.artifactid
+WHERE p.majtype = "tvepisode" 
+GROUP BY 1, 2, 3 
+UNION
+/* Tags associated with TV Series I've Watched */
+SELECT p.clientid, "movie" as "majtype", t.tag, COUNT(p.artifactid) AS "artifactcount"
+FROM rec_logged_plays p 
+JOIN t2a t ON p.artifactid = t.artifactid
+WHERE p.majtype = "movie" 
+GROUP BY 1, 2, 3  """
+        # ACTION: Exec sql_rec_tag_plays_by_client
+        cursor = dbc.cursor()
+        cursor.execute(sql_rec_tag_plays_by_client)
+        dbc.commit()
+        cursor.close()
+        #
+        # Trunc and Repopulate rec_person_plays_by_client
+        sql_rec_person_plays_by_client = """CREATE OR REPLACE TEMPORARY TABLE rec_person_plays_by_client
+SELECT p.clientid, "tvseries" as "majtype", a.personname, COUNT(p.seriesaid) AS "artifactcount"
+FROM rec_logged_plays p
+JOIN p2a a ON p.seriesaid = a.artifactid
+WHERE a.personname != "string"
+AND p.majtype = "tvepisode"
+GROUP BY 1, 2, 3
+UNION
+SELECT p.clientid, "movie" as "majtype", a.personname, COUNT(p.artifactid) AS "artifactcount"
+FROM rec_logged_plays p
+JOIN p2a a ON p.artifactid = a.artifactid
+WHERE a.personname != "string"
+AND p.majtype = "movie"
+GROUP BY 1, 2, 3 """
+        # ACTION: Exec sql_rec_person_plays_by_client
+        cursor = dbc.cursor()
+        cursor.execute(sql_rec_person_plays_by_client)
+        dbc.commit()
+        cursor.close()
+        #
+        # Build the Recs...
+        # for each user...
+        for userId in client_id_list:
+            print("userId: " + userId)
+            recDict = {'meta':{},'artifacts':{},'data':{'new':{'tvseries':[],'movie':[]},'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
+            recDict['meta']['create_date'] = currDTS
+            recDict['meta']['generator'] = 'generateRecsAllUsers-' + userId
+            recDict['meta']['clientid'] = userId
+            
+            pass
+            sqlObj = {}
+            sqlObj['new'] = {}
+            sqlObj['rewatch'] = {}
+            sqlObj['others'] = {}
+            sqlObj['people'] = {}
+            sqlObj['tags'] = {}
+            sqlObj['server'] = {}
+            #   Fetch "new" Recs for tvseries 
+            sql_new_tv = """SELECT DISTINCT '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM t2a t 
+    JOIN artifacts a on t.artifactid = a.artifactid 
+    WHERE t.tag = 'new' AND a.majtype = 'tvseries'  
+    ORDER BY t.artifactid 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['new']['tvseries'] = sql_new_tv
+            #  Fetch "new" Recs for movies 
+            sql_new_movie = """SELECT DISTINCT '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM t2a t JOIN artifacts a on t.artifactid = a.artifactid 
+    WHERE t.tag = 'new' AND a.majtype = 'movie'  
+    ORDER BY t.artifactid 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['new']['movie'] = sql_new_movie
+            #   Fetch "rewatch" Recs for tvseries 
+            sql_rewatch_tv = """SELECT DISTINCT p.clientid, p.seriesaid AS "artifactid", p.seriestitle AS "title" , "tvseries" AS "majtype",  a.imdbid  
+    FROM rec_logged_plays p
+    JOIN artifacts a ON p.seriesaid = a.artifactid
+    WHERE p.majtype = "tvepisode" 
+      AND p.clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['rewatch']['tvseries'] = sql_rewatch_tv
+            #   Fetch "rewatch" Recs for movies 
+            sql_rewatch_movie = """SELECT DISTINCT p.clientid, p.artifactid, p.title,  "movie" AS "majtype", a.imdbid 
+    FROM rec_logged_plays p
+    JOIN artifacts a ON p.artifactid = a.artifactid
+    WHERE p.majtype = "movie" 
+      AND p.clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['rewatch']['movie'] = sql_rewatch_movie
+            #   Fetch "other" Recs for tvseries 
+            sql_other_tv = """SELECT '""" + userId + """' AS "clientid",  p.seriesaid AS "artifactid", p.seriestitle AS "title", "tvseries" AS "majtype", a.imdbid 
+    FROM rec_logged_plays p
+    JOIN artifacts a ON p.seriesaid = a.artifactid
+    WHERE p.majtype = "tvepisode" 
+      AND p.clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+    GROUP BY 1, 2 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['others']['tvseries'] = sql_other_tv
+            #   Fetch "other" Recs for movies 
+            sql_other_movie = """SELECT '""" + userId + """' AS "clientid",  p.artifactid, p.title, "movie" AS "majtype", a.imdbid  
+    FROM rec_logged_plays p
+    JOIN artifacts a ON p.seriesaid = a.artifactid
+    WHERE p.majtype = "movie" 
+      AND p.clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+    GROUP BY 1, 2 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['others']['movie'] = sql_other_movie
+            #   Fetch "people" Recs for tvseries 
+            sql_people_tv = """SELECT DISTINCT '""" + userId + """' AS "clientid",  a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM p2a pp 
+    JOIN artifacts a ON pp.artifactid = a.artifactid 
+    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
+    AND pp.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+    AND a.majtype IN ( "tvseries" /* ,  "tvepisode" */ )
+    AND pp.personname NOT IN ("N/A", "string") 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['people']['tvseries'] = sql_people_tv
+            #   Fetch "people" Recs for movies 
+            sql_people_movie = """SELECT DISTINCT '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM p2a pp 
+    JOIN artifacts a ON pp.artifactid = a.artifactid 
+    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
+    AND pp.artifactid NOT IN (SELECT DISTINCT artifactid FROM rec_logged_plays WHERE majtype = "movie" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+    AND a.majtype IN ( "movie")
+    AND pp.personname NOT IN ("N/A", "string") 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['people']['movie'] = sql_people_movie
+            #   Fetch "tag" Recs for tvseries 
+            sql_tag_tv = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM t2a tt
+    JOIN artifacts a ON tt.artifactid = a.artifactid
+    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
+    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+    AND a.majtype IN ("tvseries")
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['tags']['tvseries'] = sql_tag_tv
+            #   Fetch "tag" Recs for movies 
+            sql_tag_movie = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM t2a tt
+    JOIN artifacts a ON tt.artifactid = a.artifactid
+    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
+    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+    AND a.majtype IN ("movie")
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['tags']['movie'] = sql_tag_movie
+            #   Fetch "server" Recs for tvseries 
+            sql_server_tv = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM artifacts a 
+    WHERE a.majtype = "movie" 
+      AND a.artifactid NOT IN ( SELECT artifactid FROM rec_logged_plays ) 
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['server']['tvseries'] = sql_server_tv
+            #   Fetch "server" Recs for movies 
+            sql_server_movie = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
+    FROM artifacts a 
+    WHERE a.majtype = "tvseries" 
+      AND a.artifactid NOT IN ( SELECT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" )
+    LIMIT """ + str(limitIn) + """ """
+            sqlObj['server']['movie'] = sql_server_movie
+            for recType in list(sqlObj.keys()):
+                for artifactType in list(sqlObj[recType].keys()):
+                    cursor = dbc.cursor()
+                    print("recType: " + recType + "; artifactType: " + artifactType)
+                    try:
+                        cursor.execute(sqlObj[recType][artifactType])
+                        result_tuple = cursor.fetchall()   
+                        cursor.close()                 
+                        for rt_row in result_tuple:
+                            # Turns out we don't actually need this at 
+                            # this point, but we have it, so might as 
+                            # well call it out.
+                            clientId = rt_row[0]
+                            # Build the Dict we'll use to populate the 
+                            # recYype/artifactType slot
+                            artiDict = {"artifactid":rt_row[1], "title":rt_row[2], "majtype":rt_row[3], "imdbid":rt_row[4]}
+                            # Stuff the Dict into the recYype/artifactType slot
+                            recDict['data'][recType][artifactType].append(artiDict)
+                            # See if this artifact is already in the 
+                            # "artifacts" sub-Dict.  If not do the following.
+                            if rt_row[1] not in list(recDict['artifacts'].keys()) :
+                                # Log the full artifact in the "artifacts" sub-Dict.
+                                recDict['artifacts'][rt_row[1]] = self.getArtifactById(rt_row[1])
+                                # Add a "poster" link to the artifact
+                                try:
+                                    # recDict['artifacts'][rt_row[1]][0]['poster'] = fetchPosterFile2(rt_row[4])
+                                    recDict['artifacts'][rt_row[1]][0]['poster'] = fetchPosterFile(rt_row[4],omdbapiKeyIn)
+                                except:
+                                    print("Could not get Poster link for artifactid " + [rt_row[1]])
+                                pass
+                        pass
+                    except Exception as e:
+                        eMsg = ""
+                        if hasattr(e, "message"):
+                            eMsg = e.messgae
+                        print("FAILED! (" + eMsg + ") SQL: " + sqlObj[recType][artifactType])
+                        cursor.close()  
+                    pass
+                pass
+            # Finally, close the database connection, which should purge the temporary tables
+            #dbc.close()
+            # Write client's new Recs to DB and deactivate previous.
+            self.writeRecToCache(userId,recDict,7)
+        pass
+        dbc.close()
+        return False
 
 
 class MediaLibraryDB:
@@ -2870,6 +3163,12 @@ class MediaLibraryDB:
             print('MediaLibraryDB.apiLogPlay is sad.')
             retDict['status']['detail'] = 'MediaLibraryDB.apiLogPlay is sad.'
         return retDict
+    def generateStandardRecsAllUsers(self, sinceDtStrIn, recLimitIntIn):
+        vldb = self.dbHandleConfigged()
+        vldb.generateRecsAllUsers(sinceDtStrIn,recLimitIntIn,self.config['API_Resources']['omdbapi_key'])
+        pass
+        # generateRecsAllUsers
+        return True
     def generateStandardRecs(self,clientIdStrIn,sinceDtStrIn,recLimitIntIn):   # Updated to use .cfg
         # print ("generateStandardRecs got: " + clientIdStrIn + ", " + sinceDtStrIn + ", " + str(recLimitIntIn))
         pass
@@ -2958,8 +3257,13 @@ class MediaLibraryDB:
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
         if recsJson == None or forceBoolIn == True:
-            genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
-            vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
+            # genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
+            # vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
+            
+            vldb.generateRecsAllUsers(sinceDTIn, recLimitIn, self.config['API_Resources']['omdbapi_key'])
+            
+            recsJson = vldb.getRecJsonFromCache(clientIdIn)
+            
             recsObj = genRecsObj
         else:
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
@@ -4452,6 +4756,7 @@ if __name__ == '__main__':
     # Switch
     parser.add_argument('--cli', action='store_true', help='A boolean switch')
     parser.add_argument('--onerun', action='store_true', help='Run once')
+    parser.add_argument("--allrecs", action="store_true", help="Eun Recommendations")
     args = parser.parse_args()
 
     if (args.cli == True):
@@ -4467,8 +4772,199 @@ if __name__ == '__main__':
         ml = MediaLibraryDB()
         print(json.dumps(ml.getSiteStats()))
         #MediaLibraryDB
+    elif (args.allrecs == True):
+        ml = MediaLibraryDB()
+        print("Executing recommendations...")
+        ml.generateStandardRecsAllUsers('2022-01-01 00:00:00',30)
+        print("Done.")
 
     else:
         app.run(host='0.0.0.0',port=5000)
     pass
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# /* 
+   # CREATE TEMP TABLE TO COVER CONDENSING playlog_live AND 
+   # JOINING TV SERIES DATA
+   # THIS WORKS
+   # Get list of views grouped by clientid and artifactid
+   # with majtype and series artifactid and title where apropriate
+ # */
+# CREATE OR REPLACE TEMPORARY TABLE rec_logged_plays
+# SELECT 
+  # l.clientid, 
+  # l.artifactid, 
+  # e.title, 
+  # e.majtype, 
+  # MAX(l.reqtime) AS "reqtime", 
+  # s.seriesaid, 
+  # a.title AS "seriestitle"
+# FROM playlog_live l
+# JOIN artifacts e ON l.artifactid = e.artifactid 
+# LEFT OUTER JOIN s2e s ON l.artifactid = s.episodeaid 
+# LEFT OUTER JOIN artifacts a ON s.seriesaid = a.artifactid
+# WHERE l.reqtime > '2022-01-01 00:00:00'
+# GROUP BY 1, 2 
+# ORDER BY reqtime DESC ;
+
+# /*
+   # CREATE A TEMP TABLE TO CONDENSE TAG POPULARITY AMONG
+   # ARTIFACTS WATCHED PER clientid FOR tvseries AND movie
+   # VALUES FOR majtype
+# */
+# /* TAGS AND WATCH-ARTIFACT COUNTS FOR clientid VALUES */ 
+# /* Tags associated with Movies I've Watched */
+# CREATE OR REPLACE TEMPORARY TABLE rec_tag_plays_by_client
+# SELECT p.clientid, "tvseries" as "majtype", t.tag, COUNT(p.seriesaid) AS "artifactcount"
+# FROM rec_logged_plays p 
+# JOIN t2a t ON p.seriesaid = t.artifactid
+# WHERE p.majtype = "tvepisode" 
+# GROUP BY 1, 2, 3 
+# UNION
+# /* Tags associated with TV Series I've Watched */
+# SELECT p.clientid, "movie" as "majtype", t.tag, COUNT(p.artifactid) AS "artifactcount"
+# FROM rec_logged_plays p 
+# JOIN t2a t ON p.artifactid = t.artifactid
+# WHERE p.majtype = "movie" 
+# GROUP BY 1, 2, 3 ;
+
+
+# /*
+   # CREATE A TEMP TABLE TO CONDENSE PERSON POPULARITY AMONG
+   # ARTIFACTS WATCHED PER clientid FOR tvseries AND movie
+   # VALUES FOR majtype
+# */
+# CREATE OR REPLACE TEMPORARY TABLE rec_person_plays_by_client
+# SELECT p.clientid, "tvseries" as "majtype", a.personname, COUNT(p.seriesaid) AS "artifactcount"
+# FROM rec_logged_plays p
+# JOIN p2a a ON p.seriesaid = a.artifactid
+# WHERE a.personname != "string"
+# AND p.majtype = "tvepisode"
+# GROUP BY 1, 2, 3
+# UNION
+# SELECT p.clientid, "movie" as "majtype", a.personname, COUNT(p.artifactid) AS "artifactcount"
+# FROM rec_logged_plays p
+# JOIN p2a a ON p.artifactid = a.artifactid
+# WHERE a.personname != "string"
+# AND p.majtype = "movie"
+# GROUP BY 1, 2, 3 ;
+
+
+# /* ==> REC: REWATCH <== */
+# /* WHAT I'VE WATCHED */
+# /* What I've Watched TV */
+# SELECT DISTINCT seriesaid AS "artifactid", seriestitle AS "title" , "tvseries" AS "majtype" 
+# FROM rec_logged_plays 
+# WHERE majtype = "tvepisode" 
+  # AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+# LIMIT 30;
+# /* What I've watched movies */
+# SELECT DISTINCT artifactid, title,  "movie" AS "majtype"
+# FROM rec_logged_plays 
+# WHERE majtype = "movie" 
+  # AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+# LIMIT 30;
+
+
+# /* ==> REC: PEOPLE <== */
+# /* TV Series */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM p2a pp 
+# JOIN artifacts a ON pp.artifactid = a.artifactid 
+# WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
+# AND pp.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+# AND a.majtype IN ( "tvseries" /* ,  "tvepisode" */ )
+# AND pp.personname NOT IN ("N/A", "string") 
+# LIMIT 30 ;
+# /* Movie */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM p2a pp 
+# JOIN artifacts a ON pp.artifactid = a.artifactid 
+# WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
+# AND pp.artifactid NOT IN (SELECT DISTINCT artifactid FROM rec_logged_plays WHERE majtype = "movie" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+# AND a.majtype IN ( "movie")
+# AND pp.personname NOT IN ("N/A", "string") 
+# LIMIT 30 ;
+
+
+
+# /* ==> REC: TAG <== */
+# /* TV Series */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM t2a tt
+# JOIN artifacts a ON tt.artifactid = a.artifactid
+# WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
+# AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+# AND a.majtype IN ("tvseries")
+# LIMIT 30 ;
+# /* Movie */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM t2a tt
+# JOIN artifacts a ON tt.artifactid = a.artifactid
+# WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
+# AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+# AND a.majtype IN ("movie")
+# LIMIT 30 ;
+
+
+# /* ==>  REC: OTHER <== */
+# /* WHAT THEY'VE WATCHED */
+# /* What Others have watched TV */
+# SELECT clientid, seriesaid AS "artifactid", seriestitle AS "title", "tvseries" AS "majtype"
+# FROM rec_logged_plays 
+# WHERE majtype = "tvepisode" 
+  # AND clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+# GROUP BY 1, 2 ;
+# /* What others have watched movies */
+# SELECT clientid, artifactid, title, "movie" AS "majtype" /* MAX(reqtime) as "reqtime" */ 
+# FROM rec_logged_plays 
+# WHERE majtype = "movie" 
+  # AND clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+# GROUP BY 1, 2 ;
+
+
+# */ ==> REC: SERVER <== */
+# /* WHAT NO ONE HAS WATCHED */
+# /* Movies No One Has Watched */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM artifacts a 
+# WHERE a.majtype = "movie" 
+  # AND a.artifactid NOT IN ( SELECT artifactid FROM rec_logged_plays ) 
+# LIMIT 30;
+# /* TV Series No One Has Watched */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype
+# FROM artifacts a 
+# WHERE a.majtype = "tvseries" 
+  # AND a.artifactid NOT IN ( SELECT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" )
+# LIMIT 30;
+
+
+
+# /* ==> REC: NEW <== */
+# /* NEW VIDEOS */
+# /* movies */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype 
+# FROM t2a t JOIN artifacts a on t.artifactid = a.artifactid 
+# WHERE t.tag = 'new' AND a.majtype = 'movie'  
+# ORDER BY t.artifactid limit 30;
+# /* tveries */
+# SELECT DISTINCT a.artifactid, a.title, a.majtype 
+# FROM t2a t 
+# JOIN artifacts a on t.artifactid = a.artifactid 
+# WHERE t.tag = 'new' AND a.majtype = 'tvseries'  
+# ORDER BY t.artifactid limit 30;
