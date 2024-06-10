@@ -4387,8 +4387,9 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
             ml.sessCookieOnLoad();
             
-            // document.getElementById('RNWATabWidget-tabspan-0').click();
-            // var tmpCookie = this.cc.getCookie('opt_' + optNm);
+            // Do a click on the tab selected in the "defaulttab" setting
+            // This could/should be integrated into one of the existing "onload"
+            // functions in ml, but for now, this is fine.
             var tmpCookie = ml.cc.getCookie('opt_' + "defaulttab");
             console.log("Trying to click tab " + tmpCookie);
             document.getElementById(tmpCookie).click();
