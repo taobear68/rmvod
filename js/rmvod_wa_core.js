@@ -698,6 +698,21 @@ class RMVWAHtmlGenerator {
         tmpHtml += '</select>';
         tmpHtml += '</div>';
         
+        tmpHtml += '<div><b>Default Tab: </b>';
+        tmpHtml += '<select id="defaulttab" ';
+        //tmpHtml += 'onchange="';
+        ////tmpHtml += 'switchboard(\'udpateoptplayspeed\',this.id,{})';
+        //tmpHtml += 'switchboard(\'updateselect\',this.id,{})';
+        tmpHtml += '">';
+        tmpHtml += '<option value="RNWATabWidget-tabspan-1">List/Search</option>';
+        tmpHtml += '<option value="RNWATabWidget-tabspan-2">Recommendations</option>';
+        //tmpHtml += '<option value="1.0" selected>1.0</option>';
+        //tmpHtml += '<option value="0.75">0.75</option>';
+        //tmpHtml += '<option value="0.5">0.5</option>';
+        tmpHtml += '</select>';
+        tmpHtml += '</div>';
+        
+        
         tmpHtml += '<div><span onclick="switchboard(\'formNewSingleArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         tmpHtml += '<b><u>Create a single Artifact</u></b>'
         tmpHtml += '</span></div>';
