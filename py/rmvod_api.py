@@ -2030,7 +2030,7 @@ GROUP BY 1, 2, 3 """
     FROM rec_logged_plays p
     JOIN artifacts a ON p.seriesaid = a.artifactid
     WHERE p.majtype = "tvepisode" 
-      AND p.clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+      AND p.clientid = '""" + userId + """' 
     LIMIT """ + str(limitIn) + """ """
             sqlObj['rewatch']['tvseries'] = sql_rewatch_tv
             #   Fetch "rewatch" Recs for movies 
@@ -2038,7 +2038,7 @@ GROUP BY 1, 2, 3 """
     FROM rec_logged_plays p
     JOIN artifacts a ON p.artifactid = a.artifactid
     WHERE p.majtype = "movie" 
-      AND p.clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+      AND p.clientid = '""" + userId + """' 
     LIMIT """ + str(limitIn) + """ """
             sqlObj['rewatch']['movie'] = sql_rewatch_movie
             #   Fetch "other" Recs for tvseries 
@@ -2046,7 +2046,7 @@ GROUP BY 1, 2, 3 """
     FROM rec_logged_plays p
     JOIN artifacts a ON p.seriesaid = a.artifactid
     WHERE p.majtype = "tvepisode" 
-      AND p.clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+      AND p.clientid != '""" + userId + """' 
     GROUP BY 1, 2 
     LIMIT """ + str(limitIn) + """ """
             sqlObj['others']['tvseries'] = sql_other_tv
@@ -2055,7 +2055,7 @@ GROUP BY 1, 2, 3 """
     FROM rec_logged_plays p
     JOIN artifacts a ON p.seriesaid = a.artifactid
     WHERE p.majtype = "movie" 
-      AND p.clientid != "353f7b11-f379-4828-9d52-4e7e8b0086e8"
+      AND p.clientid != '""" + userId + """' 
     GROUP BY 1, 2 
     LIMIT """ + str(limitIn) + """ """
             sqlObj['others']['movie'] = sql_other_movie
@@ -2063,8 +2063,8 @@ GROUP BY 1, 2, 3 """
             sql_people_tv = """SELECT DISTINCT '""" + userId + """' AS "clientid",  a.artifactid, a.title, a.majtype, a.imdbid 
     FROM p2a pp 
     JOIN artifacts a ON pp.artifactid = a.artifactid 
-    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
-    AND pp.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = '""" + userId + """' ) 
+    AND pp.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = '""" + userId + """'  )
     AND a.majtype IN ( "tvseries" /* ,  "tvepisode" */ )
     AND pp.personname NOT IN ("N/A", "string") 
     LIMIT """ + str(limitIn) + """ """
@@ -2073,8 +2073,8 @@ GROUP BY 1, 2, 3 """
             sql_people_movie = """SELECT DISTINCT '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
     FROM p2a pp 
     JOIN artifacts a ON pp.artifactid = a.artifactid 
-    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8") 
-    AND pp.artifactid NOT IN (SELECT DISTINCT artifactid FROM rec_logged_plays WHERE majtype = "movie" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8" )
+    WHERE pp.personname IN (SELECT personname FROM rec_person_plays_by_client WHERE clientid = '""" + userId + """' ) 
+    AND pp.artifactid NOT IN (SELECT DISTINCT artifactid FROM rec_logged_plays WHERE majtype = "movie" AND clientid = '""" + userId + """'  )
     AND a.majtype IN ( "movie")
     AND pp.personname NOT IN ("N/A", "string") 
     LIMIT """ + str(limitIn) + """ """
@@ -2083,8 +2083,8 @@ GROUP BY 1, 2, 3 """
             sql_tag_tv = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
     FROM t2a tt
     JOIN artifacts a ON tt.artifactid = a.artifactid
-    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
-    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = '""" + userId + """' )
+    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = '""" + userId + """'   )
     AND a.majtype IN ("tvseries")
     LIMIT """ + str(limitIn) + """ """
             sqlObj['tags']['tvseries'] = sql_tag_tv
@@ -2092,8 +2092,8 @@ GROUP BY 1, 2, 3 """
             sql_tag_movie = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
     FROM t2a tt
     JOIN artifacts a ON tt.artifactid = a.artifactid
-    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8")
-    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8"  )
+    WHERE tt.tag IN (SELECT tag FROM rec_tag_plays_by_client WHERE clientid = '""" + userId + """' )
+    AND tt.artifactid NOT IN (SELECT DISTINCT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" AND clientid = '""" + userId + """'  )
     AND a.majtype IN ("movie")
     LIMIT """ + str(limitIn) + """ """
             sqlObj['tags']['movie'] = sql_tag_movie
