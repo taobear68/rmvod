@@ -4389,7 +4389,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
             // document.getElementById('RNWATabWidget-tabspan-0').click();
             // var tmpCookie = this.cc.getCookie('opt_' + optNm);
-            var tmpCookie = this.cc.getCookie('opt_' + "defaulttab");
+            var tmpCookie = ml.cc.getCookie('opt_' + "defaulttab");
             console.log("Trying to click tab " + tmpCookie);
             document.getElementById(tmpCookie).click();
             console.log("Tried to click tab " + tmpCookie + "... Ta-da!");
