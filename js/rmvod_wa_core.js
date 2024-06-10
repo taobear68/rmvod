@@ -2312,7 +2312,7 @@ class RMVodWebApp {
     // cookie-stored option values
     onloadOptions(){
         var tfList = ['serplaynext','resumeplay','fullscreenplay'];
-        var selectList = ['playspeed'];
+        var selectList = ['playspeed','defaulttab'];
         //var optList = ['serplaynext','resumeplay','fullscreenplay','playspeed']; // playspeed
         
         for (var idx=0; idx < selectList.length; idx++ ) {
@@ -2331,6 +2331,11 @@ class RMVodWebApp {
                 case "playspeed":
                     if (['0.5','0.75','1.0','1.25','1.5'].indexOf(tmpCookie) < 0) {
                         cbDE.value = '1.0';
+                    }
+                    break;;
+                case "defaulttab":
+                    if (['RNWATabWidget-tabspan-1','RNWATabWidget-tabspan-2'].indexOf(tmpCookie) < 0) {
+                        cbDE.value = 'RNWATabWidget-tabspan-1';
                     }
                     break;;
                 default:
@@ -4377,14 +4382,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.basePageLayout02();
             ml.clockSet();
             ml.initStorage();
-            ml.execSearchSingleFactor2('tag',{'tag':''});
             ml.renderStaticModernSearchWidget();
             ml.onloadOptions();
-
-            
-            
             
             ml.sessCookieOnLoad();
+
+            ml.execSearchSingleFactor2('tag',{'tag':''});
 
             //ml.apiFetchUserRecentEpisodes();            
             //ml.resetPageTitle();
