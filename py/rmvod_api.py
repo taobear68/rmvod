@@ -2100,14 +2100,14 @@ GROUP BY 1, 2, 3 """
             #   Fetch "server" Recs for tvseries 
             sql_server_tv = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
     FROM artifacts a 
-    WHERE a.majtype = "movie" 
+    WHERE a.majtype = "tvseries" 
       AND a.artifactid NOT IN ( SELECT artifactid FROM rec_logged_plays ) 
     LIMIT """ + str(limitIn) + """ """
             sqlObj['server']['tvseries'] = sql_server_tv
             #   Fetch "server" Recs for movies 
             sql_server_movie = """SELECT DISTINCT  '""" + userId + """' AS "clientid", a.artifactid, a.title, a.majtype, a.imdbid 
     FROM artifacts a 
-    WHERE a.majtype = "tvseries" 
+    WHERE a.majtype = "movie" 
       AND a.artifactid NOT IN ( SELECT seriesaid FROM rec_logged_plays WHERE majtype = "tvepisode" )
     LIMIT """ + str(limitIn) + """ """
             sqlObj['server']['movie'] = sql_server_movie
