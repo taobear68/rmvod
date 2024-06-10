@@ -4386,6 +4386,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.onloadOptions();
             
             ml.sessCookieOnLoad();
+            
+            // document.getElementById('RNWATabWidget-tabspan-0').click();
+            // var tmpCookie = this.cc.getCookie('opt_' + optNm);
+            var tmpCookie = this.cc.getCookie('opt_' + "defaulttab");
+            document.getElementById(tmpCookie).click();
+
 
             ml.execSearchSingleFactor2('tag',{'tag':''});
 
