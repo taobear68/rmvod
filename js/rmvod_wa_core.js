@@ -3871,7 +3871,7 @@ function recsWrapper(sinceDtStrIn){
     console.log("recsWrapper - clientId: " + clientId);
     var sinceDTStr = sinceDtStrIn;
     // var recLimitInt = 50; // this.sse.ssOKRead('localcfg','maxrecspercategory'); 
-    var recLimitInt = this.sse.ssOKRead('localcfg','maxrecspercategory'); 
+    var recLimitInt = wa.sse.ssOKRead('localcfg','maxrecspercategory'); 
     var cbFunc = function (objIn) {
         var rec = new WMCWARecommend();
         rec.targetParentElementId = 'rmvodrecsmastercontouter';
