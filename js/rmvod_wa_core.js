@@ -882,6 +882,7 @@ class RMVodWebApp {
         //this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':180,'weeks':26,'months':6}); 
         this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':60,'weeks':8,'months':2}); 
         
+        this.sse.ssOKWrite('localcfg','maxrecspercategory',50);
         
         // This needs to happen later due to API Config fetch
         //this.apiFetchPersonsList();
@@ -2986,7 +2987,8 @@ class RMVodWebApp {
     // Execute forced-refresh of Recommendations.
     execRecsForcedRefresh(){
         //var wa = new RMVodWebApp();
-        var recLimitInt = 30;
+        //var recLimitInt = 50;  // this.sse.ssOKWrite('localcfg','maxrecspercategory'
+        var recLimitInt = this.sse.ssOKRead('localcfg','maxrecspercategory');  // this.sse.ssOKWrite('localcfg','maxrecspercategory'
         var sinceDTStr = "2023-02-01 00:00:01";
         var clientId = this.sessGetUserId();
         var forceRefresh = true;
@@ -3868,7 +3870,8 @@ function recsWrapper(sinceDtStrIn){
     var clientId = wa.sessGetUserId();
     console.log("recsWrapper - clientId: " + clientId);
     var sinceDTStr = sinceDtStrIn;
-    var recLimitInt = 30;
+    // var recLimitInt = 50; // this.sse.ssOKRead('localcfg','maxrecspercategory'); 
+    var recLimitInt = this.sse.ssOKRead('localcfg','maxrecspercategory'); 
     var cbFunc = function (objIn) {
         var rec = new WMCWARecommend();
         rec.targetParentElementId = 'rmvodrecsmastercontouter';

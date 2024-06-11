@@ -1866,6 +1866,7 @@ LIMIT 30"""
         return retList
     def generateRecsAllUsers(self, sinceDtIn='2023-02-01 00:00:00', limitIn=30, omdbapiKeyIn=""):
         
+        print("generateRecsAllUsers: sinceDtIn = " + sinceDtIn + "; limitIn = " + str(limitIn) + "; omdbapiKeyIn = " + omdbapiKeyIn)
         # We'll use this to get "poster" links to use in the recommendations
         # NOTE:  There is a known problem with this, which is that the 
         # "omdbapi_key" is not accessible by the means listed below.  
