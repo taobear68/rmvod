@@ -3905,9 +3905,12 @@ function recArtiDeetSeasonEpisodes(selectDEIdIn){
 
 class WMCWARecommend {
     constructor(){
+        this.sse = new RMSSSEnhanced();
+        
         this.targetParentElementId = 'rmvodmasterdiv';
         this.recSrcData = {'meta':{'create_date':''},'data':{}}
-        this.maxRecs = 20;
+        //this.maxRecs = 20; // this.sse.ssOKRead('localcfg','maxrecspercategory');
+        this.maxRecs = this.sse.ssOKRead('localcfg','maxrecspercategory');
         this.posterHeightPx = 215;
         this.posterWidthFraction = 0.75;
         this.posterLeftMarginPx = 25;
