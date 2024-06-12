@@ -2054,7 +2054,7 @@ GROUP BY 1, 2, 3 """
             #   Fetch "other" Recs for movies 
             sql_other_movie = """SELECT '""" + userId + """' AS "clientid",  p.artifactid, p.title, "movie" AS "majtype", a.imdbid  
     FROM rec_logged_plays p
-    JOIN artifacts a ON p.seriesaid = a.artifactid
+    JOIN artifacts a ON p.artifactid = a.artifactid
     WHERE p.majtype = "movie" 
       AND p.clientid != '""" + userId + """' 
     GROUP BY 1, 2 
