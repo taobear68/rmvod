@@ -629,6 +629,10 @@ WHERE s.seriesaid = '""" + artiIdIn + """' """
             resList.append(itemTuple[0])
         pass
         return resList
+    def getSeriesaidFromEpisodeaid(self,episodeaidIn):
+        luSQL = """SELECT seriesaid FROM s2e WHERE episodeaid = '""" + episodeaidIn + """'  """
+        seriesaid = this._stdRead(luSQL)[0][0]
+        return seriesaid        
     def getNextEpisodeArtifact(self,sEpiIdIn):
         retDict = {}
         selSql = "SELECT DISTINCT a.artifactid "
@@ -1180,7 +1184,7 @@ ORDER BY 3,4"""
         artiId = resTuple[0][0]
         return self.getArtifactById(artiId)
     #####  METHODS RELATED TO "RECOMMENDATIONS"
-    def getRecommendedArtifactPersonsListSimple(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00"):
+    def getRecommendedArtifactPersonsListSimple(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00"): #DEPRECATED  #DEPRECATED
         assert ((type(clientIdIn) == type(None) ) or (type(clientIdIn) == type("string")))
         assert type(sinceDTIn) == type("string")        
         
@@ -1205,7 +1209,7 @@ WHERE b.credits > 1"""
         for row in rowsTuple:
             retList.append(row[0])
         return retList        
-    def getRecommendedArtifactPersonsList(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",majtypModeIn=3, rowCntIn=100):
+    def getRecommendedArtifactPersonsList(self,clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",majtypModeIn=3, rowCntIn=100): #DEPRECATED  #DEPRECATED
         assert ((type(clientIdIn) == type(None) ) or (type(clientIdIn) == type("string")))
         assert type(sinceDTIn) == type("string")
         assert type(majtypModeIn) == type(3)
@@ -1260,7 +1264,7 @@ LIMIT """ + str(rowCntIn) + """ """
         for row in rowsTuple:
             retList.append(row[0])
         return retList
-    def getRecommendedArtifactsByPeopleSimple(self,peopleListIn=[],clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",rowCntIn=100):
+    def getRecommendedArtifactsByPeopleSimple(self,peopleListIn=[],clientIdIn=None,sinceDTIn="2001-09-11 08:35:00",rowCntIn=100): #DEPRECATED  #DEPRECATED
         peopleListStr = ''
         idx = 0
         while idx < len(peopleListIn):
@@ -1315,7 +1319,7 @@ LIMIT """ + str(rowCntIn) + """ """
             retList.append(tmpObj)
             # retList.append(row[0])
         return retList  
-    def getRecommendedArtifactsByPeople(self,peopleListIn):
+    def getRecommendedArtifactsByPeople(self,peopleListIn): #DEPRECATED  #DEPRECATED
         peopleListStr = ''
         idx = 0
         while idx < len(peopleListIn):
@@ -1373,7 +1377,7 @@ ORDER BY 2"""
         for row in rowsTuple:
             retList.append(row[0])
         return retList        
-    def getRecommendedArtifactsByTags(self,clientIdIn=None,sinceDTIn='2023-02-01 00:00:00',limitIn=10,tagLimitIn=5):
+    def getRecommendedArtifactsByTags(self,clientIdIn=None,sinceDTIn='2023-02-01 00:00:00',limitIn=10,tagLimitIn=5): #DEPRECATED  #DEPRECATED
         
         clientIdStr = ''
         # Set clientid condition based on input
@@ -1470,7 +1474,7 @@ ORDER BY 2
             retList.append(tmpObj)
             # retList.append(row[0])
         return retList    
-    def getRecommendedArtifactsByOthers(self,clientIdIn,sinceDTIn='2023-02-01 00:00:00',limitIn=20):
+    def getRecommendedArtifactsByOthers(self,clientIdIn,sinceDTIn='2023-02-01 00:00:00',limitIn=20): #DEPRECATED  #DEPRECATED
         assert type(clientIdIn) == type("thing")
         assert len(clientIdIn) > 10
         assert type(limitIn) == type(10)
@@ -1516,7 +1520,7 @@ ORDER BY 2
             retList.append(tmpObj)
             # retList.append(row[0])
         return retList 
-    def getRecommendedArtifactsByServer(self,sinceDtIn='2023-02-01 00:00:00',limitIn=20):
+    def getRecommendedArtifactsByServer(self,sinceDtIn='2023-02-01 00:00:00',limitIn=20): #DEPRECATED  #DEPRECATED
         pass
         localSql = """SELECT * FROM (
     (
@@ -1555,7 +1559,7 @@ ORDER BY 2
             retList.append(tmpObj)
             # retList.append(row[0])
         return retList     
-    def getRecommendedArtifactsByRewatch(self,clientIdIn=None,sinceDtIn='2023-02-01 00:00:00',limitIn=20):    
+    def getRecommendedArtifactsByRewatch(self,clientIdIn=None,sinceDtIn='2023-02-01 00:00:00',limitIn=20):    #DEPRECATED  #DEPRECATED 
         
         localSql = """SELECT * FROM (
     (
@@ -2158,6 +2162,164 @@ GROUP BY 1, 2, 3 """
         pass
         dbc.close()
         return False
+    def writeClientArtiRecentPlay(self, clientidIn, artifactidIn, seriesaidIn, majtypeIn, progressminsIn, lastreportdtsIn, completetfIn):
+        retDict = {}
+        writeSQL = ""
+        if majtypeIn == 'movie':
+            # Do the movie thing
+            result = None
+            currRec = None
+            currRec = this.getClientMoviePlay(clientidIn, artifactidIn)
+            if currRec['lastreportdts'] != '':
+                # It looks like we already have a record.  Let's update it.
+                updateSQL = """UPDATE client_play_progress 
+SET 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """' , 
+WHERE 
+    clientid = '""" + clientidIn + """' 
+    AND artifactid = '""" + artifactidIn + """' """
+                result = self._stdUpdate(updateSQL)
+            else:
+                insertSQL = """INSERT INTO client_play_progress 
+SET
+    clientid = '""" + clientidIn + """', 
+    artifactid = '""" + artifactidIn + """', 
+    seriesaid  = '""" + seriesaidIn + """', 
+    majtype = '""" + majtypeIn + """', 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """'   """
+                result = self._stdInsert(insertSQL);
+            pass
+        elif majtypeIn == "tvepisode":
+            # Do the tvepisode thing
+            result = None
+            currRec = None
+            currRec = this.getClientTvEpisodePlay(clientidIn, artifactidIn)
+            if currRec['lastreportdts'] != '':
+                # It looks like we already have a record.  Let's update it.
+                updateSQL = """UPDATE client_play_progress 
+SET 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """' , 
+WHERE 
+    clientid = '""" + clientidIn + """' 
+    AND artifactid = '""" + artifactidIn + """' """
+                result = self._stdUpdate(updateSQL)
+            else:
+                insertSQL = """INSERT INTO client_play_progress 
+SET
+    clientid = '""" + clientidIn + """', 
+    artifactid = '""" + artifactidIn + """', 
+    seriesaid  = '""" + seriesaidIn + """', 
+    majtype = '""" + majtypeIn + """', 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """'   """
+                result = self._stdInsert(insertSQL);
+            pass
+            pass
+        elif majtypeIn == "tvseries":
+            # Do the tvseries thing
+            result = None
+            currRec = None
+            currRec = this.getClientTvEpisodePlay(clientidIn, artifactidIn)
+            if currRec['lastreportdts'] != '':
+                # It looks like we already have a record.  Let's update it.
+                updateSQL = """UPDATE client_play_progress 
+SET 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """' , 
+WHERE 
+    clientid = '""" + clientidIn + """' 
+    AND artifactid = '""" + artifactidIn + """' """
+                result = self._stdUpdate(updateSQL)
+            else:
+                insertSQL = """INSERT INTO client_play_progress 
+SET
+    clientid = '""" + clientidIn + """', 
+    artifactid = '""" + artifactidIn + """', 
+    seriesaid  = '""" + seriesaidIn + """', 
+    majtype = '""" + majtypeIn + """', 
+    progressmins = '""" + progressminsIn + """' , 
+    lastreportdts = '""" + lastreportdtsIn + """' , 
+    completetf = '""" + completetfIn + """'   """
+                result = self._stdInsert(insertSQL);
+            pass
+        else:
+            # Uuuuhhh 
+            print("writeClientArtiRecentPlay - I HAVE NO IDEA WHAT I AM DOING")
+            pass
+        pass
+        return retDict
+    def getClientMoviePlay(self, clientidIn, artifactidIn):
+        retDict = {'clientid': clientidIn,'artifactid': artifactidIn, 'majtype':'movie', 'progressmins': 0, 'lastreportdts': '','completetf': False}
+        readSQL = """SELECT 
+    progressmins, 
+    lastreportdts, 
+    completetf
+FROM client_play_progress
+WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ """' """
+        resTuple = self._stdRead(readAQL)
+        for row in resTuple:
+            retDict['progressmins'] = row[0]
+            retDict['lastreportdts'] = row[1]
+            if row[2] == True:
+                retDict['completetf'] = True
+            else:
+                print("getClientMoviePlay DB reports completetf as " + str(row[2]) )
+            pass
+        pass
+        return retDict
+    def getClientTvseriesPlay(self, clientidIn, artifactidIn):
+        retDict = {'clientid': clientidIn,'artifactid': '', 'seriesaid':artifactidIn, 'majtype':'tvseries', 'progressmins': 0, 'lastreportdts': '','completetf': False}
+        readSQL = """SELECT 
+    artifactid, 
+    progressmins, 
+    lastreportdts, 
+    completetf
+FROM client_play_progress
+WHERE clientid = '""" + clientidIn + """' AND seriesaid = '""" + artifactidIn+ """' """
+        resTuple = self._stdRead(readAQL)
+        for row in resTuple:
+            retDict['artifactid'] = row[0]
+            retDict['progressmins'] = row[1]
+            retDict['lastreportdts'] = row[2]
+            if row[3] == True:
+                retDict['completetf'] = True
+            else:
+                print("getClientTvseriesPlay DB reports completetf as " + str(row[3]) )
+            pass
+        pass
+        return retDict
+    def getClientTvEpisodePlay(self, clientidIn, artifactidIn):
+        retDict = {'clientid': clientidIn,'artifactid': artifactidIn, 'seriesaid': '', 'majtype':'tvseries', 'progressmins': 0, 'lastreportdts': '','completetf': False}
+        readSQL = """SELECT 
+    seriesaid, 
+    progressmins, 
+    lastreportdts, 
+    completetf
+FROM client_play_progress
+WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ """' """
+        resTuple = self._stdRead(readAQL)
+        for row in resTuple:
+            retDict['seriesaid'] = row[0]
+            retDict['progressmins'] = row[1]
+            retDict['lastreportdts'] = row[2]
+            if row[3] == True:
+                retDict['completetf'] = True
+            else:
+                print("getClientTvseriesPlay DB reports completetf as " + str(row[3]) )
+            pass
+        pass
+        return retDict
+        
+        
+        
 
 
 class MediaLibraryDB:
@@ -3154,6 +3316,19 @@ class MediaLibraryDB:
         retDict['status'] = {'success':False,'detail':'','log':[]}
         retDict['data'] = []
         
+        ### New for play progress
+        # We need a timestamp
+        now = datetime.now()
+        lastreportdts = now.strftime("%Y-%m-%d %H:%M:%S")
+        artiDetailDict = this.getArtifactByIdNew(artiIdIn)['data']
+        vldb = self.dbHandleConfigged()
+        seriesaid = ""
+        if artiDetailDict['majtype'] == 'tvepisode':
+            seriesaid = vldb.getSeriesaidFromEpisodeaid(artifactidIn)
+        pass
+        vldb.writeClientArtiRecentPlay(clientIdIn, artiIdIn, seriesaid, artiDetailDict['majtype'], 0, lastreportdts, False):
+
+        
         try:
             #vldb = VodLibDB()
             vldb = self.dbHandleConfigged()
@@ -3303,6 +3478,11 @@ class MediaLibraryDB:
                                 
         tmpRetObj['data'] = vldb.getRecSeriesList(seriesAidIn)
         return tmpRetObj
+    def getSeriesArtifactByEpisodeId(self,episodeaidIn):
+        retDict = {}
+        luSQL = """SELECT seriesaid FROM s2e WHERE episodeaid = '""" + episodeaidIn + """'  """
+        seriesaid = this._stdRead(luSQL)[0][0]
+        return self.getArtifactById(seriesaid)
     def fetchApiConfig(self): 
         # take the current config, strip out the private stuff, and
         # send it back to the client

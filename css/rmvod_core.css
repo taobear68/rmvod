@@ -240,11 +240,13 @@ div.tags, div.relorg, div.director, div.writer, div.primcast{
 [class$="AddMemberButton"] {
     font-size:14px;
     color:#000000; 
+    cursor: pointer;
     }
 [class$="MemberRmv"] {
     margin-left:5px;
     font-size:14px;
     color:#000000; 
+    cursor: pointer;
     }
 [class$="MemberLabel"]  {
     font-size:14px;
@@ -393,6 +395,7 @@ span.RNWATabWidgetTabTab-unsel {
     margin-right:5px;
     margin-top:0px;
     margin-bottom:0px;
+    cursor: pointer;
 }
 div.RNWATabWidgetTabBody-outer {
     border-color:#000000;

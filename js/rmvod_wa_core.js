@@ -354,22 +354,22 @@ class RMVWAHtmlGenerator {
         htmlStr += '<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;NONE&quot;, &quot;userdetail&quot;:{},&quot;sessiondetails&quot;:{,&quot;sessionjson&quot;:{}}}"></div>';
         htmlStr += '<div id="sessionno" style="display:block;">'; // background-color:#ffdddd;
         //htmlStr += '<span id="loginbutton" onclick="doLoginButton()"><b><u>Login</u></b></span>';
-        htmlStr += '<span id="loginbutton" onclick="switchboard(&quot;doLogin&quot;,&quot;&quot;,{})"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="loginbutton" style="cursor: pointer;" onclick="switchboard(&quot;doLogin&quot;,&quot;&quot;,{})"><b><u>Login</u></b></span>';
         htmlStr += '</div>';
         htmlStr += '<div id="sessionyes" style="display:none;">'; //  background-color:#ddffdd;
         htmlStr += '<i>Watching as</i><br>';
         htmlStr += '<span id="sessionpersonname"></span><br>';
         //htmlStr += '(<span id="logoutbutton" onclick="doLogoutButton()"><u>Logout</u></span>)&nbsp;';
         //htmlStr += '(<span id="closesessbutton" onclick="doCloseSessButton()"><u>Close Session</u></span>)';
-        htmlStr += '(<span id="logoutbutton" onclick="switchboard(&quot;doLogout&quot;,&quot;&quot;,{})"><u>Logout</u></span>)&nbsp;';
-        htmlStr += '(<span id="closesessbutton" onclick="switchboard(&quot;doCloseSession&quot;,&quot;&quot;,{})"><u>Close Session</u></span>)';
+        htmlStr += '(<span id="logoutbutton" style="cursor: pointer;" onclick="switchboard(&quot;doLogout&quot;,&quot;&quot;,{})"><u>Logout</u></span>)&nbsp;';
+        htmlStr += '(<span id="closesessbutton" style="cursor: pointer;" onclick="switchboard(&quot;doCloseSession&quot;,&quot;&quot;,{})"><u>Close Session</u></span>)';
         htmlStr += '</div>';
         htmlStr += '<div id="sessionstart" style="display:none;">'; //  background-color:#ddddff;
         htmlStr += '<form id="loginform">';
         htmlStr += 'Username:&nbsp;<input id="username" type="text" tabindex="1"><br>';
         htmlStr += 'Password:&nbsp;<input id="password" type="password" tabindex="1"><br>';
         //htmlStr += '<span id="logingobutton" onclick="doLoginGoButton()" tabindex="3"><b><u>Login</u></b></span>';
-        htmlStr += '<span id="logingobutton" onclick="switchboard(&quot;doLoginGo&quot;,&quot;&quot;,{})" tabindex="3"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="logingobutton" style="cursor: pointer;" onclick="switchboard(&quot;doLoginGo&quot;,&quot;&quot;,{})" tabindex="3"><b><u>Login</u></b></span>';
         htmlStr += '</form>';
         htmlStr += '</div>';
         htmlStr += '</div>';            
@@ -569,7 +569,7 @@ class RMVWAHtmlGenerator {
         var sfdMFSExec = document.createElement('div');
         sfdMFSExec.id = "mfsexeccontainer";
         sfdMFSExec.style.display = 'none';
-        var tmpHtml = '<span id="mfsexeclink" style="margin-left:400px;font-weight: bold; text-decoration: underline; " onclick="switchboard(\'execmfsrch\',this.id,{})">';
+        var tmpHtml = '<span id="mfsexeclink" style="margin-left:400px;font-weight: bold; text-decoration: underline; cursor: pointer;" onclick="switchboard(\'execmfsrch\',this.id,{})">';
         tmpHtml += 'Search';
         tmpHtml += '</span>';
         sfdMFSExec.innerHTML = tmpHtml;
@@ -713,19 +713,19 @@ class RMVWAHtmlGenerator {
         tmpHtml += '</div>';
         
         
-        tmpHtml += '<div><span onclick="switchboard(\'formNewSingleArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
+        tmpHtml += '<div><span style="cursor: pointer;" onclick="switchboard(\'formNewSingleArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         tmpHtml += '<b><u>Create a single Artifact</u></b>'
         tmpHtml += '</span></div>';
         
-        tmpHtml += '<div><span onclick="switchboard(\'formNewMultiArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
-        tmpHtml += '<b><u>Create a multiple Artifacts</u></b>'
+        tmpHtml += '<div><span style="cursor: pointer;" onclick="switchboard(\'formNewMultiArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
+        tmpHtml += '<b><u>Create multiple Artifacts</u></b>'
         tmpHtml += '</span></div>';
         
         //tmpHtml += '<div><span onclick="switchboard(\'formNewMultiArti\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         //tmpHtml += '<b><u>Create a multiple Artifacts</u></b>'
         //tmpHtml += '</span></div>';
         
-        tmpHtml += '<div><span onclick="switchboard(\'forcerecrefresh\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
+        tmpHtml += '<div><span style="cursor: pointer;" onclick="switchboard(\'forcerecrefresh\',\'\',{})">'  // syle="text-decoration:underline;font-weight:bold;" 
         tmpHtml += '<b><u>Refresh Recs</u></b>'
         tmpHtml += '</span></div>';
         
@@ -1204,7 +1204,7 @@ class RMVodWebApp {
                 cellDiv1.style.display = "inline-flex";
                 cellDiv1.style.width = colWidthPct[0];
                 // cellDiv1.innerText = objIn['data'][row]['seriestitle']
-                cellDiv1.innerHTML = "<span onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                cellDiv1.innerHTML = "<span style=\"cursor: pointer;\" onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
                 rowDiv.appendChild(cellDiv1);
                 // Episode Title
                 var cellDiv2 = document.createElement('div');
@@ -1226,7 +1226,7 @@ class RMVodWebApp {
                 var cellDiv4 = document.createElement('div');
                 cellDiv4.style.display = "inline-flex";
                 cellDiv4.style.width = colWidthPct[3];
-                var tmpHtml = "<span onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Replay</u></span>";
+                var tmpHtml = "<span style=\"cusror: pointer; \" onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Replay</u></span>";
                 //cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
                 cellDiv4.innerHTML = tmpHtml;
                 rowDiv.appendChild(cellDiv4);
@@ -1236,7 +1236,7 @@ class RMVodWebApp {
                 var cellDiv5 = document.createElement('div');
                 cellDiv5.style.display = "inline-flex";
                 cellDiv5.style.width = colWidthPct[4];
-                var tmpHtml = "<span onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Play Next</u></span>";
+                var tmpHtml = "<span style=\"cursor: pointer;\" onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Play Next</u></span>";
                 //cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
                 cellDiv5.innerHTML = tmpHtml;
                 rowDiv.appendChild(cellDiv5);
@@ -1596,8 +1596,9 @@ class RMVodWebApp {
             var innerHtml = '<span class="" id="" style="" >';
             innerHtml += dValStr;
             innerHtml += '</span><br>'
-            innerHtml += '<span class="" id="" style="font-size:10px;"';
+            innerHtml += '<span class="" id="" style="font-size:10px; cursor: pointer;"';
             innerHtml += 'onclick="switchboard(\'initiateArtiEdit\',\'' + objIn['artifactid'] + '\',{})" ';
+            // innerHtml += ' class="cursor: pointer;" ';
             innerHtml += '>'; 
             innerHtml += '<u>Edit</u>';
             innerHtml += '</span>';
@@ -1605,7 +1606,7 @@ class RMVodWebApp {
             var regex = /'/g;
             if (objIn['majtype'] == 'tvseries') {
                 innerHtml += '&nbsp;&nbsp;';
-                innerHtml += '<span class="" id="" style="font-size:10px;"';
+                innerHtml += '<span class="" id="" style="font-size:10px; cursor: pointer;"';
                 innerHtml += 'onclick="switchboard(\'seriesAddEpisodesForm\',\'' ;
                 innerHtml +=  objIn['artifactid'] + '\',{\'title\':\'' + objIn['title'].replace(regex,"\\\'") ;
                 innerHtml += '\',\'artifactid\':\'' + objIn['artifactid'] ;
@@ -1620,7 +1621,7 @@ class RMVodWebApp {
             //popepideets
             if (objIn['majtype'] == 'tvseries') {
                 innerHtml += '&nbsp;&nbsp;';
-                innerHtml += '<span class="" id="" style="font-size:10px;"';
+                innerHtml += '<span class="" id="" style="font-size:10px; cursor: pointer;"';
                 innerHtml += 'onclick="switchboard(\'popepideets\',\'' ;
                 innerHtml +=  objIn['artifactid'] + '\',{})" ';
                 innerHtml += '>'; 
@@ -2395,7 +2396,7 @@ class RMVodWebApp {
         var retStr = '';
         retStr += '<span onclick="switchboard(\'execDirectStringSrch\',\'\',{\'srchstr\':\'';
         retStr += strIn;
-        retStr += '\'})" style="text-decoration:underline;">';
+        retStr += '\'})" style="text-decoration:underline; cursor:pointer;">';
         retStr += strIn;
         retStr += '</span>'
         return retStr;
@@ -2501,9 +2502,9 @@ class RMVodWebApp {
         titleDiv.className = "listelconttitle";
         var trunclength = 42;
         if (tdTitle.length > trunclength) {
-            titleDiv.innerHTML = '<span id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...</u></b></span>';
+            titleDiv.innerHTML = '<span style="cursor:pointer;" id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...</u></b></span>';
         } else {
-            titleDiv.innerHTML = '<span id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '</u></b></span>';
+            titleDiv.innerHTML = '<span style="cursor: pointer;" id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '</u></b></span>';
         }
         
         // Expand Button DIV
@@ -2511,7 +2512,7 @@ class RMVodWebApp {
         var bdSpanOnclick = "switchboard('xpopsldetail','" + artiTIDobjIn['artifactid'] + "',{})"; 
         var buttDiv = document.createElement('div');
         buttDiv.className = "listelcontxpbutt";
-        buttDiv.innerHTML = '<span class="' + bdSpanClass + '" onclick="' + bdSpanOnclick + '"><u>Det</u></span>';
+        buttDiv.innerHTML = '<span style="cursor:pointer;" class="' + bdSpanClass + '" onclick="' + bdSpanOnclick + '"><u>Det</u></span>';
         
         // Container for Title and Button
         var titleRowDiv = document.createElement('div');
@@ -2542,12 +2543,13 @@ class RMVodWebApp {
         var tdTitle = artiTIDobjIn['title']; // + "(series)";
         var titleDiv = document.createElement('div');
         titleDiv.className = "listelconttitle";
+        titleDiv.style = "cursor: pointer;";
         
         var trunclength = 38;
         if (tdTitle.length >= trunclength) {
-            titleDiv.innerHTML = '<span class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...<span style="color:#c0c080">(series)</span></u></b></span>';
+            titleDiv.innerHTML = '<span style="cursor:pointer;" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...<span style="color:#c0c080">(series)</span></u></b></span>';
         } else {
-            titleDiv.innerHTML = '<span class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '<span style="color:#c0c080">(series)</u></b></span>';
+            titleDiv.innerHTML = '<span style="cursor:pointer;" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '<span style="color:#c0c080">(series)</u></b></span>';
         }
         
         // Container for Title and Button
@@ -2597,9 +2599,9 @@ class RMVodWebApp {
         
         var trunclength = 35;
         if (tdTitle.length >= trunclength) {
-            titleDiv.innerHTML = '<span id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...</u></b></span>'; //...(series)
+            titleDiv.innerHTML = '<span style="cursor: pointer;" id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle.substring(0,(trunclength-3)) + '...</u></b></span>'; //...(series)
         } else {
-            titleDiv.innerHTML = '<span id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '</u></b></span>'; // (series)
+            titleDiv.innerHTML = '<span style="cursor: pointer;" id="' + spanId + '" class="' + tdSpanClass + '" onclick="' + tdSpanOnclick + '"><b><u>' + tdTitle + '</u></b></span>'; // (series)
         }
         
         // Expand Button DIV
@@ -2607,7 +2609,7 @@ class RMVodWebApp {
         var bdSpanOnclick = "switchboard('xpopsldetail','" + artiTIDobjIn['artifactid'] + "',{})";
         var buttDiv = document.createElement('div');
         buttDiv.className = "listelcontxpbutt";
-        buttDiv.innerHTML = '<span class="' + bdSpanClass + '" onclick="' + bdSpanOnclick + '"><u>Det</u></span>';
+        buttDiv.innerHTML = '<span style="cursor: pointer;" class="' + bdSpanClass + '" onclick="' + bdSpanOnclick + '"><u>Det</u></span>';
         
         // Container for Title and Button
         var titleRowDiv = document.createElement('div');
@@ -2644,7 +2646,7 @@ class RMVodWebApp {
     // Performs DOM update directly.
     tvsDetailShowButton(artiIdIn) {
         var innerHtml = '';
-        innerHtml += '<span class="" id="" style="font-size:10px;"';
+        innerHtml += '<span class="" id="" style="font-size:10px; cursor:pointer;"';
         innerHtml += 'onclick="switchboard(\'xpopslseriesdetail\',\'' + artiIdIn + '\',{})" ';
         innerHtml += '>';
         innerHtml += '<u>Show Series Details</u>';
@@ -2782,7 +2784,7 @@ class RMVodWebApp {
         fooDiv.appendChild(row3);
         tmpHtml += fooDiv.outerHTML;
         
-        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline;" onclick="switchboard(\'singleNewArtiSubmit\',\'\',{})">Submit</span></div>';
+        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline; cursor: pointer;" onclick="switchboard(\'singleNewArtiSubmit\',\'\',{})">Submit</span></div>';
         
         var div = document.createElement('div');
         div.className = "";
@@ -2839,7 +2841,7 @@ class RMVodWebApp {
         fooDiv.appendChild(row3);
         tmpHtml += fooDiv.outerHTML;
         
-        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline;" onclick="switchboard(\'seriesEpisodeAddSubmit\',\'\',{})">Submit</span></div>';
+        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline; cursor: pointer;" onclick="switchboard(\'seriesEpisodeAddSubmit\',\'\',{})">Submit</span></div>';
         
         var div = document.createElement('div');
         div.className = "";
@@ -2924,7 +2926,7 @@ class RMVodWebApp {
         tmpHtml += fooDiv.outerHTML;        
         
         
-        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline;" onclick="switchboard(\'multiNewArtiSubmit\',\'\',{})">Submit</span></div>';
+        tmpHtml += '<div style="padding-left:200px;"><span style="font-weight:bold;text-decoration:underline; cursor: pointer; " onclick="switchboard(\'multiNewArtiSubmit\',\'\',{})">Submit</span></div>';
         tmpHtml += '<div id="mutiaddresult">';
         
         tmpHtml += '</div>';
@@ -3267,7 +3269,7 @@ class RMVodWebApp {
         contentHtmlStr = '\
             <div style="width:1150px;height:100%;display:block;">\
                 <div id="sitestatsdatastore" data-sitestats="" style="display:none;"></div>\
-                <div id="sitestatsclicker"><b><u><span onclick="switchboard(\'sitestatsrefresh\',\'\',{})">Click for Site Statistics</span></u></b></div>\
+                <div id="sitestatsclicker"><b><u><span style="cursor:pointer" onclick="switchboard(\'sitestatsrefresh\',\'\',{})">Click for Site Statistics</span></u></b></div>\
                 <div style="width:20%;height:100%;display:inline-flex;">\
                     <div  id="stats_majid_column" style="width:100%;height:100%;display:block;">\
                         &nbsp;<!-- Major Type -->\
@@ -3333,7 +3335,7 @@ class RMVodWebApp {
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "65%";
-            labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTags\",\"" + mtAry[i] + "\",{})'>" + mtAry[i] + "</span>";
+            labelDiv.innerHTML = "<span style=\"cursor:pointer;\" onclick='switchboard(\"renderStatsTags\",\"" + mtAry[i] + "\",{})'>" + mtAry[i] + "</span>";
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
             countDiv.innerHTML = dObj['listings'][mtAry[i]]['count'];
@@ -3376,7 +3378,7 @@ class RMVodWebApp {
             var labelDiv = document.createElement('div');
             labelDiv.style.display = "inline-flex";
             labelDiv.style.width = "80%";
-            labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTitles\",\"" + majTypeIn + "\",{\"tag\":\"" + mtAry[i] + "\"})'>" + mtAry[i] + "</span>";
+            labelDiv.innerHTML = "<span style=\"cursor:pointer;\" onclick='switchboard(\"renderStatsTitles\",\"" + majTypeIn + "\",{\"tag\":\"" + mtAry[i] + "\"})'>" + mtAry[i] + "</span>";
             var countDiv = document.createElement('div');
             countDiv.style.display = "inline-flex";
             countDiv.innerHTML = dObj['listings'][majTypeIn]['tags'][mtAry[i]]['count'];
@@ -3455,7 +3457,7 @@ class RMVodWebApp {
                 var labelDiv = document.createElement('div');
                 labelDiv.style.display = "inline-flex";
                 labelDiv.style.width = "85%";
-                labelDiv.innerHTML = "<span onclick='switchboard(\"renderStatsTitleDeets\",\"" + artiObj['artifactid'] + "\",{})'>" + artiObj['title'] + "</span>";
+                labelDiv.innerHTML = "<span style=\"cursor:pointer;\" onclick='switchboard(\"renderStatsTitleDeets\",\"" + artiObj['artifactid'] + "\",{})'>" + artiObj['title'] + "</span>";
                 
                 var countDiv = document.createElement('div');
                 countDiv.style.display = "inline-flex";
@@ -3525,7 +3527,7 @@ class RMVodWebApp {
                 var tmpHtml = '';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
+                tmpHtml += '" style="cursor: pointer;" onclick="switchboard(\'recPlaySeriesFromStart\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'Play from the beginning';
@@ -3533,7 +3535,7 @@ class RMVodWebApp {
                 tmpHtml += '&nbsp;|&nbsp';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'statpopsidelist\',\'';
+                tmpHtml += '" style="cursor:pointer;" onclick="switchboard(\'statpopsidelist\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'View in List';
@@ -3543,7 +3545,7 @@ class RMVodWebApp {
                 var tmpHtml = '';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'vodPlayTitle\',\'';
+                tmpHtml += '" style="cursor:pointer;"  onclick="switchboard(\'vodPlayTitle\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'Play this Title';
@@ -3551,7 +3553,7 @@ class RMVodWebApp {
                 tmpHtml += '&nbsp;|&nbsp';
                 tmpHtml += '<b><u><span data-artifactid="';
                 tmpHtml += artiObj['artifactid'];
-                tmpHtml += '" onclick="switchboard(\'statpopsidelist\',\'';
+                tmpHtml += '" style="cursor:pointer;" onclick="switchboard(\'statpopsidelist\',\'';
                 tmpHtml += artiObj['artifactid'];
                 tmpHtml += '\',{})">';
                 tmpHtml += 'View in List';
@@ -3727,19 +3729,19 @@ class RMVodWebApp {
         htmlStr += '<div id="sessiondisp"  style="display:block; background-color:#999999; padding: 2px; ">';
         htmlStr += '<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;NONE&quot;, &quot;userdetail&quot;:{},&quot;sessiondetails&quot;:{,&quot;sessionjson&quot;:{}}}"></div>';
         htmlStr += '<div id="sessionno" style="display:block; background-color:#ffdddd;">';
-        htmlStr += '<span id="loginbutton" onclick="doLoginButton()"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="loginbutton" style="cursor:pointer;" onclick="doLoginButton()"><b><u>Login</u></b></span>';
         htmlStr += '</div>';
         htmlStr += '<div id="sessionyes" style="display:none; background-color:#ddffdd;">';
         htmlStr += '<i>Watching as</i><br>';
         htmlStr += '<span id="sessionpersonname"></span><br>';
-        htmlStr += '(<span id="logoutbutton" onclick="doLogoutButton()"><u>Logout</u></span>)&nbsp;';
-        htmlStr += '(<span id="closesessbutton" onclick="doCloseSessButton()"><u>Close Session</u></span>)';
+        htmlStr += '(<span id="logoutbutton" style="cursor:pointer;" onclick="doLogoutButton()"><u>Logout</u></span>)&nbsp;';
+        htmlStr += '(<span id="closesessbutton" style="cursor:pointer;" onclick="doCloseSessButton()"><u>Close Session</u></span>)';
         htmlStr += '</div>';
         htmlStr += '<div id="sessionstart" style="display:none; background-color:#ddddff;">';
         htmlStr += '<form id="loginform">';
         htmlStr += 'Username:&nbsp;<input id="username" type="text" tabindex="1"><br>';
         htmlStr += 'Password:&nbsp;<input id="password" type="password" tabindex="1"><br>';
-        htmlStr += '<span id="logingobutton" onclick="doLoginGoButton()" tabindex="3"><b><u>Login</u></b></span>';
+        htmlStr += '<span id="logingobutton" style="cursor:pointer;" onclick="doLoginGoButton()" tabindex="3"><b><u>Login</u></b></span>';
         htmlStr += '</form>';
         htmlStr += '</div>';
         htmlStr += '</div>';            
@@ -4190,12 +4192,12 @@ class WMCWARecommend {
                 
                 playDivHtmlStr += "    |    ";
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
-                playDivHtmlStr += "'  onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
+                playDivHtmlStr += "'  style=\"cursor:pointer;\" onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
                 playDivHtmlStr += "Play Series from start</span></div>";
             } else {
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='" + playDivStyle ;
                 playDivHtmlStr += "'><span data-artifactid='" + artiIdIn ;
-                playDivHtmlStr += "'  onclick='switchboard(\"vodPlayTitle\",\"" + artiIdIn + "\",{})' >Play this Title</span></div>";
+                playDivHtmlStr += "'  style=\"cursor:pointer;\" onclick='switchboard(\"vodPlayTitle\",\"" + artiIdIn + "\",{})' >Play this Title</span></div>";
             }
             htmlStr += playDivHtmlStr;
             
@@ -4218,7 +4220,7 @@ class WMCWARecommend {
         deetPoster.style.width = "40%";
         deetPoster.style.height = "100%";
         deetPoster.style.padding = "7px";
-        var dpHtml = "<div style='padding:3px;'><span onclick='deetHide()'><b>X [close]</b></span></div>";
+        var dpHtml = "<div style='padding:3px;'><span style=\"cursor:pointer;\" onclick='deetHide()'><b>X [close]</b></span></div>";
         if (artiDetObj['imdbid'] != '' & artiDetObj['imdbid'] != undefined & artiDetObj['imdbid'] != 'string' & artiDetObj['imdbid'] != 'none') {
             var ph = this.posterHeightPx * 1.90;
             var pw = ph * this.posterWidthFraction;

@@ -156,6 +156,17 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
+CREATE TABLE IF NOT EXISTS client_play_progress (
+    clientid VARCHAR(200) NOT NULL, 
+    artifactid VARCHAR(200) NOT NULL, 
+    seriesaid VARCHAR(200), 
+    lastreportdts DATETIME NOT NULL, 
+    progressmins INTEGER NOT NULL, 
+    completetf BOOLEAN NOT NULL DEFAULT false
+);
+
+
+
 CREATE OR REPLACE VIEW user_series_last_episode AS
     SELECT DISTINCT l.clientid AS "clientid", s.artifactid AS "artifactid", s.title AS "title", MAX(l.reqtime) AS "reqtime" 
     FROM artifacts s 
