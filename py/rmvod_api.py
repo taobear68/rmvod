@@ -2216,7 +2216,7 @@ SET
     artifactid = '""" + artifactidIn + """', 
     seriesaid  = '""" + seriesaidIn + """', 
     majtype = '""" + majtypeIn + """', 
-    progressmins = '""" + progressminsIn + """' , 
+    progressmins = '""" + str(progressminsIn) + """' , 
     lastreportdts = '""" + lastreportdtsIn + """' , 
     completetf = '""" + completetfIn + """'   """
                 result = self._stdInsert(insertSQL);
