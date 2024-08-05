@@ -3320,7 +3320,7 @@ class MediaLibraryDB:
         # We need a timestamp
         now = datetime.now()
         lastreportdts = now.strftime("%Y-%m-%d %H:%M:%S")
-        artiDetailDict = this.getArtifactByIdNew(artiIdIn)['data']
+        artiDetailDict = self.getArtifactByIdNew(artiIdIn)['data']
         vldb = self.dbHandleConfigged()
         seriesaid = ""
         if artiDetailDict['majtype'] == 'tvepisode':
