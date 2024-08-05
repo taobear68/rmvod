@@ -3327,7 +3327,7 @@ class MediaLibraryDB:
             seriesaid = vldb.getSeriesaidFromEpisodeaid(artiIdIn)
         pass
         
-        vldb.writeClientArtiRecentPlay(clientIdIn, artiIdIn, seriesaid, artiDetailDict['majtype'], 0, lastreportdts, False)
+        vldb.writeClientArtiRecentPlay(clientIdIn, artiIdIn, seriesaid, artiDetailDict[0]['majtype'], 0, lastreportdts, False)
 
         
         try:
