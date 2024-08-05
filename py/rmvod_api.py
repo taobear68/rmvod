@@ -2174,9 +2174,9 @@ GROUP BY 1, 2, 3 """
                 # It looks like we already have a record.  Let's update it.
                 updateSQL = """UPDATE client_play_progress 
 SET 
-    progressmins = '""" + progressminsIn + """' , 
+    progressmins = '""" + str(progressminsIn) + """' , 
     lastreportdts = '""" + lastreportdtsIn + """' , 
-    completetf = '""" + completetfIn + """' , 
+    completetf = '""" + str(completetfIn) + """' , 
 WHERE 
     clientid = '""" + clientidIn + """' 
     AND artifactid = '""" + artifactidIn + """' """
@@ -2188,9 +2188,9 @@ SET
     artifactid = '""" + artifactidIn + """', 
     seriesaid  = '""" + seriesaidIn + """', 
     majtype = '""" + majtypeIn + """', 
-    progressmins = '""" + progressminsIn + """' , 
+    progressmins = '""" + str(progressminsIn) + """' , 
     lastreportdts = '""" + lastreportdtsIn + """' , 
-    completetf = '""" + completetfIn + """'   """
+    completetf = '""" + str(completetfIn) + """'   """
                 result = self._stdInsert(insertSQL);
             pass
         elif majtypeIn == "tvepisode":
@@ -2218,7 +2218,7 @@ SET
     majtype = '""" + majtypeIn + """', 
     progressmins = '""" + str(progressminsIn) + """' , 
     lastreportdts = '""" + lastreportdtsIn + """' , 
-    completetf = '""" + completetfIn + """'   """
+    completetf = '""" + str(completetfIn) + """'   """
                 result = self._stdInsert(insertSQL);
             pass
             pass
