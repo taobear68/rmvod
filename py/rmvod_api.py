@@ -3323,7 +3323,7 @@ class MediaLibraryDB:
         artiDetailDict = self.getArtifactByIdNew(artiIdIn)['data']
         vldb = self.dbHandleConfigged()
         seriesaid = ""
-        if artiDetailDict['majtype'] == 'tvepisode':
+        if artiDetailDict[0]['majtype'] == 'tvepisode':
             seriesaid = vldb.getSeriesaidFromEpisodeaid(artifactidIn)
         pass
         
