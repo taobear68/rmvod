@@ -631,7 +631,7 @@ WHERE s.seriesaid = '""" + artiIdIn + """' """
         return resList
     def getSeriesaidFromEpisodeaid(self,episodeaidIn):
         luSQL = """SELECT seriesaid FROM s2e WHERE episodeaid = '""" + episodeaidIn + """'  """
-        seriesaid = this._stdRead(luSQL)[0][0]
+        seriesaid = self._stdRead(luSQL)[0][0]
         return seriesaid        
     def getNextEpisodeArtifact(self,sEpiIdIn):
         retDict = {}
