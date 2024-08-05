@@ -3324,7 +3324,7 @@ class MediaLibraryDB:
         vldb = self.dbHandleConfigged()
         seriesaid = ""
         if artiDetailDict[0]['majtype'] == 'tvepisode':
-            seriesaid = vldb.getSeriesaidFromEpisodeaid(artifactidIn)
+            seriesaid = vldb.getSeriesaidFromEpisodeaid(artiIdIn)
         pass
         
         vldb.writeClientArtiRecentPlay(clientIdIn, artiIdIn, seriesaid, artiDetailDict['majtype'], 0, lastreportdts, False)
