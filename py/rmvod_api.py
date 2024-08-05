@@ -2169,7 +2169,7 @@ GROUP BY 1, 2, 3 """
             # Do the movie thing
             result = None
             currRec = None
-            currRec = this.getClientMoviePlay(clientidIn, artifactidIn)
+            currRec = self.getClientMoviePlay(clientidIn, artifactidIn)
             if currRec['lastreportdts'] != '':
                 # It looks like we already have a record.  Let's update it.
                 updateSQL = """UPDATE client_play_progress 
@@ -2197,7 +2197,7 @@ SET
             # Do the tvepisode thing
             result = None
             currRec = None
-            currRec = this.getClientTvEpisodePlay(clientidIn, artifactidIn)
+            currRec = self.getClientTvEpisodePlay(clientidIn, artifactidIn)
             if currRec['lastreportdts'] != '':
                 # It looks like we already have a record.  Let's update it.
                 updateSQL = """UPDATE client_play_progress 
@@ -2226,7 +2226,7 @@ SET
             # Do the tvseries thing
             result = None
             currRec = None
-            currRec = this.getClientTvEpisodePlay(clientidIn, artifactidIn)
+            currRec = self.getClientTvEpisodePlay(clientidIn, artifactidIn)
             if currRec['lastreportdts'] != '':
                 # It looks like we already have a record.  Let's update it.
                 updateSQL = """UPDATE client_play_progress 
