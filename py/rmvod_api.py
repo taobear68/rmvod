@@ -2305,7 +2305,7 @@ WHERE clientid = '""" + clientidIn + """' AND seriesaid = '""" + artifactidIn+ "
     completetf
 FROM client_play_progress
 WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ """' """
-        resTuple = self._stdRead(readAQL)
+        resTuple = self._stdRead(readSQL)
         for row in resTuple:
             retDict['seriesaid'] = row[0]
             retDict['progressmins'] = row[1]
