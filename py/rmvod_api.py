@@ -3785,7 +3785,7 @@ class MediaLibraryDB:
                     #get series first episodeaid
                     #neaid = getSeriesFirstEpisode(said)
                     try:
-                        neaid = self.getSeriesFirstEpisodeAid(said)['data'][0]
+                        neaid = self.getSeriesFirstEpisodeAid(said)['data']
                         #append episodeaid to episodepl
                         epl.append(neaid)
                     except:
