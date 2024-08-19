@@ -4117,7 +4117,8 @@ AND artifactid = '""" + cookie_pbaid + seriesSQLWhere + """'   """
         
         # Intercept change to "playback_offset" cookie to trigger 
         # update to playback history
-        self.interceptPlaybackOffsetUpdate(userIdIn,cookieDictIn)
+        # DIKED OUT BECAUSE ERRORS.  FIX ERRORS LATER.
+        #self.interceptPlaybackOffsetUpdate(userIdIn,cookieDictIn)
         
         return self.udpateUserMeta(userIdIn, {'cookies':cookieDictIn})
         
