@@ -1580,6 +1580,8 @@ class RMVodWebApp {
                     case 'primcast':
                         dValStr += wa.l2sSrch(objIn[colList[idx]]) + '<br>';
                         break;
+                    case "tags":
+                        dValStr += wa.l2s(objIn[colList[idx]]) + '<br>';
                     case "imdbid":
                         if ((objIn[colList[idx]] != 'none') && (objIn[colList[idx]] != 'string')) {
                             dValStr += '<a target="_blank" href="https://www.imdb.com/title/' + objIn[colList[idx]] + '">' + objIn[colList[idx]] + '</a><br>';

@@ -3733,6 +3733,79 @@ class MediaLibraryDB:
         except:
             print("Could not get file create time for " + workingpath)
         return retval
+    def getEPLFromSPLfTVSDict(self,splDictIn):
+        #Get SPLfTVS object
+        splDict = splDictIn
+        
+        lebysaid = {}
+        # vldb = self.dbHandleConfigged()
+        # rEpList = vldb.getRecentEpisodes(splDictIn['clientid']):
+        print("getEPLFromSPLfTVSDict " + splDictIn['clientid'])
+        rEpList = self.userGetRecentEpisodes(splDictIn['clientid'])['data']
+        # m.clientid AS 'clientid', 
+        # m.title AS "seriestitle", 
+        # m.artifactid AS "seriesartifactid", 
+        # f.title AS "episodetitle", 
+        # f.artifactid AS "episodeartifactid", 
+        # f.season, 
+        # f.episode, 
+        # m.reqtime        
+        for row in rEpList:
+              lebysaid[row['seriesartifactid']] = row['episodeartifactid']
+        
+        #splDict = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": False, "series-repeat": True }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "d4e07f50-eed4-4c58-8e42-48e90694feb2", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "32a7c337-042b-40eb-b389-0c3fe0031838", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }
+        #Establish series repeat
+        rpt = splDict['options']['series-repeat']
+        #Extract seriesaidlist
+        sapl = splDict['seriesaidlist']
+        #Create Empty List episodepl
+        epl = []
+        #var skipped-series = 0
+        skippedSeries = 0
+        #For each seriesaid:
+        for said in sapl:
+            neaid = ""
+            try:
+                #get last played episodeaid
+                #lep = getLastPlayedBySeries(said)
+                lep = lebysaid[said]
+                assert lep != ""
+                assert lep != None
+                #get next episodeaid
+                #neaid = getNextEpisodeInSeries(lep)
+                neaid = self.getNextEpisodeArtifactById(lep)['data'][0]
+            except:
+                print("No previous plays of series " + said + " have been found.  Starting from first episode")
+                neaid = ""
+            pass
+            print("neaid: " + neaid)
+            if neaid == "":
+                #print("neaid is an empty string.")
+                if rpt == True:
+                    #get series first episodeaid
+                    #neaid = getSeriesFirstEpisode(said)
+                    neaid = self.getSeriesFirstEpisodeAid(said)
+                    #append episodeaid to episodepl
+                    epl.append(neaid)
+                else:
+                    if skippedSeries > 2:
+                        #list-repeat = false
+                        rpt = False
+                        #exit playlist with error (throw exception)
+                        print("Skipped too may series.  Dumping out.")
+                        break
+                    else:
+                        #skipped-series += 1
+                        skippedSeries += 1
+                        #skip to next series
+                        continue
+                    pass
+                pass
+            else:
+                #append episodeaid to episodepl
+                epl.append(neaid)
+            pass
+        return epl
 
 
 
@@ -3967,8 +4040,85 @@ WHERE userid = '""" + userIDIn + """'
         except:
             print("userAuthCheck failed for user " + userIDIn)
         return retDict
+    def interceptPlaybackOffsetUpdate(self,userIdIn, cookieDictIn):
+        pass
+        cookie_pbaid = cookieDictIn['playing_aid']
+        cookie_pboffset = cookieDictIn['playback_offset']
+        metaDict = self.getUserMeta(userIdIn);
+        #metaDict['playing_aid'] = cookieDictIn['playing_aid']
+        #metaDict['playback_offset'] = cookieDictIn['playback_offset']
+        p1 = metaDict['playing_aid'] != cookieDictIn['playing_aid']
+        p2 = metaDict['playback_offset'] != cookieDictIn['playback_offset']
+        if p1 || p2 :
+            ml = MediaLibraryDB()
+            artiDict = ml.getArtifactByIdNew(cookie_pbaid)['data'][0]
+            seriesaid = ''
+            seriesSQLWhere = " "
+            if artiDict['majtype'] = 'tvepisode':
+                # get series aid
+                seriesDict = ml.getSeriesArtifactByEpisodeId(cookie_pbaid)['data'][0]
+                seriesaid = seriesDict['artifactid']
+                seriesSQLWhere = " AND seriesaid = '" + seriesaid + "' "
+            pass
+            tblNm = 'client_play_progress'
+            presentCheckSQL = """SELECT 
+clientid, artifactid, seriesaid, lastreportdts, progressmins, completetf 
+FROM client_play_progress
+WHERE clientid = '""" + userIdIn + """' 
+AND artifactid = '""" + cookie_pbaid + seriesSQLWhere + """'   """
+                
+            # Update client_play_progress
+
+            # MariaDB [vodlib]> select * from client_play_progress;
+            # Empty set (0.000 sec)
+            
+            # MariaDB [vodlib]> desc client_play_progress;
+            # ERROR 2006 (HY000): Server has gone away
+            # No connection. Trying to reconnect...
+            # Connection id:    6296
+            # Current database: vodlib
+            
+            # +---------------+--------------+------+-----+---------+-------+
+            # | Field         | Type         | Null | Key | Default | Extra |
+            # +---------------+--------------+------+-----+---------+-------+
+            # | clientid      | varchar(200) | NO   |     | NULL    |       |
+            # | artifactid    | varchar(200) | NO   |     | NULL    |       |
+            # | seriesaid     | varchar(200) | YES  |     | NULL    |       |
+            # | lastreportdts | datetime     | NO   |     | NULL    |       |
+            # | progressmins  | int(11)      | NO   |     | NULL    |       |
+            # | completetf    | tinyint(1)   | NO   |     | 0       |       |
+            # +---------------+--------------+------+-----+---------+-------+
+            # 6 rows in set (0.033 sec)
+            
+            
+        
+
+            pass
+        else:
+            pass
+        pass
+        
+        return 
+    def getUserMeta(self,userIdIn):
+        metaDict = {}
+        try:
+            pass
+            sqlStr = """SELECT metajson FROM users WHERE userid = '""" + userIdIn + """'  """
+            mjTuple = self._stdRead(sqlStr);
+            metaDict = json.loads(mjTuple[0][0])
+            
+        except:
+            print("RNUserSession.getUserMeta -- Well that was poop.")
+            pass
+        pass
+        return metaDict
     def updateCookies(self,userIdIn,cookieDictIn):
         assert type(cookieDictIn) == type({'this':'that'})
+        
+        # Intercept change to "playback_offset" cookie to trigger 
+        # update to playback history
+        self.interceptPlaybackOffsetUpdate(userIdIn,cookieDictIn)
+        
         return self.udpateUserMeta(userIdIn, {'cookies':cookieDictIn})
         
         pass
@@ -4932,6 +5082,21 @@ def userRecentEpisodes():
     print(str(result))
     return json.dumps(result)
 
+@app.route('/artifact/playlist/generate',methods=['POST'])
+def playlistGenerateFromPLObj():
+    ml = MediaLibraryDB()
+    
+    splDict = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid" = "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": False, "series-repeat": True }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "d4e07f50-eed4-4c58-8e42-48e90694feb2", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "32a7c337-042b-40eb-b389-0c3fe0031838", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }
+    epl = ml.getEPLFromSPLfTVSDict(splDict)
+    
+    print(epl)
+    
+    
+    
+    
+    # getEPLFromSPLfTVSDict
+    
+    
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Optional app description')
