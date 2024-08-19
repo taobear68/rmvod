@@ -3784,9 +3784,13 @@ class MediaLibraryDB:
                 if rpt == True:
                     #get series first episodeaid
                     #neaid = getSeriesFirstEpisode(said)
-                    neaid = self.getSeriesFirstEpisodeAid(said)
-                    #append episodeaid to episodepl
-                    epl.append(neaid)
+                    try:
+                        neaid = self.getSeriesFirstEpisodeAid(said)
+                        #append episodeaid to episodepl
+                        epl.append(neaid)
+                    except:
+                        print("No first episode found for said: " + said)
+                    pass
                 else:
                     if skippedSeries > 2:
                         #list-repeat = false
