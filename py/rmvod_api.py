@@ -4054,7 +4054,7 @@ WHERE userid = '""" + userIDIn + """'
             artiDict = ml.getArtifactByIdNew(cookie_pbaid)['data'][0]
             seriesaid = ''
             seriesSQLWhere = " "
-            if artiDict['majtype'] = 'tvepisode':
+            if artiDict['majtype'] == 'tvepisode':
                 # get series aid
                 seriesDict = ml.getSeriesArtifactByEpisodeId(cookie_pbaid)['data'][0]
                 seriesaid = seriesDict['artifactid']
