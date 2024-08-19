@@ -4049,7 +4049,7 @@ WHERE userid = '""" + userIDIn + """'
         #metaDict['playback_offset'] = cookieDictIn['playback_offset']
         p1 = metaDict['playing_aid'] != cookieDictIn['playing_aid']
         p2 = metaDict['playback_offset'] != cookieDictIn['playback_offset']
-        if p1 || p2 :
+        if p1 or p2 :
             ml = MediaLibraryDB()
             artiDict = ml.getArtifactByIdNew(cookie_pbaid)['data'][0]
             seriesaid = ''
