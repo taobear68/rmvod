@@ -5098,7 +5098,7 @@ def playlistGenerateFromPLObj():
     try:
         #splDict = yaml.safe_load(json.dumps(request.json))
         print("playlistGenerateFromPLObj - type(request.json): " + str(type(request.json)))
-        splDict = request.json
+        splDict = yaml.safe_load(request.json)
         pass
     except:
         print("playlistGenerateFromPLObj - ONOES! Could not deal with request.json")
