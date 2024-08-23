@@ -3751,7 +3751,7 @@ class MediaLibraryDB:
         # f.episode, 
         # m.reqtime        
         for row in rEpList:
-            print ("getEPLFromSPLfTVSDict - Episode " + row['seriesartifactid'] + " had last episode " + row['episodeartifactid'])
+            print ("getEPLFromSPLfTVSDict - Series " + row['seriesartifactid'] + " had last Episode " + row['episodeartifactid'])
             lebysaid[row['seriesartifactid']] = row['episodeartifactid']
         
         #splDict = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": False, "series-repeat": True }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "d4e07f50-eed4-4c58-8e42-48e90694feb2", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "32a7c337-042b-40eb-b389-0c3fe0031838", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }
