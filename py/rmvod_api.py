@@ -5099,9 +5099,11 @@ def playlistGenerateFromPLObj():
         splDict = yaml.safe_load(json.dumps(request.json))
         pass
     except:
+        print("playlistGenerateFromPLObj - ONOES! Could not deal with " + request.json)
         pass
     pass
     
+    print(json.dumps(splDict))
     
     epl = ml.getEPLFromSPLfTVSDict(splDict)
     print(epl)
