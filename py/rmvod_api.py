@@ -3773,7 +3773,7 @@ class MediaLibraryDB:
                 assert lep != None
                 #get next episodeaid
                 #neaid = getNextEpisodeInSeries(lep)
-                neaid = self.getNextEpisodeArtifactById(lep)['data'][0]
+                neaid = self.getNextEpisodeArtifactById(lep)['data'][0]['artifactid']
             except:
                 print("No previous plays of series " + said + " have been found.  Starting from first episode")
                 neaid = ""
