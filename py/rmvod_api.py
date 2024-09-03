@@ -2264,7 +2264,7 @@ SET
     completetf
 FROM client_play_progress
 WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ """' """
-        resTuple = self._stdRead(readAQL)
+        resTuple = self._stdRead(readSQL)
         for row in resTuple:
             retDict['progressmins'] = row[0]
             retDict['lastreportdts'] = row[1]
