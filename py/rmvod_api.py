@@ -3444,15 +3444,16 @@ class MediaLibraryDB:
             vldb.generateRecsAllUsers(sinceDTIn, recLimitIn, self.config['API_Resources']['omdbapi_key'])
             print("MediaLibraryDB.fetchRecsFromCache - Generated fresh Recs, recovering them from the Cache...")
             
-            recsJson = vldb.getRecJsonFromCache(clientIdIn)
+            genRecsObj = vldb.getRecJsonFromCache(clientIdIn)
             print("MediaLibraryDB.fetchRecsFromCache - Recs recovery from Cache complete.")
             print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
             
             #recsObj = genRecsObj
             #recsObj = genRecsObj
-            recsObj = recsJson
+            recsObj = yaml.safe_load(genRecsObj.replace("'","\\\\\'"))
         else:
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
+        print("MediaLibraryDB.fetchRecsFromCache - Returning recsObj: " + str(recsObj)[0:50])
         return recsObj
     def getSeriesFirstEpisodeAid(self,seriesAidIn):   # Updated to use .cfg
         
