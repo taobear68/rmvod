@@ -4882,11 +4882,11 @@ def getRecs():
         dictIn = yaml.safe_load(json.dumps(request.json))
         diKeysList = list(dictIn.keys())
     except:
-        print("FAIL!  What came in: " + str(request.json))
+        print("getRecs - load request.json - FAIL!  What came in: " + str(request.json))
         dictIn = {}
         diKeysList = []
         return json.dumps([])    
-    print(json.dumps(dictIn))
+    print("getRecs - dictIn: " + json.dumps(dictIn))
     forceRefresh = False;
     try:
         pass
@@ -4896,7 +4896,7 @@ def getRecs():
     except:
         pass
         print("Could not set forceRefresh based on requester input.  Using default value: " + str(forceRefresh))
-        print("FAIL!  What came in: " + str(request.json))
+        print("getRecs - determine forceRefresh - FAIL!  What came in: " + str(request.json))
     try:
         retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
