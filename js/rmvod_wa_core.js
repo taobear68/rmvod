@@ -3008,6 +3008,7 @@ class RMVodWebApp {
             
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt,'forceRefresh':forceRefresh};
+        console.log ("RMVodWebApp.execRecsForcedRefresh.payloadObj: " + JSON.stringify(payloadObj));
         var endpoint = '/rmvod/api/artifact/recs/get';
         //var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
