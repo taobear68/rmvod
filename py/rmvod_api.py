@@ -3431,15 +3431,21 @@ class MediaLibraryDB:
         return recsObj
     def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn, forceBoolIn=False):
         vldb = self.dbHandleConfigged()
+        print("MediaLibraryDB.fetchRecsFromCache")
+        print("MediaLibraryDB.fetchRecsFromCache forceBoolIn: " + str(forceBoolIn))
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
+        print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3]
         if recsJson == None or forceBoolIn == True:
             # genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             # vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
+            print("MediaLibraryDB.fetchRecsFromCache - about to generate fresh Recs...")
             
             vldb.generateRecsAllUsers(sinceDTIn, recLimitIn, self.config['API_Resources']['omdbapi_key'])
+            print("MediaLibraryDB.fetchRecsFromCache - Generated fresh Recs, recovering them from the Cache...")
             
             recsJson = vldb.getRecJsonFromCache(clientIdIn)
+            print("MediaLibraryDB.fetchRecsFromCache - Recs recovery from Cache complete.")
             
             recsObj = genRecsObj
         else:
