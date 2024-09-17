@@ -3435,7 +3435,7 @@ class MediaLibraryDB:
         print("MediaLibraryDB.fetchRecsFromCache forceBoolIn: " + str(forceBoolIn))
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
-        print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3]
+        print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
         if recsJson == None or forceBoolIn == True:
             # genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             # vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
