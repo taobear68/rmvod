@@ -3446,8 +3446,11 @@ class MediaLibraryDB:
             
             recsJson = vldb.getRecJsonFromCache(clientIdIn)
             print("MediaLibraryDB.fetchRecsFromCache - Recs recovery from Cache complete.")
+            #print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
             
-            recsObj = genRecsObj
+            #recsObj = genRecsObj
+            #recsObj = genRecsObj
+            recsObj = recsObj
         else:
             recsObj = yaml.safe_load(recsJson.replace("'","\\\\\'"))
         return recsObj
