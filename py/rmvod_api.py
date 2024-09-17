@@ -4896,6 +4896,7 @@ def getRecs():
     except:
         pass
         print("Could not set forceRefresh based on requester input.  Using default value: " + str(forceRefresh))
+        print("FAIL!  What came in: " + str(request.json))
     try:
         retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
