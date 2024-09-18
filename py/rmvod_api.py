@@ -1856,7 +1856,7 @@ JOIN s2e t ON (h.artifactid = t.episodeaid AND m.artifactid = t.seriesaid)
           
         sql += """ORDER BY 8 DESC
 LIMIT 30"""
-        print("getRecentEpisodes sql: " + sql)
+        # print("getRecentEpisodes sql: " + sql)
         retList = []
         rowsTuple = self._stdRead(sql)
         for rowTuple in rowsTuple:
@@ -3706,9 +3706,9 @@ class MediaLibraryDB:
         tmpRetObj['status']['success'] = False
         try:
             vldb = self.dbHandleConfigged()
-            print("userGetRecentEpisodes - got vldb")
+            # print("userGetRecentEpisodes - got vldb")
             rowsList = vldb.getRecentEpisodes(clientIdIn)
-            print("userGetRecentEpisodes - got rowsList")
+            # print("userGetRecentEpisodes - got rowsList")
             tmpRetObj['data'] = rowsList
             tmpRetObj['status']['success'] = True
         except:
@@ -5098,7 +5098,7 @@ def userRecentEpisodes():
         diKeysList = []
         return json.dumps([]) 
     result = ml.userGetRecentEpisodes(dictIn['clientid'])
-    print(str(result))
+    # print(str(result))
     return json.dumps(result)
 
 @app.route('/artifact/playlist/generate',methods=['POST'])
