@@ -4911,6 +4911,7 @@ def getRecs():
         retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
         print( "Oh noes!  " + json.dumps(retDict))
+    print ("getRecs - retDict: " + json.dumps(retDict))
     return json.dumps(retDict)
 
 @app.route('/artifact/recs/serfirstep/get',methods=['POST'])
@@ -5119,7 +5120,7 @@ def playlistGenerateFromPLObj():
     print("playlistGenerateFromPLObj - json.dumps(splDict): " + json.dumps(splDict))
     
     epl = ml.getEPLFromSPLfTVSDict(splDict)
-    print(epl)
+    print("playlistGenerateFromPLObj - epl: " + json.dumps(epl))
     return json.dumps(epl)
     
     
