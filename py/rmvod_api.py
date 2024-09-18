@@ -3432,22 +3432,22 @@ class MediaLibraryDB:
         return recsObj
     def fetchRecsFromCache(self,clientIdIn, sinceDTIn, recLimitIn, forceBoolIn=False):
         vldb = self.dbHandleConfigged()
-        print("MediaLibraryDB.fetchRecsFromCache")
-        print("MediaLibraryDB.fetchRecsFromCache forceBoolIn: " + str(forceBoolIn))
+        # print("MediaLibraryDB.fetchRecsFromCache")
+        # print("MediaLibraryDB.fetchRecsFromCache forceBoolIn: " + str(forceBoolIn))
         recsObj = {'meta':{},'artifacts':{},'data':{'others':{'tvseries':[],'movie':[]},'tags':{'tvseries':[],'movie':[]},'people':{'tvseries':[],'movie':[]},'server':{'tvseries':[],'movie':[]},'rewatch':{'tvseries':[],'movie':[]}}};
         recsJson = vldb.getRecJsonFromCache(clientIdIn)
         print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
         if recsJson == None or forceBoolIn == True:
             # genRecsObj = self.generateStandardRecs(clientIdIn,sinceDTIn,recLimitIn)
             # vldb.writeRecToCache(clientIdIn,genRecsObj,int(self.config['API_Settings']['recs_exp_days']))
-            print("MediaLibraryDB.fetchRecsFromCache - about to generate fresh Recs...")
+            # print("MediaLibraryDB.fetchRecsFromCache - about to generate fresh Recs...")
             
             vldb.generateRecsAllUsers(sinceDTIn, recLimitIn, self.config['API_Resources']['omdbapi_key'])
-            print("MediaLibraryDB.fetchRecsFromCache - Generated fresh Recs, recovering them from the Cache...")
+            # print("MediaLibraryDB.fetchRecsFromCache - Generated fresh Recs, recovering them from the Cache...")
             
             genRecsObj = vldb.getRecJsonFromCache(clientIdIn)
-            print("MediaLibraryDB.fetchRecsFromCache - Recs recovery from Cache complete.")
-            print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
+            # print("MediaLibraryDB.fetchRecsFromCache - Recs recovery from Cache complete.")
+            # print("MediaLibraryDB.fetchRecsFromCache - Just tried initial fetch of recsJson: " + str(recsJson)[0:3])
             
             #recsObj = genRecsObj
             #recsObj = genRecsObj
@@ -4901,7 +4901,7 @@ def getRecs():
     forceRefresh = False;
     try:
         pass
-        print("forceRefresh: " + str(dictIn['forceRefresh']))
+        # print("forceRefresh: " + str(dictIn['forceRefresh']))
         assert type(dictIn['forceRefresh']) == type(True)
         forceRefresh = dictIn['forceRefresh']
     except:
@@ -4912,7 +4912,7 @@ def getRecs():
         retDict = ml.fetchRecsFromCache(dictIn['clientId'],dictIn['sinceDt'],dictIn['recLimit'], forceRefresh)  # fetchRecsFromCache
     except:
         print( "Oh noes!  " + json.dumps(retDict))
-    print ("getRecs - retDict: " + json.dumps(retDict))
+    # print ("getRecs - retDict: " + json.dumps(retDict))
     return json.dumps(retDict)
 
 @app.route('/artifact/recs/serfirstep/get',methods=['POST'])
@@ -5118,10 +5118,10 @@ def playlistGenerateFromPLObj():
         pass
     pass
     
-    print("playlistGenerateFromPLObj - json.dumps(splDict): " + json.dumps(splDict))
+    # print("playlistGenerateFromPLObj - json.dumps(splDict): " + json.dumps(splDict))
     
     epl = ml.getEPLFromSPLfTVSDict(splDict)
-    print("playlistGenerateFromPLObj - epl: " + json.dumps(epl))
+    # print("playlistGenerateFromPLObj - epl: " + json.dumps(epl))
     return json.dumps(epl)
     
     
