@@ -3008,7 +3008,7 @@ class RMVodWebApp {
             
         }
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt,'forceRefresh':forceRefresh};
-        console.log ("RMVodWebApp.execRecsForcedRefresh.payloadObj: " + JSON.stringify(payloadObj));
+        //console.log ("RMVodWebApp.execRecsForcedRefresh.payloadObj: " + JSON.stringify(payloadObj));
         var endpoint = '/rmvod/api/artifact/recs/get';
         //var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
@@ -3948,7 +3948,7 @@ class WMCWARecommend {
         
         
         var recsObj = this.recSrcData['data'];
-        console.log("WMCWARecommend.popMasterDiv: " + JSON.stringify(recsObj));
+        //console.log("WMCWARecommend.popMasterDiv: " + JSON.stringify(recsObj));
 
         // Event Handler Functions
         var mouseEnterFunc = function(fooIn){
