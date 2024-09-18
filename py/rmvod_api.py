@@ -1639,7 +1639,7 @@ SET id = '""" + uRecId + """',
         tmpSql = """SELECT record_data 
 FROM common_texts 
 WHERE filt_crit_1 = '""" + clientIdIn + """' 
-    AND record_type = ;recommendation' 
+    AND record_type = 'recommendation' 
     AND expire_date > NOW()
 ORDER BY expire_date DESC
 LIMIT 1"""
