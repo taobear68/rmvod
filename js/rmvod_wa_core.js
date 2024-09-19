@@ -1403,10 +1403,10 @@ class RMVodWebApp {
         this.cc.addRecentPlay(artiIdIn);
         // Make this artifact's list entry appear "played" if present.
         try {
-            const listTitleSpanId = artiIdIn + '_list-title-span';
+            var listTitleSpanId = artiIdIn + '_list-title-span';
             document.getElementById(listTitleSpanId).className = 'listtitleseen';
         } catch (e) {
-            console.log('vodPlayTitleApi2 - Setting the classname for the playing artifact failed');
+            console.log('vodPlayTitleApi3 - Setting the classname for the playing artifact failed');
         }
         
         
