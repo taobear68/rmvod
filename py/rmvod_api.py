@@ -3311,6 +3311,9 @@ class MediaLibraryDB:
             pass
         return tmpRetObj
     def apiLogPlay(self,artiIdIn,clientIdIn):   # Updated to use .cfg
+        print("MediaLibraryDB.apiLogPlay - artiIdIn: " + artiIdIn)
+        print("MediaLibraryDB.apiLogPlay - clientIdIn: " + clientIdIn)
+        
         retDict = {}
         retDict['method'] = 'apiLogPlay'
         retDict['params'] = [artiIdIn,clientIdIn]
