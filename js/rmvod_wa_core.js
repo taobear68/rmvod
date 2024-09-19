@@ -1419,7 +1419,9 @@ class RMVodWebApp {
         //const apiEndpoint = apiBase + '/artifact/get'; 
         const payload = {'artifactid':artiIdIn};
         this.genericApiCall(payload,apiEndpoint,cbFunc);
+        console.log("vodPlayTitleApi3 attempting to log the play to the API...");
         this.apiLogPlay(artiIdIn);
+        console.log("vodPlayTitleApi3 logging the play to the API complete.");
     }
     // Make an API call to log what is being played
     apiLogPlay(artiIdIn){
