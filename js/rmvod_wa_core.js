@@ -4653,8 +4653,21 @@ function switchboard(actionIn,objIdIn,argObjIn) {
 
 // Handle "Playback Ends" event
 function pbEnded (artiIdIn) {
+    // UPDATED TO HANDLE PLAYLIST PLAY ENDING
+    
     console.log('The playback it has ended');
-    switchboard('vodPlayNextTitle',artiIdIn,{});
+    //check to see if we're in a playlist
+    // PLHander
+    var plh = new PLHander();
+    var pldd = plh.readDataDiv();
+    if ((pldd["pl-def-obj"]["pl-aid-list"].length > 0) & (pldd["pl-def-obj"]["playing-idx"])){
+        plh.endPlaylistElement();
+    } else {
+        switchboard('vodPlayNextTitle',artiIdIn,{});
+    }
+    
+    //console.log('The playback it has ended');
+    //switchboard('vodPlayNextTitle',artiIdIn,{});
 }   
 
 // Handle "Remove Member" event of RNWAListFieldWidget
