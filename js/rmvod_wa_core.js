@@ -4031,7 +4031,7 @@ class PLHander {
             tmpHtml += plListAry[i]['desc'];
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px;'>";
-            tmpHtml += "<span onclick='switchboard(\'doPlayPlaylist\',\'" + plListAry[i]['id'] + "\',{}'><b><u>Play</u></b></span>";
+            tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plListAry[i]['id'] + "\",{})'><b><u>Play</u></b></span>";
             tmpHtml += "</div>";
             tmpHtml += "</div>";
             //tmpHtml += "";
