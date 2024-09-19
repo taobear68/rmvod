@@ -2306,6 +2306,8 @@ WHERE clientid = '""" + clientidIn + """' AND seriesaid = '""" + artifactidIn+ "
     completetf
 FROM client_play_progress
 WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ """' """
+        
+        print("VodLibDB.getClientTvEpisodePlay - readSQL: " + readSQL)
         resTuple = self._stdRead(readSQL)
         for row in resTuple:
             retDict['seriesaid'] = row[0]
