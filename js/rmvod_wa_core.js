@@ -4661,7 +4661,9 @@ function pbEnded (artiIdIn) {
     var plh = new PLHander();
     var pldd = plh.readDataDiv();
     console.log("pbEnded.pldd: " + JSON.stringify(pldd));
-    if ((pldd["pl-aid-list"].length > 0) && (pldd["playing-idx"])){
+    console.log("pbEnded.pldd[pl-aid-list].length: " + pldd["pl-aid-list"].length);
+    console.log("pbEnded.pldd[playing-idx]: " + pldd["playing-idx"]);
+    if ((pldd["pl-aid-list"].length > 0) && (pldd["playing-idx"] > -1)){
         plh.endPlaylistElement();
     } else {
         switchboard('vodPlayNextTitle',artiIdIn,{});
