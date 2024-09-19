@@ -4012,8 +4012,8 @@ class PLHander {
         var masterTargHtml = "<div>";
         
         var titleRowHtml = "<div>"
-        titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Name</b></div>"
-        titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Description</b></div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:300px;'><b>Name</b></div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:500px;'><b>Description</b></div>"
         titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Play button</b></div>"
         titleRowHtml  += "</div>";
         
@@ -4024,10 +4024,10 @@ class PLHander {
             var tmpHtml = "";
             tmpHtml += "<div>";
             tmpHtml += "<!-- ROW " + i.toString() + " -->";
-            tmpHtml += "<div style='display:inline-flex; width:100px;'>";
+            tmpHtml += "<div style='display:inline-flex; width:300px;'>";
             tmpHtml += plListAry[i]['name'];
             tmpHtml += "</div>";
-            tmpHtml += "<div style='display:inline-flex; width:100px;'>";
+            tmpHtml += "<div style='display:inline-flex; width:500px;'>";
             tmpHtml += plListAry[i]['desc'];
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px;'>";
