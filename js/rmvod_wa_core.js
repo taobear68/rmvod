@@ -4661,7 +4661,7 @@ function pbEnded (artiIdIn) {
     var plh = new PLHander();
     var pldd = plh.readDataDiv();
     console.log("pbEnded.pldd: " + JSON.stringify(pldd));
-    if ((pldd["pl-aid-list"].length > 0) & (pldd["playing-idx"])){
+    if ((pldd["pl-aid-list"].length > 0) && (pldd["playing-idx"])){
         plh.endPlaylistElement();
     } else {
         switchboard('vodPlayNextTitle',artiIdIn,{});
