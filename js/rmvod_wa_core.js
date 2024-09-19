@@ -737,6 +737,10 @@ class RMVWAHtmlGenerator {
         tmpHtml += '<div id="recentepisodescontent" style="width:1160px;"></div>';
         tmpHtml += '</div>';
         
+        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><b>TV Series Playlists</b>';
+        tmpHtml += '<div id="tvsplaylistsdata" style="display:none;" data-tvspl="{}"></div>'
+        tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px;"></div>';
+        tmpHtml += '</div>';
         
         //forcerecrefresh
         tmpHtml += '</div>';
@@ -3073,7 +3077,10 @@ class RMVodWebApp {
                         
                         wa.resetPageTitle();
                         
-                        wa.apiFetchUserRecentEpisodes();  
+                        wa.apiFetchUserRecentEpisodes(); 
+                        
+                        var plh = new PLHander();
+                        plh. tmpFakePopulatePlaylistList();
                                   
             
             
@@ -3858,6 +3865,196 @@ class RMVodWebApp {
     
 }
 
+//Playlist Handling for RMVOD client
+class PLHander {
+    constructor(){
+        this.wa = new RMVodWebApp();
+    }
+    initDataDiv(){
+        var plOmniObj = {};
+        plOmniObj["pl-def-obj"] = {"id":"", "clientid":"", "name":"", "type":"", "desc":"", "options":{}, "seriesaidlist":[]};
+        plOmniObj['pl-aid-list'] = [];
+        plOmniObj['playing-idx'] = -1;
+        plOmniObj['cookie-pnis-tf'] = false;
+        
+        var oniObjJSON = JSON.stringify(plOmniObj);
+        // console.log("initDataDiv - oniObjJSON: " + oniObjJSON);
+        
+        var dd = document.createElement("div");
+        dd.id = "plhandlerdata";
+        dd.style = "display: none;";
+        document.getElementById("headerblock3").appendChild(dd);
+        document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
+        
+    }
+    readDataDiv(){
+        var ddiv = document.getElementById('plhandlerdata');
+        var roJSON = ddiv.dataset.omniobj;
+        var retObj = JSON.parse(roJSON); //document.getElementById('plhandlerdata').dataset.omniobj);
+        return retObj;
+    }
+    writeDataDiv(ddObjIn){
+        var ddJson = JSON.stringify(ddObjIn);
+        console.log("writeDataDiv - ddJson: " + ddJson);
+        document.getElementById('plhandlerdata').dataset.omniobj = ddJson;
+    }
+    fetchPlObj(plIdIn){
+        // Ideally, we would fetch the PL object from the API and stuff it in a DIV somewhere, but for now we're just going to return a static PL Object
+        var plObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
+        return plObj;
+    }
+    clearPlAidList() {
+        var dObj = plh.readDataDiv();
+        dObj['pl-aid-list'] = [];
+        dObj['playing-idx']  = -1;
+        plh.writeDataDiv(dObj);
+    }
+    apiFetchSyndPl(plObjIn){
+        console.log("apiFetchSyndPl - Starting...");
+        var cbFunc = function(objIn){
+            console.log("apiFetchSyndPl.cbFunc - objIn: " + JSON.stringify(objIn));
+            var plh = new PLHander();
+            var dObj = plh.readDataDiv();
+            dObj['pl-aid-list'] = objIn;
+            var workingPL = objIn;
+            console.log("playPlaylist - workingPL: " + JSON.stringify(workingPL));
+            var spnState = plh.wa.cc.getCookie('serplaynext');
+            console.log("apiFetchSyndPl.cbFunc - WRITING dObj: Backing up and overriding serplaynext cookie");
+            dObj['cookie-pnis-tf'] = spnState;
+            
+            //plh.writeDataDiv(dObj);
+            //this.wa.cc.setCookie('serplaynext', false, 90)
+            //this.wa.cc.setCookie('opt_serplaynext', false, 90)
+            
+            dObj['playing-idx'] = 0;
+            console.log("apiFetchSyndPl.cbFunc - WRITING dObj: " + JSON.stringify(dObj));
+            plh.writeDataDiv(dObj);
+            plh.playPlaylistElement();            
+        }
+        //const plObj = JSON.stringify(plObjIn);
+        const plObj = JSON.stringify(plObjIn);
+        console.log("apiFetchSyndPl - plObj; " + plObj);
+        const ep = '/rmvod/api/artifact/playlist/generate';
+        console.log("apiFetchSyndPl - ep; " + ep);
+        this.wa.genericApiCall(plObj,ep,cbFunc);
+        return true;
+    }
+    playPlaylist(){
+        console.log("playPlaylist - Starting...");
+        
+        var plObj = this.readDataDiv()['pl-def-obj'];
+        console.log("playPlaylist - plObj: " + JSON.stringify(plObj));
+        var workingPL = [];
+        var plType = plObj['type']; // ": "tvdaypartblock", 
+        console.log("playPlaylist - plType: " +  plType);
+        switch (plType) {
+            case "tvdaypartblock":
+                this.apiFetchSyndPl(plObj);
+                break;;
+            default:
+                break;
+        }
+    }
+    playPlaylistElement(){
+        console.log("playPlaylistElement - Starting...");
+        var dObj = this.readDataDiv();
+        console.log("playPlaylistElement - " + JSON.stringify(dObj));
+        
+        var plAry = dObj['pl-aid-list'];
+        console.log("playPlaylistElement - plAry: " + JSON.stringify(plAry));
+        var plpIdx = dObj['playing-idx'];
+        console.log("playPlaylistElement - plpIdx: " + plpIdx);
+        
+        console.log("playPlaylistElement - Playing playlist idx " + plpIdx + ": " + plAry[plpIdx])
+        console.log("playPlaylistElement - Playing artifact " + plAry[plpIdx]);
+        
+        var wa = new RMVodWebApp();
+        wa.vodPlayTitleApi3(plAry[plpIdx]);
+        //vodPlayTitleApi3
+        
+        
+        //this.endPlaylistElement();
+        
+    }
+    endPlaylistElement(){
+        var dObj = this.readDataDiv();
+        var plAry = dObj['pl-aid-list'];
+        var plpIdx = dObj['playing-idx'];
+        console.log("endPlaylistElement - After end of play of artifact " + plAry[plpIdx]);
+        if (plpIdx < (plAry.length - 1)) {
+            // There's still at least one element in the list to play
+            dObj['playing-idx'] += 1;
+            console.log("endPlaylistElement - Looks like we still have things to play.  Playing " + plAry[dObj['playing-idx']] );
+            this.writeDataDiv(dObj);
+            this.playPlaylistElement();
+        } else {
+            if (dObj['pl-def-obj']['list-repeat'] == true) {
+                // Start the list over
+                console.log("endPlaylistElement - Restart the playlist");
+                this.playPlaylist();
+            } else {
+                // We're done.
+                console.log("endPlaylistElement - Ending playlist");
+                this.endPlaylist();
+            }
+        }
+    }
+    endPlaylist(){
+        console.log("End the playlist");
+        this.clearPlAidList();
+        var dObj = this.readDataDiv();
+        console.log("Restoring 'play next episode' cookie to " + dObj['cookie-pnis-tf'].toString());
+        //this.wa.cc.setCookie('serplaynext', dObj['cookie-pnis-tf'], 90)
+        //this.wa.cc.setCookie('opt_serplaynext', dObj['cookie-pnis-tf'], 90)        
+    }
+    tmpFakePopulatePlaylistList(){
+        var targDiv = document.getElementById("tvsplaylistscontent");
+        var masterTargHtml = "<div>";
+        
+        var titleRowHtml = "<div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Name</b></div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Description</b></div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:100px;'><b>Play button</b></div>"
+        titleRowHtml  += "</div>";
+        
+        masterTargHtml += titleRowHtml
+        
+        var plListAry = [{"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }];
+        for (var i = 0 ; i < plListAry.length ; i++ ) {
+            var tmpHtml = "";
+            tmpHtml += "<div>";
+            tmpHtml += "<!-- ROW " + i.toString() + " -->";
+            tmpHtml += "<div style='display:inline-flex; width:100px;'>";
+            tmpHtml += plListAry[i]['name'];
+            tmpHtml += "</div>";
+            tmpHtml += "<div style='display:inline-flex; width:100px;'>";
+            tmpHtml += plListAry[i]['desc'];
+            tmpHtml += "</div>";
+            tmpHtml += "<div style='display:inline-flex; width:100px;'>";
+            tmpHtml += "<span onclick='switchboard(\'doPlayPlaylist\',\'" + plListAry[i]['id'] + "\',{}'><b><u>Play</u></b></span>";
+            tmpHtml += "</div>";
+            tmpHtml += "</div>";
+            //tmpHtml += "";
+            
+            masterTargHtml += tmpHtml
+        }
+        masterTargHtml += "</div>";
+        targDiv.innerHTML = masterTargHtml;
+    }
+    tmpFakeLoadPlaylistAndPlayIt(plIdIn){
+        // This is just here to get the ball rolling.  We're going to 
+        // do something more sophisticated later.  Honest!
+        //var plh = new PLHander();
+        this.initDataDiv();
+        var tmpdd = this.readDataDiv();
+        tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
+        //tmpdd['pl-def-obj'] = this.fetchPlObj("12345678-1bcd-efgh-ijkl-mnopqrstuvwx");
+        this.writeDataDiv(tmpdd);
+        this.playPlaylist();
+    }
+}
+
+
 //
 // NEW CODE TO SUPPORT RECOMMENDATIONS -- START
 //
@@ -4639,6 +4836,12 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         case "doLoginGo":
             ml.doLoginGoButton();
             break;;
+        
+        case "doPlayPlaylist":
+            var plh = new PLHander();
+            plh.tmpFakeLoadPlaylistAndPlayIt(objIdIn);
+            break;;
+        
             
         /* 
          * Oh no... we should never get here!
