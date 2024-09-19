@@ -4660,6 +4660,7 @@ function pbEnded (artiIdIn) {
     // PLHander
     var plh = new PLHander();
     var pldd = plh.readDataDiv();
+    console.log("pbEnded.pldd: " + JSON.stringify(pldd));
     if ((pldd["pl-def-obj"]["pl-aid-list"].length > 0) & (pldd["pl-def-obj"]["playing-idx"])){
         plh.endPlaylistElement();
     } else {
