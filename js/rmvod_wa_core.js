@@ -3871,6 +3871,9 @@ class RMVodWebApp {
 class PLHander {
     constructor(){
         this.wa = new RMVodWebApp();
+        this.plObjObj = {};
+        this.plObjObj['12345678-1bcd-efgh-ijkl-mnopqrstuvwx'] = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
+        this.plObjObj['12345678-1bcd-efgh-ijkl-mnopqrstuvwy'] = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwy", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Classic British Evening Block", "type": "tvdaypartblock", "desc":"A 5-hour block with comedies and drama: Keeping Up Appearances, Waiting For God, \'Allo \'Allo!, The Fall and Rise of Reginald Perrin, Monty Pythons Flying Circus, A Bit of Fry and Laurie, The Duchess Of Duke Street, and Jeeves And Wooster.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "ab8a0b85-96d1-48b4-b20b-7c097b24b90a", "d6ce1f59-49b2-4cce-a940-9433b6bff2a0", "fc366455-7e29-49c1-a9d2-a0d3189ac29a", "264ca0c4-6d06-4b58-88a9-1a4c472ee7ba", "81bd3d9e-3a0b-4ea1-bcac-5d4fadb36f7f", "117de369-33dd-4295-bfa5-a939c6ff50d7", "6f4b23e1-83fe-4136-aca4-9210efd0fcf2", "f7d84e14-f7b0-4700-abfe-9c3ad796506b" ] }
     }
     initDataDiv(){
         var plOmniObj = {};
@@ -3902,8 +3905,9 @@ class PLHander {
     }
     fetchPlObj(plIdIn){
         // Ideally, we would fetch the PL object from the API and stuff it in a DIV somewhere, but for now we're just going to return a static PL Object
-        var plObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
-        return plObj;
+        //var plObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
+        //return plObj;
+        return this.plObjObj[plIdIn];
     }
     clearPlAidList() {
         var dObj = plh.readDataDiv();
@@ -4020,20 +4024,20 @@ class PLHander {
         titleRowHtml  += "</div>";
         
         masterTargHtml += titleRowHtml
-        
-        var plListAry = [{"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }];
-        for (var i = 0 ; i < plListAry.length ; i++ ) {
+        var plIdList = Object(this.plObjObj).keys();
+        //var plListAry = [{"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }];
+        for (var i = 0 ; i < plIdList.length ; i++ ) {
             var tmpHtml = "";
             tmpHtml += "<div>";
             tmpHtml += "<!-- ROW " + i.toString() + " -->";
             tmpHtml += "<div style='display:inline-flex; width:300px;'>";
-            tmpHtml += plListAry[i]['name'];
+            tmpHtml += this.plObjObj[plIdList[i]]['name'];
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:500px;'>";
-            tmpHtml += plListAry[i]['desc'];
+            tmpHtml += this.plObjObj[plIdList[i]]['desc'];
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px;'>";
-            tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plListAry[i]['id'] + "\",{})'><b><u>Play</u></b></span>";
+            tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plIdList[i] + "\",{})'><b><u>Play</u></b></span>";
             tmpHtml += "</div>";
             tmpHtml += "</div>";
             //tmpHtml += "";
