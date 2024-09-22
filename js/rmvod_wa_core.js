@@ -3893,7 +3893,7 @@ class PLHander {
             var plList = objIn['data'];
             var saveObj = {};
             for (var i = 0; i < plList.length; i++ ) {
-                saveObj[plList[i]['id']] = plList[i];
+                saveObj[plList[i]['id']] = plList[i]['record_data'];
             }
             
             
