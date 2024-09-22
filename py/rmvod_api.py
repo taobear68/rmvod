@@ -2337,7 +2337,7 @@ AND """ + fc1Str + """ """
                 retDict[colList[i]] = row[i]
                 
                 if i == 2:
-                    retDict[colList[i]] = resTuple[row[i]].strftime('%Y-%m-%d %H:%M:%S')
+                    retDict[colList[i]] = row[i].strftime('%Y-%m-%d %H:%M:%S')
                 # else:
                     # retDict[colLbl] = rowTuple[colList.index(colLbl)]
                 pass
