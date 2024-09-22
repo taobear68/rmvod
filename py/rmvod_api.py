@@ -3853,7 +3853,7 @@ class MediaLibraryDB:
         tmpRetObj['status']['success'] = False
         
         vldb = self.dbHandleConfigged()
-        tmpRetObj['data'] = getClientTVSPlayLists(clientIdIn,inclSiteTF)
+        tmpRetObj['data'] = vldb.getClientTVSPlayLists(clientIdIn,inclSiteTF)
         tmpRetObj['status']['success'] = True
         
         #getClientTVSPlayLists
