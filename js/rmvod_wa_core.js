@@ -3943,7 +3943,11 @@ class PLHander {
         // Ideally, we would fetch the PL object from the API and stuff it in a DIV somewhere, but for now we're just going to return a static PL Object
         //var plObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
         //return plObj;
-        return this.plObjObj[plIdIn];
+        
+        var tmpOmniObj = this.readDataDiv();
+        return tmpOmniObj['pl-list'][plIdIn];
+        
+        //return this.plObjObj[plIdIn];
     }
     clearPlAidList() {
         var dObj = plh.readDataDiv();
