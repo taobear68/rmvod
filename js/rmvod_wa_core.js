@@ -3887,7 +3887,7 @@ class PLHander {
         var sitetf = false;
         
         var cbFunc = function(objIn){
-            var plList - objIn['data'];
+            var plList = objIn['data'];
             var saveObj = {};
             for (var i = 0; i < plList.length; i++ ) {
                 saveObj[plList[i][id]] = pllist[i]
