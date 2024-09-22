@@ -3898,11 +3898,11 @@ class PLHander {
             
             
             var plh = new PLHander();
+            plh.initDataDiv();
             var tmpDataObj = plh.readDataDiv();
             tmpDataObj['pl-list'] = saveObj;
             plh.writeDataDiv(tmpDataObj);
-            plh.initDataDiv();
-            plh.tmpFakePopulatePlaylistList()
+            plh.tmpFakePopulatePlaylistList();
             // console.log(JSON.stringify(objIn));
         }
         var wa = new RMVodWebApp();
