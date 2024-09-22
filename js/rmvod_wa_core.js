@@ -4106,11 +4106,11 @@ class PLHander {
         // This is just here to get the ball rolling.  We're going to 
         // do something more sophisticated later.  Honest!
         //var plh = new PLHander();
-        this.initDataDiv();
-        var tmpdd = this.readDataDiv();
-        tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
+        //this.initDataDiv();
+        //var tmpdd = this.readDataDiv();
+        //tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
         //tmpdd['pl-def-obj'] = this.fetchPlObj("12345678-1bcd-efgh-ijkl-mnopqrstuvwx");
-        this.writeDataDiv(tmpdd);
+        //this.writeDataDiv(tmpdd);
         this.playPlaylist();
     }
 }
