@@ -4111,6 +4111,7 @@ class PLHander {
         //tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
         //tmpdd['pl-def-obj'] = this.fetchPlObj("12345678-1bcd-efgh-ijkl-mnopqrstuvwx");
         //this.writeDataDiv(tmpdd);
+        this.fetchPlObj(plIdIn);
         this.playPlaylist();
     }
 }
