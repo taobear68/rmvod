@@ -3887,6 +3887,9 @@ class PLHander {
         var sitetf = false;
         
         var cbFunc = function(objIn){
+            
+            
+            
             var plList = objIn['data'];
             var saveObj = {};
             for (var i = 0; i < plList.length; i++ ) {
@@ -3898,8 +3901,8 @@ class PLHander {
             var tmpDataObj = plh.readDataDiv();
             tmpDataObj['pl-list'] = saveObj;
             plh.writeDataDiv(tmpDataObj);
-            
-            this.tmpFakePopulatePlaylistList()
+            plh.initDataDiv();
+            plh.tmpFakePopulatePlaylistList()
             // console.log(JSON.stringify(objIn));
         }
         var wa = new RMVodWebApp();
