@@ -3946,6 +3946,7 @@ class PLHander {
         
         var tmpOmniObj = this.readDataDiv();
         tmpOmniObj['pl-def-obj'] = tmpOmniObj['pl-list'][plIdIn];
+        console.log("fetchPlObj - tmpOmniObj: " + JSON.stringify(tmpOmniObj) );
         this.writeDataDiv(tmpOmniObj);
         return tmpOmniObj['pl-list'][plIdIn];
         
