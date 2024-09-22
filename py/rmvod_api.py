@@ -2320,6 +2320,25 @@ WHERE clientid = '""" + clientidIn + """' AND artifactid = '""" + artifactidIn+ 
             pass
         pass
         return retDict
+    def getClientTVSPlayLists(self,clientIdIn,incSiteTFIn=False):
+        colList = ['id','record_data','expire_date']
+        retList = []
+        fc1Str = """filt_crit_1 = '""" + clientIdIn + """' """
+        if incSiteTFIn == True:
+            fc1Str = """(filt_crit_1 = '""" + clientIdIn + """' OR filt_crit_1 = 'sitewide')"""
+        readSQL = """SELECT id, record_data, expire_date 
+FROM common_texts 
+WHERE record_type = "playlist" 
+AND """ + fc1Str + """ """
+        resTuple = self._stdRead(readSQL)
+        for row in resTuple:
+            retDict = {}
+            for i in range(len(colList)):
+                retDict[colList[i]] = row[i]
+            pass
+            retList.append(retDict)
+        pass
+        return retList
         
         
         
@@ -3827,6 +3846,19 @@ class MediaLibraryDB:
                 epl.append(neaid)
             pass
         return epl
+    def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getAvailSPLforClient'
+        tmpRetObj['params'] = [clientIdIn,inclSiteTF]
+        tmpRetObj['status']['success'] = False
+        
+        vldb = self.dbHandleConfigged()
+        tmpRetObj['data'] = getClientTVSPlayLists(clientIdIn,inclSiteTF)
+        tmpRetObj['status']['success'] = True
+        
+        #getClientTVSPlayLists
+        return tmpRetObj
+        
 
 
 
@@ -5129,10 +5161,27 @@ def playlistGenerateFromPLObj():
     # print("playlistGenerateFromPLObj - epl: " + json.dumps(epl))
     return json.dumps(epl)
     
+@app.route('/artifact/playlist/list',methods=['POST'])
+def playlistListFetch():
+    ml = MediaLibraryDB()
     
     
+    # Expects KVPs:
+    # clientid - string - the UUID for the user
+    # sitetf - boolean - whether or not to include site-wide lists
     
-    # getEPLFromSPLfTVSDict
+    parmDict = {}
+    try:
+        #print("playlistListFetch - type(request.json): " + str(type(request.json)))
+        parmDict = yaml.safe_load(request.json)
+        pass
+    except:
+        print("playlistListFetch - ONOES! Could not deal with request.json")
+        pass
+    pass
+    
+    resDict = ml.getAvailSPLforClient(parmDict['clientid'], parmdict['sitetf'])
+    return json.dumps(resDict)
     
     
 
