@@ -3945,6 +3945,8 @@ class PLHander {
         //return plObj;
         
         var tmpOmniObj = this.readDataDiv();
+        tmpOmniObj['pl-def-obj'] = tmpOmniObj['pl-list'][plIdIn];
+        this.writeDataDiv(tmpOmniObj);
         return tmpOmniObj['pl-list'][plIdIn];
         
         //return this.plObjObj[plIdIn];
