@@ -5181,6 +5181,7 @@ def playlistListFetch():
     pass
     
     resDict = ml.getAvailSPLforClient(parmDict['clientid'], parmDict['sitetf'])
+    print(resDict)
     return json.dumps(resDict)
     
     
