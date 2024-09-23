@@ -4011,16 +4011,15 @@ class PLHander {
             var tmpHtml = ''
 
 
-            tmpHtml += '<div style="display: block; background: #ffff44; padding: 2px; width: 710px; height: 510px;">'
-            tmpHtml += '<div style="display: inline-flex; background: #44ffff;padding: 2px;width: 700px; height: 500px; align-vertical:top;">';
-            tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:310px; height: 490px; padding: 2px; background: #ff4444;">';
+            tmpHtml += '<div style="display: block;  padding: 2px; width: 710px; height: 510px;">'
+            tmpHtml += '<div style="display: inline-flex; padding: 2px;width: 700px; height: 500px; align-vertical:top;">';
+            tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:310px; height: 490px; padding: 2px; ">';
             tmpHtml += '<div style="width=100%; height=100% align-vertical: top;">';
-            // tmpHtml += '<img src="' + "http://rmvid/rmvod/img/poster_00/tt0086770.jpg" + '" width="306.375" height="408.5">';
             tmpHtml += '<img src="' + artiData['poster'] + '" width="306.375" height="408.5">';
             tmpHtml += '</div>';
             tmpHtml += '</div>';
             tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:350px; height: 490px;">';
-            tmpHtml += '<div style="display: block; background: #44ff44; padding-left: 10px;">';
+            tmpHtml += '<div style="display: block; padding-left: 10px;">';
             tmpHtml += '<div style="display: block; width: 340px; height: 75px;">';
             tmpHtml += '<span style="font-family: arial; font-size: 25px; font-weight: bold;">';
             tmpHtml += 'Next up...<br><br>';
@@ -4043,6 +4042,37 @@ class PLHander {
             tmpHtml += '</div>';
             
 
+
+            //tmpHtml += '<div style="display: block; background: #ffff44; padding: 2px; width: 710px; height: 510px;">'
+            //tmpHtml += '<div style="display: inline-flex; background: #44ffff;padding: 2px;width: 700px; height: 500px; align-vertical:top;">';
+            //tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:310px; height: 490px; padding: 2px; background: #ff4444;">';
+            //tmpHtml += '<div style="width=100%; height=100% align-vertical: top;">';
+            //// tmpHtml += '<img src="' + "http://rmvid/rmvod/img/poster_00/tt0086770.jpg" + '" width="306.375" height="408.5">';
+            //tmpHtml += '<img src="' + artiData['poster'] + '" width="306.375" height="408.5">';
+            //tmpHtml += '</div>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:350px; height: 490px;">';
+            //tmpHtml += '<div style="display: block; background: #44ff44; padding-left: 10px;">';
+            //tmpHtml += '<div style="display: block; width: 340px; height: 75px;">';
+            //tmpHtml += '<span style="font-family: arial; font-size: 25px; font-weight: bold;">';
+            //tmpHtml += 'Next up...<br><br>';
+            //tmpHtml += '</span>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '<div style="display: block; width: 340px; height: 100px;">';
+            //tmpHtml += '<span style="font-family: arial; font-size: 40px; font-weight: bold;">';
+            //tmpHtml += artiData['title'];
+            //tmpHtml += '<br><br>';
+            //tmpHtml += '</span>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '<div style="display: block; width: 340px; height: 300px; overflow: auto;">';
+            //tmpHtml += '<span style="font-family: arial; font-size: 20px; font-weight: bold; ">';
+            //tmpHtml += artiData['synopsis'];
+            //tmpHtml += '</span>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '</div>';
+            //tmpHtml += '</div>';
 
             
             
