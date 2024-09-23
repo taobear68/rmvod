@@ -4015,7 +4015,8 @@ class PLHander {
             tmpHtml += '<div style="display: inline-flex; background: #44ffff;padding: 2px;width: 700px; height: 500px; align-vertical:top;">';
             tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:310px; height: 490px; padding: 2px; background: #ff4444;">';
             tmpHtml += '<div style="width=100%; height=100% align-vertical: top;">';
-            tmpHtml += '<img src="' + "http://rmvid/rmvod/img/poster_00/tt0086770.jpg" + '" width="306.375" height="408.5">';
+            // tmpHtml += '<img src="' + "http://rmvid/rmvod/img/poster_00/tt0086770.jpg" + '" width="306.375" height="408.5">';
+            tmpHtml += '<img src="' + artiData['poster'] + '" width="306.375" height="408.5">';
             tmpHtml += '</div>';
             tmpHtml += '</div>';
             tmpHtml += '<div style="align-vertical:top; display: inline-flex; width:350px; height: 490px;">';
