@@ -3997,10 +3997,28 @@ class PLHander {
         console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
         
+        
+        //{"method":"getArtifactByIdNew","params":["1e193909-b7ec-48d0-9b14-f28f88692baf"],"status":{"success":true,"detail":"","log":[]},"data":[{"artifactid":"1e193909-b7ec-48d0-9b14-f28f88692baf","title":"All In The Family","majtype":"tvseries","runmins":30,"season":-1,"episode":-1,"file":"","filepath":"comedy/AllInTheFamily","director":[],"writer":["Norman Lear"],"primcast":["Carroll O'Connor","Danielle Brisebois","Jean Stapleton","Rob Reiner","Sally Struthers"],"relorg":[],"relyear":1971,"eidrid":"string","imdbid":"tt0066626","arbmeta":"{\"Title\": \"All in the Family\", \"Year\": \"1971u20131979\", \"Rated\": \"TV-PG\", \"Released\": \"12 Jan 1971\", \"Runtime\": \"2 min\", \"Genre\": \"Comedy, Drama\", \"Director\": \"N/A\", \"Writer\": \"Norman Lear\", \"Actors\": \"Carroll O'Connor, Jean Stapleton, Rob Reiner\", \"Plot\": \"A working class man constantly squabbles with his family over the important issues of the day.\", \"Language\": \"English\", \"Country\": \"USA\", \"Awards\": \"Won 22 Primetime Emmys. 42 wins & 73 nominations total\", \"Poster\": \"https://m.media-amazon.com/images/M/MV5BMjEyOTExMDA5OF5BMl5BanBnXkFtZTcwNjM2NjQ3Mg@@._V1_SX300.jpg\", \"Ratings\": [{\"Source\": \"Internet Movie Database\", \"Value\": \"8.4/10\"}], \"Metascore\": \"N/A\", \"imdbRating\": \"8.4\", \"imdbVotes\": \"16,729\", \"imdbID\": \"tt0066626\", \"Type\": \"series\", \"totalSeasons\": \"9\", \"Response\": \"True\", \"addeddt\": \"2024-02-18 03:55:12\", \"titleorig\": \"All In The Family\", \"titlelibrary\": \"All In The Family\"}","seasons":9,"episodes":204,"tags":["comedy"],"synopsis":"A working class man constantly squabbles with his family over the important issues of the day.","poster":"/rmvod/img/poster_00/tt0066626.jpg"}]}        
+        
+        
         var cbFunc = function(dObjIn) {
             console.log(JSON.stringify(dObjIn));
+            var artiData = dObjIn['data'];
+            
+            var tmpHtml = "<div>";
+            tmpHtml += "<b>Coming up next...</b><br>";
+            tmpHtml += artiData['title'];
+            tmpHtml += "<br>";
+            tmpHtml += artidata['synopsis'];
+            //tmpHtml += "";
+            //tmpHtml += "";
+            //tmpHtml += "";
+            tmpHtml += "</div>";
+            
+            
             var de = document.getElementById('structfeatureplayer');
-            de.innerText = JSON.stringify(dObjIn);
+            //de.innerText = JSON.stringify(dObjIn);
+            de.InnerHTML = tmpHtml;
         }
         var wa = new RMVodWebApp();
         const plObj = {'artifactid': serAID};
@@ -4038,7 +4056,11 @@ class PLHander {
         
         // structfeatureplayer
         // Post the "up next" frame for a few seconds in the player frame before starting the player
+        
+        //<span id="RNWATabWidget-tabspan-0" class="RNWATabWidgetTabTab-sel" onclick="tabPick(this.id);">Player</span>
+        
         this.renderComingUpFrame(dObj);
+        tabPick("RNWATabWidget-tabspan-0");
         
         var dIn = plAry[plpIdx]
         var playerFunc = function(dIn){
