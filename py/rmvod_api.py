@@ -2783,6 +2783,7 @@ class MediaLibraryDB:
             tmpRetObj['data'][0]['poster'] = self.fetchPosterFile2(retval['imdbid'])
         except:
             # Hard-coded for now.  Should be a .cfg option.
+            print("MediaLibraryDB.getArtifactByIdNew - artiIdIn: " + artiIdIn + "; tmpRetObj: " + yaml.dumps(tmpRetObj))
             tmpRetObj['data'][0]['poster'] = "/rmvod/img/RMVOD_NoPoster.png"
             print("getArtifactById couldn't get the poster file.  Sad.")
             
