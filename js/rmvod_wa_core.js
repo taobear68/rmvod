@@ -3994,7 +3994,9 @@ class PLHander {
     }
     renderComingUpFrame(plObjIn){
         var curPlIdx = plObjIn['playing-idx'];
+        console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringif(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
+        
         var cbFunc = function(dObjIn) {
             console.log(JSON.stringify(dObjIn));
             var de = document.getElementById('structfeatureplayer');
