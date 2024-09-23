@@ -3992,6 +3992,19 @@ class PLHander {
         this.wa.genericApiCall(plObj,ep,cbFunc);
         return true;
     }
+    renderComingUpFrame(plObjIn){
+        var curPlIdx = plObjIn['playing-idx'];
+        var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
+        var cbFunc = function(dObjIn) {
+            console.log(JSON.stringify(dObjIn));
+            var de = document.getElementById('structfeatureplayer');
+            de.innerText = JSON.stringify(dObjIn);
+        }
+        var wa = new RMVodWebApp();
+        const plObj = JSON.stringify({'artifactid': serAID});
+        const ep = '/rmvod/api/artifact/get';
+        this.wa.genericApiCall(plObj,ep,cbFunc);        
+    }
     playPlaylist(){
         console.log("playPlaylist - Starting...");
         
@@ -4021,8 +4034,20 @@ class PLHander {
         console.log("playPlaylistElement - Playing playlist idx " + plpIdx + ": " + plAry[plpIdx])
         console.log("playPlaylistElement - Playing artifact " + plAry[plpIdx]);
         
-        var wa = new RMVodWebApp();
-        wa.vodPlayTitleApi3(plAry[plpIdx]);
+        // structfeatureplayer
+        // Post the "up next" frame for a few seconds in the player frame before starting the player
+        this.renderComingUpFrame(dObj);
+        
+        var dIn = plAry[plpIdx]
+        var playerFunc = function(dIn){
+            var wa = new RMVodWebApp();
+            wa.vodPlayTitleApi3(plAry[plpIdx]);
+        }
+        setTimeout(playerFunc,5000,dIn);
+        
+        
+        //var wa = new RMVodWebApp();
+        //wa.vodPlayTitleApi3(plAry[plpIdx]);
         //vodPlayTitleApi3
         
         
