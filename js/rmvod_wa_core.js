@@ -734,16 +734,16 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div>&nbsp;</div>';
         
-        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><b>Recent Episopdes</b>';
+        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><span onclick="switchboard(\"divtogglevizblock\",\"recentepisodescontent\",{})"><b>Recent Episopdes</b></span>';
         tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}"></div>'
-        tmpHtml += '<div id="recentepisodescontent" style="width:1160px;"></div>';
+        tmpHtml += '<div id="recentepisodescontent" style="width:1160px; display: block;"></div>';
         tmpHtml += '</div>';
 
         tmpHtml += '<div>&nbsp;</div>';
         
-        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><b>TV Series Playlists</b>';
+        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><span onclick="switchboard(\"divtogglevizblock\",\"tvsplaylistscontent\",{})"><b>TV Series Playlists</b></sapn>';
         tmpHtml += '<div id="tvsplaylistsdata" style="display:none;" data-tvspl="{}"></div>'
-        tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px;"></div>';
+        tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px; display: block;"></div>';
         tmpHtml += '</div>';
         
         //forcerecrefresh
@@ -4908,6 +4908,18 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             plh.tmpFakeLoadPlaylistAndPlayIt(objIdIn);
             break;;
         
+        case "divtogglevizblock":
+            var de = document.getElementById(objIdIn);
+            if (de.style.display == "block") {
+                de.style.display = "none";
+            } else if (de.style.display == "block") {
+                de.style.display = "block";
+            } else {
+                de.style.display = "block";
+            }
+            break;;
+            
+            
             
         /* 
          * Oh no... we should never get here!
