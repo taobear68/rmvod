@@ -3960,7 +3960,7 @@ class PLHander {
         var dObj = plh.readDataDiv();
         dObj['pl-aid-list'] = [];
         dObj['playing-idx']  = -1;
-        plh.writeDataDiv(dObj);
+        self.writeDataDiv(dObj);
     }
     apiFetchSyndPl(plObjIn){
         console.log("apiFetchSyndPl - Starting...");
