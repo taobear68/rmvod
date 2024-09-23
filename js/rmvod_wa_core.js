@@ -4018,7 +4018,7 @@ class PLHander {
             
             var de = document.getElementById('structfeatureplayer');
             //de.innerText = JSON.stringify(dObjIn);
-            de.InnerHTML = tmpHtml;
+            de.innerHTML = tmpHtml;
         }
         var wa = new RMVodWebApp();
         const plObj = {'artifactid': serAID};
