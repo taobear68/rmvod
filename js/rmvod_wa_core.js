@@ -4119,6 +4119,8 @@ class PLHander {
         }
     }
     playPlaylistElement(){
+        var cardDispPerMs = 10000;
+
         console.log("playPlaylistElement - Starting...");
         var dObj = this.readDataDiv();
         console.log("playPlaylistElement - " + JSON.stringify(dObj));
@@ -4144,7 +4146,7 @@ class PLHander {
             var wa = new RMVodWebApp();
             wa.vodPlayTitleApi3(plAry[plpIdx]);
         }
-        setTimeout(playerFunc,5000,dIn);
+        setTimeout(playerFunc,cardDispPerMs,dIn);
         
         
         //var wa = new RMVodWebApp();
