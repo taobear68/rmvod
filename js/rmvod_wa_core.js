@@ -4002,8 +4002,9 @@ class PLHander {
         
         
         var cbFunc = function(dObjIn) {
-            console.log(JSON.stringify(dObjIn));
-            var artiData = dObjIn['data'];
+            //console.log(JSON.stringify(dObjIn));
+            var artiData = dObjIn['data'][0];
+            console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
             var tmpHtml = "<div>";
             tmpHtml += "<b>Coming up next...</b><br>";
