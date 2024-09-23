@@ -4003,7 +4003,7 @@ class PLHander {
             de.innerText = JSON.stringify(dObjIn);
         }
         var wa = new RMVodWebApp();
-        const plObj = JSON.stringify({'artifactid': serAID});
+        const plObj = {'artifactid': serAID};
         const ep = '/rmvod/api/artifact/get';
         this.wa.genericApiCall(plObj,ep,cbFunc);        
     }
