@@ -4009,7 +4009,7 @@ class PLHander {
             tmpHtml += "<b>Coming up next...</b><br>";
             tmpHtml += artiData['title'];
             tmpHtml += "<br>";
-            tmpHtml += artidata['synopsis'];
+            tmpHtml += artiData['synopsis'];
             //tmpHtml += "";
             //tmpHtml += "";
             //tmpHtml += "";
