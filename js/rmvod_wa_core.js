@@ -3994,7 +3994,7 @@ class PLHander {
     }
     renderComingUpFrame(plObjIn){
         var curPlIdx = plObjIn['playing-idx'];
-        console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringif(curPlIdx));
+        console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
         
         var cbFunc = function(dObjIn) {
