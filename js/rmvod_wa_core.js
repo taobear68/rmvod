@@ -4015,10 +4015,12 @@ class PLHander {
             //tmpHtml += "";
             tmpHtml += "</div>";
             
-            
+            console.log("PLHander.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
+            console.log("PLHander.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
             var de = document.getElementById('structfeatureplayer');
             //de.innerText = JSON.stringify(dObjIn);
             de.innerHTML = tmpHtml;
+            console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
         }
         var wa = new RMVodWebApp();
         const plObj = {'artifactid': serAID};
