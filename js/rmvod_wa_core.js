@@ -3186,21 +3186,25 @@ class RMVodWebApp {
         }
         
         var cbFunc = function () {
-            var wa = new RMVodWebApp();
-            var playerDE = document.getElementById('actualvideoplayer');
-            if (playerDE.paused == false) {
-                var currTime = parseInt(playerDE.currentTime);
-                var currSrc = playerDE.currentSrc;
-                
-                //console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
-                //console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
-                //console.log("");
-                
-                wa.cc.setCookie('artifact_source_uri',currSrc);
-                wa.cc.setCookie('playback_offset',currTime);
-                
-                wa.sessSettingSet('artifact_source_uri',currSrc);
-                wa.sessSettingSet('playback_offset',currTime);
+            try{
+                var wa = new RMVodWebApp();
+                var playerDE = document.getElementById('actualvideoplayer');
+                if (playerDE.paused == false) {
+                    var currTime = parseInt(playerDE.currentTime);
+                    var currSrc = playerDE.currentSrc;
+                    
+                    //console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
+                    //console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
+                    //console.log("");
+                    
+                    wa.cc.setCookie('artifact_source_uri',currSrc);
+                    wa.cc.setCookie('playback_offset',currTime);
+                    
+                    wa.sessSettingSet('artifact_source_uri',currSrc);
+                    wa.sessSettingSet('playback_offset',currTime);
+                }
+            } catch (e) {
+                console.log("RMVodWebApp.contCookiePostInterval.cbFunc failed.  Is player present?");
             }
         }
         
@@ -4008,7 +4012,7 @@ class PLHander {
             
             
             
-            var tmpHtml = ''
+            var tmpHtml = '';
 
 
             tmpHtml += '<div style="display: block;  padding: 2px; width: 710px; height: 510px;">'
