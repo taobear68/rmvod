@@ -741,7 +741,7 @@ class RMVWAHtmlGenerator {
 
         tmpHtml += '<div>&nbsp;</div>';
         
-        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'tvsplaylistscontent\',{})"><b><u>TV Series Playlists</u></b></sapn>';
+        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'tvsplaylistscontent\',{})"><b><u>TV Series Playlists</u></b></span>';
         tmpHtml += '<div id="tvsplaylistsdata" style="display:none;" data-tvspl="{}"></div>'
         tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px; display: none;"></div>';
         tmpHtml += '</div>';
