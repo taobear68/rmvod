@@ -3892,7 +3892,8 @@ class PLHander {
         // Set "sitetf" (hardcode now,  maybe a setting in future?)
         
         var clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8";
-        var sitetf = false;
+        //var sitetf = false;
+        var sitetf = true;
         
         var cbFunc = function(objIn){
             
