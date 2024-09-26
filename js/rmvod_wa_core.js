@@ -3891,8 +3891,22 @@ class PLHander {
         // Get ClientID (from cookie?)
         // Set "sitetf" (hardcode now,  maybe a setting in future?)
         
-        var clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8";
-        //var sitetf = false;
+        // <div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;353f7b11-f379-4828-9d52-4e7e8b0086e8&quot;,&quot;userdetail&quot;:{&quot;loginname&quot;:&quot;tourvilp&quot;,&quot;propername&quot;:&quot;Paul Tourville&quot;,&quot;metajson&quot;:&quot;{\&quot;cookies\&quot;:{\&quot;playing_aid\&quot;:\&quot;47465583-7829-4260-9dda-996d88aaaae3\&quot;,\&quot;artifact_source_uri\&quot;:\&quot;http://192.168.128.137/rmvod/vidsrc/docu/DirtyJobs/DiscC_DJobs_c1e02-mpg.m4v\&quot;,\&quot;cont_play_sample_int_handle\&quot;:4,\&quot;serplaynext\&quot;:false,\&quot;resumeplay\&quot;:true,\&quot;fullscreenplay\&quot;:false,\&quot;playspeed\&quot;:\&quot;1.0\&quot;,\&quot;playback_offset\&quot;:107,\&quot;defaulttab\&quot;:\&quot;RNWATabWidget-tabspan-2\&quot;}}&quot;},&quot;sessiondetails&quot;:{&quot;sessiontoken&quot;:&quot;57e5627c-ec45-431c-a245-6e5697ce066b&quot;,&quot;sessionexpiredt&quot;:&quot;2025-01-22 19:10:18&quot;}}"></div>        
+        
+        var clientid = "no-client-id";
+        // Getting clientid from session data
+        try {
+            var sessDataDiv = document.getElementById("sessiondata");
+            var sessDataObj = JSON.parse(sessDataDiv.dataset.session);
+            clientid = sessDataObj['userid'];
+        } catch (e) {
+            console.log("PLHandler.apiFetchPLList - Failed to get clientid form session data.");
+        }
+        
+        
+        
+        // var clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8";
+        // var sitetf = false;
         var sitetf = true;
         
         var cbFunc = function(objIn){
