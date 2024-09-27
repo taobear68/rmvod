@@ -3855,7 +3855,6 @@ class MediaLibraryDB:
                         print("Skipped too may series.  Dumping out.")
                         break
                     else:
-                        #skipped-series += 1
                         skippedSeries += 1
                         #skip to next series
                         continue
@@ -3871,12 +3870,11 @@ class MediaLibraryDB:
             
         tmpRetObj['data'].append({})
         tmpRetObj['data'][0]['epl'] = epl
-        #tmpRetObj['data'][0]['artifacts'] = episodeArtiObjObj
         tmpRetObj['data'][0]['artifacts'] = seriesArtiObjObj
         
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - seriesArtiObjObj: " + json.dumps(seriesArtiObjObj))
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - tmpRetObj: " + json.dumps(tmpRetObj))
+        # print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
+        # print ("MediaLibraryDB.getEPLFromSPLfTVSDict - seriesArtiObjObj: " + json.dumps(seriesArtiObjObj))
+        # print ("MediaLibraryDB.getEPLFromSPLfTVSDict - tmpRetObj: " + json.dumps(tmpRetObj))
         # return epl
         return tmpRetObj
     def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
