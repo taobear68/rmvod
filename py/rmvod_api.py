@@ -3817,7 +3817,7 @@ class MediaLibraryDB:
         skippedSeries = 0
         #For each seriesaid:
         for said in sapl:
-            seriesArtiObjObj['said'] = self.getArtifactByIdNew(said)['data'][0]
+            seriesArtiObjObj[said] = self.getArtifactByIdNew(said)['data'][0]
             neaid = ""
             try:
                 #get last played episodeaid
