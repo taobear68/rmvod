@@ -3811,11 +3811,13 @@ class MediaLibraryDB:
         sapl = splDict['seriesaidlist']
         #Create Empty List episodepl
         epl = []
-        episodeArtiObjObj = {};
+        # episodeArtiObjObj = {}
+        seriesArtiObjObj = {}
         #var skipped-series = 0
         skippedSeries = 0
         #For each seriesaid:
         for said in sapl:
+            seriesArtiObjObj['said'] = self.getArtifactByIdNew(said)['data'][0]
             neaid = ""
             try:
                 #get last played episodeaid
@@ -3825,7 +3827,7 @@ class MediaLibraryDB:
                 #get next episodeaid
                 neArtiObj = self.getNextEpisodeArtifactById(lep)['data'][0]
                 neaid = neArtiObj['artifactid']
-                episodeArtiObjObj[neaid] = neArtiObj
+                #episodeArtiObjObj[neaid] = neArtiObj
                 # neaid = self.getNextEpisodeArtifactById(lep)['data'][0]['artifactid']
             except:
                 print("No previous plays of series " + said + " have been found.  Starting from first episode")
@@ -3841,7 +3843,7 @@ class MediaLibraryDB:
                     try:
                         neaid = self.getSeriesFirstEpisodeAid(said)['data']
                         epl.append(neaid)
-                        episodeArtiObjObj[neaid] = self.getArtifactByIdNew(neaid)['data'][0]
+                        # episodeArtiObjObj[neaid] = self.getArtifactByIdNew(neaid)['data'][0]
                     except:
                         print("No first episode found for said: " + said)
                     pass
@@ -3864,14 +3866,19 @@ class MediaLibraryDB:
                 epl.append(neaid)
             pass
             
+        # Ultimately, we probably want to be more robust than this.
+        tmpRetObj['status']['success'] = True
+            
         tmpRetObj['data'].append({})
         tmpRetObj['data'][0]['epl'] = epl
-        tmpRetObj['data'][0]['artifacts'] = episodeArtiObjObj
+        #tmpRetObj['data'][0]['artifacts'] = episodeArtiObjObj
+        tmpRetObj['data'][0]['artifacts'] = seriesArtiObjObj
         
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + json.dumps(episodeArtiObjObj))
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - seriesArtiObjObj: " + json.dumps(seriesArtiObjObj))
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - tmpRetObj: " + json.dumps(tmpRetObj))
-        return epl
+        # return epl
+        return tmpRetObj
     def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'getAvailSPLforClient'

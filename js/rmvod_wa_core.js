@@ -3935,6 +3935,7 @@ class PLHander {
         plOmniObj['pl-list'] = [];
         plOmniObj["pl-def-obj"] = {"id":"", "clientid":"", "name":"", "type":"", "desc":"", "options":{}, "seriesaidlist":[]};
         plOmniObj['pl-aid-list'] = [];
+        plOmniObj['pl-artifacts'] = {};
         plOmniObj['playing-idx'] = -1;
         plOmniObj['cookie-pnis-tf'] = false;
         
@@ -3984,8 +3985,29 @@ class PLHander {
             console.log("apiFetchSyndPl.cbFunc - objIn: " + JSON.stringify(objIn));
             var plh = new PLHander();
             var dObj = plh.readDataDiv();
-            dObj['pl-aid-list'] = objIn;
-            var workingPL = objIn;
+            dObj['pl-aid-list'] = objIn['data'][0]['epl']; 
+            //dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
+            // tmpRetObj: 
+            //{
+                //"method": "getEPLFromSPLfTVSDict", 
+                //"params": [
+                    //{"id": "12345678-1bcd-efgh-ijkl-mnopqrstuvwa", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name": "Bear's Monday Primetime Playlist", "type": "tvdaypartblock", "desc": "A 4-hour block with comedy and drama. The Big Bang Theory, Grace And Frankie, House, M.D., NCIS, The Blacklist", "options": {"list-repeat": false, "series-repeat": true}, "seriesaidlist": ["fcb58edf-9f31-4c3b-9fa8-f174b0356f3c", "9aebc8fa-82a0-4c34-a516-3bd1ab7b5c54", "82510bf0-ef28-4924-a9c5-03bae33e523a", "bcac590f-a5c1-424f-aa14-82c3526e0405", "fd5e0b6d-5d6a-489c-9249-c25c790a1f8c"]}
+                    //], 
+                //"status": {"success": false, "detail": "", "log": []}, 
+                //"data": [
+                    //{
+                        //"epl": ["56855434-d7cd-417f-8cf2-5888d924641d", "e6f434d1-1175-4cfa-91a5-3f9909cdb3d8", "28debda9-0b53-426b-ab5d-1d97e620d63b", "f6af70ed-cd85-4e37-b8a9-f637ff6dabde", "bccf2ff0-f0ea-4149-919e-d0c3697d6b17"], 
+                        //"artifacts": {
+                            //"56855434-d7cd-417f-8cf2-5888d924641d": {"artifactid": "56855434-d7cd-417f-8cf2-5888d924641d", "title": "tbbt-s01-d01-e05.m4v", "majtype": "tvepisode", "runmins": -1, "season": 1, "episode": 5, "file": "tbbt-s01-d01-e05.m4v", "filepath": "comedy/big_bang_theory", "director": ["string"], "writer": ["string"], "primcast": ["string"], "relorg": ["string"], "relyear": -1, "eidrid": "string", "imdbid": "string", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["comedy"]}, 
+                            //"e6f434d1-1175-4cfa-91a5-3f9909cdb3d8": {"artifactid": "e6f434d1-1175-4cfa-91a5-3f9909cdb3d8", "title": "GraceAndFrankie_S01E03", "majtype": "tvepisode", "runmins": 29, "season": 1, "episode": 3, "file": "GraceAndFrankie_S01E03.m4v", "filepath": "comedy/GraceAndFrankie", "director": ["Bryan Gordon"], "writer": ["Howard J. Morris", "Marta Kauffman", "Nancy Fichman"], "primcast": ["Jane Fonda", "Lily Tomlin", "Sam Waterston"], "relorg": ["string"], "relyear": 2015, "eidrid": "string", "imdbid": "tt3814440", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["comedy"], "synopsis": "The Dinner - Grace and Frankie decide to go back to work. Robert and Sol have an awkward dinner party for their children."}, 
+                            //"28debda9-0b53-426b-ab5d-1d97e620d63b": {"artifactid": "28debda9-0b53-426b-ab5d-1d97e620d63b", "title": "HouseMD_S01E03", "majtype": "tvepisode", "runmins": 44, "season": 1, "episode": 3, "file": "HouseMD_S01E03.m4v", "filepath": "drama/HouseMD", "director": ["Bryan Singer"], "writer": ["David Shore"], "primcast": ["Hugh Laurie", "Lisa Edelstein", "Omar Epps"], "relorg": ["string"], "relyear": 2004, "eidrid": "string", "imdbid": "tt0606033", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["detective", "drama", "medical"], "synopsis": "Occam's Razor - A college boy whose low blood pressure does not respond with IV fluids piques House's curiosity. Clinic Cases: A woman who had a cold last week, man with a sore throat, woman whose leg hurts after running 6 miles, a boy and his MP3 Player."}, 
+                            //"f6af70ed-cd85-4e37-b8a9-f637ff6dabde": {"artifactid": "f6af70ed-cd85-4e37-b8a9-f637ff6dabde", "title": "NCIS_S01E06", "majtype": "tvepisode", "runmins": 43, "season": 1, "episode": 6, "file": "NCIS_s1e06-mpg.m4v", "filepath": "drama/NCIS", "director": ["Dennis Smith"], "writer": ["Don McGill", "Donald P. Bellisario", "Jeff Vlaming"], "primcast": ["Mark Harmon", "Michael Weatherly", "Sasha Alexander"], "relorg": ["string"], "relyear": 2003, "eidrid": "string", "imdbid": "tt0657998", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["drama"], "synopsis": "High Seas - A chef finds a naked sailor inside a freezer at a restaurant in Rota, Spain, during a port visit by USS Enterprise; shortly afterward at sea another sailor freaks out on the flight deck; soon one of them dies. Gibbs and his team s..."}, 
+                            //"bccf2ff0-f0ea-4149-919e-d0c3697d6b17": {"artifactid": "bccf2ff0-f0ea-4149-919e-d0c3697d6b17", "title": "TheBlackList_S01E05", "majtype": "tvepisode", "runmins": 43, "season": 1, "episode": 5, "file": "TheBlackList_S01E05.m4v", "filepath": "drama/TheBlacklist", "director": ["Nick Gomez"], "writer": ["John C. Kelley", "Jon Bokenkamp"], "primcast": ["Diego Klattenhoff", "James Spader", "Megan Boone"], "relorg": ["string"], "relyear": 2013, "eidrid": "string", "imdbid": "tt3173410", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": [], "synopsis": "The Courier (No. 85) - Red (James Spader) leads Liz (Megan Boone) and Ressler (Diego Klattenhoff) in a hunt for a kidnap victim and his abductor - The Blacklist No. 85, a secretive criminal courier whose inability to feel pain makes him impossible to stop. Liz uncovers evidence linking Tom (Ryan Eggold) to a Russian defector's unsolved murder."}
+                        //}
+                    //}
+                //]
+            //}
+            var workingPL = objIn['data'][0]['epl'];
             console.log("playPlaylist - workingPL: " + JSON.stringify(workingPL));
             var spnState = plh.wa.cc.getCookie('serplaynext');
             console.log("apiFetchSyndPl.cbFunc - WRITING dObj: Backing up and overriding serplaynext cookie");
@@ -4012,13 +4034,14 @@ class PLHander {
         var curPlIdx = plObjIn['playing-idx'];
         console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
-        
+        var tmpSerArtiObj = this.readDataDiv()['pl-artifacts'][serAID];
         
         //{"method":"getArtifactByIdNew","params":["1e193909-b7ec-48d0-9b14-f28f88692baf"],"status":{"success":true,"detail":"","log":[]},"data":[{"artifactid":"1e193909-b7ec-48d0-9b14-f28f88692baf","title":"All In The Family","majtype":"tvseries","runmins":30,"season":-1,"episode":-1,"file":"","filepath":"comedy/AllInTheFamily","director":[],"writer":["Norman Lear"],"primcast":["Carroll O'Connor","Danielle Brisebois","Jean Stapleton","Rob Reiner","Sally Struthers"],"relorg":[],"relyear":1971,"eidrid":"string","imdbid":"tt0066626","arbmeta":"{\"Title\": \"All in the Family\", \"Year\": \"1971u20131979\", \"Rated\": \"TV-PG\", \"Released\": \"12 Jan 1971\", \"Runtime\": \"2 min\", \"Genre\": \"Comedy, Drama\", \"Director\": \"N/A\", \"Writer\": \"Norman Lear\", \"Actors\": \"Carroll O'Connor, Jean Stapleton, Rob Reiner\", \"Plot\": \"A working class man constantly squabbles with his family over the important issues of the day.\", \"Language\": \"English\", \"Country\": \"USA\", \"Awards\": \"Won 22 Primetime Emmys. 42 wins & 73 nominations total\", \"Poster\": \"https://m.media-amazon.com/images/M/MV5BMjEyOTExMDA5OF5BMl5BanBnXkFtZTcwNjM2NjQ3Mg@@._V1_SX300.jpg\", \"Ratings\": [{\"Source\": \"Internet Movie Database\", \"Value\": \"8.4/10\"}], \"Metascore\": \"N/A\", \"imdbRating\": \"8.4\", \"imdbVotes\": \"16,729\", \"imdbID\": \"tt0066626\", \"Type\": \"series\", \"totalSeasons\": \"9\", \"Response\": \"True\", \"addeddt\": \"2024-02-18 03:55:12\", \"titleorig\": \"All In The Family\", \"titlelibrary\": \"All In The Family\"}","seasons":9,"episodes":204,"tags":["comedy"],"synopsis":"A working class man constantly squabbles with his family over the important issues of the day.","poster":"/rmvod/img/poster_00/tt0066626.jpg"}]}        
         
         
         var cbFunc = function(dObjIn) {
             console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
+            // var artiData = dObjIn['data'][0];
             var artiData = dObjIn['data'][0];
             console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
@@ -4065,10 +4088,16 @@ class PLHander {
             de.innerHTML = tmpHtml;
             console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
         }
-        var wa = new RMVodWebApp();
-        const plObj = {'artifactid': serAID};
-        const ep = '/rmvod/api/artifact/get';
-        this.wa.genericApiCall(plObj,ep,cbFunc);        
+        
+        cbFunc(tmpSerArtiObj);
+        
+        //var ddivData = this.readDataDiv();
+        //var tmpdObj = {'data':[ddivData['pl-artifacts']]};
+        
+        //var wa = new RMVodWebApp();
+        //const plObj = {'artifactid': serAID};
+        //const ep = '/rmvod/api/artifact/get';
+        //this.wa.genericApiCall(plObj,ep,cbFunc);        
     }
     playPlaylist(){
         console.log("playPlaylist - Starting...");
