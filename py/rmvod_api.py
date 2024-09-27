@@ -3857,8 +3857,8 @@ class MediaLibraryDB:
                 #append episodeaid to episodepl
                 epl.append(neaid)
             pass
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + yaml.dumps(epl))
-        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + yaml.dumps(episodeArtiObjObj))
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + json.dumps(episodeArtiObjObj))
         return epl
     def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
