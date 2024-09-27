@@ -3986,7 +3986,7 @@ class PLHander {
             var plh = new PLHander();
             var dObj = plh.readDataDiv();
             dObj['pl-aid-list'] = objIn['data'][0]['epl']; 
-            //dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
+            dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
             // tmpRetObj: 
             //{
                 //"method": "getEPLFromSPLfTVSDict", 
