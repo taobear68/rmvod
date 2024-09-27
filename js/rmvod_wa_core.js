@@ -4042,7 +4042,9 @@ class PLHander {
         var cbFunc = function(dObjIn) {
             console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
             // var artiData = dObjIn['data'][0];
-            var artiData = dObjIn['data'][0];
+            //var artiData = dObjIn['data'][0];
+            var artiData = dObjIn;
+            
             console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
             
