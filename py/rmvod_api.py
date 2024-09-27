@@ -3864,8 +3864,9 @@ class MediaLibraryDB:
                 epl.append(neaid)
             pass
             
-        tmpRetObj['data']['epl'] = epl
-        tmpRetObj['data']['artifacts'] = episodeArtiObjObj
+        tmpRetObj['data'][0] = {}
+        tmpRetObj['data'][0]['epl'] = epl
+        tmpRetObj['data'][0]['artifacts'] = episodeArtiObjObj
         
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + json.dumps(episodeArtiObjObj))
