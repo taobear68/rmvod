@@ -3778,6 +3778,12 @@ class MediaLibraryDB:
             print("Could not get file create time for " + workingpath)
         return retval
     def getEPLFromSPLfTVSDict(self,splDictIn):
+        
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'getEPLFromSPLfTVSDict'
+        tmpRetObj['params'] = [splDictIn]
+        tmpRetObj['status']['success'] = False        
+        
         #Get SPLfTVS object
         splDict = splDictIn
         seriesSkipLimit = 3
@@ -3857,8 +3863,13 @@ class MediaLibraryDB:
                 #append episodeaid to episodepl
                 epl.append(neaid)
             pass
+            
+        tmpRetObj['data']['epl'] = epl
+        tmpRetObj['data']['artifacts'] = episodeArtiObjObj
+        
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + json.dumps(epl))
         print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + json.dumps(episodeArtiObjObj))
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - tmpRetObj: " + json.dumps(tmpRetObj))
         return epl
     def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
