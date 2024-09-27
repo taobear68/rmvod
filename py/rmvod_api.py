@@ -3864,7 +3864,7 @@ class MediaLibraryDB:
                 epl.append(neaid)
             pass
             
-        tmpRetObj['data'][0] = {}
+        tmpRetObj['data'].append({})
         tmpRetObj['data'][0]['epl'] = epl
         tmpRetObj['data'][0]['artifacts'] = episodeArtiObjObj
         
