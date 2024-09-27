@@ -3780,7 +3780,7 @@ class MediaLibraryDB:
     def getEPLFromSPLfTVSDict(self,splDictIn):
         #Get SPLfTVS object
         splDict = splDictIn
-        
+        seriesSkipLimit = 3
         lebysaid = {}
         # vldb = self.dbHandleConfigged()
         # rEpList = vldb.getRecentEpisodes(splDictIn['clientid']):
@@ -3805,6 +3805,7 @@ class MediaLibraryDB:
         sapl = splDict['seriesaidlist']
         #Create Empty List episodepl
         epl = []
+        episodeArtiObjObj = {};
         #var skipped-series = 0
         skippedSeries = 0
         #For each seriesaid:
@@ -3812,32 +3813,34 @@ class MediaLibraryDB:
             neaid = ""
             try:
                 #get last played episodeaid
-                #lep = getLastPlayedBySeries(said)
                 lep = lebysaid[said]
                 assert lep != ""
                 assert lep != None
                 #get next episodeaid
-                #neaid = getNextEpisodeInSeries(lep)
-                neaid = self.getNextEpisodeArtifactById(lep)['data'][0]['artifactid']
+                neArtiObj = self.getNextEpisodeArtifactById(lep)['data'][0]
+                neaid = neArtiObj['artifactid']
+                episodeArtiObjObj[neaid] = neArtiObj
+                # neaid = self.getNextEpisodeArtifactById(lep)['data'][0]['artifactid']
             except:
                 print("No previous plays of series " + said + " have been found.  Starting from first episode")
                 neaid = ""
             pass
             print("neaid: " + neaid)
             if neaid == "":
-                #print("neaid is an empty string.")
+                # We don't have a "next episode" -- either because the 
+                # last episode played was the final episode of the 
+                # series, or the series has no episodes.
                 if rpt == True:
                     #get series first episodeaid
-                    #neaid = getSeriesFirstEpisode(said)
                     try:
                         neaid = self.getSeriesFirstEpisodeAid(said)['data']
-                        #append episodeaid to episodepl
                         epl.append(neaid)
+                        episodeArtiObjObj[neaid] = self.getArtifactByIdNew(neaid)['data'][0]
                     except:
                         print("No first episode found for said: " + said)
                     pass
                 else:
-                    if skippedSeries > 2:
+                    if skippedSeries > seriesSkipLimit:
                         #list-repeat = false
                         rpt = False
                         #exit playlist with error (throw exception)
@@ -3854,6 +3857,8 @@ class MediaLibraryDB:
                 #append episodeaid to episodepl
                 epl.append(neaid)
             pass
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - epl: " + yaml.dumps(epl))
+        print ("MediaLibraryDB.getEPLFromSPLfTVSDict - episodeArtiObjObj: " + yaml.dumps(episodeArtiObjObj))
         return epl
     def getAvailSPLforClient(self,clientIdIn,inclSiteTF=False):
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
