@@ -4370,13 +4370,14 @@ class PLHander {
     }
     pleInitialize(plIdIn){
         console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
-        this.splewriteDataDiv(this.pleGetPlayistToEdit(plIdIn));
+        var plOmniObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        var plList = plOmniObj['pl-list'];
+        this.splewriteDataDiv(plList[plIdIn]);
+        //this.pleGetPlayistToEdit(plIdIn);
         this.spleRenderBaseHtml();
         this.splePopulateEditWidget();
     }
     pleGetPlayistToEdit(tvsplIdIn){
-        var plOmniObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
-        var plList = plOmniObj['pl-list'];
         console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
         return plList[tvsplIdIn];
     }
