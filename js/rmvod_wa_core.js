@@ -5212,7 +5212,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;;
         case "tvsplapisave":
             //var plh = new PLHander();
-            console.log("Save to server. " + JSON.stringify(spleReadDataDiv()));
+            var plh = new PLHander();
+            console.log("Save to server. " + JSON.stringify(plh.spleReadDataDiv()));
             break;;
             
             
