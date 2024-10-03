@@ -4370,9 +4370,16 @@ class PLHander {
     }
     pleInitialize(plIdIn){
         console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
+        this.splewriteDataDiv(this.pleGetPlayistToEdit(plIdIn));
         this.spleRenderBaseHtml();
         this.splePopulateEditWidget();
     }
+    pleGetPlayistToEdit(tvsplIdIn){
+        var plOmniObj = JSON.stringify(document.getElementById('plhandlerdata').dataset.omniobj);
+        var plList = plOmniObj['pl-list'];
+        return plList[tvsplIdIn];
+    }
+    //plhandlerdata data-omniobj
 
 
 
