@@ -5276,7 +5276,8 @@ def playlistUpdate():
     parmDict = {}
     try:
         #print("playlistListFetch - type(request.json): " + str(type(request.json)))
-        parmDict = yaml.safe_load(request.json)
+        #parmDict = yaml.safe_load(request.json)
+        parmDict = request.json
         pass
     except:
         print("playlistListFetch - ONOES! Could not deal with request.json")
