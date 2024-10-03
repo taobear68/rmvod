@@ -2353,7 +2353,7 @@ AND """ + fc1Str + """ """
         clientid = plDictIn['clientid']
         
         updateSQL = """UPDATE common_texts 
-SET record_data = '""" + yaml.dump(plDictIn) + """',
+SET record_data = '""" + json.dumps(plDictIn) + """',
 update_date = NOW() 
 WHERE id = '""" + plid + """' """
         
