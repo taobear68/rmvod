@@ -3969,6 +3969,8 @@ class PLHander {
             var plh = new PLHander();
             var tmpSrcDDiv = plh.readDataDiv();
             tmpSrcDDiv['pl-tvs-lu-list'] = tmpWriteObj;
+            console.log("PLHander.apiFetchTVSList.cbFunc - tmpSrcDDiv: " + JSON.stringify(tmpSrcDDiv));
+            
             plh.writeDataDiv(tmpWriteObj);
             
             //var wa = new RMVodWebApp();
