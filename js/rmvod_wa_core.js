@@ -5178,7 +5178,6 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             }
             break;;
             
-            
         case "doEditPlaylist":
             console.log("doEditPlaylist - " + objIdIn);
             var plh = new PLHander();
