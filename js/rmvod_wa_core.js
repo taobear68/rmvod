@@ -3983,7 +3983,7 @@ class PLHander {
             //payloadObj = {'majtype':srchValObjIn['majtype']};
         //}
         var payloadObj = {'majtype': 'tvseries'};
-        endpoint = "/rmvod/api/titleidlist/get";
+        var endpoint = "/rmvod/api/titleidlist/get";
         wa.genericApiCall(payloadObj,endpoint,cbFunc);    
     }
     readDataDiv(){
