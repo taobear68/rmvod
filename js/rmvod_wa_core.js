@@ -3961,7 +3961,7 @@ class PLHander {
             console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
             var tmpWriteObj = {};
             for (var i = 0; i < objIn.length; i++ ) {
-                tmpWriteObj[objIn['artifactid']] = objIn['title'];
+                tmpWriteObj[objIn[i]['artifactid']] = objIn[i]['title'];
             }
             console.log("PLHander.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
             
