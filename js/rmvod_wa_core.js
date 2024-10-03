@@ -5193,23 +5193,23 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break ;;
         case "tvspleaidup":
             var plh = new PLHander();
-            plh.plePosSwap(itemIdIn,"up");
+            plh.plePosSwap(objIdIn,"up");
             break;;
         case "tvspleaiddn":
             var plh = new PLHander();
-            plh.plePosSwap(itemIdIn,"dn");
+            plh.plePosSwap(objIdIn,"dn");
             break;;
         case "tvspleaidrmv":
             var plh = new PLHander();
-            plh.plePosRmv(itemIdIn);
+            plh.plePosRmv(objIdIn);
             break;;
         case "tvsplnameupd":
             var plh = new PLHander();
-            plh.pleUpdateValue('name',itemIdIn);
+            plh.pleUpdateValue('name',objIdIn);
             break;;
         case "tvspldescupd":
             var plh = new PLHander();
-            plh.pleUpdateValue('desc',itemIdIn);
+            plh.pleUpdateValue('desc',objIdIn);
             break;;
         case "tvsplapisave":
             //var plh = new PLHander();
