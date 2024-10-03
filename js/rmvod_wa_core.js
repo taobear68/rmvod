@@ -3948,17 +3948,22 @@ class PLHander {
         dd.style = "display: none;";
         document.getElementById("headerblock3").appendChild(dd);
         document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
+        this.apiFetchTVSList()
         
     }
     apiFetchTVSList(){
         // plOmniObj['pl-tvs-lu-list']
+        console.log("PLHander.apiFetchTVSList - BEGIN");
         var wa = new RMVodWebApp();
         cbFunc = function (dataObjIn){
+            console.log("PLHander.apiFetchTVSList.cbFunc - BEGIN");
             var objIn = dataObjIn['data'];
+            console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
             var tmpWriteObj = {};
             for (var i = 0; i < objIn.length; i++ ) {
                 tmpWriteObj[objIn['artifactid']] = objIn['title'];
             }
+            console.log("PLHander.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
             
             
             var plh = new PLHander();
