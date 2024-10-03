@@ -4205,6 +4205,7 @@ class PLHander {
         var tmpPLOmni = this.readDataDiv();
         var plObjObj = tmpPLOmni['pl-list'];
         
+        var tvsluObj = this.tvsluReadDataDiv();
         
         var plIdList = Object.keys(plObjObj);
         //console.log("tmpFakePopulatePlaylistList - plIdList: " + JSON.stringify(plIdList));
@@ -4216,6 +4217,19 @@ class PLHander {
             //console.log("tmpFakePopulatePlaylistList - PL: " + JSON.stringify(plObjObj[plId]));
             //console.log("tmpFakePopulatePlaylistList - PL Name: " + plObjObj[plId]['name']);
             //console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
+            
+            var stlStr = "";
+            var saidList = plObjObj[plId]['pl-def-obj']['seriesaidlist'];
+            for (var j = 0; j < saidList.length; j++ ) {
+                stlStr += tvsluObj[saidList[j]];
+                if (j < (saidList.length - 1)) {
+                    stlStr += ", ";
+                } else {
+                    stlStr += "";
+                }
+            }
+            
+            
             var tmpHtml = "";
             tmpHtml += "<div>";
             tmpHtml += "<!-- ROW " + i.toString() + " -->";
@@ -4224,6 +4238,9 @@ class PLHander {
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:500px; padding: 2px;'>";
             tmpHtml += plObjObj[plId]['desc'];
+            tmpHtml += "<br>";
+            // Put in the list of series titles
+            tmpHtml += stlStr;
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
             tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plId + "\",{})'><b><u>Play</u></b></span>";
