@@ -4375,7 +4375,7 @@ class PLHander {
         this.splePopulateEditWidget();
     }
     pleGetPlayistToEdit(tvsplIdIn){
-        var plOmniObj = JSON.stringify(document.getElementById('plhandlerdata').dataset.omniobj);
+        var plOmniObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
         var plList = plOmniObj['pl-list'];
         console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plOmniObj));
         return plList[tvsplIdIn];
