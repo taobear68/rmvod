@@ -5280,6 +5280,8 @@ def playlistUpdate():
         pass
     except:
         print("playlistListFetch - ONOES! Could not deal with request.json")
+        print(type(request.json))
+        print(request.json)
         pass
     pass
     
