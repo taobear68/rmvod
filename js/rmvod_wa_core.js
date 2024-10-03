@@ -4220,7 +4220,8 @@ class PLHander {
             console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
             
             var stlStr = "";
-            var saidList = plObjObj[plId]['pl-def-obj']['seriesaidlist'];
+            //var saidList = plObjObj[plId]['pl-def-obj']['seriesaidlist'];
+            var saidList = plObjObj[plId]['seriesaidlist'];
             for (var j = 0; j < saidList.length; j++ ) {
                 stlStr += tvsluObj[saidList[j]];
                 if (j < (saidList.length - 1)) {
