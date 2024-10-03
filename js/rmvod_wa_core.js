@@ -5188,7 +5188,6 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case "addaditopl" :
             var plh = new PLHander();
-
             //console.log(document.getElementById("plid-tvssel").value);
             plh.pleAddAid(document.getElementById("plid-tvssel").value);
             break ;;
@@ -5216,11 +5215,6 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //var plh = new PLHander();
             console.log("Save to server. " + JSON.stringify(spleReadDataDiv()));
             break;;
-        default:
-            //var plh = new PLHander();
-            console.log("DEFAULT: " + funcNameIn + "; itemIdIn: " + itemIdIn);
-            break;;
-            
             
             
             
