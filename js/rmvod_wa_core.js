@@ -4369,12 +4369,12 @@ class PLHander {
         
     }
     pleInitialize(plIdIn){
+        this.spleRenderBaseHtml();
         console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
         var plOmniObj = this.readDataDiv();
         var plList = plOmniObj['pl-list'];
         this.splewriteDataDiv(plList[plIdIn]);
         //this.pleGetPlayistToEdit(plIdIn);
-        this.spleRenderBaseHtml();
         this.splePopulateEditWidget();
     }
     pleGetPlayistToEdit(tvsplIdIn){
