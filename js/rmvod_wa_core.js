@@ -4420,11 +4420,30 @@ class PLHander {
         //this.pleGetPlayistToEdit(plIdIn);
         this.splePopulateEditWidget();
     }
+    pleApiPostUpdate(){
+        // /artifact/playlist/update
+        //  spleReadDataDiv
+        
+        var cbFunc = function (dataObjIn) {
+            var plh = new PLHander();
+            plh.apiFetchPLList();
+            
+        }
+        
+        var plObj = this.spleReadDataDiv();
+        var payloadObj = {'plobj': this.spleReadDataDiv()};
+        var endpoint = "/rmvod/api/artifact/playlist/update";
+        var wa = new RMVodWebApp();
+        wa.genericApiCall(payloadObj,endpoint,cbFunc);    
+
+
+    }
     pleGetPlayistToEdit(tvsplIdIn){
         console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
         return plList[tvsplIdIn];
     }
     //plhandlerdata data-omniobj
+    
 
 
 

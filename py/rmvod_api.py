@@ -2347,7 +2347,43 @@ AND """ + fc1Str + """ """
             retList.append(retDict)
         pass
         return retList
+    def updatePlaylistRecord(self,plDictIn):
         
+        plid = plDictIn['id']
+        clientid = plDictIn['clientid']
+        
+        updateSQL = """UPDATE common_texts 
+SET record_data = '""" + yaml.dump(plDictIn) + """',
+update_date = NOW() 
+WHERE id = '""" + plid + """' """
+        
+        result = self._stdUpdate(updateSQL)
+        
+        # MariaDB [vodlib]> desc common_texts;
+        # ERROR 2006 (HY000): Server has gone away
+        # No connection. Trying to reconnect...
+        # Connection id:    75593
+        # Current database: vodlib
+        
+        # +-------------+--------------+------+-----+---------+-------+
+        # | Field       | Type         | Null | Key | Default | Extra |
+        # +-------------+--------------+------+-----+---------+-------+
+        # | id          | varchar(40)  | NO   | PRI | NULL    |       |
+        # | record_type | varchar(100) | NO   |     | NULL    |       |
+        # | filt_crit_1 | varchar(100) | NO   |     | NULL    |       |
+        # | filt_crit_2 | varchar(100) | NO   |     | NULL    |       |
+        # | filt_crit_3 | varchar(100) | NO   |     | NULL    |       |
+        # | create_date | datetime     | NO   |     | NULL    |       |
+        # | update_date | datetime     | NO   |     | NULL    |       |
+        # | expire_date | datetime     | NO   |     | NULL    |       |
+        # | metadata    | text         | YES  |     | NULL    |       |
+        # | record_data | mediumtext   | NO   |     | NULL    |       |
+        # +-------------+--------------+------+-----+---------+-------+
+        # 10 rows in set (0.008 sec)
+        
+        pass
+        
+        return True
         
         
 
@@ -3889,6 +3925,20 @@ class MediaLibraryDB:
         
         #getClientTVSPlayLists
         return tmpRetObj
+    def postPlaylistUpdate(self,plDictIn):
+        pass
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'postPlaylistUpdate'
+        tmpRetObj['params'] = [plDictIn]
+        tmpRetObj['status']['success'] = False
+        
+        vldb = self.dbHandleConfigged()
+        # tmpRetObj['data'] = 
+        vldb.updatePlaylistRecord(plDictIn)
+        tmpRetObj['status']['success'] = True
+        
+        #getClientTVSPlayLists
+        return tmpRetObj
         
 
 
@@ -5212,6 +5262,28 @@ def playlistListFetch():
     pass
     
     resDict = ml.getAvailSPLforClient(parmDict['clientid'], parmDict['sitetf'])
+    print(resDict)
+    return json.dumps(resDict)
+    
+@app.route('/artifact/playlist/update',methods=['POST'])
+def playlistUpdate():
+    ml = MediaLibraryDB()
+    
+    
+    # Expects KVPs:
+    # plobj - dictionary - complete Playlist Object
+    
+    parmDict = {}
+    try:
+        #print("playlistListFetch - type(request.json): " + str(type(request.json)))
+        parmDict = yaml.safe_load(request.json)
+        pass
+    except:
+        print("playlistListFetch - ONOES! Could not deal with request.json")
+        pass
+    pass
+    
+    resDict = ml.postPlaylistUpdate(parmDict['plobj']) # ml.getAvailSPLforClient(parmDict['clientid'], parmDict['sitetf'])
     print(resDict)
     return json.dumps(resDict)
     
