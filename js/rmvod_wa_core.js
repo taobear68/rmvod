@@ -4370,7 +4370,7 @@ class PLHander {
     }
     pleInitialize(plIdIn){
         console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
-        var plOmniObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        var plOmniObj = this.readDataDiv();
         var plList = plOmniObj['pl-list'];
         this.splewriteDataDiv(plList[plIdIn]);
         //this.pleGetPlayistToEdit(plIdIn);
