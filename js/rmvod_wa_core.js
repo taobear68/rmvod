@@ -3948,7 +3948,7 @@ class PLHander {
         dd.style = "display: none;";
         document.getElementById("headerblock3").appendChild(dd);
         document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
-        this.apiFetchTVSList()
+        //this.apiFetchTVSList()
         
     }
     apiFetchTVSList(){
@@ -3994,7 +3994,7 @@ class PLHander {
     }
     writeDataDiv(ddObjIn){
         var ddJson = JSON.stringify(ddObjIn);
-        //console.log("writeDataDiv - ddJson: " + ddJson);
+        console.log("writeDataDiv - ddJson: " + ddJson);
         document.getElementById('plhandlerdata').dataset.omniobj = ddJson;
     }
     fetchPlObj(plIdIn){
