@@ -3987,26 +3987,6 @@ class PLHander {
             var dObj = plh.readDataDiv();
             dObj['pl-aid-list'] = objIn['data'][0]['epl']; 
             dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
-            // tmpRetObj: 
-            //{
-                //"method": "getEPLFromSPLfTVSDict", 
-                //"params": [
-                    //{"id": "12345678-1bcd-efgh-ijkl-mnopqrstuvwa", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name": "Bear's Monday Primetime Playlist", "type": "tvdaypartblock", "desc": "A 4-hour block with comedy and drama. The Big Bang Theory, Grace And Frankie, House, M.D., NCIS, The Blacklist", "options": {"list-repeat": false, "series-repeat": true}, "seriesaidlist": ["fcb58edf-9f31-4c3b-9fa8-f174b0356f3c", "9aebc8fa-82a0-4c34-a516-3bd1ab7b5c54", "82510bf0-ef28-4924-a9c5-03bae33e523a", "bcac590f-a5c1-424f-aa14-82c3526e0405", "fd5e0b6d-5d6a-489c-9249-c25c790a1f8c"]}
-                    //], 
-                //"status": {"success": false, "detail": "", "log": []}, 
-                //"data": [
-                    //{
-                        //"epl": ["56855434-d7cd-417f-8cf2-5888d924641d", "e6f434d1-1175-4cfa-91a5-3f9909cdb3d8", "28debda9-0b53-426b-ab5d-1d97e620d63b", "f6af70ed-cd85-4e37-b8a9-f637ff6dabde", "bccf2ff0-f0ea-4149-919e-d0c3697d6b17"], 
-                        //"artifacts": {
-                            //"56855434-d7cd-417f-8cf2-5888d924641d": {"artifactid": "56855434-d7cd-417f-8cf2-5888d924641d", "title": "tbbt-s01-d01-e05.m4v", "majtype": "tvepisode", "runmins": -1, "season": 1, "episode": 5, "file": "tbbt-s01-d01-e05.m4v", "filepath": "comedy/big_bang_theory", "director": ["string"], "writer": ["string"], "primcast": ["string"], "relorg": ["string"], "relyear": -1, "eidrid": "string", "imdbid": "string", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["comedy"]}, 
-                            //"e6f434d1-1175-4cfa-91a5-3f9909cdb3d8": {"artifactid": "e6f434d1-1175-4cfa-91a5-3f9909cdb3d8", "title": "GraceAndFrankie_S01E03", "majtype": "tvepisode", "runmins": 29, "season": 1, "episode": 3, "file": "GraceAndFrankie_S01E03.m4v", "filepath": "comedy/GraceAndFrankie", "director": ["Bryan Gordon"], "writer": ["Howard J. Morris", "Marta Kauffman", "Nancy Fichman"], "primcast": ["Jane Fonda", "Lily Tomlin", "Sam Waterston"], "relorg": ["string"], "relyear": 2015, "eidrid": "string", "imdbid": "tt3814440", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["comedy"], "synopsis": "The Dinner - Grace and Frankie decide to go back to work. Robert and Sol have an awkward dinner party for their children."}, 
-                            //"28debda9-0b53-426b-ab5d-1d97e620d63b": {"artifactid": "28debda9-0b53-426b-ab5d-1d97e620d63b", "title": "HouseMD_S01E03", "majtype": "tvepisode", "runmins": 44, "season": 1, "episode": 3, "file": "HouseMD_S01E03.m4v", "filepath": "drama/HouseMD", "director": ["Bryan Singer"], "writer": ["David Shore"], "primcast": ["Hugh Laurie", "Lisa Edelstein", "Omar Epps"], "relorg": ["string"], "relyear": 2004, "eidrid": "string", "imdbid": "tt0606033", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["detective", "drama", "medical"], "synopsis": "Occam's Razor - A college boy whose low blood pressure does not respond with IV fluids piques House's curiosity. Clinic Cases: A woman who had a cold last week, man with a sore throat, woman whose leg hurts after running 6 miles, a boy and his MP3 Player."}, 
-                            //"f6af70ed-cd85-4e37-b8a9-f637ff6dabde": {"artifactid": "f6af70ed-cd85-4e37-b8a9-f637ff6dabde", "title": "NCIS_S01E06", "majtype": "tvepisode", "runmins": 43, "season": 1, "episode": 6, "file": "NCIS_s1e06-mpg.m4v", "filepath": "drama/NCIS", "director": ["Dennis Smith"], "writer": ["Don McGill", "Donald P. Bellisario", "Jeff Vlaming"], "primcast": ["Mark Harmon", "Michael Weatherly", "Sasha Alexander"], "relorg": ["string"], "relyear": 2003, "eidrid": "string", "imdbid": "tt0657998", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": ["drama"], "synopsis": "High Seas - A chef finds a naked sailor inside a freezer at a restaurant in Rota, Spain, during a port visit by USS Enterprise; shortly afterward at sea another sailor freaks out on the flight deck; soon one of them dies. Gibbs and his team s..."}, 
-                            //"bccf2ff0-f0ea-4149-919e-d0c3697d6b17": {"artifactid": "bccf2ff0-f0ea-4149-919e-d0c3697d6b17", "title": "TheBlackList_S01E05", "majtype": "tvepisode", "runmins": 43, "season": 1, "episode": 5, "file": "TheBlackList_S01E05.m4v", "filepath": "drama/TheBlacklist", "director": ["Nick Gomez"], "writer": ["John C. Kelley", "Jon Bokenkamp"], "primcast": ["Diego Klattenhoff", "James Spader", "Megan Boone"], "relorg": ["string"], "relyear": 2013, "eidrid": "string", "imdbid": "tt3173410", "arbmeta": "{\\"string\\": \\"string\\"}", "tags": [], "synopsis": "The Courier (No. 85) - Red (James Spader) leads Liz (Megan Boone) and Ressler (Diego Klattenhoff) in a hunt for a kidnap victim and his abductor - The Blacklist No. 85, a secretive criminal courier whose inability to feel pain makes him impossible to stop. Liz uncovers evidence linking Tom (Ryan Eggold) to a Russian defector's unsolved murder."}
-                        //}
-                    //}
-                //]
-            //}
             var workingPL = objIn['data'][0]['epl'];
             console.log("playPlaylist - workingPL: " + JSON.stringify(workingPL));
             var spnState = plh.wa.cc.getCookie('serplaynext');
@@ -4022,7 +4002,6 @@ class PLHander {
             plh.writeDataDiv(dObj);
             plh.playPlaylistElement();            
         }
-        //const plObj = JSON.stringify(plObjIn);
         const plObj = JSON.stringify(plObjIn);
         console.log("apiFetchSyndPl - plObj; " + plObj);
         const ep = '/rmvod/api/artifact/playlist/generate';
@@ -4032,26 +4011,19 @@ class PLHander {
     }
     renderComingUpFrame(plObjIn){
         var curPlIdx = plObjIn['playing-idx'];
-        console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
+        //console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
         var ddObj = this.readDataDiv();  //['pl-artifacts'][serAID]
-        console.log("PLHander.renderComingUpFrame - ddObj: " + JSON.stringify(ddObj));
+        //console.log("PLHander.renderComingUpFrame - ddObj: " + JSON.stringify(ddObj));
         var tmpSerArtiObj = ddObj['pl-artifacts'][serAID];
-        //{"method":"getArtifactByIdNew","params":["1e193909-b7ec-48d0-9b14-f28f88692baf"],"status":{"success":true,"detail":"","log":[]},"data":[{"artifactid":"1e193909-b7ec-48d0-9b14-f28f88692baf","title":"All In The Family","majtype":"tvseries","runmins":30,"season":-1,"episode":-1,"file":"","filepath":"comedy/AllInTheFamily","director":[],"writer":["Norman Lear"],"primcast":["Carroll O'Connor","Danielle Brisebois","Jean Stapleton","Rob Reiner","Sally Struthers"],"relorg":[],"relyear":1971,"eidrid":"string","imdbid":"tt0066626","arbmeta":"{\"Title\": \"All in the Family\", \"Year\": \"1971u20131979\", \"Rated\": \"TV-PG\", \"Released\": \"12 Jan 1971\", \"Runtime\": \"2 min\", \"Genre\": \"Comedy, Drama\", \"Director\": \"N/A\", \"Writer\": \"Norman Lear\", \"Actors\": \"Carroll O'Connor, Jean Stapleton, Rob Reiner\", \"Plot\": \"A working class man constantly squabbles with his family over the important issues of the day.\", \"Language\": \"English\", \"Country\": \"USA\", \"Awards\": \"Won 22 Primetime Emmys. 42 wins & 73 nominations total\", \"Poster\": \"https://m.media-amazon.com/images/M/MV5BMjEyOTExMDA5OF5BMl5BanBnXkFtZTcwNjM2NjQ3Mg@@._V1_SX300.jpg\", \"Ratings\": [{\"Source\": \"Internet Movie Database\", \"Value\": \"8.4/10\"}], \"Metascore\": \"N/A\", \"imdbRating\": \"8.4\", \"imdbVotes\": \"16,729\", \"imdbID\": \"tt0066626\", \"Type\": \"series\", \"totalSeasons\": \"9\", \"Response\": \"True\", \"addeddt\": \"2024-02-18 03:55:12\", \"titleorig\": \"All In The Family\", \"titlelibrary\": \"All In The Family\"}","seasons":9,"episodes":204,"tags":["comedy"],"synopsis":"A working class man constantly squabbles with his family over the important issues of the day.","poster":"/rmvod/img/poster_00/tt0066626.jpg"}]}        
-        
         
         var cbFunc = function(dObjIn) {
-            console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
-            // var artiData = dObjIn['data'][0];
-            //var artiData = dObjIn['data'][0];
+            //console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
             var artiData = dObjIn;
             
             console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
-            
-            
             var tmpHtml = '';
-
 
             tmpHtml += '<div style="display: block;  padding: 2px; width: 810px; height: 510px;">'
             tmpHtml += '<div style="display: inline-flex; padding: 2px;width: 800px; height: 500px; align-vertical:top;">';
@@ -4082,25 +4054,15 @@ class PLHander {
             tmpHtml += '</div>';
             tmpHtml += '</div>';
             tmpHtml += '</div>';
-            
 
             console.log("PLHander.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
             console.log("PLHander.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
             var de = document.getElementById('structfeatureplayer');
-            //de.innerText = JSON.stringify(dObjIn);
             de.innerHTML = tmpHtml;
             console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
         }
         
         cbFunc(tmpSerArtiObj);
-        
-        //var ddivData = this.readDataDiv();
-        //var tmpdObj = {'data':[ddivData['pl-artifacts']]};
-        
-        //var wa = new RMVodWebApp();
-        //const plObj = {'artifactid': serAID};
-        //const ep = '/rmvod/api/artifact/get';
-        //this.wa.genericApiCall(plObj,ep,cbFunc);        
     }
     playPlaylist(){
         console.log("playPlaylist - Starting...");
@@ -4196,6 +4158,7 @@ class PLHander {
         titleRowHtml  += "<div style='display:inline-flex; width:350px; border: 1px;'><b>Name</b></div>"
         titleRowHtml  += "<div style='display:inline-flex; width:500px; border: 1px;'><b>Description</b></div>"
         titleRowHtml  += "<div style='display:inline-flex; width:100px; border: 1px;'><b>Play button</b></div>"
+        titleRowHtml  += "<div style='display:inline-flex; width:100px; border: 1px;'><b>Edit button</b></div>"
         titleRowHtml  += "</div>";
         
         masterTargHtml += titleRowHtml
@@ -4226,6 +4189,9 @@ class PLHander {
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
             tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plId + "\",{})'><b><u>Play</u></b></span>";
             tmpHtml += "</div>";
+            tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
+            tmpHtml += "<span onclick='switchboard(\"doEditPlaylist\",\"" + plId + "\",{})'><b><u>Edit</u></b></span>";
+            tmpHtml += "</div>";
             tmpHtml += "</div>";
             //tmpHtml += "";
             
@@ -4246,6 +4212,170 @@ class PLHander {
         this.fetchPlObj(plIdIn);
         this.playPlaylist();
     }
+
+    spleReadDataDiv(){
+        return JSON.parse(document.getElementById('pleditdata').dataset.pledit);
+    }
+    splewriteDataDiv(ddObjIn) {
+        document.getElementById('pleditdata').dataset.pledit = JSON.stringify(ddObjIn);
+    }
+    tvsluReadDataDiv(){
+        // tvslookup
+        return JSON.parse(document.getElementById('tvslookup').dataset.tvslookup);
+    }
+    tvsluWriteDataDiv(){
+        // tvslookup
+        document.getElementById('tvslookup').dataset.tvslookup = JSON.stringify(ddObjIn);
+    }
+    splePopulateLuList(){
+        //<select id="plid-tvssel">
+        //<option value="tvs-aid-01">TV Series 1</option>
+        var luObj = this.tvsluReadDataDiv("plid-tvssel");
+        var keysAry = Object.keys(luObj);
+        var selListDE = document.getElementById("plid-tvssel");
+        selListDE.innerHTML = "";
+        for (var i = 0 ; i < keysAry.length; i++ ){
+            var tmpOption = document.createElement("option");
+            tmpOption.value = keysAry[i];
+            tmpOption.text = luObj[keysAry[i]];
+            //console.log(tmpOption.outerHTML);
+            selListDE.add(tmpOption);
+        }
+    }
+    splePopulateEditWidget(){
+        var tvsplObj = this.spleReadDataDiv();
+        document.getElementById('plid-name').value = tvsplObj['name'];
+        document.getElementById('plid-desc').innerText = tvsplObj['desc'];
+        this.splePopulateListWidget();
+        this.splePopulateLuList();    
+    }
+    splePopulateListWidget(){
+        var targDiv = document.getElementById('tvspleplouter');
+        
+        targDiv.innerHTML = "";
+        
+        var pleObj = this.spleReadDataDiv();
+        var tvsLuObj = this.tvsluReadDataDiv();
+        var plsaidAry = pleObj['seriesaidlist']
+        for (var i = 0; i < plsaidAry.length; i++) {
+            var idxNumStr = i.toString();
+            if (i < 10) {
+                idxNumStr = "0" + idxNumStr;
+            }
+            var tmpRowOuterDiv = document.createElement('div');
+            tmpRowOuterDiv.class = "tvspleplrowouter";
+            var tmpRowInnerDiv = document.createElement('div');
+            tmpRowInnerDiv.class = "tvspleplrowinner";
+            tmpRowInnerDiv.id = "tvspleditplelement" + idxNumStr;
+            tmpRowInnerDiv.dataset.aid = plsaidAry[i];
+            var tmpHtml = '<div class="tvspleplrowinnercol1">' + tvsLuObj[plsaidAry[i]] + '</div>';
+            if ( i > 0) {
+                // tmpHtml += '<div class="tvspleplrowinnercol2"><span onclick="switchboard(&quote;tvspleaidup&quote;,&quote;' + plsaidAry[i] + '&quote;,{})"><b><u>Up</u></b></span></div>';
+                tmpHtml += '<div class="tvspleplrowinnercol2"><span onclick="switchboard(\'tvspleaidup\',\'' + plsaidAry[i] + '\',{})"><b><u>Up</u></b></span></div>';
+            } else {
+                tmpHtml += '<div class="tvspleplrowinnercol2">&nbsp;</div>';
+            }
+            
+            if ( i < (plsaidAry.length - 1)) {
+                tmpHtml += '<div class="tvspleplrowinnercol3"><span onclick="switchboard(\'tvspleaiddn\',\'' + plsaidAry[i] + '\',{})"><b><u>Dn</u></b></span></div>';
+            } else {
+                tmpHtml += '<div class="tvspleplrowinnercol3">&nbsp;</div>';
+            }
+            
+            tmpHtml += '<div class="tvspleplrowinnercol4"><span onclick="switchboard(\'tvspleaidrmv\',\'' + plsaidAry[i] + '\',{})"><b><u>Rmv</u></b></span></div>';
+            
+            tmpRowInnerDiv.innerHTML = tmpHtml;
+            tmpRowOuterDiv.appendChild(tmpRowInnerDiv);
+            targDiv.appendChild(tmpRowOuterDiv);
+            
+            //<div class="tvspleplrowouter">
+                //<div id="tvspleditplelement02"  class="tvspleplrowinner">
+                    //<div class="tvspleplrowinnercol1">Playlist Element #2</div>
+                    //<div class="tvspleplrowinnercol2">Up</div>
+                    //<div class="tvspleplrowinnercol3">Dn</div>
+                    //<div class="tvspleplrowinnercol4">Rmv</div>
+                //</div>
+            //</div>        
+        }
+    }
+    plePosSwap(selAidIn,dirIn){
+        var pleObj = this.spleReadDataDiv();
+        var pleAry = pleObj['seriesaidlist'];
+        var selAidIdx = pleAry.indexOf(selAidIn);
+        var pairAidIdx = selAidIdx - 1; // up
+        if (dirIn == "dn") {
+            pairAidIdx = selAidIdx + 1;
+        }
+        var pairAid = pleAry[pairAidIdx];
+        pleAry[selAidIdx] = pairAid;
+        pleAry[pairAidIdx] = selAidIn;
+        pleObj['seriesaidlist'] = pleAry;
+        this.splewriteDataDiv(pleObj);
+        this.splePopulateListWidget();
+    }
+    plePosRmv(selAidIn){
+        var pleObj = this.spleReadDataDiv();
+        var pleAry = pleObj['seriesaidlist'];
+        var selAidIdx = pleAry.indexOf(selAidIn);
+        pleAry.splice(selAidIdx,1);
+        pleObj['seriesaidlist'] = pleAry;
+        this.splewriteDataDiv(pleObj);
+        this.splePopulateListWidget();
+    }
+    pleAddAid(aidIn){
+        var pleObj = this.spleReadDataDiv();
+        pleObj['seriesaidlist'].push(aidIn);
+        this.splewriteDataDiv(pleObj);
+        this.splePopulateListWidget();
+    }
+    pleUpdateValue(fieldNameIn,fieldValueIn){
+        var pleObj = this.spleReadDataDiv();
+        switch (fieldNameIn){
+            case "name":
+                console.log("updating Name to " + fieldValueIn);
+                pleObj['name'] = document.getElementById(fieldValueIn).value;
+                break;;
+            case "desc":
+                console.log("updating Description to " + fieldValueIn);
+                console.log(document.getElementById(fieldValueIn).value);
+                pleObj['desc'] = document.getElementById(fieldValueIn).value;
+                break;;
+            default:
+                console.log("I don't know what to do with " + fieldNameIn + ": " + fieldValueIn);
+                break;;
+        }
+        
+        this.splewriteDataDiv(pleObj);
+        this.splePopulateListWidget();
+    }
+    spleRenderBaseHtml(targDeIn){
+        var tvsluObj = {"fcb58edf-9f31-4c3b-9fa8-f174b0356f3c": "The Big Bang Theory","9aebc8fa-82a0-4c34-a516-3bd1ab7b5c54": "Grace And Frankie","82510bf0-ef28-4924-a9c5-03bae33e523a": "House, M.D.","bcac590f-a5c1-424f-aa14-82c3526e0405": "NCIS","fd5e0b6d-5d6a-489c-9249-c25c790a1f8c": "The Blacklist"};
+        var pleditObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwa","clientid":"353f7b11-f379-4828-9d52-4e7e8b0086e8","name":"Bear's Monday Primetime Playlist","type":"tvdaypartblock","desc":"A 4-hour block with comedy and drama. The Big Bang Theory, Grace And Frankie, House, M.D., NCIS, The Blacklist","options":{"list-repeat":false,"series-repeat":true},"seriesaidlist":["fcb58edf-9f31-4c3b-9fa8-f174b0356f3c","9aebc8fa-82a0-4c34-a516-3bd1ab7b5c54","82510bf0-ef28-4924-a9c5-03bae33e523a","bcac590f-a5c1-424f-aa14-82c3526e0405","fd5e0b6d-5d6a-489c-9249-c25c790a1f8c"]}
+        var tmpHtml = '<div style="width: 75%; height: 100px;"><div>Edit TV Series Playlist</div></div>';
+        tmpHtml += '<div style="width: 1100px; height: 500px;"><div id="tvslookup" style="display: none;" data-tvslookup=""></div><div id="pleditdata" style="display: none;" data-pledit=""></div>';
+        tmpHtml += '<div style="width: 100%;  height: 100%; display: inline-flex;"><div style="width: 50%;  height: 100%; display: inline-flex;">';
+        tmpHtml += '<div style="display: block; width: 100%; height: 100%;" data-pledit="">';
+        tmpHtml += '<div class="tvsplefieldrowouter"><div class="tvsplefieldrowinner"><div class="tvsplefieldlabel"><b>Name</b></div><div class="tvsplefieldfield"><input type="text" id="plid-name" onchange="switchboard(\'tvsplnameupd\',\'plid-name\',{})" width="300"></div></div></div>';
+        tmpHtml += '<div class="tvsplefieldrowouter" style="height:150px;"><div class="tvsplefieldrowinner"><div class="tvsplefieldlabel"><b>Description</b></div><div class="tvsplefieldfield"><textarea rows=5 cols=30 id="plid-desc" onchange="switchboard(\'tvspldescupd\',\'plid-desc\',{})" ></textarea></div></div></div>';
+        tmpHtml += '<div class="tvsplefieldrowouter"><div class="tvsplefieldrowinner"><div class="tvsplefieldlabel"><b>TV Series to add</b></div><div class="tvsplefieldfield"><select id="plid-tvssel"></select><button onclick="switchboard(\'addaditopl\',\'plid-tvssel\',{})" name="tvspleaidadd">Add it!</button></div></div></div>';
+        tmpHtml += '<div class="tvsplefieldrowouter" ><div class="tvsplefieldrowinner"><div class="tvsplefieldlabel"><b>Save to server</b></div><div class="tvsplefieldfield"><button onclick="switchboard(\'tvsplapisave\',\'\',{})" name="tvsplesave">Update</button></div></div></div>';
+        tmpHtml += '</div></div>';
+        tmpHtml += '<div style="width: 50%;  height: 100%; display: inline-flex;"><div id="tvspleplouter" class="tvspleplouter" style="diplay: block; width: 100%;">';
+        tmpHtml += '</div></div>';
+        // tmpHtml += '';
+        document.getElementById("structfeatureedit").innerHTML = tmpHtml;
+        document.getElementById("tvslookup").dataset.tvslookup = JSON.stringify(tvsluObj);
+        document.getElementById("pleditdata").dataset.pledit = JSON.stringify(pleditObj);
+        
+    }
+    pleInitialize(plIdIn){
+        console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
+        this.spleRenderBaseHtml();
+        this.splePopulateEditWidget();
+    }
+
+
+
 }
 
 
@@ -5047,6 +5177,52 @@ function switchboard(actionIn,objIdIn,argObjIn) {
                 de.style.display = "block";
             }
             break;;
+            
+            
+        case "doEditPlaylist":
+            console.log("doEditPlaylist - " + objIdIn);
+            var plh = new PLHander();
+            plh.pleInitialize(objIdIn);
+            document.getElementById('RNWATabWidget-tabspan-3').click();
+            break;;
+            
+        case "addaditopl" :
+            var plh = new PLHander();
+
+            //console.log(document.getElementById("plid-tvssel").value);
+            plh.pleAddAid(document.getElementById("plid-tvssel").value);
+            break ;;
+        case "tvspleaidup":
+            var plh = new PLHander();
+            plh.plePosSwap(itemIdIn,"up");
+            break;;
+        case "tvspleaiddn":
+            var plh = new PLHander();
+            plh.plePosSwap(itemIdIn,"dn");
+            break;;
+        case "tvspleaidrmv":
+            var plh = new PLHander();
+            plh.plePosRmv(itemIdIn);
+            break;;
+        case "tvsplnameupd":
+            var plh = new PLHander();
+            plh.pleUpdateValue('name',itemIdIn);
+            break;;
+        case "tvspldescupd":
+            var plh = new PLHander();
+            plh.pleUpdateValue('desc',itemIdIn);
+            break;;
+        case "tvsplapisave":
+            //var plh = new PLHander();
+            console.log("Save to server. " + JSON.stringify(spleReadDataDiv()));
+            break;;
+        default:
+            //var plh = new PLHander();
+            console.log("DEFAULT: " + funcNameIn + "; itemIdIn: " + itemIdIn);
+            break;;
+            
+            
+            
             
             
             
