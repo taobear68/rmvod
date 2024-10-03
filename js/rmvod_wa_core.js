@@ -3955,7 +3955,7 @@ class PLHander {
         // plOmniObj['pl-tvs-lu-list']
         console.log("PLHander.apiFetchTVSList - BEGIN");
         var wa = new RMVodWebApp();
-        cbFunc = function (dataObjIn){
+        var cbFunc = function (dataObjIn){
             console.log("PLHander.apiFetchTVSList.cbFunc - BEGIN");
             var objIn = dataObjIn['data'];
             console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
