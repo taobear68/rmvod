@@ -3948,7 +3948,7 @@ class PLHander {
         dd.style = "display: none;";
         document.getElementById("headerblock3").appendChild(dd);
         document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
-        //this.apiFetchTVSList()
+        this.apiFetchTVSList()
         
     }
     apiFetchTVSList(){
