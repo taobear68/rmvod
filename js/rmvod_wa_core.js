@@ -3935,6 +3935,7 @@ class PLHander {
         plOmniObj['pl-list'] = [];
         plOmniObj["pl-def-obj"] = {"id":"", "clientid":"", "name":"", "type":"", "desc":"", "options":{}, "seriesaidlist":[]};
         plOmniObj['pl-aid-list'] = [];
+        plOmniObj['pl-tvs-lu-list'] = [];
         plOmniObj['pl-artifacts'] = {};
         plOmniObj['playing-idx'] = -1;
         plOmniObj['cookie-pnis-tf'] = false;
@@ -3948,6 +3949,37 @@ class PLHander {
         document.getElementById("headerblock3").appendChild(dd);
         document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
         
+    }
+    apiFetchTVSList(){
+        // plOmniObj['pl-tvs-lu-list']
+        var wa = new RMVodWebApp();
+        cbFunc = function (dataObjIn){
+            var objIn = dataObjIn['data'];
+            var tmpWriteObj = {};
+            for (var i = 0; i < objIn.length; i++ ) {
+                tmpWriteObj[objIn['artifactid']] = objIn['title'];
+            }
+            
+            
+            var plh = new PLHander();
+            var tmpSrcDDiv = plh.readDataDiv();
+            tmpSrcDDiv['pl-tvs-lu-list'] = tmpWriteObj;
+            plh.writeDataDiv(tmpWriteObj);
+            
+            //var wa = new RMVodWebApp();
+            //var artiTitleIdList = wa.sse.ssRead('titleidlist');
+            //var tmpDiv = wa.renderSALByIdList(objIn);
+            //document.getElementById('sideartilistwidget').innerHTML = '';
+            //document.getElementById('sideartilistwidget').appendChild(tmpDiv);
+            
+            //wa.dispLastSrchFactors();     
+        }
+        //if (srchValObjIn['majtype'].length > 0){
+            //payloadObj = {'majtype':srchValObjIn['majtype']};
+        //}
+        var payloadObj = {'majtype': 'tvseries'};
+        endpoint = "/rmvod/api/titleidlist/get";
+        wa.genericApiCall(payloadObj,endpoint,cbFunc);    
     }
     readDataDiv(){
         var ddiv = document.getElementById('plhandlerdata');
@@ -4223,7 +4255,7 @@ class PLHander {
         // tvslookup
         return JSON.parse(document.getElementById('tvslookup').dataset.tvslookup);
     }
-    tvsluWriteDataDiv(){
+    tvsluWriteDataDiv(ddObjIn){
         // tvslookup
         document.getElementById('tvslookup').dataset.tvslookup = JSON.stringify(ddObjIn);
     }
@@ -4372,8 +4404,11 @@ class PLHander {
         this.spleRenderBaseHtml();
         console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
         var plOmniObj = this.readDataDiv();
-        var plList = plOmniObj['pl-list'];
-        this.splewriteDataDiv(plList[plIdIn]);
+        //var plList = plOmniObj['pl-list'];
+        //this.splewriteDataDiv(plList[plIdIn]);
+        this.splewriteDataDiv(plOmniObj['pl-list'][plIdIn]);
+        //var tvsList = plOmniObj['pl-tvs-lu-list'];
+        this.tvsluWriteDataDiv(plOmniObj['pl-tvs-lu-list']);
         //this.pleGetPlayistToEdit(plIdIn);
         this.splePopulateEditWidget();
     }
