@@ -426,3 +426,49 @@ div.recqsl{
 }
 
   
+/* CSS for Playlists */
+
+div.tvsplefieldlabel {
+    display: inline-flex; 
+    width: 30%; 
+    height: 100%;
+}
+div.tvsplefieldfield {
+    display: inline-flex; 
+    width: 70%; 
+    height: 100%;
+}
+div.tvsplefieldrowinner {
+    display: inline-flex; 
+    width: 100%; 
+    height: 100%;
+}
+div.tvsplefieldrowouter {
+    display: block; 
+    width: 100%; 
+    height: 30px;
+}
+div.tvspleplouter {
+    diplay: block; 
+    width: 100%;
+}
+div.tvspleplrowinner {
+    display:inline-flex; 
+    width: 100%;
+}
+div.tvspleplrowouter {
+    style="diplay: block; 
+    width: 100%;"
+}
+div.tvspleplrowinnercol1 {
+    display: inline-flex; width: 70%;
+}
+div.tvspleplrowinnercol2 {
+    display: inline-flex; width: 8%;
+}
+div.tvspleplrowinnercol3 {
+    display: inline-flex; width: 8%;
+}
+div.tvspleplrowinnercol4 {
+    display: inline-flex; width: 8%;
+}
