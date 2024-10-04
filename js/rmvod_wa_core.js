@@ -3887,12 +3887,6 @@ class PLHandler {
         //this.plObjObj['12345678-1bcd-efgh-ijkl-mnopqrstuvwa'] = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwa", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear\'s Monday Primetime Playlist", "type": "tvdaypartblock", "desc":"A 4-hour block with comedy and drama. The Big Bang Theory, Grace And Frankie, House, M.D., NCIS, The Blacklist", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "fcb58edf-9f31-4c3b-9fa8-f174b0356f3c", "9aebc8fa-82a0-4c34-a516-3bd1ab7b5c54", "82510bf0-ef28-4924-a9c5-03bae33e523a", "bcac590f-a5c1-424f-aa14-82c3526e0405", "fd5e0b6d-5d6a-489c-9249-c25c790a1f8c" ] };
     }
     apiFetchPLList(){
-        
-        // Get ClientID (from cookie?)
-        // Set "sitetf" (hardcode now,  maybe a setting in future?)
-        
-        // <div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;353f7b11-f379-4828-9d52-4e7e8b0086e8&quot;,&quot;userdetail&quot;:{&quot;loginname&quot;:&quot;tourvilp&quot;,&quot;propername&quot;:&quot;Paul Tourville&quot;,&quot;metajson&quot;:&quot;{\&quot;cookies\&quot;:{\&quot;playing_aid\&quot;:\&quot;47465583-7829-4260-9dda-996d88aaaae3\&quot;,\&quot;artifact_source_uri\&quot;:\&quot;http://192.168.128.137/rmvod/vidsrc/docu/DirtyJobs/DiscC_DJobs_c1e02-mpg.m4v\&quot;,\&quot;cont_play_sample_int_handle\&quot;:4,\&quot;serplaynext\&quot;:false,\&quot;resumeplay\&quot;:true,\&quot;fullscreenplay\&quot;:false,\&quot;playspeed\&quot;:\&quot;1.0\&quot;,\&quot;playback_offset\&quot;:107,\&quot;defaulttab\&quot;:\&quot;RNWATabWidget-tabspan-2\&quot;}}&quot;},&quot;sessiondetails&quot;:{&quot;sessiontoken&quot;:&quot;57e5627c-ec45-431c-a245-6e5697ce066b&quot;,&quot;sessionexpiredt&quot;:&quot;2025-01-22 19:10:18&quot;}}"></div>        
-        
         var clientid = "no-client-id";
         // Getting clientid from session data
         try {
@@ -3903,10 +3897,6 @@ class PLHandler {
             console.log("PLHandler.apiFetchPLList - Failed to get clientid form session data.");
         }
         
-        
-        
-        // var clientid = "353f7b11-f379-4828-9d52-4e7e8b0086e8";
-        // var sitetf = false;
         var sitetf = true;
         
         var cbFunc = function(objIn){
@@ -3923,7 +3913,6 @@ class PLHandler {
             tmpDataObj['pl-list'] = saveObj;
             plh.writeDataDiv(tmpDataObj);
             plh.tmpFakePopulatePlaylistList();
-            // console.log(JSON.stringify(objIn));
         }
         var wa = new RMVodWebApp();
         const plObj = JSON.stringify({'clientid': clientid, 'sitetf': sitetf});
@@ -3949,10 +3938,8 @@ class PLHandler {
         document.getElementById("headerblock3").appendChild(dd);
         document.getElementById("plhandlerdata").dataset.omniobj = JSON.stringify(plOmniObj);
         this.apiFetchTVSList()
-        
     }
     apiFetchTVSList(){
-        // plOmniObj['pl-tvs-lu-list']
         console.log("PLHandler.apiFetchTVSList - BEGIN");
         var wa = new RMVodWebApp();
         var cbFunc = function (dataObjIn){
@@ -3964,7 +3951,6 @@ class PLHandler {
                 tmpWriteObj[objIn[i]['artifactid']] = objIn[i]['title'];
             }
             //console.log("PLHandler.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
-            
             
             var plh = new PLHandler();
             var tmpSrcDDiv = plh.readDataDiv();
@@ -3993,17 +3979,11 @@ class PLHandler {
         document.getElementById('plhandlerdata').dataset.omniobj = ddJson;
     }
     fetchPlObj(plIdIn){
-        // Ideally, we would fetch the PL object from the API and stuff it in a DIV somewhere, but for now we're just going to return a static PL Object
-        //var plObj = {"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] };
-        //return plObj;
-        
         var tmpOmniObj = this.readDataDiv();
         tmpOmniObj['pl-def-obj'] = tmpOmniObj['pl-list'][plIdIn];
         //console.log("fetchPlObj - tmpOmniObj: " + JSON.stringify(tmpOmniObj) );
         this.writeDataDiv(tmpOmniObj);
         return tmpOmniObj['pl-list'][plIdIn];
-        
-        //return this.plObjObj[plIdIn];
     }
     clearPlAidList() {
         var dObj = plh.readDataDiv();
@@ -4024,10 +4004,6 @@ class PLHandler {
             var spnState = plh.wa.cc.getCookie('serplaynext');
             //console.log("apiFetchSyndPl.cbFunc - WRITING dObj: Backing up and overriding serplaynext cookie");
             dObj['cookie-pnis-tf'] = spnState;
-            
-            //plh.writeDataDiv(dObj);
-            //this.wa.cc.setCookie('serplaynext', false, 90)
-            //this.wa.cc.setCookie('opt_serplaynext', false, 90)
             
             dObj['playing-idx'] = 0;
             //console.log("apiFetchSyndPl.cbFunc - WRITING dObj: " + JSON.stringify(dObj));
@@ -4098,7 +4074,6 @@ class PLHandler {
     }
     playPlaylist(){
         console.log("playPlaylist - Starting...");
-        
         var plObj = this.readDataDiv()['pl-def-obj'];
         //console.log("playPlaylist - plObj: " + JSON.stringify(plObj));
         var workingPL = [];
@@ -4123,14 +4098,8 @@ class PLHandler {
         //console.log("playPlaylistElement - plAry: " + JSON.stringify(plAry));
         var plpIdx = dObj['playing-idx'];
         //console.log("playPlaylistElement - plpIdx: " + plpIdx);
-        
         //console.log("playPlaylistElement - Playing playlist idx " + plpIdx + ": " + plAry[plpIdx])
         //console.log("playPlaylistElement - Playing artifact " + plAry[plpIdx]);
-        
-        // structfeatureplayer
-        // Post the "up next" frame for a few seconds in the player frame before starting the player
-        
-        //<span id="RNWATabWidget-tabspan-0" class="RNWATabWidgetTabTab-sel" onclick="tabPick(this.id);">Player</span>
         
         this.renderComingUpFrame(dObj);
         tabPick("RNWATabWidget-tabspan-0");
@@ -4141,15 +4110,6 @@ class PLHandler {
             wa.vodPlayTitleApi3(plAry[plpIdx]);
         }
         setTimeout(playerFunc,cardDispPerMs,dIn);
-        
-        
-        //var wa = new RMVodWebApp();
-        //wa.vodPlayTitleApi3(plAry[plpIdx]);
-        //vodPlayTitleApi3
-        
-        
-        //this.endPlaylistElement();
-        
     }
     endPlaylistElement(){
         var dObj = this.readDataDiv();
@@ -4179,14 +4139,12 @@ class PLHandler {
         this.clearPlAidList();
         var dObj = this.readDataDiv();
         console.log("Restoring 'play next episode' cookie to " + dObj['cookie-pnis-tf'].toString());
-        //this.wa.cc.setCookie('serplaynext', dObj['cookie-pnis-tf'], 90)
-        //this.wa.cc.setCookie('opt_serplaynext', dObj['cookie-pnis-tf'], 90)        
     }
     tmpFakePopulatePlaylistList(){
         var targDiv = document.getElementById("tvsplaylistscontent");
         var masterTargHtml = "<div>";
         
-        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span onclick='switchboard(\"tvsplnew\",\"\",{})'><b><u>Create New Playlist</u></b></span></div>"
+        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span style='cursor:pointer;' onclick='switchboard(\"tvsplnew\",\"\",{})'><b><u>Create New Playlist</u></b></span></div>"
         
         var titleRowHtml = "<div>"
         titleRowHtml  += "<div style='display:inline-flex; width:350px; border: 1px;'><b>Name</b></div>"
@@ -4202,14 +4160,10 @@ class PLHandler {
         var plObjObj = tmpPLOmni['pl-list'];
         var plIdList = Object.keys(plObjObj);
         
-        //var tvsluObj = this.tvsluReadDataDiv();
         var tvsluObj = tmpPLOmni['pl-tvs-lu-list'];
         //console.log("PLHandler.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
-        
         //console.log("tmpFakePopulatePlaylistList - plIdList: " + JSON.stringify(plIdList));
         //console.log("tmpFakePopulatePlaylistList - plObjObj: " + JSON.stringify(plObjObj));
-        
-        //var plListAry = [{"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }];
         for (var i = 0 ; i < plIdList.length ; i++ ) {
             var plId = plIdList[i];
             //////console.log("tmpFakePopulatePlaylistList - PL: " + JSON.stringify(plObjObj[plId]));
@@ -4217,9 +4171,7 @@ class PLHandler {
             //////console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
             
             var stlStr = "";
-            
             var serListMode = 2;
-            
             switch (serListMode) {
                 case 2:
                     stlStr += "<ol>";
@@ -4253,21 +4205,19 @@ class PLHandler {
             
             tmpHtml += "<div style='display: block; width: 100%; height: 100%'>";
             tmpHtml += "<div style='display: block; width: 100%;'>";
-            //tmpHtml += "<div style='display: block; width: 490px;'>";
-            //tmpHtml += "<div style='display: block; width: 485px;'>";
             tmpHtml += plObjObj[plId]['desc'];
             tmpHtml += "</div><div style='display: block; width: 100%;'>";
-            //tmpHtml += "</div><div style='display: block; width: 485px;'>";
+            
             // Put in the list of series titles
             tmpHtml += stlStr;
             tmpHtml += "</div></div>";
             
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
-            tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plId + "\",{})'><b><u>Play</u></b></span>";
+            tmpHtml += "<span style='cursor:pointer;' onclick='switchboard(\"doPlayPlaylist\",\"" + plId + "\",{})'><b><u>Play</u></b></span>";
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
-            tmpHtml += "<span onclick='switchboard(\"doEditPlaylist\",\"" + plId + "\",{})'><b><u>Edit</u></b></span>";
+            tmpHtml += "<span style='cursor:pointer;' onclick='switchboard(\"doEditPlaylist\",\"" + plId + "\",{})'><b><u>Edit</u></b></span>";
             tmpHtml += "</div>";
             tmpHtml += "</div>";
             //tmpHtml += "";
@@ -4278,14 +4228,6 @@ class PLHandler {
         targDiv.innerHTML = masterTargHtml;
     }
     tmpFakeLoadPlaylistAndPlayIt(plIdIn){
-        // This is just here to get the ball rolling.  We're going to 
-        // do something more sophisticated later.  Honest!
-        //var plh = new PLHandler();
-        //this.initDataDiv();
-        //var tmpdd = this.readDataDiv();
-        //tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
-        //tmpdd['pl-def-obj'] = this.fetchPlObj("12345678-1bcd-efgh-ijkl-mnopqrstuvwx");
-        //this.writeDataDiv(tmpdd);
         this.fetchPlObj(plIdIn);
         this.playPlaylist();
     }
@@ -4297,16 +4239,12 @@ class PLHandler {
         document.getElementById('pleditdata').dataset.pledit = JSON.stringify(ddObjIn);
     }
     tvsluReadDataDiv(){
-        // tvslookup
         return JSON.parse(document.getElementById('tvslookup').dataset.tvslookup);
     }
     tvsluWriteDataDiv(ddObjIn){
-        // tvslookup
         document.getElementById('tvslookup').dataset.tvslookup = JSON.stringify(ddObjIn);
     }
     splePopulateLuList(){
-        //<select id="plid-tvssel">
-        //<option value="tvs-aid-01">TV Series 1</option>
         var luObj = this.tvsluReadDataDiv("plid-tvssel");
         var keysAry = Object.keys(luObj);
         var selListDE = document.getElementById("plid-tvssel");
@@ -4347,32 +4285,22 @@ class PLHandler {
             tmpRowInnerDiv.dataset.aid = plsaidAry[i];
             var tmpHtml = '<div class="tvspleplrowinnercol1">' + tvsLuObj[plsaidAry[i]] + '</div>';
             if ( i > 0) {
-                // tmpHtml += '<div class="tvspleplrowinnercol2"><span onclick="switchboard(&quote;tvspleaidup&quote;,&quote;' + plsaidAry[i] + '&quote;,{})"><b><u>Up</u></b></span></div>';
-                tmpHtml += '<div class="tvspleplrowinnercol2"><span onclick="switchboard(\'tvspleaidup\',\'' + plsaidAry[i] + '\',{})"><b><u>Up</u></b></span></div>';
+                tmpHtml += '<div class="tvspleplrowinnercol2"><span style="cursor:pointer;" onclick="switchboard(\'tvspleaidup\',\'' + plsaidAry[i] + '\',{})"><b><u>Up</u></b></span></div>';
             } else {
                 tmpHtml += '<div class="tvspleplrowinnercol2">&nbsp;</div>';
             }
             
             if ( i < (plsaidAry.length - 1)) {
-                tmpHtml += '<div class="tvspleplrowinnercol3"><span onclick="switchboard(\'tvspleaiddn\',\'' + plsaidAry[i] + '\',{})"><b><u>Dn</u></b></span></div>';
+                tmpHtml += '<div class="tvspleplrowinnercol3"><span style="cursor:pointer;" onclick="switchboard(\'tvspleaiddn\',\'' + plsaidAry[i] + '\',{})"><b><u>Dn</u></b></span></div>';
             } else {
                 tmpHtml += '<div class="tvspleplrowinnercol3">&nbsp;</div>';
             }
             
-            tmpHtml += '<div class="tvspleplrowinnercol4"><span onclick="switchboard(\'tvspleaidrmv\',\'' + plsaidAry[i] + '\',{})"><b><u>Rmv</u></b></span></div>';
+            tmpHtml += '<div class="tvspleplrowinnercol4"><span style="cursor:pointer;" onclick="switchboard(\'tvspleaidrmv\',\'' + plsaidAry[i] + '\',{})"><b><u>Rmv</u></b></span></div>';
             
             tmpRowInnerDiv.innerHTML = tmpHtml;
             tmpRowOuterDiv.appendChild(tmpRowInnerDiv);
             targDiv.appendChild(tmpRowOuterDiv);
-            
-            //<div class="tvspleplrowouter">
-                //<div id="tvspleditplelement02"  class="tvspleplrowinner">
-                    //<div class="tvspleplrowinnercol1">Playlist Element #2</div>
-                    //<div class="tvspleplrowinnercol2">Up</div>
-                    //<div class="tvspleplrowinnercol3">Dn</div>
-                    //<div class="tvspleplrowinnercol4">Rmv</div>
-                //</div>
-            //</div>        
         }
     }
     plePosSwap(selAidIn,dirIn){
@@ -4450,23 +4378,15 @@ class PLHandler {
         //console.log('PLHandler.pleInitialize - plIdIn: ' + plIdIn);
         var plOmniObj = this.readDataDiv();
         //console.log('PLHandler.pleInitialize - plOmniObj: ' + JSON.stringify(plOmniObj));
-        //var plList = plOmniObj['pl-list'];
-        //this.splewriteDataDiv(plList[plIdIn]);
         this.splewriteDataDiv(plOmniObj['pl-list'][plIdIn]);
-        //var tvsList = plOmniObj['pl-tvs-lu-list'];
         this.tvsluWriteDataDiv(plOmniObj['pl-tvs-lu-list']);
-        //this.pleGetPlayistToEdit(plIdIn);
         this.splePopulateEditWidget();
     }
     pleApiPostUpdate(){
-        // /artifact/playlist/update
-        //  spleReadDataDiv
-        
         var cbFunc = function (dataObjIn) {
             // Wait 2 seconds, then refresh the playlists
             var toFunc = function(){
                 var plh = new PLHandler();
-                //plh.apiFetchPLList();
                 plh.apiFetchPLList()
             }
             setTimeout(toFunc,2000);
@@ -4477,8 +4397,6 @@ class PLHandler {
         var endpoint = "/rmvod/api/artifact/playlist/update";
         var wa = new RMVodWebApp();
         wa.genericApiCall(payloadObj,endpoint,cbFunc);    
-
-
     }
     pleGetPlayistToEdit(tvsplIdIn){
         //console.log('PLHandler.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
@@ -4489,32 +4407,17 @@ class PLHandler {
             
             var toFunc = function(){
                 var plh = new PLHandler();
-                //plh.apiFetchPLList();
                 plh.apiFetchPLList()
             }
             setTimeout(toFunc,2000);
-            
-            
-            //var plh = new PLHandler();
-            
-            
-            //plh.apiFetchPLList();
-            //console.log(JSON.stringify(objIn));
-            // apiFetchTVSList
         }
         var wa = new RMVodWebApp();
-        //const plObj = JSON.stringify({'clientid': "353f7b11-f379-4828-9d52-4e7e8b0086e8"});
         var sessionObj =  JSON.parse(document.getElementById('sessiondata').dataset.session);
         
-        //<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;353f7b11-f379-4828-9d52-4e7e8b0086e8&quot;,&quot;userdetail&quot;:{&quot;loginname&quot;:&quot;tourvilp&quot;,&quot;propername&quot;:&quot;Paul Tourville&quot;,&quot;metajson&quot;:&quot;{\&quot;cookies\&quot;:{\&quot;playing_aid\&quot;:\&quot;fa5ed716-a4d6-469b-a470-f1916378e63d\&quot;,\&quot;artifact_source_uri\&quot;:\&quot;http://192.168.128.137/rmvod/vidsrc/drama/NCIS/NCIS_s1e09-mpg.m4v\&quot;,\&quot;cont_play_sample_int_handle\&quot;:4,\&quot;serplaynext\&quot;:false,\&quot;resumeplay\&quot;:false,\&quot;fullscreenplay\&quot;:false,\&quot;playspeed\&quot;:\&quot;1.0\&quot;,\&quot;playback_offset\&quot;:2613,\&quot;defaulttab\&quot;:\&quot;RNWATabWidget-tabspan-2\&quot;}}&quot;},&quot;sessiondetails&quot;:{&quot;sessiontoken&quot;:&quot;57e5627c-ec45-431c-a245-6e5697ce066b&quot;,&quot;sessionexpiredt&quot;:&quot;2025-01-22 19:10:18&quot;}}"></div>
-
-        //const plObj = {'clientid': "353f7b11-f379-4828-9d52-4e7e8b0086e8"};
         var plObj = {'clientid': sessionObj['userid']};
         var ep = '/rmvod/api/artifact/playlist/create';
         this.wa.genericApiCall(plObj,ep,cbFunc);
-        
     }
-    //plhandlerdata data-omniobj
     
 
 
@@ -4533,13 +4436,10 @@ function recsWrapper(sinceDtStrIn){
     var rec = new WMCWARecommend();
     rec.renderRecQuickSearchContainer();
     
-    
-    
     var wa = new RMVodWebApp();
     var clientId = wa.sessGetUserId();
     console.log("recsWrapper - clientId: " + clientId);
     var sinceDTStr = sinceDtStrIn;
-    // var recLimitInt = 50; // this.sse.ssOKRead('localcfg','maxrecspercategory'); 
     var recLimitInt = wa.sse.ssOKRead('localcfg','maxrecspercategory'); 
     var cbFunc = function (objIn) {
         var rec = new WMCWARecommend();
@@ -4548,7 +4448,6 @@ function recsWrapper(sinceDtStrIn){
         rec.popMasterDiv();
         rec.qsRecGenerateLinkList(objIn); 
         //console.log("recsWrapper.cbFunc - DONE.");
-        
     }
     var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt};
     //console.log("recsWrapper - payloadObj: " + JSON.stringify(payloadObj));
@@ -4694,25 +4593,6 @@ class WMCWARecommend {
                         if ((posterStr != "") & (posterStr != undefined)) {
                             posterImg.src = posterStr;
                         }
-                        // this.recSrcData['artifacts'][artiId]
-                        
-                        //console.log(artiObj['artifactid'] + " poster: " + recsObj['artifacts'][artiObj['artifactid']][0]['poster']);
-                        
-                        
-                        
-                        //posterImg.src = this.recSrcData['artifacts'][artiId][0]['poster'];
-                        
-                        
-                        
-                        //if (artiObj['imdbid'] != '' & artiObj['imdbid'] != undefined & artiObj['imdbid'] != 'string' & artiObj['imdbid'] != 'none') {
-                            ////posterImg.src = 'http://rmvid/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
-                            //posterImg.src = '/rmvod/img/poster_00/' + artiObj['imdbid'] + '.jpg' ;
-                            
-                        //} else {
-                            ////posterDiv.innerHTML = "<b>Oops!  No Poster!</b>";
-                            //posterImg.src = '/rmvod/img/RMVOD_NoPoster.png' ;
-                            //// RMVOD_NoPoster.png
-                        //}
                         
                         posterDiv.appendChild(posterImg);
                         
@@ -4738,7 +4618,6 @@ class WMCWARecommend {
                         console.log( "Well, that's fucked.  INDEX: " + String(k) + "; JSON: " + JSON.stringify(artiObj) + " (" + e + ")");
                     }
                 }
-                //mtCount += 1;
                 
                 var labelDiv = document.createElement('div');
                 labelDiv.style.marginTop = "10px";
