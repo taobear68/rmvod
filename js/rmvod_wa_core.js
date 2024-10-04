@@ -4265,12 +4265,13 @@ class PLHander {
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:500px; padding: 2px;'>";
             
-            //tmpHtml += "<div style='display: block; width: 100%; height: 100%'>";
-            //tmpHtml += "<div style='display: block; width: 100%;'>";
-            tmpHtml += "<div style='display: block; width: 490px;'>";
-            tmpHtml += "<div style='display: block; width: 485px;'>";
+            tmpHtml += "<div style='display: block; width: 100%; height: 100%'>";
+            tmpHtml += "<div style='display: block; width: 100%;'>";
+            //tmpHtml += "<div style='display: block; width: 490px;'>";
+            //tmpHtml += "<div style='display: block; width: 485px;'>";
             tmpHtml += plObjObj[plId]['desc'];
-            tmpHtml += "</div><div style='display: block; width: 485px;'>";
+            tmpHtml += "</div><div style='display: block; width: 100%;'>";
+            //tmpHtml += "</div><div style='display: block; width: 485px;'>";
             // Put in the list of series titles
             tmpHtml += stlStr;
             tmpHtml += "</div></div>";
