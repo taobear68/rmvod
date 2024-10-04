@@ -4195,7 +4195,8 @@ class PLHander {
         titleRowHtml  += "<div style='display:inline-flex; width:100px; border: 1px;'><b>Edit button</b></div>"
         titleRowHtml  += "</div>";
         
-        masterTargHtml += titleRowHtml
+        masterTargHtml += newPlButtonRowHtml;
+        masterTargHtml += titleRowHtml;
         
         var tmpPLOmni = this.readDataDiv();
         var plObjObj = tmpPLOmni['pl-list'];
