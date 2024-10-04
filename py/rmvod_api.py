@@ -3962,7 +3962,7 @@ class MediaLibraryDB:
         
         tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
         tmpRetObj['method'] = 'postPlaylistUpdate'
-        tmpRetObj['params'] = [plDictIn]
+        tmpRetObj['params'] = [clientIdIn]
         tmpRetObj['status']['success'] = False
         
         try:
