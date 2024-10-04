@@ -4270,7 +4270,7 @@ class PLHander {
             tmpHtml += "<div style='display: block; width: 490px;'>";
             tmpHtml += "<div style='display: block; width: 485px;'>";
             tmpHtml += plObjObj[plId]['desc'];
-            tmpHtml += "</div><div style='display: block; width: 100%;'>";
+            tmpHtml += "</div><div style='display: block; width: 485px;'>";
             // Put in the list of series titles
             tmpHtml += stlStr;
             tmpHtml += "</div>";
