@@ -4463,9 +4463,12 @@ class PLHandler {
         //  spleReadDataDiv
         
         var cbFunc = function (dataObjIn) {
-            var plh = new PLHandler();
-            plh.apiFetchPLList();
-            
+            // Wait 2 seconds, then refresh the playlists
+            var toFunc = function(){
+                var plh = new PLHandler();
+                plh.apiFetchPLList();
+            }
+            setTimeout(toFunc,2000);
         }
         
         var plObj = this.spleReadDataDiv();
@@ -4483,6 +4486,8 @@ class PLHandler {
     apiNewPlaylist(){
         var cbFunc = function(objIn){
             var plh = new PLHandler();
+            
+            
             plh.apiFetchTVSList();
             //console.log(JSON.stringify(objIn));
             // apiFetchTVSList
