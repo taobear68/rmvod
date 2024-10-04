@@ -4264,10 +4264,15 @@ class PLHander {
             tmpHtml += plObjObj[plId]['name'];
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:500px; padding: 2px;'>";
+            
+            tmpHtml += "<div style='display: block; width: 100%; height:100%'>";
+            tmpHtml += "<div style='display: block; width: 100%;'>";
             tmpHtml += plObjObj[plId]['desc'];
-            tmpHtml += "<br>";
+            tmpHtml += "</div><div style='display: block; width: 100%;'>";
             // Put in the list of series titles
             tmpHtml += stlStr;
+            tmpHtml += "</div>";
+            
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
             tmpHtml += "<span onclick='switchboard(\"doPlayPlaylist\",\"" + plId + "\",{})'><b><u>Play</u></b></span>";
