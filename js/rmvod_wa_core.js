@@ -4467,7 +4467,7 @@ class PLHandler {
             var toFunc = function(){
                 var plh = new PLHandler();
                 //plh.apiFetchPLList();
-                plh.tmpFakePopulatePlaylistList()
+                plh.apiFetchPLList()
             }
             setTimeout(toFunc,2000);
         }
@@ -4486,10 +4486,19 @@ class PLHandler {
     }
     apiNewPlaylist(){
         var cbFunc = function(objIn){
-            var plh = new PLHandler();
+            
+            var toFunc = function(){
+                var plh = new PLHandler();
+                //plh.apiFetchPLList();
+                plh.apiFetchPLList()
+            }
+            setTimeout(toFunc,2000);
             
             
-            plh.apiFetchTVSList();
+            //var plh = new PLHandler();
+            
+            
+            //plh.apiFetchPLList();
             //console.log(JSON.stringify(objIn));
             // apiFetchTVSList
         }
