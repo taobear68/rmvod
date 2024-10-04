@@ -3958,36 +3958,25 @@ class PLHander {
         var cbFunc = function (dataObjIn){
             console.log("PLHander.apiFetchTVSList.cbFunc - BEGIN");
             var objIn = dataObjIn['data'];
-            console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
+            //console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
             var tmpWriteObj = {};
             for (var i = 0; i < objIn.length; i++ ) {
                 tmpWriteObj[objIn[i]['artifactid']] = objIn[i]['title'];
             }
-            console.log("PLHander.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
+            //console.log("PLHander.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
             
             
             var plh = new PLHander();
             var tmpSrcDDiv = plh.readDataDiv();
             tmpSrcDDiv['pl-tvs-lu-list'] = tmpWriteObj;
-            console.log("PLHander.apiFetchTVSList.cbFunc - tmpSrcDDiv: " + JSON.stringify(tmpSrcDDiv));
+            //console.log("PLHander.apiFetchTVSList.cbFunc - tmpSrcDDiv: " + JSON.stringify(tmpSrcDDiv));
             
             plh.writeDataDiv(tmpSrcDDiv);
             
             // Hail Mary pass to try to get the description to include 
             // series titles dynamically.
             plh.tmpFakePopulatePlaylistList();
-            
-            //var wa = new RMVodWebApp();
-            //var artiTitleIdList = wa.sse.ssRead('titleidlist');
-            //var tmpDiv = wa.renderSALByIdList(objIn);
-            //document.getElementById('sideartilistwidget').innerHTML = '';
-            //document.getElementById('sideartilistwidget').appendChild(tmpDiv);
-            
-            //wa.dispLastSrchFactors();     
         }
-        //if (srchValObjIn['majtype'].length > 0){
-            //payloadObj = {'majtype':srchValObjIn['majtype']};
-        //}
         var payloadObj = {'majtype': 'tvseries'};
         var endpoint = "/rmvod/api/titleidlist/get";
         wa.genericApiCall(payloadObj,endpoint,cbFunc);    
@@ -4000,7 +3989,7 @@ class PLHander {
     }
     writeDataDiv(ddObjIn){
         var ddJson = JSON.stringify(ddObjIn);
-        console.log("writeDataDiv - ddJson: " + ddJson);
+        //console.log("writeDataDiv - ddJson: " + ddJson);
         document.getElementById('plhandlerdata').dataset.omniobj = ddJson;
     }
     fetchPlObj(plIdIn){
@@ -4010,7 +3999,7 @@ class PLHander {
         
         var tmpOmniObj = this.readDataDiv();
         tmpOmniObj['pl-def-obj'] = tmpOmniObj['pl-list'][plIdIn];
-        console.log("fetchPlObj - tmpOmniObj: " + JSON.stringify(tmpOmniObj) );
+        //console.log("fetchPlObj - tmpOmniObj: " + JSON.stringify(tmpOmniObj) );
         this.writeDataDiv(tmpOmniObj);
         return tmpOmniObj['pl-list'][plIdIn];
         
@@ -4025,15 +4014,15 @@ class PLHander {
     apiFetchSyndPl(plObjIn){
         console.log("apiFetchSyndPl - Starting...");
         var cbFunc = function(objIn){
-            console.log("apiFetchSyndPl.cbFunc - objIn: " + JSON.stringify(objIn));
+            //console.log("apiFetchSyndPl.cbFunc - objIn: " + JSON.stringify(objIn));
             var plh = new PLHander();
             var dObj = plh.readDataDiv();
             dObj['pl-aid-list'] = objIn['data'][0]['epl']; 
             dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
             var workingPL = objIn['data'][0]['epl'];
-            console.log("playPlaylist - workingPL: " + JSON.stringify(workingPL));
+            //console.log("playPlaylist - workingPL: " + JSON.stringify(workingPL));
             var spnState = plh.wa.cc.getCookie('serplaynext');
-            console.log("apiFetchSyndPl.cbFunc - WRITING dObj: Backing up and overriding serplaynext cookie");
+            //console.log("apiFetchSyndPl.cbFunc - WRITING dObj: Backing up and overriding serplaynext cookie");
             dObj['cookie-pnis-tf'] = spnState;
             
             //plh.writeDataDiv(dObj);
@@ -4041,14 +4030,14 @@ class PLHander {
             //this.wa.cc.setCookie('opt_serplaynext', false, 90)
             
             dObj['playing-idx'] = 0;
-            console.log("apiFetchSyndPl.cbFunc - WRITING dObj: " + JSON.stringify(dObj));
+            //console.log("apiFetchSyndPl.cbFunc - WRITING dObj: " + JSON.stringify(dObj));
             plh.writeDataDiv(dObj);
             plh.playPlaylistElement();            
         }
         const plObj = JSON.stringify(plObjIn);
-        console.log("apiFetchSyndPl - plObj; " + plObj);
+        //console.log("apiFetchSyndPl - plObj; " + plObj);
         const ep = '/rmvod/api/artifact/playlist/generate';
-        console.log("apiFetchSyndPl - ep; " + ep);
+        //console.log("apiFetchSyndPl - ep; " + ep);
         this.wa.genericApiCall(plObj,ep,cbFunc);
         return true;
     }
@@ -4064,7 +4053,7 @@ class PLHander {
             //console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
             var artiData = dObjIn;
             
-            console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
+            //console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
             var tmpHtml = '';
 
@@ -4098,11 +4087,11 @@ class PLHander {
             tmpHtml += '</div>';
             tmpHtml += '</div>';
 
-            console.log("PLHander.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
-            console.log("PLHander.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
+            //console.log("PLHander.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
+            //console.log("PLHander.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
             var de = document.getElementById('structfeatureplayer');
             de.innerHTML = tmpHtml;
-            console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
+            //console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
         }
         
         cbFunc(tmpSerArtiObj);
@@ -4111,10 +4100,10 @@ class PLHander {
         console.log("playPlaylist - Starting...");
         
         var plObj = this.readDataDiv()['pl-def-obj'];
-        console.log("playPlaylist - plObj: " + JSON.stringify(plObj));
+        //console.log("playPlaylist - plObj: " + JSON.stringify(plObj));
         var workingPL = [];
         var plType = plObj['type']; // ": "tvdaypartblock", 
-        console.log("playPlaylist - plType: " +  plType);
+        //console.log("playPlaylist - plType: " +  plType);
         switch (plType) {
             case "tvdaypartblock":
                 this.apiFetchSyndPl(plObj);
@@ -4128,15 +4117,15 @@ class PLHander {
 
         console.log("playPlaylistElement - Starting...");
         var dObj = this.readDataDiv();
-        console.log("playPlaylistElement - " + JSON.stringify(dObj));
+        //console.log("playPlaylistElement - " + JSON.stringify(dObj));
         
         var plAry = dObj['pl-aid-list'];
-        console.log("playPlaylistElement - plAry: " + JSON.stringify(plAry));
+        //console.log("playPlaylistElement - plAry: " + JSON.stringify(plAry));
         var plpIdx = dObj['playing-idx'];
-        console.log("playPlaylistElement - plpIdx: " + plpIdx);
+        //console.log("playPlaylistElement - plpIdx: " + plpIdx);
         
-        console.log("playPlaylistElement - Playing playlist idx " + plpIdx + ": " + plAry[plpIdx])
-        console.log("playPlaylistElement - Playing artifact " + plAry[plpIdx]);
+        //console.log("playPlaylistElement - Playing playlist idx " + plpIdx + ": " + plAry[plpIdx])
+        //console.log("playPlaylistElement - Playing artifact " + plAry[plpIdx]);
         
         // structfeatureplayer
         // Post the "up next" frame for a few seconds in the player frame before starting the player
@@ -4166,21 +4155,21 @@ class PLHander {
         var dObj = this.readDataDiv();
         var plAry = dObj['pl-aid-list'];
         var plpIdx = dObj['playing-idx'];
-        console.log("endPlaylistElement - After end of play of artifact " + plAry[plpIdx]);
+        //console.log("endPlaylistElement - After end of play of artifact " + plAry[plpIdx]);
         if (plpIdx < (plAry.length - 1)) {
             // There's still at least one element in the list to play
             dObj['playing-idx'] += 1;
-            console.log("endPlaylistElement - Looks like we still have things to play.  Playing " + plAry[dObj['playing-idx']] );
+            //console.log("endPlaylistElement - Looks like we still have things to play.  Playing " + plAry[dObj['playing-idx']] );
             this.writeDataDiv(dObj);
             this.playPlaylistElement();
         } else {
             if (dObj['pl-def-obj']['list-repeat'] == true) {
                 // Start the list over
-                console.log("endPlaylistElement - Restart the playlist");
+                //console.log("endPlaylistElement - Restart the playlist");
                 this.playPlaylist();
             } else {
                 // We're done.
-                console.log("endPlaylistElement - Ending playlist");
+                //console.log("endPlaylistElement - Ending playlist");
                 this.endPlaylist();
             }
         }
@@ -4212,7 +4201,7 @@ class PLHander {
         
         //var tvsluObj = this.tvsluReadDataDiv();
         var tvsluObj = tmpPLOmni['pl-tvs-lu-list'];
-        console.log("PLHander.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
+        //console.log("PLHander.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
         
         //console.log("tmpFakePopulatePlaylistList - plIdList: " + JSON.stringify(plIdList));
         //console.log("tmpFakePopulatePlaylistList - plObjObj: " + JSON.stringify(plObjObj));
@@ -4220,9 +4209,9 @@ class PLHander {
         //var plListAry = [{"id":"12345678-1bcd-efgh-ijkl-mnopqrstuvwx", "clientid": "353f7b11-f379-4828-9d52-4e7e8b0086e8", "name":"Bear's Weekday Evening Playlist", "type": "tvdaypartblock", "desc":"A 3-hour block with sitcoms, drama and sc-fi.", "options":{ "list-repeat": false, "series-repeat": true }, "seriesaidlist":[ "1e193909-b7ec-48d0-9b14-f28f88692baf", "4e4e3fa6-5e21-407e-b60a-929725621b2d", "3f45db1f-e61f-4da3-87b0-baaf5f208cd6", "2c0d048e-6cc2-418c-9229-cc9a6f77769b", "26ba526b-0a9f-4444-b571-39b9a409335a", "3062158b-e3cf-463e-9890-ad300ac963ac" ] }];
         for (var i = 0 ; i < plIdList.length ; i++ ) {
             var plId = plIdList[i];
-            console.log("tmpFakePopulatePlaylistList - PL: " + JSON.stringify(plObjObj[plId]));
-            console.log("tmpFakePopulatePlaylistList - PL Name: " + plObjObj[plId]['name']);
-            console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
+            //////console.log("tmpFakePopulatePlaylistList - PL: " + JSON.stringify(plObjObj[plId]));
+            //////console.log("tmpFakePopulatePlaylistList - PL Name: " + plObjObj[plId]['name']);
+            //////console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
             
             var stlStr = "";
             //var saidList = plObjObj[plId]['pl-def-obj']['seriesaidlist'];
@@ -4433,9 +4422,9 @@ class PLHander {
     }
     pleInitialize(plIdIn){
         this.spleRenderBaseHtml();
-        console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
+        //console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
         var plOmniObj = this.readDataDiv();
-        console.log('PLHander.pleInitialize - plOmniObj: ' + JSON.stringify(plOmniObj));
+        //console.log('PLHander.pleInitialize - plOmniObj: ' + JSON.stringify(plOmniObj));
         //var plList = plOmniObj['pl-list'];
         //this.splewriteDataDiv(plList[plIdIn]);
         this.splewriteDataDiv(plOmniObj['pl-list'][plIdIn]);
@@ -4463,7 +4452,7 @@ class PLHander {
 
     }
     pleGetPlayistToEdit(tvsplIdIn){
-        console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
+        //console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
         return plList[tvsplIdIn];
     }
     //plhandlerdata data-omniobj
