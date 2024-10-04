@@ -4273,7 +4273,7 @@ class PLHander {
             tmpHtml += "</div><div style='display: block; width: 485px;'>";
             // Put in the list of series titles
             tmpHtml += stlStr;
-            tmpHtml += "</div>";
+            tmpHtml += "</div></div>";
             
             tmpHtml += "</div>";
             tmpHtml += "<div style='display:inline-flex; width:100px; padding: 2px;'>";
