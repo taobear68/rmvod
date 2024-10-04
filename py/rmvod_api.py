@@ -2384,6 +2384,21 @@ WHERE id = '""" + plid + """' """
         pass
         
         return True
+    def writeNewPlaylist(self,plDictIn):
+        createSQL = """INSERT INTO common-texts 
+SET id = '""" + plDictIn['id'] + """', 
+record_type = 'playlist', """ + plDictIn['id'] + """', 
+filter_crit_1 = '""" + plDictIn['clientid'] + """', 
+filter_crit_2 = '', 
+filter_crit_3 = '', 
+create_date = NOW(), 
+update_date = NOW(), 
+expire_date = '2034-12-31 23:59:59', 
+metadata = '{}',
+record_data = '""" + json.dumps(plDictIn) + """' """
+        result = this._stdInsert(createSQL)
+        return result
+
         
         
 
@@ -3939,8 +3954,25 @@ class MediaLibraryDB:
         
         #getClientTVSPlayLists
         return tmpRetObj
+    def generatePlaylist(self,clientIdIn):
+        basePLDict = {"id": "" ,"clientid": "" ,"name": "", "type": "tvdaypartblock", "desc": "", "options": {"list-repeat": False, "series-repeat": True}, "seriesaidlist": []}
+        basePLDict['id'] = str(uuid.uuid4())
+        basePLDict['clientid'] = clientIdIn
+        basePLDict['name'] = "New Playlist " + basePLDict['id']
         
-
+        tmpRetObj = copy.deepcopy(self.libMeta['retdicttempl'])
+        tmpRetObj['method'] = 'postPlaylistUpdate'
+        tmpRetObj['params'] = [plDictIn]
+        tmpRetObj['status']['success'] = False
+        
+        try:
+            vldb = self.dbHandleConfigged()
+            result = vldb.writeNewPlaylist(basePLDict)
+            tmpRetObj['status']['success'] = True
+        except:
+            tmpRetObj['status']['detail'] = "DB Action failed"
+        
+        return tmpRetObj
 
 
 class RNUserSession:
@@ -5290,6 +5322,12 @@ def playlistUpdate():
     print(resDict)
     return json.dumps(resDict)
     
+@app.route('/artifact/playlist/create',methods=['POST'])
+def playlistCreate():
+    ml = MediaLibraryDB()
+    resDict = ml.generatePlaylist(request.json['clientid'])
+    print(resDict)
+    return json.dumps(resDict)
     
 
 if __name__ == '__main__':
