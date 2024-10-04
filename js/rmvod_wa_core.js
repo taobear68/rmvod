@@ -3085,7 +3085,7 @@ class RMVodWebApp {
                         
                         wa.apiFetchUserRecentEpisodes(); 
                         
-                        var plh = new PLHander();
+                        var plh = new PLHandler();
                         // plh.tmpFakePopulatePlaylistList();
                         plh.apiFetchPLList();
                                   
@@ -3877,7 +3877,7 @@ class RMVodWebApp {
 }
 
 //Playlist Handling for RMVOD client
-class PLHander {
+class PLHandler {
     constructor(){
         this.wa = new RMVodWebApp();
         //this.plObjObj = {};
@@ -3917,7 +3917,7 @@ class PLHander {
                 saveObj[plList[i]['id']] = JSON.parse(plList[i]['record_data']);
             }
             
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.initDataDiv();
             var tmpDataObj = plh.readDataDiv();
             tmpDataObj['pl-list'] = saveObj;
@@ -3953,23 +3953,23 @@ class PLHander {
     }
     apiFetchTVSList(){
         // plOmniObj['pl-tvs-lu-list']
-        console.log("PLHander.apiFetchTVSList - BEGIN");
+        console.log("PLHandler.apiFetchTVSList - BEGIN");
         var wa = new RMVodWebApp();
         var cbFunc = function (dataObjIn){
-            console.log("PLHander.apiFetchTVSList.cbFunc - BEGIN");
+            console.log("PLHandler.apiFetchTVSList.cbFunc - BEGIN");
             var objIn = dataObjIn['data'];
-            //console.log("PLHander.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
+            //console.log("PLHandler.apiFetchTVSList.cbFunc - objIn: " + JSON.stringify(objIn));
             var tmpWriteObj = {};
             for (var i = 0; i < objIn.length; i++ ) {
                 tmpWriteObj[objIn[i]['artifactid']] = objIn[i]['title'];
             }
-            //console.log("PLHander.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
+            //console.log("PLHandler.apiFetchTVSList.cbFunc - tmpWriteObj: " + JSON.stringify(tmpWriteObj));
             
             
-            var plh = new PLHander();
+            var plh = new PLHandler();
             var tmpSrcDDiv = plh.readDataDiv();
             tmpSrcDDiv['pl-tvs-lu-list'] = tmpWriteObj;
-            //console.log("PLHander.apiFetchTVSList.cbFunc - tmpSrcDDiv: " + JSON.stringify(tmpSrcDDiv));
+            //console.log("PLHandler.apiFetchTVSList.cbFunc - tmpSrcDDiv: " + JSON.stringify(tmpSrcDDiv));
             
             plh.writeDataDiv(tmpSrcDDiv);
             
@@ -4015,7 +4015,7 @@ class PLHander {
         console.log("apiFetchSyndPl - Starting...");
         var cbFunc = function(objIn){
             //console.log("apiFetchSyndPl.cbFunc - objIn: " + JSON.stringify(objIn));
-            var plh = new PLHander();
+            var plh = new PLHandler();
             var dObj = plh.readDataDiv();
             dObj['pl-aid-list'] = objIn['data'][0]['epl']; 
             dObj['pl-artifacts'] = objIn['data'][0]['artifacts']; 
@@ -4043,17 +4043,17 @@ class PLHander {
     }
     renderComingUpFrame(plObjIn){
         var curPlIdx = plObjIn['playing-idx'];
-        //console.log("PLHander.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
+        //console.log("PLHandler.renderComingUpFrame curPlIdx: " + JSON.stringify(curPlIdx));
         var serAID = plObjIn['pl-def-obj']['seriesaidlist'][curPlIdx]
         var ddObj = this.readDataDiv();  //['pl-artifacts'][serAID]
-        //console.log("PLHander.renderComingUpFrame - ddObj: " + JSON.stringify(ddObj));
+        //console.log("PLHandler.renderComingUpFrame - ddObj: " + JSON.stringify(ddObj));
         var tmpSerArtiObj = ddObj['pl-artifacts'][serAID];
         
         var cbFunc = function(dObjIn) {
-            //console.log("PLHander.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
+            //console.log("PLHandler.renderComingUpFrame.cbFunc - " + JSON.stringify(dObjIn));
             var artiData = dObjIn;
             
-            //console.log("PLHander.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
+            //console.log("PLHandler.renderComingUpFrame.cbFunc - artiData: " + JSON.stringify(artiData));
             
             var tmpHtml = '';
 
@@ -4087,11 +4087,11 @@ class PLHander {
             tmpHtml += '</div>';
             tmpHtml += '</div>';
 
-            //console.log("PLHander.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
-            //console.log("PLHander.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
+            //console.log("PLHandler.renderComingUpFrame.cbFunc - tmpHtml: " + tmpHtml);
+            //console.log("PLHandler.renderComingUpFrame.cbFunc - About to write to the player div (structfeatureplayer)...");
             var de = document.getElementById('structfeatureplayer');
             de.innerHTML = tmpHtml;
-            //console.log("PLHander.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
+            //console.log("PLHandler.renderComingUpFrame.cbFunc - I think I wrote to the player div (structfeatureplayer).");
         }
         
         cbFunc(tmpSerArtiObj);
@@ -4204,7 +4204,7 @@ class PLHander {
         
         //var tvsluObj = this.tvsluReadDataDiv();
         var tvsluObj = tmpPLOmni['pl-tvs-lu-list'];
-        //console.log("PLHander.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
+        //console.log("PLHandler.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
         
         //console.log("tmpFakePopulatePlaylistList - plIdList: " + JSON.stringify(plIdList));
         //console.log("tmpFakePopulatePlaylistList - plObjObj: " + JSON.stringify(plObjObj));
@@ -4280,7 +4280,7 @@ class PLHander {
     tmpFakeLoadPlaylistAndPlayIt(plIdIn){
         // This is just here to get the ball rolling.  We're going to 
         // do something more sophisticated later.  Honest!
-        //var plh = new PLHander();
+        //var plh = new PLHandler();
         //this.initDataDiv();
         //var tmpdd = this.readDataDiv();
         //tmpdd['pl-def-obj'] = this.fetchPlObj(plIdIn);
@@ -4447,9 +4447,9 @@ class PLHander {
     }
     pleInitialize(plIdIn){
         this.spleRenderBaseHtml();
-        //console.log('PLHander.pleInitialize - plIdIn: ' + plIdIn);
+        //console.log('PLHandler.pleInitialize - plIdIn: ' + plIdIn);
         var plOmniObj = this.readDataDiv();
-        //console.log('PLHander.pleInitialize - plOmniObj: ' + JSON.stringify(plOmniObj));
+        //console.log('PLHandler.pleInitialize - plOmniObj: ' + JSON.stringify(plOmniObj));
         //var plList = plOmniObj['pl-list'];
         //this.splewriteDataDiv(plList[plIdIn]);
         this.splewriteDataDiv(plOmniObj['pl-list'][plIdIn]);
@@ -4463,7 +4463,7 @@ class PLHander {
         //  spleReadDataDiv
         
         var cbFunc = function (dataObjIn) {
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.apiFetchPLList();
             
         }
@@ -4477,12 +4477,12 @@ class PLHander {
 
     }
     pleGetPlayistToEdit(tvsplIdIn){
-        //console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
+        //console.log('PLHandler.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
         return plList[tvsplIdIn];
     }
     apiNewPlaylist(){
         var cbFunc = function(objIn){
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.apiFetchTVSList();
             //console.log(JSON.stringify(objIn));
             // apiFetchTVSList
@@ -5290,7 +5290,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;;
         
         case "doPlayPlaylist":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.tmpFakeLoadPlaylistAndPlayIt(objIdIn);
             break;;
         
@@ -5308,39 +5308,39 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case "doEditPlaylist":
             console.log("doEditPlaylist - " + objIdIn);
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.pleInitialize(objIdIn);
             document.getElementById('RNWATabWidget-tabspan-3').click();
             break;;
             
         case "addaditopl" :
-            var plh = new PLHander();
+            var plh = new PLHandler();
             //console.log(document.getElementById("plid-tvssel").value);
             plh.pleAddAid(document.getElementById("plid-tvssel").value);
             break ;;
         case "tvspleaidup":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.plePosSwap(objIdIn,"up");
             break;;
         case "tvspleaiddn":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.plePosSwap(objIdIn,"dn");
             break;;
         case "tvspleaidrmv":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.plePosRmv(objIdIn);
             break;;
         case "tvsplnameupd":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.pleUpdateValue('name',objIdIn);
             break;;
         case "tvspldescupd":
-            var plh = new PLHander();
+            var plh = new PLHandler();
             plh.pleUpdateValue('desc',objIdIn);
             break;;
         case "tvsplapisave":
-            //var plh = new PLHander();
-            var plh = new PLHander();
+            //var plh = new PLHandler();
+            var plh = new PLHandler();
             plh.pleApiPostUpdate();
             console.log("Save to server. " + JSON.stringify(plh.spleReadDataDiv()));
             break;;
@@ -5369,8 +5369,8 @@ function pbEnded (artiIdIn) {
     
     console.log('The playback it has ended');
     //check to see if we're in a playlist
-    // PLHander
-    var plh = new PLHander();
+    // PLHandler
+    var plh = new PLHandler();
     var pldd = plh.readDataDiv();
     console.log("pbEnded.pldd: " + JSON.stringify(pldd));
     console.log("pbEnded.pldd[pl-aid-list].length: " + pldd["pl-aid-list"].length);
