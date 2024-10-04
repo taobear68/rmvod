@@ -4466,7 +4466,8 @@ class PLHandler {
             // Wait 2 seconds, then refresh the playlists
             var toFunc = function(){
                 var plh = new PLHandler();
-                plh.apiFetchPLList();
+                //plh.apiFetchPLList();
+                plh.tmpFakePopulatePlaylistList()
             }
             setTimeout(toFunc,2000);
         }
