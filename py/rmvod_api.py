@@ -2396,7 +2396,9 @@ update_date = NOW(),
 expire_date = '2034-12-31 23:59:59', 
 metadata = '{}',
 record_data = '""" + json.dumps(plDictIn) + """' """
+        print("VodLibDB.writeNewPlaylist createSQL: " + createSQL)
         result = this._stdInsert(createSQL)
+        print("VodLibDB.writeNewPlaylist result: " + str(result))
         return result
 
         
