@@ -3973,6 +3973,10 @@ class PLHander {
             
             plh.writeDataDiv(tmpSrcDDiv);
             
+            // Hail Mary pass to try to get the description to include 
+            // series titles dynamically.
+            plh.tmpFakePopulatePlaylistList();
+            
             //var wa = new RMVodWebApp();
             //var artiTitleIdList = wa.sse.ssRead('titleidlist');
             //var tmpDiv = wa.renderSALByIdList(objIn);
