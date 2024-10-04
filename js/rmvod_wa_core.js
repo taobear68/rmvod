@@ -4204,11 +4204,12 @@ class PLHander {
         
         var tmpPLOmni = this.readDataDiv();
         var plObjObj = tmpPLOmni['pl-list'];
+        var plIdList = Object.keys(plObjObj);
         
         //var tvsluObj = this.tvsluReadDataDiv();
         var tvsluObj = tmpPLOmni['pl-tvs-lu-list'];
+        console.log("PLHander.tmpFakePopulatePlaylistList - tvsluObj: " + JSON.stringify(tvsluObj));
         
-        var plIdList = Object.keys(plObjObj);
         //console.log("tmpFakePopulatePlaylistList - plIdList: " + JSON.stringify(plIdList));
         //console.log("tmpFakePopulatePlaylistList - plObjObj: " + JSON.stringify(plObjObj));
         
