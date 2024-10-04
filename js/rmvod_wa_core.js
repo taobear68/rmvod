@@ -4214,6 +4214,37 @@ class PLHander {
             //////console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
             
             var stlStr = "";
+            
+            var serListMode = 2;
+            
+            switch (serListMode) {
+                case 2:
+                    stlStr += "<ol>";
+                    var saidList = plObjObj[plId]['seriesaidlist'];
+                    for (var j = 0; j < saidList.length; j++ ) {
+                        stlStr += "<li>" + tvsluObj[saidList[j]] + </li>;
+                        //if (j < (saidList.length - 1)) {
+                            //stlStr += ", ";
+                        //} else {
+                            //stlStr += "";
+                        //}
+                    }
+                    stlStr += "</ol>";
+                    break;;
+                    
+                default:
+                    var saidList = plObjObj[plId]['seriesaidlist'];
+                    for (var j = 0; j < saidList.length; j++ ) {
+                        stlStr += tvsluObj[saidList[j]];
+                        if (j < (saidList.length - 1)) {
+                            stlStr += ", ";
+                        } else {
+                            stlStr += "";
+                        }
+                    }
+                    break;;
+            }
+            
             //var saidList = plObjObj[plId]['pl-def-obj']['seriesaidlist'];
             var saidList = plObjObj[plId]['seriesaidlist'];
             for (var j = 0; j < saidList.length; j++ ) {
