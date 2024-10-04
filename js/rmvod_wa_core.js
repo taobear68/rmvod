@@ -4186,7 +4186,7 @@ class PLHander {
         var targDiv = document.getElementById("tvsplaylistscontent");
         var masterTargHtml = "<div>";
         
-        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span onclick='switchboard(\'tvsplnew\',\'\',{})'><b><u>Create New Playlist</u></b></span></div>"
+        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span onclick='switchboard(\"tvsplnew\",\"\",{})'><b><u>Create New Playlist</u></b></span></div>"
         
         var titleRowHtml = "<div>"
         titleRowHtml  += "<div style='display:inline-flex; width:350px; border: 1px;'><b>Name</b></div>"
