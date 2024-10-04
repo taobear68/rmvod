@@ -4186,6 +4186,8 @@ class PLHander {
         var targDiv = document.getElementById("tvsplaylistscontent");
         var masterTargHtml = "<div>";
         
+        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span onclick='switchboard(\'tvsplnew\',\'\',{})'><b><u>Create New Playlist</u></b></span></div>"
+        
         var titleRowHtml = "<div>"
         titleRowHtml  += "<div style='display:inline-flex; width:350px; border: 1px;'><b>Name</b></div>"
         titleRowHtml  += "<div style='display:inline-flex; width:500px; border: 1px;'><b>Description</b></div>"
@@ -4476,6 +4478,25 @@ class PLHander {
     pleGetPlayistToEdit(tvsplIdIn){
         //console.log('PLHander.pleGetPlayistToEdit - plList: ' + JSON.stringify(plList));
         return plList[tvsplIdIn];
+    }
+    apiNewPlaylist(){
+        var cbFunc = function(objIn){
+            var plh = new PLHander();
+            plh.apiFetchTVSList();
+            //console.log(JSON.stringify(objIn));
+            // apiFetchTVSList
+        }
+        var wa = new RMVodWebApp();
+        //const plObj = JSON.stringify({'clientid': "353f7b11-f379-4828-9d52-4e7e8b0086e8"});
+        var sessionObj =  JSON.parse(document.getElementById('sessiondata').dataset.session);
+        
+        //<div id="sessiondata" style="display:none" data-session="{&quot;userid&quot;:&quot;353f7b11-f379-4828-9d52-4e7e8b0086e8&quot;,&quot;userdetail&quot;:{&quot;loginname&quot;:&quot;tourvilp&quot;,&quot;propername&quot;:&quot;Paul Tourville&quot;,&quot;metajson&quot;:&quot;{\&quot;cookies\&quot;:{\&quot;playing_aid\&quot;:\&quot;fa5ed716-a4d6-469b-a470-f1916378e63d\&quot;,\&quot;artifact_source_uri\&quot;:\&quot;http://192.168.128.137/rmvod/vidsrc/drama/NCIS/NCIS_s1e09-mpg.m4v\&quot;,\&quot;cont_play_sample_int_handle\&quot;:4,\&quot;serplaynext\&quot;:false,\&quot;resumeplay\&quot;:false,\&quot;fullscreenplay\&quot;:false,\&quot;playspeed\&quot;:\&quot;1.0\&quot;,\&quot;playback_offset\&quot;:2613,\&quot;defaulttab\&quot;:\&quot;RNWATabWidget-tabspan-2\&quot;}}&quot;},&quot;sessiondetails&quot;:{&quot;sessiontoken&quot;:&quot;57e5627c-ec45-431c-a245-6e5697ce066b&quot;,&quot;sessionexpiredt&quot;:&quot;2025-01-22 19:10:18&quot;}}"></div>
+
+        //const plObj = {'clientid': "353f7b11-f379-4828-9d52-4e7e8b0086e8"};
+        var plObj = {'clientid': sessionObj['userid']};
+        var ep = '/rmvod/api/artifact/playlist/create';
+        this.wa.genericApiCall(plObj,ep,cbFunc);
+        
     }
     //plhandlerdata data-omniobj
     
@@ -5323,7 +5344,10 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             console.log("Save to server. " + JSON.stringify(plh.spleReadDataDiv()));
             break;;
             
-            
+        case "tvsplnew":
+            var plh = new PLHandler();
+            plh.apiNewPlaylist();
+            break;;
             
             
             
