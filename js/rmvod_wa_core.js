@@ -4222,7 +4222,7 @@ class PLHander {
                     stlStr += "<ol>";
                     var saidList = plObjObj[plId]['seriesaidlist'];
                     for (var j = 0; j < saidList.length; j++ ) {
-                        stlStr += "<li>" + tvsluObj[saidList[j]] + </li>;
+                        stlStr += "<li>" + tvsluObj[saidList[j]] + "</li>";
                         //if (j < (saidList.length - 1)) {
                             //stlStr += ", ";
                         //} else {
