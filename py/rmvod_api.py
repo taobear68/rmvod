@@ -2385,7 +2385,7 @@ WHERE id = '""" + plid + """' """
         
         return True
     def writeNewPlaylist(self,plDictIn):
-        createSQL = """INSERT INTO common-texts 
+        createSQL = """INSERT INTO common_texts 
 SET id = '""" + plDictIn['id'] + """', 
 record_type = 'playlist', 
 filt_crit_1 = '""" + plDictIn['clientid'] + """', 
