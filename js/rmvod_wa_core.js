@@ -1676,7 +1676,6 @@ class RMVodWebApp {
         //put a throbber in to replace any old content
         var editDiv = document.getElementById('sideartilistwidget');
         editDiv.innerHTML = '<div class="throbber-ring"></div>';        
-                
                
         var payloadObj = {};
         var endpoint = '';
@@ -1697,9 +1696,6 @@ class RMVodWebApp {
                     payloadObj = {'tag':srchValObjIn['tag']};
                 } 
                 endpoint = "/rmvod/api/titleidlist/get";
-                //var wa = new RMVodWebApp();
-                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "text":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1737,9 +1733,6 @@ class RMVodWebApp {
                     payloadObj = {'majtype':srchValObjIn['majtype']};
                 }
                 endpoint = "/rmvod/api/titleidlist/get";
-                //var wa = new RMVodWebApp();
-                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "relyear":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1756,9 +1749,6 @@ class RMVodWebApp {
                     payloadObj = {'relyear1':srchValObjIn['relyear1'],'relyear2':srchValObjIn['relyear2']};
                 }
                 endpoint = "/rmvod/api/titleidlist/get";
-                //var wa = new RMVodWebApp();
-                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //endpoint = apiBase + '/titleidlist/get';
                 break;
             case "whereclause":  //UPDATED FOR NEW RETURN OBJECT MODEL
                 cbFunc = function (dataObjIn){
@@ -1777,29 +1767,7 @@ class RMVodWebApp {
                     payloadObj = {'whereclause':srchValObjIn[factorStrIn]};
                 }
                 endpoint = "/rmvod/api/titleidlist/get";
-                //var wa = new RMVodWebApp();
-                //var apiBase = wa.sse.ssRead('apicfg')['API_Resources']['api_path'];
-                //endpoint = apiBase + '/titleidlist/get';
                 break;
-            //case "artifactid":
-                //cbFunc = function (dataObjIn){
-                    //var objIn = dataObjIn['data'];
-                    //var wa = new RMVodWebApp();
-                    //var artiTitleIdList = wa.sse.ssRead('titleidlist');
-                    //if (objIn.length > 0) {
-                        //var tmpDiv = wa.renderSALByIdList(objIn);
-                        //document.getElementById('sideartilistwidget').innerHTML = '';
-                        //document.getElementById('sideartilistwidget').appendChild(tmpDiv);
-                        
-                        //wa.dispLastSrchFactors();     
-                    //}
-                //}
-                //if (srchValObjIn[factorStrIn].length > 0){
-                    //payloadObj = {'whereclause':"artifactid = '" + srchValObjIn['artifactid'] + "'"};
-                //}
-                //endpoint = "/rmvod/api/titleidlist/get";
-                //break;
-                
             default:
                 console.log("execSearchSingleFactor fell through: ", factorStrIn, JSON.stringify(srchValObjIn));
         }
@@ -1853,8 +1821,6 @@ class RMVodWebApp {
         }
         
         const endpoint = '/rmvod/api/mfsearch/get';
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //const endpoint = apiBase + '/mfsearch/get';
         const payload = sfValsObj;
         this.genericApiCall(payload,endpoint,cbFunc);
         
@@ -2257,7 +2223,6 @@ class RMVodWebApp {
     // select Edit tab
     selectEditTab(){
         const ev = new Event('click');
-        //document.getElementById('RNWATabWidget-tabspan-2').dispatchEvent(ev); // RNWATabWidget-tabspan-2
         document.getElementById('RNWATabWidget-tabspan-3').dispatchEvent(ev); // RNWATabWidget-tabspan-2
         return true;
     }
@@ -2285,8 +2250,6 @@ class RMVodWebApp {
         }
         var payload = {'filepath':nafp,'file':nafn,'majtype':namt};
         var endpoint = "/rmvod/api/artifact/newsingle";
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //var endpoint = apiBase + '/artifact/newsingle';
         this.genericApiCall(payload,endpoint,cbFunc);
     }
     // Submit "Add Multiple Artifacts" form
@@ -2994,14 +2957,10 @@ class RMVodWebApp {
         }
         var payloadObj = {'seriesaid': seriesaidIn, 'filepath':filepathIn, 'filefrag':filefragIn};
         var endpoint = '/rmvod/api/series/artifacts/add';
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //const endpoint = apiBase + '/series/artifacts/add';
         this.genericApiCall(payloadObj,endpoint,cbFunc)
     }
     // Execute forced-refresh of Recommendations.
     execRecsForcedRefresh(){
-        //var wa = new RMVodWebApp();
-        //var recLimitInt = 50;  // this.sse.ssOKWrite('localcfg','maxrecspercategory'
         var recLimitInt = this.sse.ssOKRead('localcfg','maxrecspercategory');  // this.sse.ssOKWrite('localcfg','maxrecspercategory'
         var sinceDTStr = "2023-02-01 00:00:01";
         var clientId = this.sessGetUserId();
@@ -3011,7 +2970,6 @@ class RMVodWebApp {
             var rec = new WMCWARecommend();
             rec.targetParentElementId = 'rmvodrecsmastercontouter';
             rec.setRecSrcData(objIn);
-            //rec.popMasterDiv(sinceDtStrIn);
             rec.popMasterDiv();
             rec.qsRecGenerateLinkList(objIn); 
             alert('Recommendation Refresh complete.');
@@ -3020,15 +2978,8 @@ class RMVodWebApp {
         var payloadObj = {'clientId':clientId,'sinceDt':sinceDTStr,'recLimit':recLimitInt,'forceRefresh':forceRefresh};
         //console.log ("RMVodWebApp.execRecsForcedRefresh.payloadObj: " + JSON.stringify(payloadObj));
         var endpoint = '/rmvod/api/artifact/recs/get';
-        //var result = wa.genericApiCall(payloadObj,endpoint,cbFunc);
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);
-        
-        
     }
-    // Cookie Handling
-    //
-    // activesessiontf
-    // sessiontoken
     
     // Handle Session state base on cookie on load
     sessCookieOnLoad() {
@@ -3086,13 +3037,9 @@ class RMVodWebApp {
                         wa.apiFetchUserRecentEpisodes(); 
                         
                         var plh = new PLHandler();
-                        // plh.tmpFakePopulatePlaylistList();
                         plh.apiFetchPLList();
-                                  
-            
-            
                     } else {
-                        
+                        console.log("sessCookieOnLoad.RMVodWebApp - objIn['sessiontoken']: " + objIn['sessiontoken']);
                     }
                 }
                 var payloadObj = {"token":sessToken};
@@ -3154,7 +3101,6 @@ class RMVodWebApp {
                 console.log("contCookieOnLoad.cbFunc - Resume Play Position failed because " + e);
             }
         }
-        
         var cbDE = document.getElementById('resumeplay');
         if (cbDE.checked == true) {
             var playAID = this.cc.getCookie('playing_aid');
@@ -3193,10 +3139,6 @@ class RMVodWebApp {
                     var currTime = parseInt(playerDE.currentTime);
                     var currSrc = playerDE.currentSrc;
                     
-                    //console.log("contCookiePostInterval.cbFunc - currTime: " + currTime);
-                    //console.log("contCookiePostInterval.cbFunc - currSrc: " + currSrc);
-                    //console.log("");
-                    
                     wa.cc.setCookie('artifact_source_uri',currSrc);
                     wa.cc.setCookie('playback_offset',currTime);
                     
@@ -3222,12 +3164,6 @@ class RMVodWebApp {
         this.cc.clearCookie('playback_offset');
         this.cc.clearCookie('cont_play_sample_int_handle');
         this.cc.clearCookie('play_aid');
-
-        //this.cc.clearCookie('artifact_source_uri');
-        //this.cc.clearCookie('playback_offset');
-        //this.cc.clearCookie('cont_play_sample_int_handle');
-        //this.cc.clearCookie('play_aid');
-
     }
     // Play the first episode of a tvseries -- needs the artifactid
     // of the tvseries artifact as an argument
@@ -3275,10 +3211,7 @@ class RMVodWebApp {
         }
         var payloadObj = {'artiid':seriesAID,'season':seriesSeason};
         var endpoint = '/rmvod/api/artifact/recs/serseasoneplist/get';
-        //var apiBase = this.sse.ssRead('apicfg')['API_Resources']['api_path'];
-        //const endpoint = apiBase + '/artifact/recs/serseasoneplist/get';
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc); 
-        
     }
     
     // Stats things
@@ -3347,7 +3280,6 @@ class RMVodWebApp {
         console.log(dObj['listings']['movie']['count']);
         var mtAry = Object.keys(dObj['listings']);
         var wrapDiv = document.createElement('div');
-        //wrapDiv.style.backgroudColor = this.sse.ssOKRead('localcfg','rowsbgc')[];
         wrapDiv.style.width = "100%";
         wrapDiv.style.display = "block";
         for (var i = 0; i < mtAry.length; i++ ){
@@ -3368,7 +3300,6 @@ class RMVodWebApp {
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
-        //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
         headerDiv.innerHTML = "Artifact count by <b>Major Type</b>";
         document.getElementById(targetDEIdIn).appendChild(headerDiv);
@@ -3412,11 +3343,7 @@ class RMVodWebApp {
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
-        //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
-        //var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
-        // this.sse.ssOKWrite('localcfg','sitestatsperiod',{'days':180,'weeks':26,'months':6}); 
-        //headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last 30 days for Major Type " + majTypeIn;
         headerDiv.innerHTML = "Top 10 <b>Tags</b> by views in the last " + this.getStatsPeriodAsString('days') + " days for Major Type " + majTypeIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
@@ -3425,11 +3352,6 @@ class RMVodWebApp {
         var clearList = ["stats_titles_column","stats_title_detail_column"];
         for (var i = 0; i < clearList.length; i++ ) {
             document.getElementById(clearList[i]).innerHTML = "&nbsp;";
-            //try {
-                //document.getElementById(clearList[i]).innerHTML = "&nbsp;";
-            //} catch (e) {
-                //console.log("Failed to clear div " + clearList[i] + " because " + e);
-            //}
         }
     }
     // Render the "Top 10 Title" column of the stats display, with the 
@@ -3495,9 +3417,7 @@ class RMVodWebApp {
         var headerDiv = document.createElement("div");
         headerDiv.style.width = "100%";
         headerDiv.style.display = "block";
-        //headerDiv.style.backgroundColor = "#e0e0e0";
         headerDiv.style.height = "70px";
-        //var daysStr = this.sse.ssOKRead('localcfg','sitestatsperiod')['days'].toString;
         headerDiv.innerHTML = "Top 10 <b>Titles</b> by views in the last " + this.getStatsPeriodAsString('days') + " days for Tag " + tagIn;
         document.getElementById(targetDEIdIn).appendChild(headerDiv);        
         
@@ -4950,13 +4870,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             document.getElementById(tmpCookie).click();
             console.log("Tried to click tab " + tmpCookie + "... Ta-da!");
 
-
             ml.execSearchSingleFactor2('tag',{'tag':''});
-
-            //ml.apiFetchUserRecentEpisodes();            
-            //ml.resetPageTitle();
-            
-            
             break;
 
         case 'simpleNamesList':  
@@ -5124,7 +5038,6 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         case 'recentpopsidelist':
             console.log('recentpopsidelist - TODO:  Display slidelist for tvseries with artifactid ' + objIdIn);
             break;
-                  
             
         case 'popepideets':
             ml.apiPopulateEpisodeDetails(objIdIn);
@@ -5134,26 +5047,27 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             ml.execRecsForcedRefresh();
             break;
             
-            
         case "renderStats" :
             ml.renderStatsContainer('statstabbody');
             ml.renderStatsMajIdCol('stats_majid_column');
             break;;
+        
         case "renderStatsTags":
             ml.renderStatsTagsCol(objIdIn,'stats_tags_column');
             //console.log(actionIn + ": " + objIdIn);
             break;;
+        
         case "renderStatsTitles":
             ml.renderStatsTitlesCol(objIdIn,argObjIn['tag'],'stats_titles_column');
             //console.log(actionIn + ": " + objIdIn + ", " + argObjIn['tag']);
             break;;
+        
         case "renderStatsTitleDeets":
             ml.renderStatsTitleDetailsCol(objIdIn);
             break;;
             
         case "showArtiInList":
-            
-            
+            console.log(actionIn + ": " + objIdIn + ", " + argObjIn['tag']);
             break;;
             
         case "sitestatsrefresh":
@@ -5212,26 +5126,32 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             //console.log(document.getElementById("plid-tvssel").value);
             plh.pleAddAid(document.getElementById("plid-tvssel").value);
             break ;;
+        
         case "tvspleaidup":
             var plh = new PLHandler();
             plh.plePosSwap(objIdIn,"up");
             break;;
+        
         case "tvspleaiddn":
             var plh = new PLHandler();
             plh.plePosSwap(objIdIn,"dn");
             break;;
+        
         case "tvspleaidrmv":
             var plh = new PLHandler();
             plh.plePosRmv(objIdIn);
             break;;
+        
         case "tvsplnameupd":
             var plh = new PLHandler();
             plh.pleUpdateValue('name',objIdIn);
             break;;
+        
         case "tvspldescupd":
             var plh = new PLHandler();
             plh.pleUpdateValue('desc',objIdIn);
             break;;
+        
         case "tvsplapisave":
             //var plh = new PLHandler();
             var plh = new PLHandler();
@@ -5243,8 +5163,6 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             var plh = new PLHandler();
             plh.apiNewPlaylist();
             break;;
-            
-            
             
         /* 
          * Oh no... we should never get here!
@@ -5263,7 +5181,6 @@ function pbEnded (artiIdIn) {
     
     console.log('The playback it has ended');
     //check to see if we're in a playlist
-    // PLHandler
     var plh = new PLHandler();
     var pldd = plh.readDataDiv();
     console.log("pbEnded.pldd: " + JSON.stringify(pldd));
@@ -5274,9 +5191,6 @@ function pbEnded (artiIdIn) {
     } else {
         switchboard('vodPlayNextTitle',artiIdIn,{});
     }
-    
-    //console.log('The playback it has ended');
-    //switchboard('vodPlayNextTitle',artiIdIn,{});
 }   
 
 // Handle "Remove Member" event of RNWAListFieldWidget
