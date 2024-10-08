@@ -3918,10 +3918,10 @@ class PLHandler {
         return tmpOmniObj['pl-list'][plIdIn];
     }
     clearPlAidList() {
-        var dObj = plh.readDataDiv();
+        var dObj = this.readDataDiv();
         dObj['pl-aid-list'] = [];
         dObj['playing-idx']  = -1;
-        self.writeDataDiv(dObj);
+        this.writeDataDiv(dObj);
     }
     apiFetchSyndPl(plObjIn){
         console.log("apiFetchSyndPl - Starting...");
