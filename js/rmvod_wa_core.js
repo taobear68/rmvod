@@ -4916,7 +4916,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             
         case "vodPlayTitle":
             //ml.vodPlayTitleApi3(objIdIn);
-            pl.apiArtiPlayOneOff(objIdIn);
+            ml.apiArtiPlayOneOff(objIdIn);
             break;
             
         case "vodPlayNextTitle":
