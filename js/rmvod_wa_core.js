@@ -2667,7 +2667,14 @@ class RMVodWebApp {
         }
         synoStr += artiObj['synopsis'];
         
-        document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'];
+        // Generate Playlist display string
+        var plDetailStr = "";
+        var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
+            plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (plDataObj['pl-def-obj']['playing-idx'] + 1).toString() + "/" + (plDataObj['pl-def-obj']['pl-artifacts'].length.toString()) + ")"
+        }
+        
+        document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'] + plDetailStr;
         document.getElementById('header-synopsis').innerText = synoStr;
         document.getElementById('header-production').innerHTML = 'Production: ' + prodStr;
         document.getElementById('header-cast').innerHTML = 'Cast: ' + castStr;
@@ -3789,7 +3796,7 @@ class RMVodWebApp {
     
     //
     //
-    // User Session bits -- BEGIN
+    // User Session bits -- END
     //
     //
     
