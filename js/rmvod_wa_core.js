@@ -4363,7 +4363,10 @@ class PLHandler {
         
         var headerDe = document.getElementById('header-title');
         var headerStr = headerDe.innerText;
-        headerDe.innerText = headerStr + plDetailStr;
+        console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
+        headerStr += plDetailStr;
+        console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
+        headerDe.innerText = headerStr;
         
         // = 'Now Playing: ' + artiObj['title'] + plDetailStr;        
     }
