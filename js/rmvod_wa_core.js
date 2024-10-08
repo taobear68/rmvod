@@ -2680,6 +2680,10 @@ class RMVodWebApp {
         document.getElementById('header-synopsis').innerText = synoStr;
         document.getElementById('header-production').innerHTML = 'Production: ' + prodStr;
         document.getElementById('header-cast').innerHTML = 'Cast: ' + castStr;
+        
+        var plh = new PLHandler();
+        plh.pleUpdateArtiInfoHeader();
+        
     }
     // Refresh "Filed List Widget"
     // Performs DOM updates directly.
@@ -4367,7 +4371,7 @@ class PLHandler {
         console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
         headerStr += plDetailStr;
         console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
-        headerDe.innerText = headerStr;
+        document.getElementById('header-title').innerText = headerStr;
         
         // = 'Now Playing: ' + artiObj['title'] + plDetailStr;        
     }
