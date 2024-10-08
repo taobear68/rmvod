@@ -2670,9 +2670,11 @@ class RMVodWebApp {
         // Generate Playlist display string
         var plDetailStr = "";
         var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        console.log("renderArtifactDetailHeader - plDataObj['pl-def-obj']['playing-idx']: " + plDataObj['pl-def-obj']['playing-idx'].toString());
         if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
             plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (plDataObj['pl-def-obj']['playing-idx'] + 1).toString() + "/" + (plDataObj['pl-def-obj']['pl-artifacts'].length.toString()) + ")"
         }
+        console.log("renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
         
         document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'] + plDetailStr;
         document.getElementById('header-synopsis').innerText = synoStr;
