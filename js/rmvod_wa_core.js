@@ -1427,6 +1427,11 @@ class RMVodWebApp {
         this.apiLogPlay(artiIdIn);
         console.log("vodPlayTitleApi3 logging the play to the API complete.");
     }
+    apiArtiPlayOneOff(artiIdIn){
+        var plh = new PLHandler();
+        plh.clearPlAidList()
+        this.vodPlayTitleApi3(artiIdIn)
+    }
     // Make an API call to log what is being played
     apiLogPlay(artiIdIn){
         var cbFunc = function(dataObjIn){
@@ -1492,7 +1497,8 @@ class RMVodWebApp {
             if (typeof objIn == "object" ) {
                 // We actually have a "next title"
                 console.log("vodPlayNextTitle.cbFunc: next title == true " + objIn['title']);
-                wa.vodPlayTitleApi3(objIn['artifactid']);
+                //wa.vodPlayTitleApi3(objIn['artifactid']);
+                wa.apiArtiPlayOneOff(objIn['artifactid']);
             } else {
                 // We don't actually have a "next title"
                 console.log("vodPlayNextTitle.cbFunc: next title == false");
@@ -2667,15 +2673,6 @@ class RMVodWebApp {
         }
         synoStr += artiObj['synopsis'];
         
-        //// Generate Playlist display string
-        //var plDetailStr = "";
-        //var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
-        //console.log("renderArtifactDetailHeader - plDataObj['pl-def-obj']['playing-idx']: " + plDataObj['pl-def-obj']['playing-idx']);
-        //if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
-            //plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (plDataObj['pl-def-obj']['playing-idx'] + 1) + "/" + (plDataObj['pl-def-obj']['pl-artifacts'].length) + ")"
-        //}
-        //console.log("renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
-        
         document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'];
         document.getElementById('header-synopsis').innerText = synoStr;
         document.getElementById('header-production').innerHTML = 'Production: ' + prodStr;
@@ -3117,7 +3114,8 @@ class RMVodWebApp {
         var cbDE = document.getElementById('resumeplay');
         if (cbDE.checked == true) {
             var playAID = this.cc.getCookie('playing_aid');
-            this.vodPlayTitleApi3(playAID);
+            //this.vodPlayTitleApi3(playAID);
+            this.apiArtiPlayOneOff(playAID);
             var intervHandle = setInterval(cbFunc,1000);
             this.cc.setCookie('cont_play_sample_int_handle',intervHandle,5);
         }
@@ -3184,7 +3182,8 @@ class RMVodWebApp {
         //console.log('playFirstEpOfSeries.seriesAidIn: ' + seriesAidIn);
         var cbFunc = function (objIn) {
             var wa = new RMVodWebApp();
-            wa.vodPlayTitleApi3(objIn['data']);
+            //wa.vodPlayTitleApi3(objIn['data']);
+            wa.apiArtiPlayOneOff(objIn['data']);
         }
         var payloadObj = {'artiid':seriesAidIn};
         var endpoint = '/rmvod/api/artifact/recs/serfirstep/get';
@@ -4916,7 +4915,8 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             break;        
             
         case "vodPlayTitle":
-            ml.vodPlayTitleApi3(objIdIn);
+            //ml.vodPlayTitleApi3(objIdIn);
+            pl.apiArtiPlayOneOff(objIdIn);
             break;
             
         case "vodPlayNextTitle":
