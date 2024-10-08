@@ -2667,14 +2667,14 @@ class RMVodWebApp {
         }
         synoStr += artiObj['synopsis'];
         
-        // Generate Playlist display string
-        var plDetailStr = "";
-        var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
-        console.log("renderArtifactDetailHeader - plDataObj['pl-def-obj']['playing-idx']: " + plDataObj['pl-def-obj']['playing-idx']);
-        if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
-            plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (plDataObj['pl-def-obj']['playing-idx'] + 1) + "/" + (plDataObj['pl-def-obj']['pl-artifacts'].length) + ")"
-        }
-        console.log("renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
+        //// Generate Playlist display string
+        //var plDetailStr = "";
+        //var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        //console.log("renderArtifactDetailHeader - plDataObj['pl-def-obj']['playing-idx']: " + plDataObj['pl-def-obj']['playing-idx']);
+        //if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
+            //plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (plDataObj['pl-def-obj']['playing-idx'] + 1) + "/" + (plDataObj['pl-def-obj']['pl-artifacts'].length) + ")"
+        //}
+        //console.log("renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
         
         document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'] + plDetailStr;
         document.getElementById('header-synopsis').innerText = synoStr;
@@ -4037,6 +4037,8 @@ class PLHandler {
         var playerFunc = function(dIn){
             var wa = new RMVodWebApp();
             wa.vodPlayTitleApi3(plAry[plpIdx]);
+            var plh = new PLHandler();
+            plh.pleUpdateArtiInfoHeader();
         }
         setTimeout(playerFunc,cardDispPerMs,dIn);
     }
@@ -4346,6 +4348,24 @@ class PLHandler {
         var plObj = {'clientid': sessionObj['userid']};
         var ep = '/rmvod/api/artifact/playlist/create';
         this.wa.genericApiCall(plObj,ep,cbFunc);
+    }
+    pleUpdateArtiInfoHeader(){
+        // Generate Playlist display string
+        var plDetailStr = "";
+        var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+        var playingIdx = plDataObj['pl-def-obj']['playing-idx'];
+        var plLen = plDataObj['pl-def-obj']['pl-artifacts'].length;
+        console.log("pleUpdateArtiInfoHeader - playingIdx: " + playingIdx;
+        if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
+            plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (playingIdx + 1) + "/" + plLen + ")"
+        }
+        console.log("PLHandler.renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
+        
+        var headerDe = document.getElementById('header-title');
+        var headerStr = headerDe.innerText;
+        headerDe.innerText = headerStr + plDetailStr;
+        
+        // = 'Now Playing: ' + artiObj['title'] + plDetailStr;        
     }
     
 
