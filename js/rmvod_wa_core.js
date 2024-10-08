@@ -4355,7 +4355,7 @@ class PLHandler {
         var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
         var playingIdx = plDataObj['pl-def-obj']['playing-idx'];
         var plLen = plDataObj['pl-def-obj']['pl-artifacts'].length;
-        console.log("pleUpdateArtiInfoHeader - playingIdx: " + playingIdx;
+        console.log("pleUpdateArtiInfoHeader - playingIdx: " + playingIdx);
         if (plDataObj['pl-def-obj']['playing-idx'] >= 0) {
             plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (playingIdx + 1) + "/" + plLen + ")"
         }
