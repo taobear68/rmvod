@@ -2676,7 +2676,7 @@ class RMVodWebApp {
         //}
         //console.log("renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
         
-        document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'] + plDetailStr;
+        document.getElementById('header-title').innerText = 'Now Playing: ' + artiObj['title'];
         document.getElementById('header-synopsis').innerText = synoStr;
         document.getElementById('header-production').innerHTML = 'Production: ' + prodStr;
         document.getElementById('header-cast').innerHTML = 'Cast: ' + castStr;
