@@ -4339,7 +4339,7 @@ class PLHandler {
             var tmpHtml = "";
             tmpHtml += "<div id=\"tvspllemro_" + lIdxStr + "\" class=\"tvsplminirowouter\">";
             tmpHtml += "<div id=\"tvspllemrm_" + lIdxStr + "\" class=\"tvsplminirowmid\">";
-            tmpHtml += "<span id=\"tvspllemrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_" + lIdxStr + "',{'spanid': 'tvspllemrmx_" + lIdxStr + "'})\"><b><u>[>]</u></b></span>";
+            tmpHtml += "<span id=\"tvspllemrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvspllemri_" + lIdxStr + "',{'spanid': 'tvspllemrmx_" + lIdxStr + "'})\"><b><u>[>]</u></b></span>";
             tmpHtml += "<span id=\"tvspllemrmt_" + lIdxStr + "\" class=\"tvsplminirowmidtitle\" onclick=\"switchboard('doPlayPlaylist','" + plId + "',{})\"><b><u>" + plObjObj[plId]['name'] + "</u></b></span>"; // THIS NEEDS TO BE UPDATED WITH THE ACTUAL PLAY LINK
             tmpHtml += "</div>";
             tmpHtml += "<div id=\"tvspllemri_" + lIdxStr + "\" class=\"tvsplminirowinner\">";
