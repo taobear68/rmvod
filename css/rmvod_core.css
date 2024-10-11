@@ -472,3 +472,57 @@ div.tvspleplrowinnercol3 {
 div.tvspleplrowinnercol4 {
     display: inline-flex; width: 8%;
 }
+
+
+
+
+
+div.srchmoderowouter {
+    display: block; 
+    border: 2px; 
+    border-color: black;
+}
+span.tvsplminirowmidexpand {}
+span.tvsplminirowmidtitle {}
+
+div.srchmoderowcontent {
+    display: none; 
+    margin-left: 10px; 
+    border: 2px; 
+    border-color: black;
+}
+
+div.tvsplminirowouter {
+    display: block; 
+    border: 1px; 
+    border-color: black;
+} 
+div.tvsplminirowmid {
+    display: block; 
+    border: 1px; 
+    border-color: black;
+}
+span.tvsplminirowmidexpand {}
+span.tvsplminirowmidtitle {}
+div.tvsplminirowinner {
+    display: none; 
+    border: 1px; 
+    border-color: black;
+}
+div.tvsplminirowcontentwrapper {
+    display: block; 
+    margin-left: 10px; 
+    border: 1px; 
+    border-color: black;
+}
+div.tvsplminirowcontentdesc {
+    display: block; 
+    border: 1px; 
+    border-color: black;
+}
+div.tvsplminirowcontentserieslist {
+    display: block; 
+    border: 1px; 
+    border-color: black;
+}
+

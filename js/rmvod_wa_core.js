@@ -594,7 +594,7 @@ class RMVWAHtmlGenerator {
         blockOneHtml += "</div>";
         
         var blockTwoHtml = ""
-        blockTwoHtml += "div id=\"smro_01\" class=\"srchmoderowouter\">";
+        blockTwoHtml += "<div id=\"smro_01\" class=\"srchmoderowouter\">";
         blockTwoHtml += "<span id=\"tvsplmrmx_001\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_01',{'spanid':'tvsplmrmx_001'})\"><b><u>[>]</u></b></span>";
         blockTwoHtml += "<span id=\"tvsplmrmt_001\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>TV Series Playlists</u></b></span>";
         blockTwoHtml += "</div>";
@@ -5312,6 +5312,17 @@ function switchboard(actionIn,objIdIn,argObjIn) {
         case "tvsplnew":
             var plh = new PLHandler();
             plh.apiNewPlaylist();
+            break;;
+        
+        case "flipdispblock":
+            var sOpt = ['block','none']; 
+            var caretStrList = ['[^]','[>]'];
+            var de = document.getElementById(objIdIn);
+            var currStyle = window.getComputedStyle(de);
+            var cdIdx = sOpt.indexOf(currStyle.display);
+            var newDispIdx = (cdIdx + 1) % 2;
+            document.getElementById(argObjIn['spanid']).innerHTML = "<b><u>" + caretStrList[newDispIdx] + "</u></b>";
+            de.style.display = sOpt[newDispIdx]; 
             break;;
             
         /* 
