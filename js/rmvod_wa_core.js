@@ -586,7 +586,8 @@ class RMVWAHtmlGenerator {
         
         var blockOneHtml = "<div id=\"smro_00\" class=\"srchmoderowouter\">";
         blockOneHtml += "<span id=\"tvsplmrmx_000\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_00',{'spanid':'tvsplmrmx_000'})\"><b><u>[^]</u></b></span>";
-        blockOneHtml += "<span id=\"tvsplmrmt_000\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Search Factors</u></b></span>";
+        //blockOneHtml += "<span id=\"tvsplmrmt_000\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Search Factors</u></b></span>";
+        blockOneHtml += "<span id=\"tvsplmrmt_000\" class=\"tvsplminirowmidtitle\">Search Factors</span>";
         blockOneHtml += "</div>";
         blockOneHtml += "<div id=\"smrc_00\" class=\"srchmoderowcontent\" style=\"display: block;\">";
         //blockOneHtml += "Ta-da!  Classic Search Doddad";
@@ -596,7 +597,8 @@ class RMVWAHtmlGenerator {
         var blockTwoHtml = ""
         blockTwoHtml += "<div id=\"smro_01\" class=\"srchmoderowouter\">";
         blockTwoHtml += "<span id=\"tvsplmrmx_001\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_01',{'spanid':'tvsplmrmx_001'})\"><b><u>[>]</u></b></span>";
-        blockTwoHtml += "<span id=\"tvsplmrmt_001\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>TV Series Playlists</u></b></span>";
+        //blockTwoHtml += "<span id=\"tvsplmrmt_001\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>TV Series Playlists</u></b></span>";
+        blockTwoHtml += "<span id=\"tvsplmrmt_001\" class=\"tvsplminirowmidtitle\" >TV Series Playlists</span>";
         blockTwoHtml += "</div>";
         blockTwoHtml += "<div id=\"smrc_01\" class=\"srchmoderowcontent\">";
         blockTwoHtml += "Ta-da!  Playlists Doddad!";
@@ -605,7 +607,8 @@ class RMVWAHtmlGenerator {
         var blockThreeHtml = "";
         blockThreeHtml += "<div id=\"smro_02\" class=\"srchmoderowouter\">";
         blockThreeHtml += "<span id=\"tvsplmrmx_002\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_02',{'spanid':'tvsplmrmx_002'})\"><b><u>[>]</u></b></span>";
-        blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Recommendations Quick Lists</u></b></span>";
+        //blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Recommendations Quick Lists</u></b></span>";
+        blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" >Recommendations Quick Lists</span>";
         blockThreeHtml += "</div>";
         blockThreeHtml += "<div id=\"smrc_02\" class=\"srchmoderowcontent\">";
         blockThreeHtml += "Ta-da!  Recs Quick Lists";
