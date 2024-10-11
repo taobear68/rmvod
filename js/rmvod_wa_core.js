@@ -4503,7 +4503,7 @@ function recsWrapper(sinceDtStrIn){
     //console.log("recsWrapper - BEGIN");
     document.getElementById('rmvodrecsmastercontouter').innerHTML = '<div class="throbber-ring"></div>';
     var rec = new WMCWARecommend();
-    rec.renderRecQuickSearchContainer();
+    //rec.renderRecQuickSearchContainer();
     
     var wa = new RMVodWebApp();
     var clientId = wa.sessGetUserId();
