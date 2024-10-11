@@ -3957,7 +3957,8 @@ class PLHandler {
             var tmpDataObj = plh.readDataDiv();
             tmpDataObj['pl-list'] = saveObj;
             plh.writeDataDiv(tmpDataObj);
-            plh.tmpFakePopulatePlaylistList();
+            //plh.tmpFakePopulatePlaylistList();
+            plh.tmpFakePopulatePlaylistList2();
         }
         var wa = new RMVodWebApp();
         const plObj = JSON.stringify({'clientid': clientid, 'sitetf': sitetf});
@@ -4006,7 +4007,8 @@ class PLHandler {
             
             // Hail Mary pass to try to get the description to include 
             // series titles dynamically.
-            plh.tmpFakePopulatePlaylistList();
+            //plh.tmpFakePopulatePlaylistList();
+            plh.tmpFakePopulatePlaylistList2();
         }
         var payloadObj = {'majtype': 'tvseries'};
         var endpoint = "/rmvod/api/titleidlist/get";
@@ -4274,6 +4276,106 @@ class PLHandler {
         masterTargHtml += "</div>";
         targDiv.innerHTML = masterTargHtml;
     }
+    tmpFakePopulatePlaylistList2(){
+        var targDiv = document.getElementById("smrc_01");
+        var masterTargHtml = "<div>";
+        
+        var newPlButtonRowHtml = "<div style='disply:block; width: 100%'><span style='cursor:pointer;' onclick='switchboard(\"tvsplnew\",\"\",{})'><b><u>Create New Playlist</u></b></span></div>"
+    
+        masterTargHtml += newPlButtonRowHtml;
+        //masterTargHtml += titleRowHtml;
+        
+        var tmpPLOmni = this.readDataDiv();
+        var plObjObj = tmpPLOmni['pl-list'];
+        var plIdList = Object.keys(plObjObj);
+        
+        var tvsluObj = tmpPLOmni['pl-tvs-lu-list'];
+        
+        for (var i = 0 ; i < plIdList.length ; i++ ) {
+            var plId = plIdList[i];
+            //////console.log("tmpFakePopulatePlaylistList - PL: " + JSON.stringify(plObjObj[plId]));
+            //////console.log("tmpFakePopulatePlaylistList - PL Name: " + plObjObj[plId]['name']);
+            //////console.log("tmpFakePopulatePlaylistList - PL Desc: " + plObjObj[plId]['desc']);
+            
+            var stlStr = "";
+            var serListMode = 2;
+            switch (serListMode) {
+                case 2:
+                    stlStr += "<ol>";
+                    var saidList = plObjObj[plId]['seriesaidlist'];
+                    for (var j = 0; j < saidList.length; j++ ) {
+                        stlStr += "<li>" + tvsluObj[saidList[j]] + "</li>";
+                    }
+                    stlStr += "</ol>";
+                    break;;
+                    
+                default:
+                    var saidList = plObjObj[plId]['seriesaidlist'];
+                    for (var j = 0; j < saidList.length; j++ ) {
+                        stlStr += tvsluObj[saidList[j]];
+                        if (j < (saidList.length - 1)) {
+                            stlStr += ", ";
+                        } else {
+                            stlStr += "";
+                        }
+                    }
+                    break;;
+            }
+            var lIdxStr = i.toString();
+            if (i < 10) {
+                lIdxStr = "00" + i.toString();
+            } else if (i < 100) {
+                lIdxStr = "0" + i.toString();
+            } else if (i > 999 || i < 0) {
+                throw new Error("PLHandler.tmpFakePopulatePlaylistList2 - Playlist Index out of range.");
+            }
+            
+            
+            var tmpHtml = "";
+            tmpHtml += "<div id=\"tvsplmro_" + lIdxStr + "\" class=\"tvsplminirowouter\">";
+            tmpHtml += "<div id=\"tvsplmrm_" + lIdxStr + "\" class=\"tvsplminirowmid\">";
+            tmpHtml += "<span id=\"tvsplmrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_000',{})\"><b><u>[>]</u></b></span>";
+            tmpHtml += "<span id=\"tvsplmrmt_" + lIdxStr + "\" class=\"tvsplminirowmidtitle\" onclick=""><b><u>" + plObjObj[plId]['name'] + "</u></b></span>"; // THIS NEEDS TO BE UPDATED WITH THE ACTUAL PLAY LINK
+            tmpHtml += "</div>";
+            tmpHtml += "<div id=\"tvsplmri_" + lIdxStr + "\" class=\"tvsplminirowinner\">";
+            tmpHtml += "<div id=\"tvsplmrcw_" + lIdxStr + "\" class=\"tvsplminirowcontentwrapper\">";
+            tmpHtml += "<div id=\"tvsplmrcd_" + lIdxStr + "\" class=\"tvsplminirowcontentdesc\">";
+            tmpHtml += plObjObj[plId]['desc'] + "<br><span id=\"tvsplmrce_000\" class=\"tvsplminirowcontentedit\" onclick=\"\"><b><u>Edit</u></b></span>"; // THIS NEEDSD TO BE UPDATED WITH THE ACTUAL EDIT LINK
+            tmpHtml += "</div>";
+            tmpHtml += "<div id=\"tvsplmrcsl_" + lIdxStr + "\" class=\"tvsplminirowcontentserieslist\">";
+            tmpHtml += stlStr;
+            tmpHtml += "</div></div></div></div>";
+        
+            //<div id="tvsplmro_000" class="tvsplminirowouter">
+                //<div id="tvsplmrm_000" class="tvsplminirowmid">
+                    //<span id="tvsplmrmx_000" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','tvsplmri_000',{})"><b><u>[>]</u></b></span>
+                    //<span id="tvsplmrmt_000" class="tvsplminirowmidtitle" onclick=""><b><u>PlaylistName01</u></b></span>
+                //</div>
+                //<div id="tvsplmri_000" class="tvsplminirowinner">
+                    //<div id="tvsplmrcw_000" class="tvsplminirowcontentwrapper">
+                        //<div id="tvsplmrcd_000" class="tvsplminirowcontentdesc">
+                            //DescriptionText01<br><span id="tvsplmrce_000" class="tvsplminirowcontentedit" onclick=""><b><u>Edit</u></b></span>
+                        //</div>
+                        //<div id="tvsplmrcsl_000" class="tvsplminirowcontentserieslist">
+                            //<ol>
+                                //SeriesTitleList
+                                //<li>SeriesTitle1</li>
+                                //<li>SeriesTitle2</li>
+                                //<li>SeriesTitle3</li>
+                            //</ol>
+                        //</div>
+                    //</div>
+                //</div>
+            //</div>
+            
+            masterTargHtml += tmpHtml
+        }
+        masterTargHtml += "</div>";
+        targDiv.innerHTML = masterTargHtml;
+    }
+
+                  
+    
     tmpFakeLoadPlaylistAndPlayIt(plIdIn){
         this.fetchPlObj(plIdIn);
         this.playPlaylist();
