@@ -4337,17 +4337,17 @@ class PLHandler {
             
             
             var tmpHtml = "";
-            tmpHtml += "<div id=\"tvsplmro_" + lIdxStr + "\" class=\"tvsplminirowouter\">";
-            tmpHtml += "<div id=\"tvsplmrm_" + lIdxStr + "\" class=\"tvsplminirowmid\">";
-            tmpHtml += "<span id=\"tvsplmrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_" + lIdxStr + "',{'spanid': 'tvsplmrmx_" + lIdxStr + "'})\"><b><u>[>]</u></b></span>";
-            tmpHtml += "<span id=\"tvsplmrmt_" + lIdxStr + "\" class=\"tvsplminirowmidtitle\" onclick=\"switchboard('doPlayPlaylist','" + plId + "',{})\"><b><u>" + plObjObj[plId]['name'] + "</u></b></span>"; // THIS NEEDS TO BE UPDATED WITH THE ACTUAL PLAY LINK
+            tmpHtml += "<div id=\"tvspllemro_" + lIdxStr + "\" class=\"tvsplminirowouter\">";
+            tmpHtml += "<div id=\"tvspllemrm_" + lIdxStr + "\" class=\"tvsplminirowmid\">";
+            tmpHtml += "<span id=\"tvspllemrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_" + lIdxStr + "',{'spanid': 'tvspllemrmx_" + lIdxStr + "'})\"><b><u>[>]</u></b></span>";
+            tmpHtml += "<span id=\"tvspllemrmt_" + lIdxStr + "\" class=\"tvsplminirowmidtitle\" onclick=\"switchboard('doPlayPlaylist','" + plId + "',{})\"><b><u>" + plObjObj[plId]['name'] + "</u></b></span>"; // THIS NEEDS TO BE UPDATED WITH THE ACTUAL PLAY LINK
             tmpHtml += "</div>";
-            tmpHtml += "<div id=\"tvsplmri_" + lIdxStr + "\" class=\"tvsplminirowinner\">";
-            tmpHtml += "<div id=\"tvsplmrcw_" + lIdxStr + "\" class=\"tvsplminirowcontentwrapper\">";
-            tmpHtml += "<div id=\"tvsplmrcd_" + lIdxStr + "\" class=\"tvsplminirowcontentdesc\">";
-            tmpHtml += plObjObj[plId]['desc'] + "<br><span id=\"tvsplmrce_" + lIdxStr + "\" class=\"tvsplminirowcontentedit\" onclick=\"switchboard('doEditPlaylist','" + plId + "',{})\"><b><u>Edit</u></b></span>"; // THIS NEEDSD TO BE UPDATED WITH THE ACTUAL EDIT LINK
+            tmpHtml += "<div id=\"tvspllemri_" + lIdxStr + "\" class=\"tvsplminirowinner\">";
+            tmpHtml += "<div id=\"tvspllemrcw_" + lIdxStr + "\" class=\"tvsplminirowcontentwrapper\">";
+            tmpHtml += "<div id=\"tvspllemrcd_" + lIdxStr + "\" class=\"tvsplminirowcontentdesc\">";
+            tmpHtml += plObjObj[plId]['desc'] + "<br><span id=\"tvspllemrce_" + lIdxStr + "\" class=\"tvsplminirowcontentedit\" onclick=\"switchboard('doEditPlaylist','" + plId + "',{})\"><b><u>Edit</u></b></span>"; // THIS NEEDSD TO BE UPDATED WITH THE ACTUAL EDIT LINK
             tmpHtml += "</div>";
-            tmpHtml += "<div id=\"tvsplmrcsl_" + lIdxStr + "\" class=\"tvsplminirowcontentserieslist\">";
+            tmpHtml += "<div id=\"tvspllemrcsl_" + lIdxStr + "\" class=\"tvsplminirowcontentserieslist\">";
             tmpHtml += stlStr;
             tmpHtml += "</div></div></div></div>";
         
