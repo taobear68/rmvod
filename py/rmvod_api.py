@@ -1854,8 +1854,9 @@ JOIN s2e t ON (h.artifactid = t.episodeaid AND m.artifactid = t.seriesaid)
             sql += """WHERE m.clientid = '""" + clientidIn + """' 
 """
           
-        sql += """ORDER BY 8 DESC
-LIMIT 30"""
+        # sql += """ORDER BY 8 DESC
+# LIMIT 30"""
+        sql += """ORDER BY 8 DESC"""
         # print("getRecentEpisodes sql: " + sql)
         retList = []
         rowsTuple = self._stdRead(sql)
