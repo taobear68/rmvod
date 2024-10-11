@@ -606,6 +606,7 @@ class RMVWAHtmlGenerator {
         
         var blockThreeHtml = "";
         blockThreeHtml += "<div id=\"smro_02\" class=\"srchmoderowouter\">";
+        //blockThreeHtml += "<span id=\"tvsplmrmx_002\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_02',{'spanid':'tvsplmrmx_002'})\"><b><u>[>]</u></b></span>";
         blockThreeHtml += "<span id=\"tvsplmrmx_002\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_02',{'spanid':'tvsplmrmx_002'})\"><b><u>[>]</u></b></span>";
         //blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Recommendations Quick Lists</u></b></span>";
         blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" >Recommendations Quick Lists</span>";
