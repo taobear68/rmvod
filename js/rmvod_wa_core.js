@@ -581,6 +581,118 @@ class RMVWAHtmlGenerator {
         
         return newSrchWidget;
     }
+    renderDESearchWidgetContainer2(){
+        var origSrchWidget = this.renderDESearchWidgetContainer()
+        
+        var blockOneHtml = "<div id=\"smro_00\" class=\"srchmoderowouter\">";
+        blockOneHtml += "<span id=\"tvsplmrmx_000\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_00',{'spanid':'tvsplmrmx_000'})\"><b><u>[^]</u></b></span>";
+        blockOneHtml += "<span id=\"tvsplmrmt_000\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Search Factors</u></b></span>";
+        blockOneHtml += "</div>";
+        blockOneHtml += "<div id=\"smrc_00\" class=\"srchmoderowcontent\" style=\"display: block;\">";
+        //blockOneHtml += "Ta-da!  Classic Search Doddad";
+        blockOneHtml += origSrchWidget.outerHTML
+        blockOneHtml += "</div>";
+        
+        var blockTwoHtml = ""
+        blockTwoHtml += "div id=\"smro_01\" class=\"srchmoderowouter\">";
+        blockTwoHtml += "<span id=\"tvsplmrmx_001\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_01',{'spanid':'tvsplmrmx_001'})\"><b><u>[>]</u></b></span>";
+        blockTwoHtml += "<span id=\"tvsplmrmt_001\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>TV Series Playlists</u></b></span>";
+        blockTwoHtml += "</div>";
+        blockTwoHtml += "<div id=\"smrc_01\" class=\"srchmoderowcontent\">";
+        blockTwoHtml += "Ta-da!  Playlists Doddad!";
+        blockTwoHtml += "</div> ";
+        
+        var blockThreeHtml = "";
+        blockThreeHtml += "<div id=\"smro_02\" class=\"srchmoderowouter\">";
+        blockThreeHtml += "<span id=\"tvsplmrmx_002\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_02',{'spanid':'tvsplmrmx_002'})\"><b><u>[>]</u></b></span>";
+        blockThreeHtml += "<span id=\"tvsplmrmt_002\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>Recommendations Quick Lists</u></b></span>";
+        blockThreeHtml += "</div>";
+        blockThreeHtml += "<div id=\"smrc_02\" class=\"srchmoderowcontent\">";
+        blockThreeHtml += "Ta-da!  Recs Quick Lists";
+        blockThreeHtml += "</div>";
+        
+        
+        
+        //<div>
+            
+            //<div id="smro_00" class="srchmoderowouter">
+                //<span id="tvsplmrmx_000" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','smrc_00',{'spanid':'tvsplmrmx_000'})"><b><u>[^]</u></b></span>
+                //<span id="tvsplmrmt_000" class="tvsplminirowmidtitle" onclick=""><b><u>Search Factors</u></b></span>
+            //</div>
+            //<div id="smrc_00" class="srchmoderowcontent" style="display: block;">
+                //Ta-da!  Classic Search Doddad
+            //</div>
+            
+            //<div id="smro_01" class="srchmoderowouter">
+                //<span id="tvsplmrmx_001" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','smrc_01',{'spanid':'tvsplmrmx_001'})"><b><u>[>]</u></b></span>
+                //<span id="tvsplmrmt_001" class="tvsplminirowmidtitle" onclick=""><b><u>TV Series Playlists</u></b></span>
+            //</div>
+            //<div id="smrc_01" class="srchmoderowcontent">
+                
+                //<div id="tvsplmro_000" class="tvsplminirowouter">
+                    //<div id="tvsplmrm_000" class="tvsplminirowmid">
+                        //<span id="tvsplmrmx_000" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','tvsplmri_000',{})"><b><u>[>]</u></b></span>
+                        //<span id="tvsplmrmt_000" class="tvsplminirowmidtitle" onclick=""><b><u>PlaylistName01</u></b></span>
+                    //</div>
+                    //<div id="tvsplmri_000" class="tvsplminirowinner">
+                        //<div id="tvsplmrcw_000" class="tvsplminirowcontentwrapper">
+                            //<div id="tvsplmrcd_000" class="tvsplminirowcontentdesc">
+                                //DescriptionText01<br><span id="tvsplmrce_000" class="tvsplminirowcontentedit" onclick=""><b><u>Edit</u></b></span>
+                            //</div>
+                            //<div id="tvsplmrcsl_000" class="tvsplminirowcontentserieslist">
+                                //<ol>
+                                    //SeriesTitleList
+                                    //<li>SeriesTitle1</li>
+                                    //<li>SeriesTitle2</li>
+                                    //<li>SeriesTitle3</li>
+                                //</ol>
+                            //</div>
+                        //</div>
+                    //</div>
+                //</div>
+                
+                //<div id="tvsplmro_001" class="tvsplminirowouter">
+                    //<div id="tvsplmrm_001" class="tvsplminirowmid">
+                        //<span id="tvsplmrmx_001" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','tvsplmri_001',{})"><b><u>[>]</u></b></span>
+                        //<span id="tvsplmrmt_001" class="tvsplminirowmidtitle" onclick=""><b><u>PlaylistName02</u></b></span>
+                    //</div>
+                    //<div id="tvsplmri_001" class="tvsplminirowinner">
+                        //<div id="tvsplmrcw_001" class="tvsplminirowcontentwrapper">
+                            //<div id="tvsplmrcd_001" class="tvsplminirowcontentdesc">
+                                //DescriptionText02<br><span id="tvsplmrce_001" class="tvsplminirowcontentedit" onclick=""><b><u>Edit</u></b></span>
+                            //</div>
+                            //<div id="tvsplmrcsl_001" class="tvsplminirowcontentserieslist">
+                                //<ol>
+                                    //SeriesTitleList
+                                    //<li>SeriesTitle1</li>
+                                    //<li>SeriesTitle2</li>
+                                    //<li>SeriesTitle3</li>
+                                //</ol>
+                            //</div>
+                        //</div>
+                    //</div>
+                //</div>
+                
+            //</div>     
+
+            
+            //<div id="smro_02" class="srchmoderowouter">
+                //<span id="tvsplmrmx_002" class="tvsplminirowmidexpand" onclick="switchboard('flipdispblock','smrc_02',{'spanid':'tvsplmrmx_002'})"><b><u>[>]</u></b></span>
+                //<span id="tvsplmrmt_002" class="tvsplminirowmidtitle" onclick=""><b><u>Recommendations Quick Lists</u></b></span>
+            //</div>
+            //<div id="smrc_02" class="srchmoderowcontent">
+                //Ta-da!  Recs Quick Lists
+            //</div>
+        
+        //</div>
+        
+        
+        
+        var bigDiv = document.createElement('div');
+        var bigHtml = blockOneHtml + blockTwoHtml + blockThreeHtml;
+        bigDiv.innerHTML = bigHtml;
+        return bigDiv;
+    }
     renderStackFormRow(argsObjIn){
         var argsObj = {};
         var defaultValuesObj = {};
@@ -2416,7 +2528,8 @@ class RMVodWebApp {
     // Render the "Search Widget"
     renderStaticModernSearchWidget(){
         var hr = new RMVWAHtmlGenerator();
-        var newSrchWidget = hr.renderDESearchWidgetContainer();
+        //var newSrchWidget = hr.renderDESearchWidgetContainer();
+        var newSrchWidget = hr.renderDESearchWidgetContainer2();
         
         var targDiv = document.getElementById('headerblock2');
         targDiv.innerHTML = '';

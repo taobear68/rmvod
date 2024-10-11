@@ -3840,6 +3840,7 @@ class MediaLibraryDB:
         #Get SPLfTVS object
         splDict = splDictIn
         seriesSkipLimit = 3
+        # Last Episode By Series Artifact ID
         lebysaid = {}
         # vldb = self.dbHandleConfigged()
         # rEpList = vldb.getRecentEpisodes(splDictIn['clientid']):
@@ -3871,6 +3872,7 @@ class MediaLibraryDB:
         #For each seriesaid:
         for said in sapl:
             seriesArtiObjObj[said] = self.getArtifactByIdNew(said)['data'][0]
+            # Next Episode Artifact ID
             neaid = ""
             try:
                 #get last played episodeaid
