@@ -5427,6 +5427,7 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             var currStyle = window.getComputedStyle(de);
             var cdIdx = sOpt.indexOf(currStyle.display);
             var newDispIdx = (cdIdx + 1) % 2;
+            console.log("switchboard.flipdispblock - argObjIn['spanid']: " + argObjIn['spanid']);
             document.getElementById(argObjIn['spanid']).innerHTML = "<b><u>" + caretStrList[newDispIdx] + "</u></b>";
             de.style.display = sOpt[newDispIdx]; 
             break;;
