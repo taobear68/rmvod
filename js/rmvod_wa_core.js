@@ -4963,7 +4963,8 @@ class WMCWARecommend {
     // Build the list of "quick links" and stuff them in the target div.
     qsRecGenerateLinkList(recObjIn) {
         //console.log('qsRecGenerateLinkList - recObjIn: ' + JSON.stringify(recObjIn));
-        var containerDiv = document.getElementById('rec-quicklink-container');
+        //var containerDiv = document.getElementById('rec-quicklink-container');  //smrc_02
+        var containerDiv = document.getElementById('smrc_02');  //rec-quicklink-container
         containerDiv.innerHTML = ""; //'<div class="throbber-ring"></div>';
         //containerDiv.innerHTML = '<div class="throbber-ring"></div>';
         var typesList = Object.keys(recObjIn['data']);
