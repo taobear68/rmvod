@@ -4334,7 +4334,7 @@ class PLHandler {
             var tmpHtml = "";
             tmpHtml += "<div id=\"tvsplmro_" + lIdxStr + "\" class=\"tvsplminirowouter\">";
             tmpHtml += "<div id=\"tvsplmrm_" + lIdxStr + "\" class=\"tvsplminirowmid\">";
-            tmpHtml += "<span id=\"tvsplmrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_000',{})\"><b><u>[>]</u></b></span>";
+            tmpHtml += "<span id=\"tvsplmrmx_" + lIdxStr + "\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','tvsplmri_" + lIdxStr + "',{})\"><b><u>[>]</u></b></span>";
             tmpHtml += "<span id=\"tvsplmrmt_" + lIdxStr + "\" class=\"tvsplminirowmidtitle\" onclick=\"\"><b><u>" + plObjObj[plId]['name'] + "</u></b></span>"; // THIS NEEDS TO BE UPDATED WITH THE ACTUAL PLAY LINK
             tmpHtml += "</div>";
             tmpHtml += "<div id=\"tvsplmri_" + lIdxStr + "\" class=\"tvsplminirowinner\">";
