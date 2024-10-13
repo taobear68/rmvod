@@ -1419,13 +1419,16 @@ class RMVodWebApp {
                 var rowDiv = document.createElement('div');
                 rowDiv.style.display = "block";
                 //rowDiv.style.width = "20%";
+                
                 // Series Title
                 var cellDiv1 = document.createElement('div');
                 cellDiv1.style.display = "inline-flex";
                 cellDiv1.style.width = colWidthPct[0];
                 // cellDiv1.innerText = objIn['data'][row]['seriestitle']
-                cellDiv1.innerHTML = "<span style=\"cursor: pointer;\" onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                //cellDiv1.innerHTML = "<span style=\"cursor: pointer;\" onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                cellDiv1.innerHTML = "<span style=\"cursor: pointer;\" onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\">" + objIn['data'][row]['seriestitle'] + '</span>';
                 rowDiv.appendChild(cellDiv1);
+                
                 //// Episode Title
                 //var cellDiv2 = document.createElement('div');
                 //cellDiv2.style.display = "inline-flex";
