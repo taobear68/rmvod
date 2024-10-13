@@ -1386,6 +1386,101 @@ class RMVodWebApp {
         var result = this.genericApiCall(payloadObj,endpoint,cbFunc);        
         
     }
+
+    apiFetchUserRecentEpisodes2(){
+        var clientid = this.sessGetUserId();
+        var cbFunc = function(objIn) {
+            //console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
+            // recentepisodesdata
+            var colWidthPct = ["50%","0%","25%","0%","25%"];
+            var dataDE = document.getElementById('recentepisodesdata');
+            dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
+            var tblDiv = document.createElement('div');
+            
+            //<div>
+                //<div style="display: block">
+                    //<div style="display: inline-flex">Series Name 1</div>
+                    //<div style="display: inline-flex"><span><b><u>S00E00</u></b></span></div>
+                    //<div style="display: inline-flex"><span><b><u>Next</u></b></span></div>
+                //</div>
+                //<div style="display: block">
+                    //<div style="display: inline-flex">Series Name 2</div>
+                    //<div style="display: inline-flex"><span><b><u>S00E00</u></b></span></div>
+                    //<div style="display: inline-flex"><span><b><u>Next</u></b></span></div>
+                //</div>
+            //</div>
+                        
+            
+            
+            
+            for (var row in objIn['data']) {
+                //console.log(JSON.stringify(row));
+                // Row Container
+                var rowDiv = document.createElement('div');
+                rowDiv.style.display = "block";
+                //rowDiv.style.width = "20%";
+                // Series Title
+                var cellDiv1 = document.createElement('div');
+                cellDiv1.style.display = "inline-flex";
+                cellDiv1.style.width = colWidthPct[0];
+                // cellDiv1.innerText = objIn['data'][row]['seriestitle']
+                cellDiv1.innerHTML = "<span style=\"cursor: pointer;\" onclick=\"switchboard('recentpopsidelist','" + objIn['data'][row]['seriesartifactid'] + "',{})\"><u>" + objIn['data'][row]['seriestitle'] + '</u></span>';
+                rowDiv.appendChild(cellDiv1);
+                //// Episode Title
+                //var cellDiv2 = document.createElement('div');
+                //cellDiv2.style.display = "inline-flex";
+                //cellDiv2.style.width = colWidthPct[1];
+                ////console.log("apiFetchUserRecentEpisodes.cbFunc - episodetitle: " + typeof objIn['data'][row]['episodetitle'] + " - " + objIn['data'][row]['episodetitle']);
+                ////cellDiv2.innerText = objIn['data'][row]['episodetitle'];
+                ////cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,32);
+                //cellDiv2.innerText = objIn['data'][row]['episodetitle'].toString().substring(0,32);
+                //rowDiv.appendChild(cellDiv2);
+                // SXEY notation
+                var cellDiv3 = document.createElement('div');
+                cellDiv3.style.display = "inline-flex";
+                cellDiv3.style.width = colWidthPct[2];
+                //cellDiv3.innerText = "S" + objIn['data'][row]['season'] + "E" +  objIn['data'][row]['episode']
+                var cd3TmpHtml = "";
+                cd3TmpHtml += "<span style=\"cusror: pointer; \" onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><b><u>";
+                cd3TmpHtml += "S" + objIn['data'][row]['season'] + "E" +  objIn['data'][row]['episode'];
+                //cd3TmpHtml += '';
+                //cd3TmpHtml += '';
+                //cd3TmpHtml += '';
+                cd3TmpHtml += '</u></b></span>';
+                cellDiv3.innerHTML = cd3TmpHtml;
+                rowDiv.appendChild(cellDiv3);
+                //// Replay
+                ////onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
+                //var cellDiv4 = document.createElement('div');
+                //cellDiv4.style.display = "inline-flex";
+                //cellDiv4.style.width = colWidthPct[3];
+                //var tmpHtml = "<span style=\"cusror: pointer; \" onclick=\"switchboard('vodPlayTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Replay</u></span>";
+                ////cellDiv4.innerText = "Replay"; //objIn['data']['episodetitle']
+                //cellDiv4.innerHTML = tmpHtml;
+                //rowDiv.appendChild(cellDiv4);
+                // Play Next
+                //onclick="switchboard('vodPlayTitle','ca6c898f-d7c4-44d9-ad70-ba0b393a63f4',{})"
+                //switchboard('vodPlayNextTitle',artiIdIn,{});
+                var cellDiv5 = document.createElement('div');
+                cellDiv5.style.display = "inline-flex";
+                cellDiv5.style.width = colWidthPct[4];
+                var tmpHtml = "<span style=\"cursor: pointer;\" onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Next</u></span>";
+                //cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
+                cellDiv5.innerHTML = tmpHtml;
+                rowDiv.appendChild(cellDiv5);
+                
+                tblDiv.appendChild(rowDiv);
+                
+            }
+            document.getElementById('smrc_03').innerHTML = '';
+            document.getElementById('smrc_03').appendChild(tblDiv);
+        }
+        const payloadObj = {'clientid':clientid};
+        const endpoint = '/rmvod/api/user/recent/episodes/get';
+        var result = this.genericApiCall(payloadObj,endpoint,cbFunc);        
+        
+    }
+
     
     // Retrieves a fresh copy of the "tags" list
     // Stores result in Session Storage
@@ -1564,7 +1659,8 @@ class RMVodWebApp {
             console.log('RMVodWebApp.apiLogPlay.cdFunc: ' + JSON.stringify(dataObjIn));
             
             var wa = new RMVodWebApp();
-            wa.apiFetchUserRecentEpisodes();
+            //wa.apiFetchUserRecentEpisodes();
+            wa.apiFetchUserRecentEpisodes2();
             
         }
         const apiEndpoint = '/rmvod/api/logplay/post'; 
@@ -3171,7 +3267,8 @@ class RMVodWebApp {
                         
                         wa.resetPageTitle();
                         
-                        wa.apiFetchUserRecentEpisodes(); 
+                        //wa.apiFetchUserRecentEpisodes(); 
+                        wa.apiFetchUserRecentEpisodes2(); 
                         
                         var plh = new PLHandler();
                         plh.apiFetchPLList();
