@@ -616,6 +616,15 @@ class RMVWAHtmlGenerator {
         blockThreeHtml += "Ta-da!  Recs Quick Lists";
         blockThreeHtml += "</div>";
         
+        var blockFourHtml = "";
+        blockFourHtml += "<div id=\"smro_03\" class=\"srchmoderowouter\">";
+        blockFourHtml += "<span id=\"tvsplmrmx_003\" class=\"tvsplminirowmidexpand\" onclick=\"switchboard('flipdispblock','smrc_03',{'spanid':'tvsplmrmx_003'})\"><b><u>[>]</u></b></span>";
+        blockFourHtml += "<span id=\"tvsplmrmt_003\" class=\"tvsplminirowmidtitle\" >Recent Episodes List</span>";
+        blockFourHtml += "</div>";
+        blockFourHtml += "<div id=\"smrc_03\" class=\"srchmoderowcontent\">";
+        blockFourHtml += "Ta-da!  Recent Episodes List";
+        blockFourHtml += "</div>";
+        
         
         
         //<div>
