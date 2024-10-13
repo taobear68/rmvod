@@ -1393,7 +1393,7 @@ class RMVodWebApp {
             //console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
             var colWidthPct = ["60%","0%","20%","0%","20%"];
-            var dataDE = document.getElementById('recentepisodesdata');
+            var dataDE = document.getElementById('smrc_03');
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
             var tblDiv = document.createElement('div');
             
