@@ -1392,7 +1392,7 @@ class RMVodWebApp {
         var cbFunc = function(objIn) {
             //console.log("apiFetchUserRecentEpisodes.cbFunc: " + JSON.stringify(objIn));
             // recentepisodesdata
-            var colWidthPct = ["50%","0%","25%","0%","25%"];
+            var colWidthPct = ["60%","0%","20%","0%","20%"];
             var dataDE = document.getElementById('recentepisodesdata');
             dataDE.dataset.recenteps = JSON.stringify(objIn['data']);
             var tblDiv = document.createElement('div');
@@ -1464,7 +1464,7 @@ class RMVodWebApp {
                 var cellDiv5 = document.createElement('div');
                 cellDiv5.style.display = "inline-flex";
                 cellDiv5.style.width = colWidthPct[4];
-                var tmpHtml = "<span style=\"cursor: pointer;\" onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><u>Next</u></span>";
+                var tmpHtml = "<span style=\"cursor: pointer;\" onclick=\"switchboard('vodPlayNextTitle','" + objIn['data'][row]['episodeartifactid'] + "',{})\"><b><u>Next</u></b></span>";
                 //cellDiv5.innerText = "Play Next"; //objIn['data']['episodetitle']
                 cellDiv5.innerHTML = tmpHtml;
                 rowDiv.appendChild(cellDiv5);
