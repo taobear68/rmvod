@@ -858,19 +858,19 @@ class RMVWAHtmlGenerator {
         
         tmpHtml += '<div id="sitestatsouter" style="width:1160px;">Show Site Stats</div>';
         
-        tmpHtml += '<div>&nbsp;</div>';
+        //tmpHtml += '<div>&nbsp;</div>';
         
-        tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'recentepisodescontent\',{})"><b><u>Recent Episopdes</u></b></span>';
-        tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}"></div>'
-        tmpHtml += '<div id="recentepisodescontent" style="width:1160px; display: none;"></div>';
-        tmpHtml += '</div>';
+        //tmpHtml += '<div id="recentepisodesouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'recentepisodescontent\',{})"><b><u>Recent Episopdes</u></b></span>';
+        //tmpHtml += '<div id="recentepisodesdata" style="display:none;" data-recenteps="{}"></div>'
+        //tmpHtml += '<div id="recentepisodescontent" style="width:1160px; display: none;"></div>';
+        //tmpHtml += '</div>';
 
-        tmpHtml += '<div>&nbsp;</div>';
+        //tmpHtml += '<div>&nbsp;</div>';
         
-        tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'tvsplaylistscontent\',{})"><b><u>TV Series Playlists</u></b></span>';
-        tmpHtml += '<div id="tvsplaylistsdata" style="display:none;" data-tvspl="{}"></div>'
-        tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px; display: none;"></div>';
-        tmpHtml += '</div>';
+        //tmpHtml += '<div id="tvsplaylistsouter" style="width:1160px;"><span style="cursor: pointer;" onclick="switchboard(\'divtogglevizblock\',\'tvsplaylistscontent\',{})"><b><u>TV Series Playlists</u></b></span>';
+        //tmpHtml += '<div id="tvsplaylistsdata" style="display:none;" data-tvspl="{}"></div>'
+        //tmpHtml += '<div id="tvsplaylistscontent" style="width:1160px; display: none;"></div>';
+        //tmpHtml += '</div>';
         
         //forcerecrefresh
         tmpHtml += '</div>';
