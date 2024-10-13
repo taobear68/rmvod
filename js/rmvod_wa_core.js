@@ -881,7 +881,7 @@ class RMVWAHtmlGenerator {
         var tmpHtml = '';
         tmpHtml += '<div style="display:inline-flex;">';
         tmpHtml += '<div style="width:580px;height:518px;">';
-        tmpHtml += '<div id="headerblock2" style="overflow: auto;">';
+        tmpHtml += '<div id="headerblock2" style="overflow: scroll;">';
         tmpHtml += '<div style="margin:8px;">';
         tmpHtml += '&nbsp;';
         tmpHtml += '</div></div></div>';
