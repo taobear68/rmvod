@@ -703,7 +703,7 @@ class RMVWAHtmlGenerator {
         
         
         var bigDiv = document.createElement('div');
-        var bigHtml = blockOneHtml + blockTwoHtml + blockThreeHtml;
+        var bigHtml = blockOneHtml + blockTwoHtml + blockThreeHtml + blockFourHtml;
         bigDiv.innerHTML = bigHtml;
         return bigDiv;
     }
