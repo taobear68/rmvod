@@ -4686,26 +4686,30 @@ class PLHandler {
         this.wa.genericApiCall(plObj,ep,cbFunc);
     }
     pleUpdateArtiInfoHeader(){
-        // Generate Playlist display string
-        var plDetailStr = "";
-        var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
-        var playingIdx = plDataObj['playing-idx'];
-        console.log("PLHandler.renderArtifactDetailHeader - plDataObj['pl-aid-list']: " + JSON.stringify(plDataObj['pl-aid-list']));
-        var plLen = plDataObj['pl-aid-list'].length;
-        console.log("pleUpdateArtiInfoHeader - playingIdx: " + playingIdx);
-        if (playingIdx >= 0) {
-            plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (playingIdx + 1) + "/" + plLen + ")"
+        try {
+            // Generate Playlist display string
+            var plDetailStr = "";
+            var plDataObj = JSON.parse(document.getElementById('plhandlerdata').dataset.omniobj);
+            var playingIdx = plDataObj['playing-idx'];
+            console.log("PLHandler.renderArtifactDetailHeader - plDataObj['pl-aid-list']: " + JSON.stringify(plDataObj['pl-aid-list']));
+            var plLen = plDataObj['pl-aid-list'].length;
+            console.log("pleUpdateArtiInfoHeader - playingIdx: " + playingIdx);
+            if (playingIdx >= 0) {
+                plDetailStr += " | PL = " + plDataObj['pl-def-obj']['name'] + "(" + (playingIdx + 1) + "/" + plLen + ")"
+            }
+            console.log("PLHandler.renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
+            
+            var headerDe = document.getElementById('header-title');
+            var headerStr = headerDe.innerText;
+            console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
+            headerStr += plDetailStr;
+            console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
+            document.getElementById('header-title').innerText = headerStr;
+            
+            // = 'Now Playing: ' + artiObj['title'] + plDetailStr;   
+        } catch (e) {
+            console.log("PLHandler.pleUpdateArtiInfoHeader -- Failed to generate Playlist Info string for header.  There might not be a playlist in play. " + e);
         }
-        console.log("PLHandler.renderArtifactDetailHeader - plDetailStr: " + plDetailStr);
-        
-        var headerDe = document.getElementById('header-title');
-        var headerStr = headerDe.innerText;
-        console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
-        headerStr += plDetailStr;
-        console.log("PLHandler.renderArtifactDetailHeader - headerStr: " + headerStr);
-        document.getElementById('header-title').innerText = headerStr;
-        
-        // = 'Now Playing: ' + artiObj['title'] + plDetailStr;        
     }
     
 
