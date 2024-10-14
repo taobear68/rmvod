@@ -1652,8 +1652,12 @@ class RMVodWebApp {
         console.log("vodPlayTitleApi3 logging the play to the API complete.");
     }
     apiArtiPlayOneOff(artiIdIn){
-        var plh = new PLHandler();
-        plh.clearPlAidList()
+        try {
+            var plh = new PLHandler();
+            plh.clearPlAidList();
+        } catch (e) {
+            console.log("RMVodWebApp.apiArtiPlayOneOff -- Tried to clear PL AID List, but failed.  Fresh load, maybe?  " + e);
+        }
         this.vodPlayTitleApi3(artiIdIn)
     }
     // Make an API call to log what is being played
