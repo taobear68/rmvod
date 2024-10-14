@@ -19,7 +19,7 @@
 -- # along with RIBBBITmedia VideoOnDemand (a.k.a. "rmvod"). If not, 
 -- # see <https://www.gnu.org/licenses/>.
 
--- # VERSION 0.2.0
+-- # VERSION 0.9.3
 
 
 create database if not exists vodlib;
