@@ -1708,16 +1708,16 @@ class RMVodWebApp {
             console.log("webkitExitFullScreen not supported.  " + e);
         }
         
-        //// Confirm checkbox is checked
-        if (document.getElementById('serplaynext').checked == false) {
-            console.log('serplaynext not checked');
-            // Clear browser title
-            //this.resetPageTitle();            
-            return;
-        } else {
-
-            console.log("vodPlayNextTitle skipping title reset.");
-        }
+        ////// Confirm checkbox is checked
+        //if (document.getElementById('serplaynext').checked == false) {
+            //console.log('serplaynext not checked');
+            //// Clear browser title
+            ////this.resetPageTitle();            
+            //return;
+        //} else {
+            //console.log("vodPlayNextTitle skipping title reset.");
+        //}
+        
         var cbFunc = function(dataObjIn){
             var objIn = dataObjIn['data'][0];
             // console.log("vodPlayNextTitle.cbFunc: next title: " + objIn['title']);
@@ -5576,7 +5576,23 @@ function pbEnded (artiIdIn) {
     if ((pldd["pl-aid-list"].length > 0) && (pldd["playing-idx"] > -1)){
         plh.endPlaylistElement();
     } else {
-        switchboard('vodPlayNextTitle',artiIdIn,{});
+
+        // Confirm checkbox is checked
+        if (document.getElementById('serplaynext').checked == false) {
+            console.log('serplaynext not checked');
+            // Clear browser title
+            //this.resetPageTitle();            
+            return;
+        } else {
+            try {
+                console.log("pbEnded skipping title reset.  Trying to play next episode.");
+                switchboard('vodPlayNextTitle',artiIdIn,{});
+            } catch (e) {
+                console.log("pbEnded play next episode barfed.  " + e);
+            }
+        }
+
+        //
     }
 }   
 
