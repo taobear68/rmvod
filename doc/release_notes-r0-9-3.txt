@@ -1,0 +1,20 @@
+RIBBBITmedia Video On Demand - Tag 0.9.3
+
+Introduces TV Series Playlists, consolidates Playlists and Recent Episodes to List/Search tab, some bug fixes.
+
+TV Series Playlists
+
+This is a new feature which provides the ability to create (and edit) playlists of TV Series, such that the user's watch history is scanned to find the most-recently watched episode of each series, and plays the next (one) episode for each series listed in the Playlist, in the order listed.  Playlists can be set to repeat a series when the end is reached, and continue playing the Playlist over and over until the user stops it.  If a Series is set to not repeat once the end is reached, it will be skipped and no longer appear in the sequence of played episodes, unless the user manually initiates playback of an earlier episode in the series.  In that case the next time the Playlist is invoked, it will resume playing the previously-ended Series from the episode following the one manually played. Also, a playlist can be associated with a single user or set to be "sitewide", meaning all users on the Server have access to it.  Users can create and edit playlists, and the editing takes place in the Edit tab.  Any information in the Edit tab at the time the user opts to create or edit a Playlist will be wiped out.  Note that the behavior of the Playist edit function is different in that the "Update" button must be pushed for the changes to be posted to the server.
+
+
+Rework of left-side of List/Search tab
+
+The left side of the List/Search tab used to have the "Search Factors" and "Recommendations Quick Lists", which spilled off the bottom of the tab, requiring a scroll bar.  The "TV Series Playlist" and "Recent Episodes" lists have been integrated into the left side of the List/Search tab, using a collapsible tree view widget.  By default, the "Search Factors" section is exposed, but the caret-in-square-braces at the left of the section label can be clicked to expand or collapse each section, and if it does spill off the bottom of the tab, a scroll bar will automatically appear just for the left side of the tab, meaning that the list area on the  right of the tab no longer "double-scrolls".  The  "Recent Episodes" section has been refactored to make more efficient use of screen space, and displays the relevant information in three columns, rather than 5.  The name of the Series, the Episode last played (which is a button to replay that Episode), and the word "Next" (which is a link to play the next Episode in the Series.
+
+
+Significant bug fixes
+
+For internal Javascript links/buttons, added  "cursor: pointer" to style for the functional spans.
+"Artifact Play Progress" functionality begun, but not finished.  No shapr edges exposed to user.
+Fixed some session cookie persistence issues
+
