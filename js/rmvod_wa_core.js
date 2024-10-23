@@ -5528,7 +5528,23 @@ function pbEnded (artiIdIn) {
     console.log('The playback it has ended');
     
     console.log("Dumping out of fullscreen");
-    document.getElementById('actualvideoplayer').webkitExitFullScreen();
+    var plr = document.getElementById('actualvideoplayer');
+    //document.getElementById('actualvideoplayer').webkitExitFullScreen();
+    
+    try {
+        if (plr.exitFullscreen) {
+            plr.exitFullscreen();
+        } else if (plr.webkitExitFullscreen) {
+            plr.webkitExitFullscreen();
+        } else if (plr.mozCancelFullScreen) {
+            plr.mozCancelFullScreen();
+        } else if (docElm.msExitFullscreen) {
+            plr.msExitFullscreen();
+        }
+    } catch (e) {
+        console.log("Exit fullscreen failed.");
+    }
+    
     
     // Clear browser title
     this.resetPageTitle();            
