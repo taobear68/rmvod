@@ -5546,6 +5546,7 @@ function pbEnded (artiIdIn) {
             plr.msExitFullscreen();
         } else {
             console.log("Exit fullscreen method not found.");
+        }
     } catch (e) {
         console.log("Exit fullscreen failed.");
     }
