@@ -5530,7 +5530,7 @@ function pbEnded (artiIdIn) {
     console.log("Dumping out of fullscreen");
     document.getElementById('actualvideoplayer').webkitExitFullScreen();
     
-     Clear browser title
+    // Clear browser title
     this.resetPageTitle();            
     
     
