@@ -5526,6 +5526,14 @@ function pbEnded (artiIdIn) {
     // UPDATED TO HANDLE PLAYLIST PLAY ENDING
     
     console.log('The playback it has ended');
+    
+    console.log("Dumping out of fullscreen");
+    document.getElementById('actualvideoplayer').webkitExitFullScreen();
+    
+     Clear browser title
+    this.resetPageTitle();            
+    
+    
     //check to see if we're in a playlist
     var plh = new PLHandler();
     var pldd = plh.readDataDiv();
