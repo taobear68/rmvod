@@ -5533,12 +5533,16 @@ function pbEnded (artiIdIn) {
     
     try {
         if (plr.exitFullscreen) {
+            console.log("Doing exitFullscreen");
             plr.exitFullscreen();
         } else if (plr.webkitExitFullscreen) {
+            console.log("Doing webkitExitFullscreen");
             plr.webkitExitFullscreen();
         } else if (plr.mozCancelFullScreen) {
+            console.log("Doing mozCancelFullScreen");
             plr.mozCancelFullScreen();
-        } else if (docElm.msExitFullscreen) {
+        } else if (plr.msExitFullscreen) {
+            console.log("Doing msExitFullscreen");
             plr.msExitFullscreen();
         }
     } catch (e) {
@@ -5546,8 +5550,8 @@ function pbEnded (artiIdIn) {
     }
     
     
-    // Clear browser title
-    this.resetPageTitle();            
+    //// Clear browser title
+    //this.resetPageTitle();            
     
     
     //check to see if we're in a playlist
