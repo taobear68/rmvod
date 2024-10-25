@@ -4170,6 +4170,14 @@ class PLHandler {
             tmpHtml += '<span style="font-family: arial; font-size: 25px; font-weight: bold;">';
             tmpHtml += 'Next up...<br><br>';
             tmpHtml += '</span>';
+            
+            
+            tmpHtml += '<span onclick="switchboard(\'plendplelplay\',\'\',{})" style="font-family: arial; font-size: 25px; font-weight: bold;">';
+            tmpHtml += '<b><u>[Skip]</u></b>';
+            tmpHtml += '</span>';
+            
+            
+            
             tmpHtml += '</div>';
             tmpHtml += '<div style="display: block; width: 440px; height: 100px;">';
             tmpHtml += '<span style="font-family: arial; font-size: 40px; font-weight: bold;">';
@@ -5509,6 +5517,19 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             document.getElementById(argObjIn['spanid']).innerHTML = "<b><u>" + caretStrList[newDispIdx] + "</u></b>";
             de.style.display = sOpt[newDispIdx]; 
             break;;
+        case "plendplelplay":
+            try{
+                var plh = new PLHandler();
+                //var pldd = plh.readDataDiv();
+                plh.endPlaylistElement();
+            } catch (e) {
+                console.log("plendplelplay FAILED: " + e);
+            }
+            break;;
+
+            
+            
+            
             
         /* 
          * Oh no... we should never get here!
