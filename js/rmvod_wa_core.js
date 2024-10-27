@@ -3836,6 +3836,13 @@ class RMVodWebApp {
         var sessDetObj = {"userid":this.cc.getCookie("clientid"), "userdetail":{"loginname": "", "propername": "", "metajson": {"dachshund": "silly", "listothings": ["person", "man", "womam", "camera", "tv"]}},"sessiondetails":{"sessiontoken": "", "sessionexpiredt": ""}};
         document.getElementById('sessionpersonname').innerHTML = "<b>" + sessDetObj['userdetail']['propername'] + "</b>";
         document.getElementById('sessiondata').dataset.session = JSON.stringify(sessDetObj);
+        
+        // Added to completely reload the page
+        console.log("RMVodWebApp.doLogoutButton - Launching firstthing");
+        switchboard("firstthing","",{});
+        console.log("RMVodWebApp.doLogoutButton - Done with firstthing");
+        
+        
     }
     doCloseSessButton() {
         // Close Session closes the session on the server via API call, then runs doLogoutButton
