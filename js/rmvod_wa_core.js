@@ -4172,9 +4172,9 @@ class PLHandler {
             tmpHtml += '</span>';
             
             
-            tmpHtml += '<span onclick="switchboard(\'plendplelplay\',\'\',{})" style="font-family: arial; font-size: 25px; font-weight: bold;">';
-            tmpHtml += '<b><u>[Skip]</u></b>';
-            tmpHtml += '</span>';
+            //tmpHtml += '<span onclick="switchboard(\'plskipplay\',\'\',{})" style="font-family: arial; font-size: 25px; font-weight: bold;">';
+            //tmpHtml += '<b><u>[Skip]</u></b>';
+            //tmpHtml += '</span>';
             
             
             
@@ -4244,6 +4244,32 @@ class PLHandler {
             plh.pleUpdateArtiInfoHeader();
         }
         setTimeout(playerFunc,cardDispPerMs,dIn);
+    }
+    pleSkipBeforePlay(){
+        console.log("PLHandler.pleSkipBeforePlay - Begin.");
+        var dObj = this.readDataDiv();
+        var plAry = dObj['pl-aid-list'];
+        var plpIdx = dObj['playing-idx'];
+        //console.log("endPlaylistElement - After end of play of artifact " + plAry[plpIdx]);
+        if (plpIdx < (plAry.length - 1)) {
+            // There's still at least one element in the list to play
+            dObj['playing-idx'] += 1;
+            //console.log("endPlaylistElement - Looks like we still have things to play.  Playing " + plAry[dObj['playing-idx']] );
+            this.writeDataDiv(dObj);
+            //this.playPlaylistElement();
+            // This will probably require some other action.
+        } else {
+            if (dObj['pl-def-obj']['list-repeat'] == true) {
+                // Start the list over
+                //console.log("endPlaylistElement - Restart the playlist");
+                this.playPlaylist();
+            } else {
+                // We're done.
+                //console.log("endPlaylistElement - Ending playlist");
+                this.endPlaylist();
+            }
+        }
+        
     }
     endPlaylistElement(){
         var dObj = this.readDataDiv();
@@ -5517,11 +5543,11 @@ function switchboard(actionIn,objIdIn,argObjIn) {
             document.getElementById(argObjIn['spanid']).innerHTML = "<b><u>" + caretStrList[newDispIdx] + "</u></b>";
             de.style.display = sOpt[newDispIdx]; 
             break;;
-        case "plendplelplay":
+        case "plskipplay":
             try{
                 var plh = new PLHandler();
                 //var pldd = plh.readDataDiv();
-                plh.endPlaylistElement();
+                plh.pleSkipBeforePlay();
             } catch (e) {
                 console.log("plendplelplay FAILED: " + e);
             }
