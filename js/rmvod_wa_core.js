@@ -3756,6 +3756,7 @@ class RMVodWebApp {
         document.getElementById('username').focus();
     }
     doLoginGoButton () {
+        console.log("RMVodWebApp.doLoginGoButton - BEGIN");
         var unm = document.getElementById('username').value;
         document.getElementById('username').value = "";
         var pw = document.getElementById('password').value
@@ -3763,7 +3764,15 @@ class RMVodWebApp {
         // Do the "start session" thing
         
         var cbFunc = function (objIn) {
+            console.log("RMVodWebApp.doLoginGoButton.cbFunc - BEGIN");
+            console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn: " + JSON.stringify(objIn));
             try {
+                
+                // WE NEED TO DO SOMETHING TO VERIFY A SESSION WAS 
+                // RETURNED.  Failed logins are showing the 
+                // "Watching as" div.
+                
+                
                 //console.log("doLoginGoButton.cbFunc: " + JSON.stringify(objIn));
                 var sessDetObj = {"userid":objIn['userid']}
                 sessDetObj['userdetail'] = {"loginname": objIn['loginname'], "propername": objIn['propername'], "metajson": objIn['metajson']};
@@ -3785,7 +3794,13 @@ class RMVodWebApp {
                 var wa = new RMVodWebApp();
                 wa.sessSettingSetBulk(JSON.parse(sessDetObj['userdetail']['metajson'])['cookies']);
                 
-                wa.onloadOptions();
+                // Redundant if firsthing runs
+                // wa.onloadOptions();
+                
+                // Added to completely reload the page
+                console.log("RMVodWebApp.doLoginGoButton.cbFunc - Launching firstthing");
+                switchboard("firstthing","",{});
+                console.log("RMVodWebApp.doLoginGoButton.cbFunc - Done with firstthing");
                 
                 // TODO check to make sure we're properly handling the "broswer userid"
                 
