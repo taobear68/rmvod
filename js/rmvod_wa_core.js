@@ -3766,6 +3766,20 @@ class RMVodWebApp {
         var cbFunc = function (objIn) {
             console.log("RMVodWebApp.doLoginGoButton.cbFunc - BEGIN");
             console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn: " + JSON.stringify(objIn));
+            
+            var wa = new RMVodWebApp();
+
+            // sessiontoken
+            // 57e5627c-ec45-431c-a245-6e5697ce066b
+            // 36 char
+            
+            if (objIn['sessiontoken'].length != 36) {
+                console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn['sessiontoken'] is not 36 characters long.  Login Failed. ");
+                wa.doLogoutButton()
+            }
+            
+            
+            
             try {
                 
                 // WE NEED TO DO SOMETHING TO VERIFY A SESSION WAS 
@@ -3791,7 +3805,7 @@ class RMVodWebApp {
                 document.getElementById('clockdisp').style.display = "block";
                 document.getElementById('sessionyes').style.display = "block";    
                 
-                var wa = new RMVodWebApp();
+                // var wa = new RMVodWebApp();
                 wa.sessSettingSetBulk(JSON.parse(sessDetObj['userdetail']['metajson'])['cookies']);
                 
                 // Redundant if firsthing runs
