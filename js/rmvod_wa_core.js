@@ -3777,11 +3777,13 @@ class RMVodWebApp {
                 if (objIn['sessiontoken'].length != 36) {
                     console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn['sessiontoken'] is not 36 characters long.  Login Failed. ");
                     wa.doLogoutButton()
+                    alert("Could not log in with provided credentials (1).  Try again.");
                     return
                 }
             } catch (e) {
                 console.log("RMVodWebApp.doLoginGoButton.cbFunc - Login Failed: " + e);
                 wa.doLogoutButton()
+                alert("Could not log in with provided credentials (2).  Try again.");
                 return
             }
             
@@ -3826,7 +3828,7 @@ class RMVodWebApp {
                 // TODO check to make sure we're properly handling the "broswer userid"
                 
             } catch (e) {
-                alert("Could not log in with provided credentials.  Try again.");
+                alert("Could not log in with provided credentials.  Try again.(3)");
                 console.log("doLoginGoButton.cbFunc: LOGIN FAILED!  DO SOMETHING CORRECT HERE!");
             }
         }
