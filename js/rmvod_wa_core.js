@@ -3773,8 +3773,13 @@ class RMVodWebApp {
             // 57e5627c-ec45-431c-a245-6e5697ce066b
             // 36 char
             
-            if (objIn['sessiontoken'].length != 36) {
-                console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn['sessiontoken'] is not 36 characters long.  Login Failed. ");
+            try {
+                if (objIn['sessiontoken'].length != 36) {
+                    console.log("RMVodWebApp.doLoginGoButton.cbFunc - objIn['sessiontoken'] is not 36 characters long.  Login Failed. ");
+                    wa.doLogoutButton()
+                }
+            } catch (e) {
+                console.log("RMVodWebApp.doLoginGoButton.cbFunc - Login Failed: " + e);
                 wa.doLogoutButton()
             }
             
