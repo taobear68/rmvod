@@ -5101,7 +5101,7 @@ class WMCWARecommend {
                 // season
                 // episode                
                 for (var i = 0; i < rpAry.length; i++ ) {
-                    if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid']] ) {
+                    if ( artiIdIn === rpAry[i]['seriesartifactid'] ) {
                         console.log("Rec Play Next: " + rpAry[i]['episodeartifactid']);
                         playDivHtmlStr += "<br>";
                         playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpAry[i]['season'] + "E" + rpAry[i]['episode'] + "</u></b></span>";
