@@ -5086,7 +5086,7 @@ class WMCWARecommend {
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
                 playDivHtmlStr += "'  style=\"cursor:pointer;\" onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
                 //playDivHtmlStr += "Play Series from start</span></div>";
-                playDivHtmlStr += "Play Series from start</span>";
+                playDivHtmlStr += "<b><u>Play Series from start</u></b></span>";
                 
                 //var rpObj = {};
                 //var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
