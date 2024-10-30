@@ -5089,7 +5089,10 @@ class WMCWARecommend {
                 playDivHtmlStr += "Play Series from start</span>";
                 
                 //var rpObj = {};
-                var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
+                //var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
+                var tmpDe = document.getElementById("smrc_03");
+                var tmpJson = tmpDe.dataset.recenteps;
+                var rpAry = JSON.parse(tmpJson);
                 // clientid
                 // seriestitle
                 // seriesartifactid
