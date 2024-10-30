@@ -5100,9 +5100,9 @@ class WMCWARecommend {
                 for (var i = 0; i < rpAry.length; i++ ) {
                     if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid'] ) {
                         playDivHtmlStr += "<br>";
-                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpObj[rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpObj[rpAry[i]['season']] + "E" + rpObj[rpAry[i]['episode']] + "</u></b></span>";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpObj[rpAry[i]['episodeartifactid']] + "',{})\"><b><u>Replay S" + rpObj[rpAry[i]['season']] + "E" + rpObj[rpAry[i]['episode']] + "</u></b></span>";
                         playDivHtmlStr += "&nbsp;&nbsp;--&nbsp;&nbsp;";
-                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpObj[rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Play next</u></b></span>";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpObj[rpAry[i]['episodeartifactid']] + "',{})\"><b><u>Play next</u></b></span>";
                         //playDivHtmlStr += "";
                     }
                 }
