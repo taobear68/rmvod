@@ -1761,7 +1761,33 @@ class RMVodWebApp {
                 
         const cbFunc = function (dataObjIn) {
             
+            
+            
+            
             var objIn = dataObjIn['data'][0];
+            
+            
+            var serPVButtonsHtml = "";
+            if (objIn['majtype'] === "tvseries") {
+                //var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
+                var tmpDe = document.getElementById("smrc_03");
+                var tmpJson = tmpDe.dataset.recenteps;
+                var rpAry = JSON.parse(tmpJson);
+                for (var i = 0; i < rpAry.length; i++ ) {
+                    if ( objIn['artifactid'] === rpAry[i]['seriesartifactid'] ) {
+                        console.log("Rec Play Next: " + rpAry[i]['episodeartifactid']);
+                        serPVButtonsHtml += "<br>";
+                        serPVButtonsHtml += "<span onclick=\"switchboard('vodPlayTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpAry[i]['season'] + "E" + rpAry[i]['episode'] + "</u></b></span>";
+                        serPVButtonsHtml += "&nbsp;&nbsp;--&nbsp;&nbsp;";
+                        serPVButtonsHtml += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Play next</u></b></span>";
+                        serPVButtonsHtml += "<br>";
+                        //serPVButtonsHtml += "";
+                    }
+                }
+            }
+            
+            
+            
             
             var wa = new RMVodWebApp();
             const colList = ['title','majtype','relyear','tags','synopsis','runmins','director','writer','primcast','relorg','season','episode','file','filepath','eidrid','imdbid','arbmeta','artifactid'];
@@ -1793,6 +1819,9 @@ class RMVodWebApp {
                             dValStr += objIn[colList[idx]] + '<br>';
                         }
                         break;
+                    case "title":
+                        dValStr +=  objIn[colList[idx]]  + '<br>';
+                        dValStr += serPVButtonsHtml;
                     default:
                         dValStr +=  objIn[colList[idx]]  + '<br>';
                         break;
