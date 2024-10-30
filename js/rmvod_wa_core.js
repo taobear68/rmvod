@@ -5086,7 +5086,7 @@ class WMCWARecommend {
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
                 playDivHtmlStr += "'  style=\"cursor:pointer;\" onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
                 //playDivHtmlStr += "Play Series from start</span></div>";
-                playDivHtmlStr += "Play Series from start</span></div>";
+                playDivHtmlStr += "Play Series from start</span>";
                 
                 //var rpObj = {};
                 var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
@@ -5098,7 +5098,8 @@ class WMCWARecommend {
                 // season
                 // episode                
                 for (var i = 0; i < rpAry.length; i++ ) {
-                    if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid'] ) {
+                    if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid']] ) {
+                        console.log(rpObj["Rec Play Next: " + rpAry[i]['episodeartifactid']]);
                         playDivHtmlStr += "<br>";
                         playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpObj[rpAry[i]['episodeartifactid']] + "',{})\"><b><u>Replay S" + rpObj[rpAry[i]['season']] + "E" + rpObj[rpAry[i]['episode']] + "</u></b></span>";
                         playDivHtmlStr += "&nbsp;&nbsp;--&nbsp;&nbsp;";
