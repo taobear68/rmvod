@@ -1780,7 +1780,7 @@ class RMVodWebApp {
                         serPVButtonsHtml += "<span onclick=\"switchboard('vodPlayTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpAry[i]['season'] + "E" + rpAry[i]['episode'] + "</u></b></span>";
                         serPVButtonsHtml += "&nbsp;&nbsp;--&nbsp;&nbsp;";
                         serPVButtonsHtml += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Play next</u></b></span>";
-                        serPVButtonsHtml += "<br>";
+                        serPVButtonsHtml += "<br><br>";
                         //serPVButtonsHtml += "";
                     }
                 }
