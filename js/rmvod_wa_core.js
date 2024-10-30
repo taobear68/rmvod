@@ -1822,6 +1822,7 @@ class RMVodWebApp {
                     case "title":
                         dValStr +=  objIn[colList[idx]]  + '<br>';
                         dValStr += serPVButtonsHtml;
+                        break;
                     default:
                         dValStr +=  objIn[colList[idx]]  + '<br>';
                         break;
