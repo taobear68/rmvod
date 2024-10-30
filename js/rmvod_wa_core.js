@@ -5099,11 +5099,11 @@ class WMCWARecommend {
                 // episode                
                 for (var i = 0; i < rpAry.length; i++ ) {
                     if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid']] ) {
-                        console.log(rpObj["Rec Play Next: " + rpAry[i]['episodeartifactid']]);
+                        console.log("Rec Play Next: " + rpAry[i]['episodeartifactid']);
                         playDivHtmlStr += "<br>";
-                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpObj[rpAry[i]['episodeartifactid']] + "',{})\"><b><u>Replay S" + rpObj[rpAry[i]['season']] + "E" + rpObj[rpAry[i]['episode']] + "</u></b></span>";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpAry[i]['season'] + "E" + rpAry[i]['episode'] + "</u></b></span>";
                         playDivHtmlStr += "&nbsp;&nbsp;--&nbsp;&nbsp;";
-                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpObj[rpAry[i]['episodeartifactid']] + "',{})\"><b><u>Play next</u></b></span>";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Play next</u></b></span>";
                         //playDivHtmlStr += "";
                     }
                 }
