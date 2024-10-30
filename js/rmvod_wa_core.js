@@ -2,7 +2,7 @@
 //rmvod_wa_core.js  Copyright 2022, 2023, 2024 Paul Tourville
 
 //This file is part of RIBBBITmedia VideoOnDemand (a.k.a. "rmvod").
-
+\
 //RIBBBITmedia VideoOnDemand (a.k.a. "rmvod") is free software: you 
 //can redistribute it and/or modify it under the terms of the GNU 
 //General Public License as published by the Free Software 
@@ -4987,6 +4987,21 @@ class WMCWARecommend {
         var artiJson = document.getElementById('artifactDetailDiv').dataset.artifact;
         var artiDetObj = JSON.parse(artiJson)[0];
         
+        //var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
+        // clientid
+        // seriestitle
+        // seriesartifactid
+        // episodetitle
+        // episodeartifactid
+        // season
+        // episode
+        // 
+        //var rpObj = {};
+        //for (var i = 0; i < rpAry.length; i++ ) {
+            //rpObj[rpAry[i]['seriesartifactid'] = rpAry[i];
+        //}
+        
+        
         var tagListStr = "";
         var writerListStr = "";
         var directorListStr = "";
@@ -5070,7 +5085,31 @@ class WMCWARecommend {
                 playDivHtmlStr += "    |    ";
                 playDivHtmlStr += "<span data-artifactid='" + artiIdIn;
                 playDivHtmlStr += "'  style=\"cursor:pointer;\" onclick='switchboard(\"recPlaySeriesFromStart\",\"" + artiIdIn + "\",{})' >";
+                //playDivHtmlStr += "Play Series from start</span></div>";
                 playDivHtmlStr += "Play Series from start</span></div>";
+                
+                //var rpObj = {};
+                var rpAry = JSON.parse(document.getElementById("smrc_03").dataset.recenteps);
+                // clientid
+                // seriestitle
+                // seriesartifactid
+                // episodetitle
+                // episodeartifactid
+                // season
+                // episode                
+                for (var i = 0; i < rpAry.length; i++ ) {
+                    if ( artiIdIn === rpObj[rpAry[i]['seriesartifactid'] ) {
+                        playDivHtmlStr += "<br>";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayTitle','" + rpObj[rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Replay S" + rpObj[rpAry[i]['season']] + "E" + rpObj[rpAry[i]['episode']] + "</u></b></span>";
+                        playDivHtmlStr += "&nbsp;&nbsp;--&nbsp;&nbsp;";
+                        playDivHtmlStr += "<span onclick=\"switchboard('vodPlayNextTitle','" + rpObj[rpAry[i]['episodeartifactid'] + "',{})\"><b><u>Play next</u></b></span>";
+                        //playDivHtmlStr += "";
+                    }
+                }
+                
+                playDivHtmlStr += "</div>";
+                
+                
             } else {
                 playDivHtmlStr += "<div data-artifactid='" + artiIdIn + "' style='" + playDivStyle ;
                 playDivHtmlStr += "'><span data-artifactid='" + artiIdIn ;
