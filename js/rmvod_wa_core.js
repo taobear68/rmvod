@@ -5694,34 +5694,14 @@ function pbEnded (artiIdIn) {
     console.log('The playback it has ended');
     
     console.log("Dumping out of fullscreen");
-    //var plr = document.getElementById('actualvideoplayer');
-    //document.getElementById('actualvideoplayer').webkitExitFullScreen();
-    document.exitFullscreen();
-    
-    //try {
-        //if (plr.exitFullscreen) {
-            //console.log("Doing exitFullscreen");
-            //plr.exitFullscreen();
-        //} else if (plr.webkitExitFullscreen) {
-            //console.log("Doing webkitExitFullscreen");
-            //plr.webkitExitFullscreen();
-        //} else if (plr.mozCancelFullScreen) {
-            //console.log("Doing mozCancelFullScreen");
-            //plr.mozCancelFullScreen();
-        //} else if (plr.msExitFullscreen) {
-            //console.log("Doing msExitFullscreen");
-            //plr.msExitFullscreen();
-        //} else {
-            //console.log("Exit fullscreen method not found.");
-        //}
-    //} catch (e) {
-        //console.log("Exit fullscreen failed.");
-    //}
-    
+    try {
+        document.exitFullscreen();
+    } catch (e) {
+        consoloe.log("pbEnded - Tried to dump out of fullscreen, but failed.  Are we even IN fullscreen?  " + e );
+    }
     
     //// Clear browser title
     //this.resetPageTitle();            
-    
     
     //check to see if we're in a playlist
     var plh = new PLHandler();
