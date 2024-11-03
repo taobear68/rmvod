@@ -1659,7 +1659,8 @@ class RMVodWebApp {
             if ((pNextTF == 'false') & (pFullTF == 'true')) {
                 console.log("Closing out fullscreen - pNextTF: " + pNextTF + ", pFullTF: " + pFullTF);
                 // YES
-                document.getElementById('actualvideoplayer').webkitExitFullScreen(); // requestFullscreen
+                //document.getElementById('actualvideoplayer').webkitExitFullScreen(); // requestFullscreen
+                document.exitFullscreen();
                 // NO
                 //document.getElementById('actualvideoplayer').requestFullscreen(); // requestFullscreen
             }
@@ -5693,28 +5694,29 @@ function pbEnded (artiIdIn) {
     console.log('The playback it has ended');
     
     console.log("Dumping out of fullscreen");
-    var plr = document.getElementById('actualvideoplayer');
+    //var plr = document.getElementById('actualvideoplayer');
     //document.getElementById('actualvideoplayer').webkitExitFullScreen();
+    document.exitFullscreen();
     
-    try {
-        if (plr.exitFullscreen) {
-            console.log("Doing exitFullscreen");
-            plr.exitFullscreen();
-        } else if (plr.webkitExitFullscreen) {
-            console.log("Doing webkitExitFullscreen");
-            plr.webkitExitFullscreen();
-        } else if (plr.mozCancelFullScreen) {
-            console.log("Doing mozCancelFullScreen");
-            plr.mozCancelFullScreen();
-        } else if (plr.msExitFullscreen) {
-            console.log("Doing msExitFullscreen");
-            plr.msExitFullscreen();
-        } else {
-            console.log("Exit fullscreen method not found.");
-        }
-    } catch (e) {
-        console.log("Exit fullscreen failed.");
-    }
+    //try {
+        //if (plr.exitFullscreen) {
+            //console.log("Doing exitFullscreen");
+            //plr.exitFullscreen();
+        //} else if (plr.webkitExitFullscreen) {
+            //console.log("Doing webkitExitFullscreen");
+            //plr.webkitExitFullscreen();
+        //} else if (plr.mozCancelFullScreen) {
+            //console.log("Doing mozCancelFullScreen");
+            //plr.mozCancelFullScreen();
+        //} else if (plr.msExitFullscreen) {
+            //console.log("Doing msExitFullscreen");
+            //plr.msExitFullscreen();
+        //} else {
+            //console.log("Exit fullscreen method not found.");
+        //}
+    //} catch (e) {
+        //console.log("Exit fullscreen failed.");
+    //}
     
     
     //// Clear browser title
