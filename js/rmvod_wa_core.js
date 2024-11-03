@@ -5738,6 +5738,18 @@ function pbEnded (artiIdIn) {
             console.log('serplaynext not checked');
             // Clear browser title
             //this.resetPageTitle();            
+            
+            // click the default tab.
+            // Do a click on the tab selected in the "defaulttab" setting
+            // This could/should be integrated into one of the existing "onload"
+            // functions in ml, but for now, this is fine.
+            var ml = new RMVodWebApp();
+            var tmpCookie = ml.cc.getCookie('opt_' + "defaulttab");
+            console.log("Trying to click tab " + tmpCookie);
+            document.getElementById(tmpCookie).click();
+            console.log("Tried to click tab " + tmpCookie + "... Ta-da!");
+            
+            
             return;
         } else {
             try {
