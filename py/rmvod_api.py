@@ -2827,12 +2827,45 @@ class MediaLibraryDB:
             vldb = self.dbHandleConfigged()
             retval = vldb.getArtifactById(artiIdIn,False)[0]
             retval = self.titleLibTweak(retval)
+            
+            # Let's interpret arbmeta to see if we're doing a movie of the week
+            try:
+                # Insert the interpretation code below here once it's stable.
+                pass
+                
+            except:
+                pass
+                
+            
+            
             tmpRetObj['data'].append(retval)
         except:
             tmpRetObj['status']['success'] = False
             tmpRetObj['status']['detail'] = "getArtifactById for " + artiIdIn + " FAILED"
             print("getArtifactById for " + artiIdIn + " FAILED")
         pass
+        
+        # This interprets arbmeta for dynamic episode playback.  Once 
+        # it's stable it should be mived into the try/except block above.
+        # This is being developed outside the try block to get execution 
+        # to stop on error and dump meaningful logs
+        arbmeta = yaml.safe_load(tmpRetObj['data'][0]['arbmeta'])
+        arbmetaKeys = list(arbmeta.keys())
+        if 'dynep_tf' in arbmetaKeys:
+            if arbmeta['dynep_tf'] == True or arbmeta['dynep_tf'] == "true":
+                model = arbmeta['dynep_model']
+                criteria = arbmeta['dynep_model_criteria']
+                tmpRetObj['data'][0] = self.dynamicEpisodeHandler(tmpRetObj['data'][0],model,criteria)
+            else:
+                pass
+            pass
+        else:
+            pass
+        pass
+        # End of arbmeta interpretation code for dynamic episode playback
+        
+        
+        
         try:
             tmpRetObj['data'][0]['poster'] = self.fetchPosterFile2(retval['imdbid'])
         except:
@@ -2843,6 +2876,15 @@ class MediaLibraryDB:
             
         
         return tmpRetObj
+    def dynamicEpisodeHandler(self,artiObjIn,modelIn,criteriaIn):
+        print ("MediaLibraryDB.dynamicEpisodeHandler - START")
+        print ("MediaLibraryDB.dynamicEpisodeHandler - modelIn: " + modelIn)
+        print ("MediaLibraryDB.dynamicEpisodeHandler - criteriaIn: " + str(criteriaIn))
+        print ("MediaLibraryDB.dynamicEpisodeHandler - artiObjIn: " + json.dumps(artiObjIn))
+        modArtiObj = artiObjIn
+        modArtiObj['title'] = "[MOTW] " + modArtiObj['title']
+        pass
+        return modArtiObj
     ###### THIS NEEDS TO BE DECOMMISSIONED!!!!  WHOA DOGGIES!
     def getArtifactById(self,artiIdIn): # Updated to use .cfg  
         return self.getArtifactByIdNew(artiIdIn)['data'][0]
