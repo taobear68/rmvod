@@ -632,9 +632,11 @@ if __name__ == '__main__':
         pass
         print("This is where we would do an interactive menu thingy")
         menu = MLCLIMenu()
+        menu.apiBaseUrl = doit.apiBaseUrl
         menu.mainLoop()
     elif (wrkEP == "expnew"):
         menu = MLCLIMenu()
+        menu.apiBaseUrl = doit.apiBaseUrl
         menu.removeNewTagByAge()
     else:
         tmpEPSC = doit.lookupPrefabEndpoints(args.endpoint)
