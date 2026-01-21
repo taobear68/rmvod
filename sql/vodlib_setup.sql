@@ -174,7 +174,7 @@ CREATE OR REPLACE VIEW user_series_last_episode AS
     JOIN playlog_live l on j.episodeaid = l.artifactid 
     WHERE s.majtype = "tvseries"
     AND l.reqtime > (NOW() - INTERVAL 60 DAY)  
-    GROUP BY 1,2
+    GROUP BY 1,2;
 
 
 
